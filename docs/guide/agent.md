@@ -1,22 +1,22 @@
 **哪吒监控的被控端服务被称为Agent，本文档将介绍如何在被控端服务器上安装Agent，并与Dashboard连接**  
 <br/>
 ## 一键安装Agent
----
+
 目前哪吒监控已支持在WIndows和Linux上一键安装Agent，遵循本文档的步骤，你可以很轻松的在服务器上部署它  
 <br/>
 ### 准备工作
----
+
 你需要提前在管理面板中设置好通信域名，此域名不可以接入CDN，这里以前面提到过的示例通信域名 “data.example.com” 来做演示  
 进入后台管理面板，转到“设置”页，在“未接入CDN的面板服务器域名/IP”项中填入通信域名，然后点击"保存"  
 <br/>
 ### Linux一键安装
----
+
 * 首先在管理面板中添加一台服务器
 * 点击新添加的服务器旁，绿色的Linux图标按钮，复制一键安装命令
 * 在被控端服务器中运行复制的一键安装命令，等待安装完成后返回到Dashboard主页查看服务器是否上线  
 <br/>
 ###  Windows一键安装
----
+
 * 首先在管理面板中添加一台服务器
 * 点击新添加的服务器旁，绿色的Windows图标按钮，复制一键安装命令
 * 进入Windows服务器，运行PowerShell，在PowerShell中运行复制的安装命令
@@ -25,7 +25,7 @@
 <br/>  
 <br/>
 ## 其他方式安装Agent
---- 
+ 
 <br/>  
 
 ### Linux安装Agent  
@@ -44,13 +44,13 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  
 <br/>  
 
 ### Windows安装Agent  
----
+
 - 请参考社区文章：  
 [哪吒探针 - Windows 客户端安装](https://nyko.me/2020/12/13/nezha-windows-client.html)  
 <br/>  
 
 ### OpenWRT安装Agent  
----
+
 **如何使 旧版OpenWRT/LEDE 自启动**  
 - 请参考项目：  
 [哪吒监控 For OpenWRT](https://github.com/Erope/openwrt_nezha)  
