@@ -2,5 +2,5 @@
 
 ```shell
 npm i
-npm run docs:dev
+npm run dev
 ```
