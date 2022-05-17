@@ -84,7 +84,7 @@ location ~ ^/(ws|terminal/.+)$  {
 
 * CaddyServer v1（v2 无需特别配置）
 
-  ```Caddyfile
+  ```
   proxy /ws http://ip:8008 {
       websocket
   }

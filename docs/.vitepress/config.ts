@@ -19,72 +19,47 @@ export default defineConfig({
       '/': {
         label: '简体中文',
         nav: [
-          { text: '使用指南', link: '/', activeMatch: '^/$|^/guide/' },
+          { text: '使用指南', 
+            link: '/', 
+            activeMatch: '^/$|^/guide/' 
+          },
           {
             text: '开发手册',
-            link: '/config/basics',
-            activeMatch: '^/config/'
+            link: '/developer/basics',
+            activeMatch: '^/developer/'
           }
         ],
-    
+
         sidebar: {
           '/guide/': getGuideSidebarZhCN(),
-          '/config/': getConfigSidebarZhCN(),
+          '/developer/': getDeveloperSidebarZhCN(),
           '/': getGuideSidebarZhCN()
         },
         repo: 'nezhahq/nezhahq.github.io',
         docsDir: 'docs',
         docsBranch: 'main',
         editLinks: true,
-        editLinkText: 'Edit this page on GitHub',
-        lastUpdated: 'Last Updated',
-
-        algolia: {
-        appId: '8J64VVRP8K',
-        apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
-        indexName: 'vitepress'
-       },
-
-        carbonAds: {
-        carbon: 'CEBDT27Y',
-        custom: 'CKYD62QM',
-        placement: 'vuejsorg'
-       }
+        editLinkText: '在GitHub中编辑',
+        lastUpdated: '上次更新'
       },
       '/en_US/': {
         label: 'English',
         nav: [
-          { text: 'User Guide', link: '/en_US/', activeMatch: '^/$|^/guide/' },
-          {
-            text: 'Development Manual',
-            link: '/en_US/config/basics',
-            activeMatch: '^/config/'
-          }
+          { text: 'User Guide', link: '/en_US/', activeMatch: '^/$|^/en_US/guide/' },
+          { text: 'Development Manual', link: '/en_US/developer/basics', activeMatch: '^/en_US/developer/' }
         ],
     
         sidebar: {
-          '/guide/': getGuideSidebarEnUS(),
-          '/config/': getConfigSidebarEnUS(),
-          '/': getGuideSidebarEnUS()
+          '/en_US/guide/': getGuideSidebarEnUS(),
+          '/en_US/developer/': getDeveloperSidebarEnUS(),
+          '/en_US/': getGuideSidebarEnUS()
         },
         repo: 'nezhahq/nezhahq.github.io',
         docsDir: 'docs',
         docsBranch: 'main',
         editLinks: true,
         editLinkText: 'Edit this page on GitHub',
-        lastUpdated: 'Last Updated',
-
-        algolia: {
-        appId: '8J64VVRP8K',
-        apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
-        indexName: 'vitepress'
-       },
-
-        carbonAds: {
-        carbon: 'CEBDT27Y',
-        custom: 'CKYD62QM',
-        placement: 'vuejsorg'
-       }
+        lastUpdated: 'Last Updated'
       }
     }
   }
@@ -108,38 +83,38 @@ function getGuideSidebarZhCN() {
     {
       text: '管理面板配置',
       children: [
-        { text: '主机', link: '/guide/frontmatter' },
-        { text: '服务', link: '/guide/theming' },
-        { text: '定时任务', link: '/guide/api' },
-        { text: '报警通知', link: '/guide/api' },
-        { text: '设置', link: '/guide/differences-from-vuepress' }
+        { text: '主机', link: '/guide/servers' },
+        { text: '服务', link: '/guide/services' },
+        { text: '定时任务', link: '/guide/tasks' },
+        { text: '报警通知', link: '/guide/notifications' },
+        { text: '设置', link: '/guide/settings' }
       ]
     },
     {
       text: '常见问题',
       children: [
-        { text: '问题1', link: '/guide/frontmatter' },
-        { text: '问题2', link: '/guide/theming' },
-        { text: '问题3', link: '/guide/api' },
-        { text: '问题4', link: '/guide/api' },
-        { text: '问题5', link: '/guide/differences-from-vuepress' }
+        { text: '问题1', link: '/guide/q1' },
+        { text: '问题2', link: '/guide/q2' },
+        { text: '问题3', link: '/guide/q3' },
+        { text: '问题4', link: '/guide/q4' },
+        { text: '问题5', link: '/guide/q5' }
       ]
     }
   ]
 }
 
-function getConfigSidebarZhCN() {
+function getDeveloperSidebarZhCN() {
   return [
     {
       text: 'App Config',
-      children: [{ text: 'Basics', link: '/config/basics' }]
+      children: [ { text: 'Basics', link: '/developer/basics' } ]
     },
     {
       text: 'Theme Config',
       children: [
-        { text: 'Homepage', link: '/config/homepage' },
-        { text: 'Algolia Search', link: '/config/algolia-search' },
-        { text: 'Carbon Ads', link: '/config/carbon-ads' }
+        { text: 'Homepage', link: '/developer/homepage' },
+        { text: 'Algolia Search', link: '/developer/algolia-search' },
+        { text: 'Carbon Ads', link: '/developer/carbon-ads' }
       ]
     }
   ]
@@ -154,47 +129,47 @@ function getGuideSidebarEnUS() {
       ]
     },
     {
-      text: 'Installation',
+      text: 'Installation Manual',
       children: [
         { text: 'Install Dashboard', link: '/en_US/guide/dashboard' },
         { text: 'Install Agent', link: '/en_US/guide/agent' }
       ]
     },
     {
-      text: 'Advanced Configuration',
+      text: 'Admin Panel',
       children: [
-        { text: 'Servers', link: '/guide/frontmatter' },
-        { text: 'Services', link: '/guide/theming' },
-        { text: 'Tasks', link: '/guide/api' },
-        { text: 'Notifications', link: '/guide/api' },
-        { text: 'Settings', link: '/guide/differences-from-vuepress' }
+        { text: 'Servers', link: '/en_US/guide/servers' },
+        { text: 'Services', link: '/en_US/guide/services' },
+        { text: 'Tasks', link: '/en_US/guide/tasks' },
+        { text: 'Notifications', link: '/en_US/guide/notifications' },
+        { text: 'Settings', link: '/en_US/guide/settings' }
       ]
     },
     {
       text: 'FAQ',
       children: [
-        { text: '问题1', link: '/guide/frontmatter' },
-        { text: '问题2', link: '/guide/theming' },
-        { text: '问题3', link: '/guide/api' },
-        { text: '问题4', link: '/guide/api' },
-        { text: '问题5', link: '/guide/differences-from-vuepress' }
+        { text: 'Q1', link: '/en_US/guide/q1' },
+        { text: 'Q2', link: '/en_US/guide/q2' },
+        { text: 'Q3', link: '/en_US/guide/q3' },
+        { text: 'Q4', link: '/en_US/guide/q4' },
+        { text: 'Q5', link: '/en_US/guide/q5' }
       ]
     }
   ]
 }
 
-function getConfigSidebarEnUS() {
+function getDeveloperSidebarEnUS() {
   return [
     {
       text: 'App Config',
-      children: [{ text: 'Basics', link: '/en_US/config/basics' }]
+      children: [ { text: 'Basics', link: '/en_US/developer/basics' } ]
     },
     {
       text: 'Theme Config',
       children: [
-        { text: 'Homepage', link: '/en_US/config/homepage' },
-        { text: 'Algolia Search', link: '/en_US/config/algolia-search' },
-        { text: 'Carbon Ads', link: '/en_US/config/carbon-ads' }
+        { text: 'Homepage', link: '/en_US/developer/homepage' },
+        { text: 'Algolia Search', link: '/en_US/developer/algolia-search' },
+        { text: 'Carbon Ads', link: '/en_US/developer/carbon-ads' }
       ]
     }
   ]
