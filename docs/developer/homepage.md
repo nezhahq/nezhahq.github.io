@@ -1,6 +1,6 @@
 # Theme Config: Homepage
 
-VitePress provides a homepage layout. To use it, specify `home: true` plus some other metadata in your root `index.md`'s [YAML frontmatter](../guide/frontmatter). This is an example of how it works:
+VitePress provides a homepage layout. To use it, specify `home: true` plus some other metadata in your root `index.md`'s YAML frontmatter. This is an example of how it works:
 
 ```yaml
 ---
