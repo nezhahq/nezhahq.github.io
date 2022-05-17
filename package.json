@@ -1,0 +1,26 @@
+{
+  "name": "nezhahq.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nezhahq/nezhahq.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nezhahq/nezhahq.github.io/issues"
+  },
+  "homepage": "https://github.com/nezhahq/nezhahq.github.io#readme",
+  "devDependencies": {
+    "vitepress": "^0.22.4"
+  }
+}
