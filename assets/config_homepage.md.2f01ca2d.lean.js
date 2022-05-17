@@ -1,1 +1,0 @@
-import{_ as n,c as a,o as s,a as e}from"./app.54944ef9.js";const h='{"title":"Theme Config: Homepage","description":"","frontmatter":{},"headers":[],"relativePath":"config/homepage.md","lastUpdated":1652768268000}',t={},o=e("",3),p=[o];function c(u,i,l,r,k,d){return s(),a("div",null,p)}var g=n(t,[["render",c]]);export{h as __pageData,g as default};
