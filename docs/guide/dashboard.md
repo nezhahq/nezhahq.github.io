@@ -1,5 +1,5 @@
-### 准备工作
-----
+## 准备工作  
+
 搭建一个哪吒监控，你需要：
 1. 一台可以连接公网的VPS，防火墙和安全策略需要放行8008和5555端口，否则会无法访问和无法接收数据。单核512MB内存的服务器配置就足以满足大多数使用场景
 2. 一个已经设置好A记录，指向Dashboard服务器ip的域名 
@@ -12,8 +12,9 @@
 **本文档将以宝塔面板反代面板的过程作为范例，随着未来版本的变化，部分功能的入口可能会发生改变，本文档仅供参考**
 <br/>
 <br/>
-### 获取Github的Client ID和密钥
-----
+
+## 获取Github的Client ID和密钥
+
 哪吒监控接入Github和Gitee作为后台管理员账号  
 + 首先我们需要新建一个验证应用，以Github为例，登陆Github后，打开 https://github.com/settings/developers ，依次选择“OAuth Apps” - “New OAuth App”    
 `Application name` - 随意填写  
@@ -23,8 +24,9 @@
 + 保存页面中的Client ID，然后点击 “Generate a new client secret“，创建一个新的Client Secret，新建的密钥仅会显示一次，请妥善保存
 <br/>
 <br/>
-### 在服务器中安装Dashboard
----
+
+## 在服务器中安装Dashboard
+
 * 在面板服务器中，运行安装脚本：  
 ```bash
 curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
@@ -53,8 +55,9 @@ curl -L https://fastly.jsdelivr.net/gh/naiba/nezha@master/script/install.sh -o n
 来打开管理脚本  
 <br/>
 <br/>
-### 配置反向代理
----
+
+## 配置反向代理
+
 * 在宝塔面板中新建一个站点，域名填写公开访问域名，如 “http://cdn.example.com“ ，然后点击“设置”进入站点设置选项，选择“反向代理” - “新建反向代理”  
 
 * 自定义一个代理名称，在下方“目标URL”中填入 `http://127.0.0.1` 然后点击“保存”  
@@ -96,8 +99,8 @@ location ~ ^/(ws|terminal/.+)$  {
 <br/>
 <br/>
 
-### 在宝塔面板中配置SSL
----
+## 在宝塔面板中配置SSL
+
 首先，先暂时关闭反向代理  
 正如在其他网站中配置SSL证书一样，进入站点设置中的“SSL”，你可以选择自动申请 Let´s Encrypt 证书或手动配置已有的证书  
 完成SSL的设置后，你需要回到 https://github.com/settings/developers ，编辑之前创建的验证应用程序，将之前我们填入的"Homepage URL"和"Authorization callback URL"中的域名全部从`http`改为`https`，如："https://cdn.example.com" 和 "https://cdn.example.com/oauth2/callback" ，**不更改此项可能会导致你无法登陆面板后台**  
