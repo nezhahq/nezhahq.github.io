@@ -93,7 +93,7 @@ function getGuideSidebarZhCN() {
     {
       text: '常见问题',
       children: [
-        { text: '问题1', link: '/guide/q1' },
+        { text: 'TG api被墙', link: '/guide/q1' },
         { text: '问题2', link: '/guide/q2' },
         { text: '问题3', link: '/guide/q3' },
         { text: '问题4', link: '/guide/q4' },
