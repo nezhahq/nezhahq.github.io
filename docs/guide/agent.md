@@ -24,12 +24,9 @@
 * 等待安装完成后返回Dashboard主页查看服务器是否上线  
 <br/>  
 <br/>
-## 其他方式安装Agent
- 
-<br/>  
-
+## 其他方式安装Agent  
 ### Linux安装Agent  
----
+
 * 首先在管理面板中添加一台服务器  
 * 在被控服务器中，运行脚本（位于中国大陆的服务器请使用镜像）：
 ```bash
@@ -38,7 +35,7 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  
 ```  
 * 选择“安装监控Agent”  
 * 输入通信域名，如：”data.example.com“  
-* 输入面板通信端口，默认为5555  
+* 输入面板通信端口（RPC端口），默认为5555  
 * 输入Agent密钥，Agent密钥在管理面板中添加服务器时生成，可以在管理面板中的“主机”页中找到  
 * 等待安装完成后返回Dashboard主页查看服务器是否上线  
 <br/>  
@@ -89,7 +86,7 @@ restart() {
 <br/>  
 <br/>
 ## 自定义Agent监控项目
----
+
 #### 自定义监控的网卡和硬盘分区
 
 * 执行 `/opt/nezha/agent/nezha-agent --edit-agent-config` 来选择自定义的网卡和分区，然后重启 Agent 即可生效

@@ -2,7 +2,7 @@
 home: true
 heroImage: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
 heroText: 哪吒监控
-tagline: 一个开源的轻量服务器和网站监控、运维工具
+tagline: 一个开源、轻量的服务器和网站监控、运维工具
 actionText: 开始使用 →
 actionLink: /guide/dashboard
 features:
