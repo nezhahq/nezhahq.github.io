@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/nezhahq/nezhahq.github.io#readme",
   "devDependencies": {
-    "vitepress": "^0.22.4"
+    "vitepress": "^0.22.4",
+    "vitepress-dark-theme": "github:nezhahq/vitepress-dark-theme"
   }
 }
