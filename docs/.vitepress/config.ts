@@ -87,11 +87,11 @@ function getGuideSidebarZhCN() {
     {
       text: '常见问题',
       children: [
-        { text: '如何进行数据迁移、备份恢复？', link: '/guide/q1' },
+        { text: 'TG api被墙', link: '/guide/q1' },
         { text: 'Agent 启动/上线 问题自检流程', link: '/guide/q2' },
         { text: '如何反向代理 gRPC 端口', link: '/guide/q3' },
         { text: '实时通道断开/在线终端连接失败', link: '/guide/q4' },
-        { text: '问题5', link: '/guide/q5' }
+        { text: '如何进行数据迁移、备份恢复？', link: '/guide/q5' }
       ]
     }
   ]
@@ -136,11 +136,10 @@ function getGuideSidebarEnUS() {
     {
       text: 'FAQ',
       children: [
-        { text: 'How do I migrate my data to the new server and restore my backups?', link: '/en_US/guide/q1' },
         { text: 'Let the Agent start/on-line, and the self-test process of the problem', link: '/en_US/guide/q2' },
         { text: 'Reverse Proxy gRPC Port (support Cloudflare CDN)', link: '/en_US/guide/q3' },
         { text: 'Real-time channel disconnection/online terminal connection failure', link: '/en_US/guide/q4' },
-        { text: 'Q5', link: '/en_US/guide/q5' }
+        { text: 'How do I migrate my data to the new server and restore my backups?', link: '/en_US/guide/q5' }
       ]
     }
   ]
