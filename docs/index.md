@@ -14,4 +14,4 @@ features:
   details: 支持在线SSH，支持流量循环监控，支持设置定时任务、服务器批量执行任务
 footer: Copyright © 2022-present Nezhahq
 ---  
-<br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。
+<br />本作品采用 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a> 进行许可。
