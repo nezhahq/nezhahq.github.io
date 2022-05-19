@@ -25,7 +25,7 @@ export default defineConfig({
           },
           {
             text: '开发手册',
-            link: '/developer/basics',
+            link: '/developer/index',
             activeMatch: '^/developer/'
           }
         ],
@@ -46,7 +46,7 @@ export default defineConfig({
         label: 'English',
         nav: [
           { text: 'User Guide', link: '/en_US/', activeMatch: '^/$|^/en_US/guide/' },
-          { text: 'Development Manual', link: '/en_US/developer/basics', activeMatch: '^/en_US/developer/' }
+          { text: 'Development Manual', link: '/en_US/developer/index', activeMatch: '^/en_US/developer/' }
         ],
     
         sidebar: {
@@ -81,7 +81,8 @@ function getGuideSidebarZhCN() {
         { text: '服务', link: '/guide/services' },
         { text: '定时任务', link: '/guide/tasks' },
         { text: '报警通知', link: '/guide/notifications' },
-        { text: '设置', link: '/guide/settings' }
+        { text: '设置', link: '/guide/settings' },
+        { text: 'API', link: '/guide/api' }
       ]
     },
     {
@@ -101,15 +102,9 @@ function getGuideSidebarZhCN() {
 function getDeveloperSidebarZhCN() {
   return [
     {
-      text: 'App Config',
-      children: [ { text: 'Basics', link: '/developer/basics' } ]
-    },
-    {
-      text: 'Theme Config',
+      text: '开发手册',
       children: [
-        { text: 'Homepage', link: '/developer/homepage' },
-        { text: 'Algolia Search', link: '/developer/algolia-search' },
-        { text: 'Carbon Ads', link: '/developer/carbon-ads' }
+        { text: '创建新主题', link: '/developer/theme' }
       ]
     }
   ]
@@ -131,7 +126,8 @@ function getGuideSidebarEnUS() {
         { text: 'Services', link: '/en_US/guide/services' },
         { text: 'Tasks', link: '/en_US/guide/tasks' },
         { text: 'Notifications', link: '/en_US/guide/notifications' },
-        { text: 'Settings', link: '/en_US/guide/settings' }
+        { text: 'Settings', link: '/en_US/guide/settings' },
+        { text: 'API', link: '/en_US/guide/api' }
       ]
     },
     {
@@ -149,15 +145,9 @@ function getGuideSidebarEnUS() {
 function getDeveloperSidebarEnUS() {
   return [
     {
-      text: 'App Config',
-      children: [ { text: 'Basics', link: '/en_US/developer/basics' } ]
-    },
-    {
-      text: 'Theme Config',
+      text: 'Development Manual',
       children: [
-        { text: 'Homepage', link: '/en_US/developer/homepage' },
-        { text: 'Algolia Search', link: '/en_US/developer/algolia-search' },
-        { text: 'Carbon Ads', link: '/en_US/developer/carbon-ads' }
+        { text: 'Create a new theme', link: '/en_US/developer/theme' }
       ]
     }
   ]

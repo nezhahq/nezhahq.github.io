@@ -1,1 +1,0 @@
-# Theme Config: Algolia Search
