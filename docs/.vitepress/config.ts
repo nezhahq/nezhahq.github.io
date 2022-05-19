@@ -93,7 +93,14 @@ function getGuideSidebarZhCN() {
         { text: '如何反向代理 gRPC 端口', link: '/guide/q3' },
         { text: '实时通道断开/在线终端连接失败', link: '/guide/q4' },
         { text: '如何进行数据迁移、备份恢复？', link: '/guide/q5' }
-
+      ]
+    },
+    {
+      text: '排障指南',
+      children: [
+        { text: 'Dashboard相关', link: '/guide/dashboardq' },
+        { text: 'Agent相关', link: '/guide/agentq' },
+        { text: '登陆相关', link: '/guide/loginq' }
       ]
     }
   ]
@@ -138,6 +145,14 @@ function getGuideSidebarEnUS() {
         { text: 'Reverse Proxy gRPC Port (support Cloudflare CDN)', link: '/en_US/guide/q3' },
         { text: 'Real-time channel disconnection/online terminal connection failure', link: '/en_US/guide/q4' },
         { text: 'How do I migrate my data to the new server and restore my backups?', link: '/en_US/guide/q5' }
+      ]
+    },
+    {
+      text: 'Troubleshooting Guide',
+      children: [
+        { text: 'Dashboard', link: '/en_US/guide/dashboardq' },
+        { text: 'Agent', link: '/en_US/guide/agentq' },
+        { text: 'Login', link: '/en_US/guide/loginq' }
       ]
     }
   ]
