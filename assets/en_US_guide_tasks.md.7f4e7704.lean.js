@@ -1,1 +1,0 @@
-import{_ as e,c as t,o as s,a}from"./app.c4507667.js";const m='{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"en_US/guide/tasks.md"}',o={},r=a("p",null,"tasks",-1),n=[r];function c(_,d,i,p,l,f){return s(),t("div",null,n)}var h=e(o,[["render",c]]);export{m as __pageData,h as default};

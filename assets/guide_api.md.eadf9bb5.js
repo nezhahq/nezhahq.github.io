@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as a,a as o}from"./app.2c402e15.js";const m='{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"guide/api.md"}',s={},r=o("p",null,"\u656C\u8BF7\u671F\u5F85",-1),c=[r];function n(_,i,p,d,l,f){return a(),t("div",null,c)}var h=e(s,[["render",n]]);export{m as __pageData,h as default};
