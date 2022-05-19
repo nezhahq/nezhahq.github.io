@@ -5,7 +5,7 @@
 ## 管理员列表
 + 如果你修改了自己的Github/Gitee用户名，可以在此项中同步修改，否则无法登陆，多个用户请用逗号隔开: `user1,user2`  
 
-+ 如需更改管理员账户，请在安装脚本中选择“修改面板设置”，重新设置新的管理员 `Client ID` 和 `Client Secret` 
++ 如需更改管理员账户，请前往 `/opt/nezha/dashboard/data/config.yaml` ，重新设置新的管理员 `Client ID` 和 `Client Secret` 
 <br/>
 
 ## 主题
@@ -96,7 +96,8 @@
   ```
 ## 前台查看密码
 如果你不想直接展示你的主页，你可以在这里设置一个查看密码  
-设置密码后，需要输入密码才可以访问主页
+设置密码后，需要输入密码才可以访问主页  
+如果忘记前台密码，可以在 `/opt/nezha/dashboard/data/config.yaml` 中修改
 <br/>
 
 ## 未接入CDN的面板服务器域名/IP
