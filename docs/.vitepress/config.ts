@@ -104,7 +104,8 @@ function getDeveloperSidebarZhCN() {
     {
       text: '开发手册',
       children: [
-        { text: '创建新主题', link: '/developer/theme' }
+        { text: '创建新主题', link: '/developer/theme' },
+        { text: 'l10n', link: '/developer/l10n' }
       ]
     }
   ]
@@ -147,7 +148,8 @@ function getDeveloperSidebarEnUS() {
     {
       text: 'Development Manual',
       children: [
-        { text: 'Create a new theme', link: '/en_US/developer/theme' }
+        { text: 'Create a new theme', link: '/en_US/developer/theme' },
+        { text: 'l10n', link: '/en_US/developer/l10n' }
       ]
     }
   ]
