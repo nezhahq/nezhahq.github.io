@@ -3,7 +3,7 @@ home: true
 heroImage: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
 heroText: Nezha Monitoring
 tagline: A open source, lightweight server and website monitoring and O&M tool
-actionText: Learn more →
+actionText: Learn More →
 actionLink: /en_US/guide/dashboard
 features:
 - title: One-Click Installation
