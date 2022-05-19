@@ -1,0 +1,1 @@
+import{_ as e,c as t,o,a}from"./app.c4507667.js";const h='{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"en_US/developer/theme.md"}',s={},n=a("p",null,"Comming soon",-1),r=[n];function c(_,i,p,d,l,m){return o(),t("div",null,r)}var u=e(s,[["render",c]]);export{h as __pageData,u as default};
