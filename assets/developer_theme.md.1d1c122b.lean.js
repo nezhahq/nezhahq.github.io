@@ -1,0 +1,1 @@
+import{_ as e,c as t,o as a,a as o}from"./app.df59db74.js";const h='{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"developer/theme.md"}',r={},s=o("p",null,"\u656C\u8BF7\u671F\u5F85",-1),c=[s];function n(_,d,p,i,l,m){return a(),t("div",null,c)}var u=e(r,[["render",n]]);export{h as __pageData,u as default};
