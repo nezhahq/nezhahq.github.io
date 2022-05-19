@@ -31,8 +31,11 @@
 * 在被控服务器中，运行脚本（位于中国大陆的服务器请使用镜像）：
 ```bash
 curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
-
 ```  
+如果你的被控服务器位于中国大陆，可以使用镜像：  
+````bash
+curl -L https://fastly.jsdelivr.net/gh/naiba/nezha@master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
+````
 * 选择“安装监控Agent”  
 * 输入通信域名，如：”data.example.com“  
 * 输入面板通信端口（RPC端口），默认为5555  

@@ -14,3 +14,6 @@ curl ip.sb
 curl ip-api.com
 ```
 
+### 查看密码忘记\删除查看密码
+请查看或编辑`/opt/nezha/dashboard/data/config.yaml`文件。   
+密码位于site-viewpassword。
