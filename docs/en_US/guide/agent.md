@@ -1,63 +1,57 @@
-**哪吒监控的被控端服务被称为Agent，本文档将介绍如何在被控端服务器上安装Agent，并与Dashboard连接**  
+**The service in the monitored server is called Agent. This document will describe how to install the Agent on the monitored server and connect it with Dashboard**  
 <br/>
 ## Install Agent using one-click script  
-目前哪吒监控已支持在WIndows和Linux上一键安装Agent，遵循本文档的步骤，你可以很轻松的在服务器上部署它  
+Nezha Monitoring now supports one-click installation of the Agent on Windows and Linux. Follow the steps in this document and you can easily deploy it on your server  
 <br/>
-### 准备工作
----
-你需要提前在管理面板中设置好通信域名，此域名不可以接入CDN，这里以前面提到过的示例通信域名 “data.example.com” 来做演示  
-进入后台管理面板，转到“设置”页，在“未接入CDN的面板服务器域名/IP”项中填入通信域名，然后点击"保存"  
+### Preparation
+First of all, you need to set up the communication domain name in the settings page of the admin panel, this domain name can not connect to the CDN, here is the sample communication domain name "data.example.com" mentioned earlier for demonstration    
+Enter the administration panel, go to the "Settings" page, in the item "CDN Bypassed Domain/IP
+", fill in the communication domain name, and then click "Save"  
 <br/>
-### Linux一键安装
----
-* 首先在管理面板中添加一台服务器
-* 点击新添加的服务器旁，绿色的Linux图标按钮，复制一键安装命令
-* 在被控端服务器中运行复制的一键安装命令，等待安装完成后返回到Dashboard主页查看服务器是否上线  
+###  One-click installation on Linux
+* First add a server in the admin panel
+* Click on the green Linux icon button next to the newly added server and copy the one-click installation command
+* Run the copied one-click installation command on the monitored server, wait for the installation to complete, and then return to the Dashboard home page to see if the server is online.  
 <br/>
-###  Windows一键安装
----
-* 首先在管理面板中添加一台服务器
-* 点击新添加的服务器旁，绿色的Windows图标按钮，复制一键安装命令
-* 进入Windows服务器，运行PowerShell，在PowerShell中运行复制的安装命令
-* 如遇到确认「执行策略变更」请选择 Y
-* 等待安装完成后返回Dashboard主页查看服务器是否上线  
+###  One-click installation on Windows
+* First add a server in the admin panel  
+* Click on the green Linux icon button next to the newly added server and copy the one-click installation command  
+* Login to Windows Server, open PowerShell, and run the copied installation command in PowerShell  
+* If you encounter the prompt "Implement Policy Change" please select Y  
+* Wait for the installation to complete and return to the Dashboard home page to see if the server is online  
 <br/>  
 <br/>
-## 其他方式安装Agent
---- 
+## Other ways to install Agent
 <br/>  
 
-### Linux安装Agent  
----
-* 首先在管理面板中添加一台服务器  
-* 在被控服务器中，运行脚本（位于中国大陆的服务器请使用镜像）：
+### Installing Agent on Linux  
+* First add a server in the admin panel  
+* In the monitored server, run the script: 
 ```bash
-curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
-
+curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh   
 ```  
-* 选择“安装监控Agent”  
-* 输入通信域名，如：”data.example.com“  
-* 输入面板通信端口，默认为5555  
-* 输入Agent密钥，Agent密钥在管理面板中添加服务器时生成，可以在管理面板中的“主机”页中找到  
-* 等待安装完成后返回Dashboard主页查看服务器是否上线  
+* Select “Install_agent”  
+* Input the communication domain name, e.g. "data.example.com"  
+* Input RPC port, default is 5555 
+* Input the Agent Secret, which is generated when adding a server in the administration panel and can be found in the " Servers " page of the administration panel  
+* Wait for the installation to complete and return to the Dashboard home page to see if the server is online  
 <br/>  
 
-### Windows安装Agent  
----
-- 请参考社区文章：  
-[哪吒探针 - Windows 客户端安装](https://nyko.me/2020/12/13/nezha-windows-client.html)  
+### Installing Agent on Windows  
+- Please refer to the community article: 
+[哪吒探针 - Windows 客户端安装](https://nyko.me/2020/12/13/nezha-windows-client.html)(Chinese)  
 <br/>  
 
-### OpenWRT安装Agent  
----
-**如何使 旧版OpenWRT/LEDE 自启动**  
-- 请参考项目：  
-[哪吒监控 For OpenWRT](https://github.com/Erope/openwrt_nezha)  
+### Installing Agent on OpenWRT
+
+**How to make the old version of OpenWRT/LEDE self-boot?**  
+- Please refer to the project:   
+[哪吒监控 For OpenWRT](https://github.com/Erope/openwrt_nezha) (Chinese) 
 <br/>
 
-**如何使 新版OpenWRT 自启动？来自 @艾斯德斯**  
-* 首先在 release 下载对应的二进制解压 zip 包后放置到 `/root`  
-* 运行 `chmod +x /root/nezha-agent` 赋予执行权限，然后创建 `/etc/init.d/nezha-service`：
+**How to make the new version of OpenWRT self-boot? By @艾斯德斯**  
+* First download the corresponding binary from the release, unzip the zip package and place it in `/root`    
+* Then run `chmod +x /root/nezha-agent` to give it execute access, create file `/etc/init.d/nezha-service`：  
 
 ```shell
 #!/bin/sh /etc/rc.common
@@ -67,7 +61,7 @@ USE_PROCD=1
 
 start_service() {
  procd_open_instance
- procd_set_param command /root/nezha-agent -s 面板通信地址:端口 -p 秘钥 -d
+ procd_set_param command /root/nezha-agent -s data.example.com:5555 -p secreat -d
  procd_set_param respawn
  procd_close_instance
 }
@@ -83,24 +77,24 @@ restart() {
 }
 ```
 
-* 运行 `chmod +x /etc/init.d/nezha-service` 赋予执行权限  
-* 启动服务： `/etc/init.d/nezha-service enable && /etc/init.d/nezha-service start`  
+* Give it permission to execute: `chmod +x /etc/init.d/nezha-service`  
+* Start the service `/etc/init.d/nezha-service enable && /etc/init.d/nezha-service start`  
 <br/>  
-<br/>
-## 自定义Agent监控项目
----
-#### 自定义监控的网卡和硬盘分区
 
-* 执行 `/opt/nezha/agent/nezha-agent --edit-agent-config` 来选择自定义的网卡和分区，然后重启 Agent 即可生效
+## Customize Agent
 
-#### 其他运行参数
+#### Customize the NIC and hard drive partitions to be monitored
 
-通过执行 `./nezha-agent --help` 查看支持的参数，如果你使用了一键脚本安装Agent，可以编辑 `/etc/systemd/system/nezha-agent.service`，在 `ExecStart=` 这一行的末尾加上以下参数
+* Run `/opt/nezha/agent/nezha-agent --edit-agent-config` to select a custom NIC and partition, and then restart Agent
 
-- `--report-delay` 控制系统信息上报的间隔，默认为 1 秒，可以设置为 3 来进一步降低 agent 端系统资源占用（配置区间 1-4）
-- `--skip-conn` 不监控连接数，推荐 机场/连接密集型服务器或CPU占用较高的服务器设置
-- `--skip-procs` 不监控进程数，也可以降低 agent 占用
-- `--disable-auto-update` 禁止 **自动更新** Agent（安全特性）
-- `--disable-force-update` 禁止 **强制更新** Agent（安全特性）
-- `--disable-command-execute` 禁止在 Agent 上执行定时任务、打开在线终端（安全特性）
-- `--tls` 启用 SSL/TLS 加密（使用 nginx 反向代理 Agent 的 grpc 连接，并且 nginx 开启 SSL/TLS 时，需要启用该项配置）
+#### Other Flags
+
+Run `./nezha-agent --help` to view supported flags，if you are already using the one-click script, you can edit `/etc/systemd/system/nezha-agent.service`，at the end of this line `ExecStart=` add:  
+
+- `--report-delay` System information reporting interval, default is 1 second, can be set to 3 to reduce the system resource usage on the agent side (configuration range 1-4)
+- `--skip-conn` Not monitoring the number of connections, if it is a server with a large number of connections, the CPU usage will be high. It is recommended to set this to reduce CPU usage
+- `--skip-procs` Disable monitoring the number of processes can also reduce CPU and memory usage
+- `--disable-auto-update` Disable **Automatic Update** Agent (security feature)
+- `--disable-force-update` Disable **Forced Update** Agent (security feature)
+- `--disable-command-execute` Disable execution of scheduled tasks, disallow open online terminals on the Agent side (security feature)
+- `--tls` Enable SSL/TLS encryption (If you are using nginx to reverse proxy Agent´s grpc connections, and if nginx has SSL/TLS enabled, you need to enable this configuration)
