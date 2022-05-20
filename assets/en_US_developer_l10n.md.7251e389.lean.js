@@ -1,1 +1,0 @@
-import{_ as e,c as t,o,a}from"./app.2c402e15.js";const u='{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"en_US/developer/l10n.md"}',n={},s=a("p",null,"Comming soon",-1),r=[s];function c(_,l,d,i,p,m){return o(),t("div",null,r)}var h=e(n,[["render",c]]);export{u as __pageData,h as default};
