@@ -33,7 +33,7 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  
 ```  
 如果你的面板服务器位于中国大陆，可以使用镜像：  
 ````bash
-curl -L https://jihulab.com/nezha/nezha/-/blob/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
+curl -L https://fastly.jsdelivr.net/gh/naiba/nezha@master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
 ````
 
 * 等待Docker安装完毕后，分别输入以下值：  
