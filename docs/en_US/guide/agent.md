@@ -96,5 +96,5 @@ Run `./nezha-agent --help` to view supported flags，if you are already using th
 - `--skip-procs` Disable monitoring the number of processes can also reduce CPU and memory usage
 - `--disable-auto-update` Disable **Automatic Update** Agent (security feature)
 - `--disable-force-update` Disable **Forced Update** Agent (security feature)
-- `--disable-command-execute` Disable execution of scheduled tasks, disallow open online terminals on the Agent side (security feature)
+- `--disable-command-execute` Disable execution of scheduled tasks, disallow WebShell (security feature)
 - `--tls` Enable SSL/TLS encryption (If you are using nginx to reverse proxy Agent´s grpc connections, and if nginx has SSL/TLS enabled, you need to enable this configuration)
