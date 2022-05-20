@@ -8,8 +8,8 @@
 ## 使用说明
 
 1. 克隆[此仓库](https://github.com/nezhahq/skeleton-custom-theme)到本地
-2. 修改 `data/config.yaml` 中的oauth2 配置（回调连接可以填 `http://localhost` 的）
-3. `docker-compose up`
+2. 修改 `data/config.yaml` 中的 Oauth2 配置（回调连接可以填 `http://localhost`）
+3. 运行 `docker-compose up`
 4. 开始开发
 5. 主题制作完成之后可以将 `theme-custom` 放置到服务器上的 `/opt/nezha/dashboard/theme-custom` 位置
 
