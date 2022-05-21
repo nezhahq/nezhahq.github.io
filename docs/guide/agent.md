@@ -105,3 +105,9 @@ restart() {
 - `--disable-force-update` 禁止 **强制更新** Agent（安全特性）
 - `--disable-command-execute` 禁止在 Agent 上执行定时任务、打开在线终端（安全特性）
 - `--tls` 启用 SSL/TLS 加密（使用 nginx 反向代理 Agent 的 grpc 连接，并且 nginx 开启 SSL/TLS 时，需要启用该项配置）
+
+## FAQ
+#### Agent有Docker版吗？
+Agent目前没有推出Docker镜像。  
+Agent和Dashboard思路相反，Dashboard要尽可能不影响宿主机工作，但Agent则需要插入宿主机中执行监控和其他命令。  
+将Agent放入容器中确实可以继续执行监控任务，但WebShell等功能无法正常运行，因此不提供Docker镜像。  
