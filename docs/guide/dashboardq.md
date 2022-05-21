@@ -17,3 +17,14 @@ curl ip-api.com
 ### 查看密码忘记\删除查看密码
 请查看或编辑`/opt/nezha/dashboard/data/config.yaml`文件。   
 密码位于site-viewpassword。
+
+### 面板安装失败: iptables ......
+首先尝试重启docker再操作
+```shell
+systemctl status docker
+systemctl restart docker
+systemctl status docker
+```
+重启后尝试重新安装面板。  
+若依然出现iptables...等错误，则考虑是否直接关闭iptables甚至移除iptables。  
+这个问题也可能由内核引起，也可以尝试更换官方内核。  
