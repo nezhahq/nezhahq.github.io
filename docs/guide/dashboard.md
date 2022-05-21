@@ -16,7 +16,7 @@
 ## 获取Github的Client ID和密钥
 
 哪吒监控接入Github和Gitee作为后台管理员账号  
-+ 首先我们需要新建一个验证应用，以Github为例，登陆Github后，打开 https://github.com/settings/developers ，依次选择“OAuth Apps” - “New OAuth App”    
++ 首先我们需要新建一个验证应用，以Github为例，登录Github后，打开 https://github.com/settings/developers ，依次选择“OAuth Apps” - “New OAuth App”    
 `Application name` - 随意填写  
 `Homepage URL` - 填写面板的访问域名，如："http://cdn.example.com"  
 `Authorization callback URL` - 填写回调地址，如："http://cdn.example.com/oauth2/callback"  
@@ -103,7 +103,7 @@ location ~ ^/(ws|terminal/.+)$  {
 
 首先，先暂时关闭反向代理  
 正如在其他网站中配置SSL证书一样，进入站点设置中的“SSL”，你可以选择自动申请 Let´s Encrypt 证书或手动配置已有的证书  
-完成SSL的设置后，你需要回到 https://github.com/settings/developers ，编辑之前创建的验证应用程序，将之前我们填入的"Homepage URL"和"Authorization callback URL"中的域名全部从`http`改为`https`，如："https://cdn.example.com" 和 "https://cdn.example.com/oauth2/callback" ，**不更改此项可能会导致你无法登陆面板后台**  
+完成SSL的设置后，你需要回到 https://github.com/settings/developers ，编辑之前创建的验证应用程序，将之前我们填入的"Homepage URL"和"Authorization callback URL"中的域名全部从`http`改为`https`，如："https://cdn.example.com" 和 "https://cdn.example.com/oauth2/callback" ，**不更改此项可能会导致你无法登录面板后台**  
 
 ## FAQ
 #### 我对面板提供的数据修改/增加功能不满意，我想要自己修改/增加数据怎么办？

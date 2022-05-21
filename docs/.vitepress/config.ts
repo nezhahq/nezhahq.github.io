@@ -100,7 +100,7 @@ function getGuideSidebarZhCN() {
       children: [
         { text: 'Dashboard相关', link: '/guide/dashboardq' },
         { text: 'Agent相关', link: '/guide/agentq' },
-        { text: '登陆相关', link: '/guide/loginq' }
+        { text: '登录相关', link: '/guide/loginq' }
       ]
     }
   ]
