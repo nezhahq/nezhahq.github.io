@@ -106,14 +106,20 @@ location ~ ^/(ws|terminal/.+)$  {
 完成SSL的设置后，你需要回到 https://github.com/settings/developers ，编辑之前创建的验证应用程序，将之前我们填入的"Homepage URL"和"Authorization callback URL"中的域名全部从`http`改为`https`，如："https://cdn.example.com" 和 "https://cdn.example.com/oauth2/callback" ，**不更改此项可能会导致你无法登录面板后台**  
 
 ## FAQ
-#### 我对面板提供的数据修改/增加功能不满意，我想要自己修改/增加数据怎么办？
-常见于批量插入Agent等需求中，可以直接修改数据库。  
+### 我对面板提供的数据修改/增加功能不满意，我想要自己修改/增加数据怎么办？
+常见于批量插入 Agent 等需求中，可以直接修改数据库。  
 请注意，数据库中并非什么都可以修改，错误的修改会导致数据混乱无法启动Dashboard，**请勿随意修改数据库！**  
+::: danger  
 再重复一遍，**请勿随意修改数据库！**  
-请先**停止**面板容器，数据库是sqlite3，位于`/opt/nezha/dashboard/data/sqlite.db`，请备份后操作  
+:::  
+如需要在数据库中修改数据，请先**停止**面板容器再修改。  
+数据库类型是 sqlite3，位于 `/opt/nezha/dashboard/data/sqlite.db`，修改前请备份  
 
-#### 数据库中各表/列是什么意思？
+### 数据库中各表/列是什么意思？
 文档不提供数据库解释，有能力修改数据库的稍加分析应该就足以看懂。
 
-#### Dashboard会自动更新吗？
-Agent通常情况下会自动更新，但Dashboard并不会，需要手动更新。
+### Dashboard 会自动更新吗？
+Agent通常情况下会自动更新，但Dashboard并不会，需要手动更新。  
+
+### 如何更新 Dashboard？
+运行脚本 `./nezha.sh` ，选择重启面板并更新

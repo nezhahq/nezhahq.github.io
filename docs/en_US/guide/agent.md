@@ -97,4 +97,10 @@ Run `./nezha-agent --help` to view supported flags，if you are already using th
 - `--disable-auto-update` Disable **Automatic Update** Agent (security feature)
 - `--disable-force-update` Disable **Forced Update** Agent (security feature)
 - `--disable-command-execute` Disable execution of scheduled tasks, disallow WebShell (security feature)
-- `--tls` Enable SSL/TLS encryption (If you are using nginx to reverse proxy Agent´s grpc connections, and if nginx has SSL/TLS enabled, you need to enable this configuration)
+- `--tls` Enable SSL/TLS encryption (If you are using nginx to reverse proxy Agent´s grpc connections, and if nginx has SSL/TLS enabled, you need to enable this configuration)  
+
+## FAQ
+### Is there a Docker image for Agent?
+**There is currently no Docker image for Agent.**  
+The Agent is designed to be the opposite of the Dashboard, in that the Dashboard is designed to work without affecting the server as much as possible, while the Agent needs to execute monitoring services and run commands in the server.  
+Putting the Agent in a container does continue to execute monitoring services, but features such as WebShell do not work, so we do not provide Docker image of the Agent.  

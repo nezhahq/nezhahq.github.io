@@ -91,4 +91,23 @@ Now, you should be able to access the panel directly using a domain name such as
 ## Configuring SSL in the aaPanel
 First, temporarily disable the reverse proxy    
 As with other websites, you can choose to automatically apply for a Let´s Encrypt certificate or manually configure an existing certificate by going to "SSL" in the site settings  
-After you finish setting up SSL, you need to go back to https://github.com/settings/developers and edit the authentication application you created before, change all the domain names in the "Homepage URL" and "Authorization callback URL" you filled in before from `http` to `https`, such as: "https://cdn.example.com" and "https://cdn.example.com/oauth2/callback",  **If you don't change these links, you may not be able to log into the admin panel**  
+After you finish setting up SSL, you need to go back to https://github.com/settings/developers and edit the authentication application you created before, change all the domain names in the "Homepage URL" and "Authorization callback URL" you filled in before from `http` to `https`, such as: "https://cdn.example.com" and "https://cdn.example.com/oauth2/callback",  **If you don't change these links, you may not be able to log into the admin panel**   
+
+## FAQ
+### I am not satisfied with the data modification or addition function provided by the Dashboard, what if I want to modify or add data myself?
+Commonly used in requirements such as batch installation of Agents, where you can modify the database directly.  
+Please note that not everything can be modified in the database, wrong modification will lead to data confusion and failure to start Dashboard, **please do not modify the database at will!**  
+::: danger  
+Again, **please do not modify the database at will!**  
+:::    
+If you need to modify the data in the database, please **stop** the Dashboard container before modifying it.  
+The database type is sqlite3, located in `/opt/nezha/dashboard/data/sqlite.db`, please backup before modifying the data
+
+### What are each table or column in the database?
+The documentation does not provide an explanation of the database. If you have the ability to modify the database, you should be able to read it with a little thinking.
+
+### Does Dashboard update automatically?
+The Agent normally updates automatically, but the Dashboard does not and needs to be updated manually.  
+
+### How do I update the Dashboard?
+Run the script `. /nezha.sh` and select restart Dashboard and update
