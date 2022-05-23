@@ -42,7 +42,7 @@
   </style>
   ```
 
-#### DayNight 主题更改进度条颜色、修改页脚示例（来自 [@hyt-allen-xu](https://github.com/hyt-allen-xu)）
+#### DayNight 主题更改进度条颜色、修改页脚示例（来自 [@hyt-allen-xu](https://github.com/hyt-allen-xu)  [@tech-fever](https://github.com/tech-fever)）
 
   ```html
   <style>
@@ -50,12 +50,16 @@
     background-color: #00a7d0 !important;
   }
   </style>
+  
   <script>
   window.onload = function(){
+  var avatar=document.querySelector("img")
   var footer=document.querySelector("div.footer-container")
   footer.innerHTML="©2021 你的名字 & Powered by 你的名字"
   footer.style.visibility="visible"
-  }
+  avatar.src="你的图片连接"
+  avatar.style.visibility="visible"
+}
   </script>
   ```
 

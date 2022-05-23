@@ -42,7 +42,7 @@ Since the code of different themes is different, if you really need to modify th
   </style>
   ```
 
-#### Example of modifying DayNight theme progress bar color and footer (by [@hyt-allen-xu](https://github.com/hyt-allen-xu))  
+#### Example of modifying DayNight theme progress bar color and footer (by [@hyt-allen-xu](https://github.com/hyt-allen-xu) [@tech-fever](https://github.com/tech-fever))  
 
   ```html
   <style>
@@ -50,12 +50,16 @@ Since the code of different themes is different, if you really need to modify th
     background-color: #00a7d0 !important;
   }
   </style>
+  
   <script>
   window.onload = function(){
+  var avatar=document.querySelector("img")
   var footer=document.querySelector("div.footer-container")
-  footer.innerHTML="©2022 "your name" & Powered by "your name"
+  footer.innerHTML="©2021 YourName & Powered by YourName"
   footer.style.visibility="visible"
-  }
+  avatar.src="Logo URL"
+  avatar.style.visibility="visible"
+}
   </script>
   ```
 
