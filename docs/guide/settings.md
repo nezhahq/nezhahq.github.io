@@ -3,7 +3,7 @@
 <br/>
 
 ## 管理员列表
-+ 如果你修改了自己的Github/Gitee用户名，可以在此项中同步修改，否则无法登录，多个用户请用逗号隔开: `user1,user2`  
++ 如果你修改了自己的Github, Gitlab, Jihulab或Gitee的用户名，可以在此项中同步修改，否则无法登录，多个用户请用逗号隔开: `user1,user2`  
 
 + 如需更改管理员账户，请前往 `/opt/nezha/dashboard/data/config.yaml` ，重新设置新的管理员 `Client ID` 和 `Client Secret` 
 <br/>

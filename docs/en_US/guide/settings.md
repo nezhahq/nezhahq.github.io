@@ -3,7 +3,7 @@ You can customize your site title here
 <br/>
 
 ## Admin List
-+ If you have changed your Github/Gitee username, you can change it in this item, otherwise you can't log in, please separate multiple users with commas: `user1,user2`  
++ If you have changed your Github, Gitlab, Jihulab, Gitee username, you can change it in this item, otherwise you can't log in, please separate multiple users with commas: `user1,user2`  
 
 + To change your administrator account, please go to `/opt/nezha/dashboard/data/config.yaml` to set the new administrator `Client ID` and `Client Secret`.   
 <br/>  

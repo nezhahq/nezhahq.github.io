@@ -6,12 +6,12 @@ To setup a Nezha monitorning Dashboard, you need these things:
 If you want to use CDN, please prepare two domains, one connect to CDN for public access, CDN needs to support WebSocket protocol; the other domain should not connect to CDN, use it as Agent to send data to Dashboard.   
 This document uses "cdn.example.com" and "data.example.com" domains to demonstrate respectively
 :::
-3. A Github account
+3. A Github or Gitlab account
 
 **This document will use the aaPanel as an example, with future versions of the changes, some of the features may change, this document is for reference only**
 <br/>
 <br/>
-## Get the Client ID and Client Secret on Github
+## Get the Client ID and Client Secret on Github/Gitlab
 Nezha Monitor uses a Github account as the login account for the admin panel    
 + First we need to create a new authentication application, after logging into Github, open https://github.com/settings/developers and select "OAuth Apps" - "New OAuth App "      
 `Application name` - Fill in as you like  
@@ -20,7 +20,11 @@ Nezha Monitor uses a Github account as the login account for the admin panel
 + Click on "Registration Application"  
 + Remember the Client ID in the page, then click "Generate a new client secret" to create a new Client Secret, the new secret will be displayed only once, please save it properly
 <br/>
-<br/>
+<br/>  
++ If you're using Gitlab, you'll need to go to https://gitlab.com/-/profile/applications to create a new application  
++ Fill in `Redirect URL` with the callback address    
++ In `Scopes`, select `read_user` and `read_api`   
++ Once created, save the Application ID and Secret  
 ## Installing Dashboard on the server
 * In the panel server, run the installation script:    
 ```bash
@@ -28,10 +32,10 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.s
 ```  
 
 * After waiting for the Docker installation to complete, input the following settings:    
-`OAuth2 provider` -   Github  
+`OAuth2 provider` -   Github or Gitlab  
 `Client ID` - Previously saved Client ID   
 `Client Secret` - Previously saved secret   
-`GitHub/Gitee login name` - Github username   
+`GitHub/Gitee login name` - Github o Gitlab username   
 `Site title` - Custom site title   
 `Site access port` - Public access port, customizable, default 8008   
 `RPC port` - The communication port between Agent and Dashboard, default 5555   
