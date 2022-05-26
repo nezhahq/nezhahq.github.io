@@ -7,7 +7,7 @@ actionText: 开始使用 →
 actionLink: /guide/dashboard
 features:
 - title: 一键安装
-  details: 支持一键脚本安装面板和监控服务，轻松使用；Linux、WIndows、MacOS、OpenWRT等主流系统均受支持
+  details: 支持一键脚本安装面板和监控服务，轻松使用；Linux、Windows、MacOS、OpenWRT等主流系统均受支持
 - title: 随时监控
   details: 支持同时监控多个服务器的系统状态，支持监控网页、端口、SSL证书状态；支持故障、流量等状态报警，支持多种通知方式（Telegram、邮件、微信等）
 - title: 轻量运维
