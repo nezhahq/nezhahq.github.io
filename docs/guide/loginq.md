@@ -9,4 +9,32 @@
 :::  
 
 ### 如何检查我的回调地址是否错误？  
-请确保登录前浏览器显示的协议+域名+端口和登录后跳转到的协议+域名+端口一致。
+请确保登录前浏览器显示的协议+域名+端口和登录后跳转到的协议+域名+端口一致。  
+请确保您的路径为`/oauth2/callback`，**全部小写**
+
+## 登录后面板报错
+### http: named cookie not present
+清理cookies后重新登录，或换个浏览器
+
+### lookup xxx
+容器DNS解析失败，多数情况下为修改了iptables相关配置。  
+建议先重启docker，`sudo systemctl restart docker`，再使用脚本重启面板。  
+仍然出现lookup错误建议查看是否有其他控制iptables的工具，如宝塔防火墙等。  
+这个问题也可能由内核引起，请尝试更换官方内核。  
+
+### 授权方式无效，或者登录回调地址无效、过期或已被撤销
+只出现在Gitee登录方式中，原因不明，建议更换到Jihulab。
+
+### oauth2: server response missing access_token
+可能由多种因素引起，最大可能性是网络问题，建议检查网络后重试。  
+无法解决的话建议更换Github/Jihulab等。
+
+### 该用户不是本站点管理员，无法登录
+您登陆错了账号或者配置错了用户名，注意**用户名不是邮箱**，可使用脚本修改。
+
+### dial tcp xxx:443 i/o timeout
+网络问题，可先重启docker，`sudo systemctl restart docker`，再使用脚本重启面板。  
+如为国内主机配置Github登陆方式，则建议切换到Jihulab以避免网络干扰。
+
+### net/http: TLS handshake timeout
+同上。
