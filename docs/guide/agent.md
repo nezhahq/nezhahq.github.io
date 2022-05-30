@@ -49,6 +49,59 @@ curl -L https://jihulab.com/nezha/nezha/-/raw/master/script/install.sh -o nezha.
 [哪吒探针 - Windows 客户端安装](https://nyko.me/2020/12/13/nezha-windows-client.html)  
 <br/>  
 
+### MacOS安装Agent  
+***本节内容改编自[Mitsea Blog](https://blog.mitsea.com/e796f93db38d49e4b18df234c6ee75f5)，改编已获得原作者授权***  
+<br/>  
+  
++ 首先在管理面板中添加一台服务器  
++ 前往 [Release](https://github.com/naiba/nezha/releases) 页下载 Agent 二进制文件，根据 CPU 架构选择下载 darwin amd64 还是 arm64 的 Agent  
+如 Intel CPU 下载 amd64，Apple Silicon 下载 arm64 版本。下载完成后解压 Agent 二进制文件，如解压到下载文件夹  
++ 新建一个名为 `nezha_agent.plist` 的文件并保存，修改文件内容如下：  
+```xml  
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>Label</key>
+	<string>nezha_agent</string>
+	<key>Program</key>
+	<string>在这里修改 Agent 二进制文件的的路径，如：/Users/123/Downloads/nezha-agent</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>在这里修改 Agent 二进制文件的的路径，同上</string>
+		<string>--password</string>
+		<string>通信密钥，如：529664783eeb23cc25</string>
+		<string>--server</string>
+		<string>通信网址和RPC端口，如:data.example.com:5555</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>
+```  
++ 在 Terminal 中使用下面的命令加载 plist 文件到 launchd 里，**注意替换文件路径**  
+```shell  
+launchctl load /Users/123/Desktop/nezha_agent.plist
+```  
++ 启动进程  
+```shell  
+launchctl start nezha_agent
+```  
++ 检查进程是否运行  
+```shell  
+launchctl list | grep nezha_agent
+```  
++ 停止进程并移除
+```shell  
+launchctl stop nezha_agent
+```  
+```shell  
+launchctl remove nezha_agent
+``` 
+<br/>  
+
 ### OpenWRT安装Agent  
 
 **如何使 旧版OpenWRT/LEDE 自启动**  
