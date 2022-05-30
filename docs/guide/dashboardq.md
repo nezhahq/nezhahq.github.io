@@ -30,3 +30,6 @@ systemctl status docker
 重启后尝试重新安装面板。  
 若依然出现iptables...等错误，则考虑是否直接关闭iptables甚至移除iptables。  
 这个问题也可能由内核引起，也可以尝试更换官方内核。  
+
+## 面板重启失败：Invalid hostPort: nz_site_port 等
+按理不应该出现这个情况，如出现可以通过脚本修改配置。  
