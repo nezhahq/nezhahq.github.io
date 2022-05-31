@@ -42,6 +42,63 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.s
 [哪吒探针 - Windows 客户端安装](https://nyko.me/2020/12/13/nezha-windows-client.html)(Chinese)  
 <br/>  
 
+### Installing Agent on MacOS  
+***This section is adapted from [Mitsea Blog](https://blog.mitsea.com/e796f93db38d49e4b18df234c6ee75f5), with permission from the original author***  
+<br/>  
+::: warning  
+If you are prompted with "macOS cannot verify this app" during installation, please go to system settings to allow the app to run.  
+:::  
+  
++ First add a server in the admin panel  
++ Go to the [Release](https://github.com/naiba/nezha/releases) page to download the Agent binary and choose whether to download the darwin amd64 or arm64 Agent depending on the CPU architecture  
+For example, download the amd64 version for Intel CPU and the arm64 version for Apple Silicon. After downloading, extract the Agent binary file, e.g. to the Download folder 
++ Create a new file named `nezha_agent.plist` and save it, edit the contents of the file:    
+```xml  
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>Label</key>
+	<string>nezha_agent</string>
+	<key>Program</key>
+	<string>Change the path of the Agent binary here, e.g. /Users/123/Downloads/nezha-agent</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>Change the path of the Agent binary here, e.g. /Users/123/Downloads/nezha-agent</string>
+		<string>--password</string>
+		<string>Communication Secret, eg: 529664783eeb23cc25</string>
+		<string>--server</string>
+		<string>Communication URL and RPC port, eg:data.example.com:5555</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>
+```  
++ Use the following command in Terminal to load the plist file into launchd  
+ **Be sure to change the file path**  
+```shell  
+launchctl load /Users/123/Desktop/nezha_agent.plist
+```  
++ Start Service  
+```shell  
+launchctl start nezha_agent
+```  
++ Check if the service is running  
+```shell  
+launchctl list | grep nezha_agent
+```  
++ Stop service and remove
+```shell  
+launchctl stop nezha_agent
+```  
+```shell  
+launchctl remove nezha_agent
+``` 
+<br/>  
+
 ### Installing Agent on OpenWRT
 
 **How to make the old version of OpenWRT/LEDE self-boot?**  
