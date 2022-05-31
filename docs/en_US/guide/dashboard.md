@@ -60,7 +60,7 @@ to open the management script
 #PROXY-START/
 location / {
     proxy_pass http://127.0.0.1:8008;
-    proxy_set_header Host $host;
+    proxy_set_header Host $http_host;
     proxy_set_header      Upgrade $http_upgrade;
 }
 location ~ ^/(ws|terminal/.+)$  {
@@ -68,7 +68,7 @@ location ~ ^/(ws|terminal/.+)$  {
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "Upgrade";
-    proxy_set_header Host $host;
+    proxy_set_header Host $http_host;
 }
 #PROXY-END/
 ````
