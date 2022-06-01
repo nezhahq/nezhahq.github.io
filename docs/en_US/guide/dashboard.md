@@ -83,9 +83,11 @@ Now, you should be able to access the panel directly using a domain name such as
   ```
   proxy /ws http://ip:8008 {
       websocket
+      header_upstream -Origin
   }
   proxy /terminal/* http://ip:8008 {
       websocket
+      header_upstream -Origin
   }
   ```
 

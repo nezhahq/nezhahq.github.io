@@ -97,9 +97,11 @@ location ~ ^/(ws|terminal/.+)$  {
   ```
   proxy /ws http://ip:8008 {
       websocket
+      header_upstream -Origin
   }
   proxy /terminal/* http://ip:8008 {
       websocket
+      header_upstream -Origin
   }
   ```
 
