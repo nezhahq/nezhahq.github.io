@@ -1,4 +1,4 @@
-Nezha Monitoring supports monitoring of server load, CPU, memory, hard disk, bandwidth, data transfer, monthly data transfer, number of processes, number of connections, and sends alarm notifications when one of these items reaches a user-set limit.  
+Nezha Monitoring supports monitoring of server load, CPU, memory, hard disk, data transfer, monthly data transfer, number of processes, number of connections, and sends alarm notifications when one of these items reaches a user-set limit.  
 <br/>
 <br/>
 ## Flexible notification methods  
@@ -77,5 +77,5 @@ Can be used as monthly transfer notificatin
 - `cycle_unit` Statistics cycle unit, default `hour`, optional (`hour`, `day`, `week`, `month`, `year`)
 - `min/max`, `cover`, `ignore` Please refer to the basic rules to configure
 
-Example: The server with ID 3 (defined in the `ignore`) is counted on the 15th of each month, and a notification is triggered when the monthly outbound traffic reaches 1TB during the cycle. `[{"type":"transfer_out_cycle","max":1000000000000,"cycle_start":"2022-01-11T08:00:00.00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true}}]`
+Example: The servers with ID 3 and 4 (defined in the `ignore`) are counted on the 1st of each month, and a notification is triggered when the monthly outbound transfer reaches 1TB during the cycle. `[{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]`
   ![7QKaUx.md.png](https://s4.ax1x.com/2022/01/13/7QKaUx.md.png)

@@ -1,4 +1,4 @@
-哪吒监控支持对服务器的负载、CPU、内存、硬盘、带宽、流量、月流量、进程数、连接数进行监控，并在其中某项达到用户设定值时发送报警通知
+哪吒监控支持对服务器的负载、CPU、内存、硬盘、流量、月流量、进程数、连接数进行监控，并在其中某项达到用户设定值时发送报警通知
 <br/>
 <br/>
 ## 灵活的通知方式  
@@ -91,5 +91,5 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
 - cycle_unit 统计周期单位，默认`hour`,可选(`hour`, `day`, `week`, `month`, `year`)
 - min/max、cover、ignore 参考基本规则配置
 
-示例: ID 为 3 的服务器（ignore 里面定义），以每月 15 号为统计周期，周期内统计的出站月流量达到 1TB 时报警 `[{"type":"transfer_out_cycle","max":1000000000000,"cycle_start":"2022-01-11T08:00:00.00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true}}]`
+示例: ID 为 3 和 4 的服务器（ignore 里面定义），以每月 1 号为统计周期，周期内统计的出站月流量达到 1TB 时报警 `[{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]`
   ![7QKaUx.md.png](https://s4.ax1x.com/2022/01/13/7QKaUx.md.png)
