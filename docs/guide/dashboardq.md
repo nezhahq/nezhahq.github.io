@@ -20,7 +20,7 @@ curl ip-api.com
 请查看或编辑 `/opt/nezha/dashboard/data/config.yaml` 文件。   
 密码位于 site-viewpassword。
 
-## 面板安装失败: iptables ......
+## 面板安装/重启/更新失败: iptables ......
 首先尝试重启docker再操作
 ```shell
 systemctl status docker
