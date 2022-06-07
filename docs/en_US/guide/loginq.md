@@ -1,4 +1,4 @@
-## Page refuses to connect or times out after login callback  
+## Page refuses to connect or timeout after login callback  
 1. Your server cannot connect to Github, consider trying several times or switching to Gitlab.
 2. You have configured the wrong callback URL, make sure your callback URL is correct and **port and protocol** are correct!
 3. An unknown error occurred in Dashboard, you can use the script to check the logs.  
@@ -29,7 +29,7 @@ Suggest changing the authentication method to Github/Gitlab.
 It may be caused by a number of factors, the most likely is a network problem, we suggest to check the network and retry.  
 If you can't solve it, we suggest changing the authentication method to Github/Gitlab.  
 
-### This user is not the administrator or cannot log in
+### This user is not the administrator or cannot login
 You have logged into the wrong account or configured the wrong username, note that **username is not email**, you can use a script to modify it.  
 
 ### dial tcp xxx:443 i/o timeout
