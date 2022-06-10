@@ -23,6 +23,10 @@ export default defineConfig({
             link: '/', 
             activeMatch: '^/$|^/guide/' 
           },
+          { text: '社区项目', 
+            link: '/case/index', 
+            activeMatch: '^/case/' 
+          },
           {
             text: '开发手册',
             link: '/developer/index',
@@ -32,6 +36,7 @@ export default defineConfig({
 
         sidebar: {
           '/guide/': getGuideSidebarZhCN(),
+          '/case/': getCaseSidebarZhCN(),
           '/developer/': getDeveloperSidebarZhCN(),
           '/': getGuideSidebarZhCN()
         },
@@ -45,12 +50,14 @@ export default defineConfig({
       '/en_US/': {
         label: 'English',
         nav: [
-          { text: 'User Guide', link: '/en_US/', activeMatch: '^/$|^/en_US/guide/' },
+          { text: 'User Guide', link: '/en_US/', activeMatch: '^/en_US/guide/' },
+          { text: 'Community Projects', link: '/en_US/case/index', activeMatch: '^/en_US/case/' },
           { text: 'Development Manual', link: '/en_US/developer/index', activeMatch: '^/en_US/developer/' }
         ],
     
         sidebar: {
           '/en_US/guide/': getGuideSidebarEnUS(),
+          '/en_US/case/': getCaseSidebarEnUS(),
           '/en_US/developer/': getDeveloperSidebarEnUS(),
           '/en_US/': getGuideSidebarEnUS()
         },
@@ -107,6 +114,18 @@ function getGuideSidebarZhCN() {
   ]
 }
 
+function getCaseSidebarZhCN() {
+  return [
+    {
+      text: '社区项目',
+      children: [
+        { text: '搭建哪吒 Telegram 机器人', link: '/case/case1' },
+        { text: '使用Siri语音运行快捷指令查询服务器状态', link: '/case/case2' }
+      ]
+    }
+  ]
+}
+
 function getDeveloperSidebarZhCN() {
   return [
     {
@@ -155,6 +174,18 @@ function getGuideSidebarEnUS() {
         { text: 'Dashboard', link: '/en_US/guide/dashboardq' },
         { text: 'Agent', link: '/en_US/guide/agentq' },
         { text: 'Login', link: '/en_US/guide/loginq' }
+      ]
+    }
+  ]
+}
+
+function getCaseSidebarEnUS() {
+  return [
+    {
+      text: 'Community Projects',
+      children: [
+        { text: 'Build your own Telegram bot to query server information', link: '/en_US/case/case1' },
+        { text: 'Use Siri to run shortcut to check server status', link: '/en_US/case/case2' }
       ]
     }
   ]
