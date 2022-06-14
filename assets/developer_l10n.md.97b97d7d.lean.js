@@ -1,1 +1,0 @@
-import{_ as e,c as o,o as t,a as r}from"./app.b8b795d4.js";const u='{"title":"\u4ECB\u7ECD","description":"","frontmatter":{},"headers":[{"level":2,"title":"\u4ECB\u7ECD","slug":"\u4ECB\u7ECD"}],"relativePath":"developer/l10n.md"}',a={},l=r("",4),c=[l];function n(s,i,d,_,p,h){return t(),o("div",null,c)}var f=e(a,[["render",n]]);export{u as __pageData,f as default};
