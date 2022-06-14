@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  lastUpdated: true,
   locales: {
     '/': {
         lang: 'zh-CN',
