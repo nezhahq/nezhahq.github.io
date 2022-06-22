@@ -125,9 +125,9 @@ function getCaseSidebarZhCN() {
     {
       text: '社区项目',
       children: [
-        { text: '搭建哪吒 Telegram 机器人', link: '/case/case1' },
-        { text: '使用Siri语音运行快捷指令查询服务器状态', link: '/case/case2' },
-        { text: '自建多语言 Telegram 服务器查询机器人', link: '/case/case3' }
+        { text: '1. 搭建哪吒 Telegram 机器人', link: '/case/case1' },
+        { text: '2. 使用Siri语音运行快捷指令查询服务器状态', link: '/case/case2' },
+        { text: '3. 自建多用户多语言 Telegram 服务器状态查询机器人', link: '/case/case3' }
       ]
     }
   ]
@@ -191,9 +191,9 @@ function getCaseSidebarEnUS() {
     {
       text: 'Community Projects',
       children: [
-        { text: 'Build your own Telegram bot to query server information', link: '/en_US/case/case1' },
-        { text: 'Use Siri to run shortcut to check server status', link: '/en_US/case/case2' },
-        { text: 'Build your own telegram query robot that supports multi-language', link: '/en_US/case/case3' }
+        { text: '1. Build your own Telegram bot to query server information', link: '/en_US/case/case1' },
+        { text: '2. Use Siri to run shortcut to check server status', link: '/en_US/case/case2' },
+        { text: '3. Self-hosted, multi-user, multi-lingual server status query Telegram bot', link: '/en_US/case/case3' }
       ]
     }
   ]
