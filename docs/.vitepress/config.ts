@@ -195,7 +195,7 @@ function getCaseSidebarEnUS() {
         { text: '1. Build your own Telegram bot to query server information', link: '/en_US/case/case1' },
         { text: '2. Use Siri to run shortcut to check server status', link: '/en_US/case/case2' },
         { text: '3. Self-hosted, multi-user, multi-lingual server status query Telegram bot', link: '/en_US/case/case3' },
-        { text: '4. Fake-agent, monitoring data cheater', link: '/en_US//case/case4' }
+        { text: '4. Fake-agent, monitoring data cheater', link: '/en_US/case/case4' }
       ]
     }
   ]
