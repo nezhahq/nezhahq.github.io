@@ -18,7 +18,39 @@ Refer to the example below, it is very flexible.
      - Request method: GET
      - Request type: default
      - Body: null
-     - URL Parameter acquisition instructions：The XXXXXX in botXXXXXX is the token provided when you follow the official @Botfather in Telegram and enter /newbot to create a new bot. (In the line after _Use this token to access the HTTP API_). The 'bot' are essential. After creating a bot, you need to talk to the BOT in Telegram (send a random message) before you can send a message by using API. YYYYYY is Telegram user's ID, you can get it by talking to the bot @userinfobot.
+     - Notes for this method：The XXXXXX in botXXXXXX is the token provided when you follow the official @Botfather in Telegram and enter /newbot to create a new bot. (In the line after _Use this token to access the HTTP API_). The 'bot' are essential. After creating a bot, you need to talk to the BOT in Telegram (send a random message) before you can send a message by using API. YYYYYY is Telegram user's ID, you can get it by talking to the bot @userinfobot.    
+
+  - Email notification example - Outlook, contributed by [@MIKU_N
+](https://github.com/MIKU-N)
+
+     - Name: MS Mail Notification
+     - URL：https://graph.microsoft.com/v1.0/me/microsoft.graph.sendMail
+     - Request method: POST
+     - Request type: JSON
+     - Header: `{"Content-type":"application/json",
+                  "Authorization":"Bearer {Token}"}`
+     - Body:
+  ```
+  {
+    "message": {
+        "subject": "Server Status Notification",
+        "body": {
+            "contentType": "Text",
+            "content": "#NEZHA#"
+        },
+        "toRecipients": [
+            {
+                "emailAddress": {
+                    "address": "ADDRESS FOR RECEVING EMAILS"
+                }
+            }
+        ]
+    }
+}
+  ```
+
+  - Notes for this method: This method requires calling Microsoft Graph V1.0, you need to go to Microsoft Graph and create your own application, give `Mail.Send` permission and get the Token, or you can go [Microsoft Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer) directly to give permission and get the Token, just replace the Token in the Header with the actual Token.
+     
 
 <br/>
 <br/>

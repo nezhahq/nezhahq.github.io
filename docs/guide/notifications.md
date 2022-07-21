@@ -26,7 +26,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - 请求类型: JSON
      - Body: `{"appToken":"你的appToken","topicIds":[],"content":"#NEZHA#","contentType":"1","uids":["你的uid"]}`
 
-   - Telegram 示例 [@haitau](https://github.com/haitau) 贡献
+   - Telegram 示例 贡献者：[@haitau](https://github.com/haitau) 
 
      - 名称：telegram 机器人消息通知
      - URL：https://api.telegram.org/botXXXXXX/sendMessage?chat_id=YYYYYY&text=#NEZHA#
@@ -35,7 +35,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - Body: 空
      - URL 参数获取说明：botXXXXXX 中的 XXXXXX 是在 telegram 中关注官方 @Botfather ，输入/newbot ，创建新的机器人（bot）时，会提供的 token（在提示 Use this token to access the HTTP API:后面一行）这里 'bot' 三个字母不可少。创建 bot 后，需要先在 telegram 中与 BOT 进行对话（随便发个消息），然后才可用 API 发送消息。YYYYYY 是 telegram 用户的数字 ID。与机器人@userinfobot 对话可获得。
 
-  - Outlook 示例
+  - 邮件通知示例 - Outlook 贡献者：[@MIKU_N](https://github.com/MIKU-N) 
 
      - 名称：MS邮件告警
      - URL：https://graph.microsoft.com/v1.0/me/microsoft.graph.sendMail
@@ -44,7 +44,8 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - Header: `{"Content-type":"application/json",
                   "Authorization":"Bearer {Token}"}`
      - Body:
-     `{
+  ```
+  {
     "message": {
         "subject": "服务器状态警报",
         "body": {
@@ -59,8 +60,9 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
             }
         ]
     }
-}`
-     - URL 参数获取说明：此方式调用Microsoft Graph V1.0,需要前往Microsoft Graph自行创建应用程序并授予`Mail.Send`权限并获取Token;或者你可以使用[Microsoft Graph Explorer](https://developer.microsoft.com/zh-cn/graph/graph-explorer)直接授予权限并获取Token。将Header中的Token字段替换为实际字符段即可。
+}
+  ```
+  - URL 参数获取说明：此方式调用 Microsoft Graph V1.0,需要前往 Microsoft Graph 自行创建应用程序，授予 `Mail.Send` 权限并获取 Token;或者你可以使用[Microsoft Graph Explorer](https://developer.microsoft.com/zh-cn/graph/graph-explorer)直接授予权限并获取 Token。将 Header 中的 Token 字段替换为实际字符段即可。
      
 
 <br/>
