@@ -8,7 +8,11 @@ This document uses "cdn.example.com" and "data.example.com" domains to demonstra
 :::
 3. A Github or Gitlab account
 
-**This document will use the aaPanel as an example, with future versions of the changes, some of the features may change, this document is for reference only**
+**This document will use the aaPanel as an example, with future versions of the changes, some of the features may change, this document is for reference only**  
+:::warning  
+This project does not rely on aaPanel, you can choose to use any server panel you like, and if you are capable enough, you can manually install NginX or Caddy to configure SSL and reverse proxy.  
+If you don't think it's necessary to use port 80 or 443 to access Dashboard, you don't even need to install NginX and you can just use the install script.  
+:::  
 <br/>
 <br/>
 ## Get the Client ID and Client Secret on Github/Gitlab

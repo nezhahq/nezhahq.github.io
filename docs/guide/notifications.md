@@ -88,24 +88,48 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
   - `0` 监控所有，通过 `ignore` 忽略特定服务器
   - `1` 忽略所有，通过 `ignore` 监控特定服务器  
   例如：`[{"type":"offline","duration":10, "cover":0, "ignore":{"5": true}}]`
-- ignore:  选择忽略特定服务器，搭配 `cover` 使用，内容为服务器id和布尔值，例如：`{"1": true, "2":false}`  
+- ignore:  选择忽略特定服务器，搭配 `cover` 使用，内容为服务器 id 和布尔值，例如：`{"1": true, "2":false}`  
 
 **完整示例:**  
-:::tip 
-添加一个离线报警
+ 
+>>添加一个离线报警
+>
+>   - 名称：离线通知
+>   - 规则：`[{"Type":"offline","Duration":10}]`
+>   - 启用：√
+  
 
-   - 名称：离线通知
-   - 规则：`[{"Type":"offline","Duration":10}]`
-   - 启用：√
-:::  
+ 
+>>添加一个监控 CPU 持续 10s 超过 50% **且** 内存持续 20s 占用低于 20% 的报警
+>
+>   - 名称：CPU+内存
+>   - 规则：`[{"Type":"cpu","Min":0,"Max":50,"Duration":10},{"Type":"memory","Min":20,"Max":0,"Duration":20}]`
+>   - 启用：√
+  
 
-:::tip 
-添加一个监控 CPU 持续 10s 超过 50% **且** 内存持续 20s 占用低于 20% 的报警
+>>将特定的服务器通知发送到特定的通知分组  
+>
+>示例场景：  
+>你有 1、2、3、4 四台服务器和 A、B 两个不同的通知组  
+>1、2 这两台服务器掉线十分钟后给通知组 A 发送通知  
+>3、4 这两台服务器掉线十分钟后给通知组 B 发送通知    
+>
+>首先你需要先设置好 A、B 两个通知组，然后添加两条报警规则：  
+>  
+>**规则一：**
+>   - 名称：1、2 离线，发送给通知组 A
+>   - 规则：`[{"type":"offline","duration":600,"cover":1,"ignore":{"1":true,"2":true}}]`
+>   - 通知方式组： A
+>   - 启用：√  
+>
+>**规则二：**
+>   - 名称：3、4 离线，发送给通知组 B
+>   - 规则：`[{"type":"offline","duration":600,"cover":1,"ignore":{"3":true,"4":true}}]`
+>   - 通知方式组： B
+>   - 启用：√  
 
-   - 名称：CPU+内存
-   - 规则：`[{"Type":"cpu","Min":0,"Max":50,"Duration":10},{"Type":"memory","Min":20,"Max":0,"Duration":20}]`
-   - 启用：√
-:::  
+**灵活使用参数可以让你的通知功能被充分使用**  
+  
 <br/> 
 
 ### 特殊：任意周期流量报警
@@ -121,5 +145,8 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
 - cycle_unit 统计周期单位，默认`hour`,可选(`hour`, `day`, `week`, `month`, `year`)
 - min/max、cover、ignore 参考基本规则配置
 
-示例: ID 为 3 和 4 的服务器（ignore 里面定义），以每月 1 号为统计周期，周期内统计的出站月流量达到 1TB 时报警 `[{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]`
+>示例:  
+>> ID 为 3 和 4 的服务器（ignore 里面定义），以每月 1 号为统计周期，周期内统计的出站月流量达到 1TB 时报警  
+>
+>`[{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]`
   ![7QKaUx.md.png](https://s4.ax1x.com/2022/01/13/7QKaUx.md.png)

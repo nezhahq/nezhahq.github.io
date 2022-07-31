@@ -78,21 +78,44 @@ Refer to the example below, it is very flexible.
 - ignore:   Select to ignore specific servers, use with `cover` with server id and boolean, e.g.: `{"1": true, "2":false}`  
 
 **Complete examples:**  
-:::tip 
-Add an offline notification
+ 
+>>Add an offline notification
+>
+>   - Name: Offline notification
+>   - Rules: `[{"Type":"offline","Duration":10}]`
+>   - Enable: √
+  
 
-   - Name: Offline notification
-   - Rules: `[{"Type":"offline","Duration":10}]`
-   - Enable: √
-:::  
+  
+>>Add an notification when the CPU exceeds 50% for 10s **but** the memory usage is below 20% for 20s  
+>
+>   - Name: CPU and RAM
+>   - Rules: `[{"Type":"cpu","Min":0,"Max":50,"Duration":10},{"Type":"memory","Min":20,"Max":0,"Duration":20}]`
+>   - Enable: √  
+  
+>>Send specific server notifications to specific notification groups  
+>
+>Case:  
+>You have four servers, 1, 2, 3, 4, and two different notification groups, A and B  
+>1, 2 The two servers are down for 10 minutes and send a notification to Notification Group A  
+>3, 4 These two servers are down for ten minutes and then send a notification to Notification Group B    
+>
+>First you need to set up two notification groups, A and B, and then add two alarm rules:    
+>  
+>**Rule I:**
+>   - Name: 1, 2 Off-line, send notification to group A
+>   - Rules:`[{"type":"offline","duration":600,"cover":1,"ignore":{"1":true,"2":true}}]`
+>   - Notification group: A  
+>   - Enable: √  
+>
+>**Rule II:**
+>   - Name: 3, 4 Off-line, send notification to group B
+>   - Rules:`[{"type":"offline","duration":600,"cover":1,"ignore":{"3":true,"4":true}}]`
+>   - Notification group: B
+>   - Enable: √  
 
-:::tip  
-Add an notification when the CPU exceeds 50% for 10s **but** the memory usage is below 20% for 20s  
-
-   - Name CPU and RAM
-   - Rules: `[{"Type":"cpu","Min":0,"Max":50,"Duration":10},{"Type":"memory","Min":20,"Max":0,"Duration":20}]`
-   - Enable: √
-:::  
+**Using these rules flexibly will help you to make full use of the notification function**  
+  
 <br/> 
 
 ###  Special: Any-cycle transfer notification
@@ -109,5 +132,8 @@ Can be used as monthly transfer notificatin
 - `cycle_unit` Statistics cycle unit, default `hour`, optional (`hour`, `day`, `week`, `month`, `year`)
 - `min/max`, `cover`, `ignore` Please refer to the basic rules to configure
 
-Example: The servers with ID 3 and 4 (defined in the `ignore`) are counted on the 1st of each month, and a notification is triggered when the monthly outbound transfer reaches 1TB during the cycle. `[{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]`
+>Example:  
+>>The servers with ID 3 and 4 (defined in the `ignore`) are counted on the 1st of each month, and a notification is triggered when the monthly outbound transfer reaches 1TB during the cycle.  
+>
+> `[{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]`
   ![7QKaUx.md.png](https://s4.ax1x.com/2022/01/13/7QKaUx.md.png)
