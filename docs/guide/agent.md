@@ -22,7 +22,6 @@
 * 进入Windows服务器，运行PowerShell，在PowerShell中运行复制的安装命令
 * 如遇到确认「执行策略变更」请选择 Y
 * 等待安装完成后返回Dashboard主页查看服务器是否上线  
-<br/>  
 <br/>
 
 ## 其他方式安装Agent 
@@ -33,7 +32,7 @@
 * 在被控服务器中，运行脚本（位于中国大陆的服务器请使用镜像）：
 ```bash
 curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
-```  
+```
 如果你的被控服务器位于中国大陆，可以使用镜像：  
 ````bash
 curl -L https://jihulab.com/nezha/nezha/-/raw/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
@@ -43,7 +42,107 @@ curl -L https://jihulab.com/nezha/nezha/-/raw/master/script/install.sh -o nezha.
 * 输入面板通信端口（RPC端口），默认为5555  
 * 输入Agent密钥，Agent密钥在管理面板中添加服务器时生成，可以在管理面板中的“主机”页中找到  
 * 等待安装完成后返回Dashboard主页查看服务器是否上线  
-<br/>  
+  <br/>
+### 在 其他Linux 如 alpine 使用 openrc 的发行版 安装 Agent
+
+* 修改 SERVER、SECRET、TLS 然后在 shell 中 执行
+
+```shell
+cat >/etc/init.d/nezha-agent<< EOF
+#!/sbin/openrc-run
+
+SERVER="" #dashboard 地址 ip:port
+SECRET="" #SECRET
+TLS="" # 是否启用 tls 是 "--tls" 否留空
+
+NZ_BASE_PATH="/opt/nezha"
+NZ_AGENT_PATH="${NZ_BASE_PATH}/agent"
+pidfile="/run/${RC_SVCNAME}.pid"
+command="/opt/nezha/agent/nezha-agent"
+command_args="-s ${SERVER}  -p ${SECRET} ${TLS}"
+command_background=true
+
+depend() {
+	need net
+}
+
+checkconfig() {
+	GITHUB_URL="github.com"
+
+	if [ ! -f "${NZ_AGENT_PATH}/nezha-agent" ]; then
+		if [[ $(uname -m | grep 'x86_64') != "" ]]; then
+			os_arch="amd64"
+		elif [[ $(uname -m | grep 'i386\|i686') != "" ]]; then
+			os_arch="386"
+		elif [[ $(uname -m | grep 'aarch64\|armv8b\|armv8l') != "" ]]; then
+			os_arch="arm64"
+		elif [[ $(uname -m | grep 'arm') != "" ]]; then
+			os_arch="arm"
+		elif [[ $(uname -m | grep 's390x') != "" ]]; then
+			os_arch="s390x"
+		elif [[ $(uname -m | grep 'riscv64') != "" ]]; then
+			os_arch="riscv64"
+		fi
+
+		local version=$(curl -m 10 -sL "https://api.github.com/repos/naiba/nezha/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+		if [ ! -n "$version" ]; then
+			version=$(curl -m 10 -sL "https://fastly.jsdelivr.net/gh/naiba/nezha/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/naiba\/nezha@/v/g')
+		fi
+		if [ ! -n "$version" ]; then
+			version=$(curl -m 10 -sL "https://gcore.jsdelivr.net/gh/naiba/nezha/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/naiba\/nezha@/v/g')
+		fi
+
+		if [ ! -n "$version" ]; then
+			echo -e "获取版本号失败，请检查本机能否链接 https://api.github.com/repos/naiba/nezha/releases/latest"
+			return 0
+		else
+			echo -e "当前最新版本为: ${version}"
+		fi
+		wget -t 2 -T 10 -O nezha-agent_linux_${os_arch}.zip https://${GITHUB_URL}/naiba/nezha/releases/download/${version}/nezha-agent_linux_${os_arch}.zip >/dev/null 2>&1
+		if [[ $? != 0 ]]; then
+			echo -e "Release 下载失败，请检查本机能否连接 ${GITHUB_URL}${plain}"
+			return 0
+		fi
+
+		mkdir -p $NZ_AGENT_PATH
+		chmod 755 -R $NZ_AGENT_PATH
+		unzip -qo nezha-agent_linux_${os_arch}.zip && mv nezha-agent $NZ_AGENT_PATH && rm -rf nezha-agent_linux_${os_arch}.zip README.md
+	fi
+
+	if [ ! -x "${NZ_AGENT_PATH}/nezha-agent" ]; then
+		chmod +x ${NZ_AGENT_PATH}/nezha-agent
+	fi
+}
+
+start_pre() {
+	if [ "${RC_CMD}" != "restart" ]; then
+		checkconfig || return $?
+	fi
+}
+
+EOF
+
+```
+
+* 增加运行权限
+
+  ```shell
+  chmod +x /etc/init.d/nezha-agent
+  ```
+
+* 运行 nezha-agent
+
+  ```shell
+  rc-service nezha-agent-hy start
+  ```
+
+* 添加开机自启动
+
+  ```shell
+  rc-update add nezha-agent
+  ```
+
+  
 
 ### 在 Windows 中安装Agent  
 
@@ -85,26 +184,26 @@ curl -L https://jihulab.com/nezha/nezha/-/raw/master/script/install.sh -o nezha.
 	<true/>
 </dict>
 </plist>
-```  
+```
 + 在 Terminal 中使用下面的命令加载 plist 文件到 launchd 里，**注意替换文件路径**  
 ```shell  
 launchctl load /Users/123/Desktop/nezha_agent.plist
-```  
+```
 + 启动进程  
 ```shell  
 launchctl start nezha_agent
-```  
+```
 + 检查进程是否运行  
 ```shell  
 launchctl list | grep nezha_agent
-```  
+```
 + 停止进程并移除
 ```shell  
 launchctl stop nezha_agent
-```  
+```
 ```shell  
 launchctl remove nezha_agent
-``` 
+```
 <br/>  
 
 ### 在 OpenWRT 中安装Agent  
