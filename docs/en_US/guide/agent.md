@@ -8,7 +8,7 @@ First of all, you need to set up the communication domain name in the settings p
 Enter the administration panel, go to the "Settings" page, in the item "CDN Bypassed Domain/IP
 ", fill in the communication domain name, and then click "Save"  
 <br/>
-###  One-click installation on Linux
+###  One-click installation on Linux (Ubuntu, Debian, CentOS)
 * First add a server in the admin panel
 * Click on the green Linux icon button next to the newly added server and copy the one-click installation command
 * Run the copied one-click installation command on the monitored server, wait for the installation to complete, and then return to the Dashboard home page to see if the server is online.  
@@ -24,7 +24,7 @@ Enter the administration panel, go to the "Settings" page, in the item "CDN Bypa
 ## Other ways to install Agent
 <br/>  
 
-### Installing Agent on Linux  
+### Installing Agent on Linux (Ubuntu, Debian, CentOS)  
 * First add a server in the admin panel  
 * In the monitored server, run the script: 
 ```bash
@@ -41,16 +41,17 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.s
 * Wait for the installation to complete and return to the Dashboard home page to see if the server is online  
   <br/>
 
-### Installing Agent on other Linux (such as alpine use oprec not systemd)
+### Installing Agent on other Linux (such as alpine use oprec not systemd) 
+Contributed by [unknown0054](https://github.com/unknwon0054)
 
-* edit SERVER,SECRET,TLS then run in shell
+* Edit SERVER,SECRET,TLS then run it in Shell
 
 ```shell
 cat >/etc/init.d/nezha-agent<< EOF
 #!/sbin/openrc-run
-SERVER="" #dashboard address ip:port
+SERVER="" #Dashboard address ip:port
 SECRET="" #SECRET
-TLS="" # enable tls?  yes:"--tls" no:""
+TLS="" # Enable tls?  yes:"--tls" no:""
 NZ_BASE_PATH="/opt/nezha"
 NZ_AGENT_PATH="${NZ_BASE_PATH}/agent"
 pidfile="/run/${RC_SVCNAME}.pid"
@@ -84,14 +85,14 @@ checkconfig() {
 			version=$(curl -m 10 -sL "https://gcore.jsdelivr.net/gh/naiba/nezha/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/naiba\/nezha@/v/g')
 		fi
 		if [ ! -n "$version" ]; then
-			echo -e "version get to failed, please check if the network can link https://api.github.com/repos/naiba/nezha/releases/latest"
+			echo -e "Failed to get the version number, please check if the network can connect to https://api.github.com/repos/naiba/nezha/releases/latest"
 			return 0
 		else
 			echo -e "The current latest version is: ${version}"
 		fi
 		wget -t 2 -T 10 -O nezha-agent_linux_${os_arch}.zip https://${GITHUB_URL}/naiba/nezha/releases/download/${version}/nezha-agent_linux_${os_arch}.zip >/dev/null 2>&1
 		if [[ $? != 0 ]]; then
-			echo -e "Release download failed, please check if the network can link ${GITHUB_URL}${plain}"
+			echo -e "Release download failed, please check if the network can connect to ${GITHUB_URL}${plain}"
 			return 0
 		fi
 		mkdir -p $NZ_AGENT_PATH
@@ -110,19 +111,19 @@ start_pre() {
 EOF
 ```
 
-* add execute permission
+* Add execute permission
 
   ```shell
   chmod +x /etc/init.d/nezha-agent
   ```
 
-* run nezha-agent
+* Run Nezha-Agent
 
   ```shell
   rc-service nezha-agent-hy start
   ```
 
-* auto start on boot
+* Set self-start after boot
 
   ```shell
   rc-update add nezha-agent
@@ -228,24 +229,6 @@ restart() {
 * Give it permission to execute: `chmod +x /etc/init.d/nezha-service`  
 * Start the service `/etc/init.d/nezha-service enable && /etc/init.d/nezha-service start`  
 <br/>  
-
-## Customize Agent
-
-#### Customize the NIC and hard drive partitions to be monitored
-
-* Run `/opt/nezha/agent/nezha-agent --edit-agent-config` to select a custom NIC and partition, and then restart Agent
-
-#### Other Flags
-
-Run `./nezha-agent --help` to view supported flags，if you are already using the one-click script, you can edit `/etc/systemd/system/nezha-agent.service`，at the end of this line `ExecStart=` add:  
-
-- `--report-delay` System information reporting interval, default is 1 second, can be set to 3 to reduce the system resource usage on the agent side (configuration range 1-4)
-- `--skip-conn` Not monitoring the number of connections, if it is a server with a large number of connections, the CPU usage will be high. It is recommended to set this to reduce CPU usage
-- `--skip-procs` Disable monitoring the number of processes can also reduce CPU and memory usage
-- `--disable-auto-update` Disable **Automatic Update** Agent (security feature)
-- `--disable-force-update` Disable **Forced Update** Agent (security feature)
-- `--disable-command-execute` Disable execution of scheduled tasks, disallow WebShell (security feature)
-- `--tls` Enable SSL/TLS encryption (If you are using nginx to reverse proxy Agent´s grpc connections, and if nginx has SSL/TLS enabled, you need to enable this configuration)  
 
 ## FAQ
 ### Is there a Docker image for Agent?
