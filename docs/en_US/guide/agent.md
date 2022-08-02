@@ -29,13 +29,100 @@ Enter the administration panel, go to the "Settings" page, in the item "CDN Bypa
 * In the monitored server, run the script: 
 ```bash
 curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh   
-```  
+```
 * Select “Install_agent”  
 * Input the communication domain name, e.g. "data.example.com"  
 * Input RPC port, default is 5555 
 * Input the Agent Secret, which is generated when adding a server in the administration panel and can be found in the " Servers " page of the administration panel  
 * Wait for the installation to complete and return to the Dashboard home page to see if the server is online  
 <br/>  
+
+### Installing Agent on other Linux (such as alpine use oprec not systemd)
+
+* edit SERVER,SECRET,TLS then run in shell
+
+```shell
+cat >/etc/init.d/nezha-agent<< EOF
+#!/sbin/openrc-run
+SERVER="" #dashboard address ip:port
+SECRET="" #SECRET
+TLS="" # enable tls?  yes:"--tls" no:""
+NZ_BASE_PATH="/opt/nezha"
+NZ_AGENT_PATH="${NZ_BASE_PATH}/agent"
+pidfile="/run/${RC_SVCNAME}.pid"
+command="/opt/nezha/agent/nezha-agent"
+command_args="-s ${SERVER}  -p ${SECRET} ${TLS}"
+command_background=true
+depend() {
+	need net
+}
+checkconfig() {
+	GITHUB_URL="github.com"
+	if [ ! -f "${NZ_AGENT_PATH}/nezha-agent" ]; then
+		if [[ $(uname -m | grep 'x86_64') != "" ]]; then
+			os_arch="amd64"
+		elif [[ $(uname -m | grep 'i386\|i686') != "" ]]; then
+			os_arch="386"
+		elif [[ $(uname -m | grep 'aarch64\|armv8b\|armv8l') != "" ]]; then
+			os_arch="arm64"
+		elif [[ $(uname -m | grep 'arm') != "" ]]; then
+			os_arch="arm"
+		elif [[ $(uname -m | grep 's390x') != "" ]]; then
+			os_arch="s390x"
+		elif [[ $(uname -m | grep 'riscv64') != "" ]]; then
+			os_arch="riscv64"
+		fi
+		local version=$(curl -m 10 -sL "https://api.github.com/repos/naiba/nezha/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+		if [ ! -n "$version" ]; then
+			version=$(curl -m 10 -sL "https://fastly.jsdelivr.net/gh/naiba/nezha/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/naiba\/nezha@/v/g')
+		fi
+		if [ ! -n "$version" ]; then
+			version=$(curl -m 10 -sL "https://gcore.jsdelivr.net/gh/naiba/nezha/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/naiba\/nezha@/v/g')
+		fi
+		if [ ! -n "$version" ]; then
+			echo -e "version get to failed, please check if the network can link https://api.github.com/repos/naiba/nezha/releases/latest"
+			return 0
+		else
+			echo -e "The current latest version is: ${version}"
+		fi
+		wget -t 2 -T 10 -O nezha-agent_linux_${os_arch}.zip https://${GITHUB_URL}/naiba/nezha/releases/download/${version}/nezha-agent_linux_${os_arch}.zip >/dev/null 2>&1
+		if [[ $? != 0 ]]; then
+			echo -e "Release download failed, please check if the network can link ${GITHUB_URL}${plain}"
+			return 0
+		fi
+		mkdir -p $NZ_AGENT_PATH
+		chmod 755 -R $NZ_AGENT_PATH
+		unzip -qo nezha-agent_linux_${os_arch}.zip && mv nezha-agent $NZ_AGENT_PATH && rm -rf nezha-agent_linux_${os_arch}.zip README.md
+	fi
+	if [ ! -x "${NZ_AGENT_PATH}/nezha-agent" ]; then
+		chmod +x ${NZ_AGENT_PATH}/nezha-agent
+	fi
+}
+start_pre() {
+	if [ "${RC_CMD}" != "restart" ]; then
+		checkconfig || return $?
+	fi
+}
+EOF
+```
+
+* add execute permission
+
+  ```shell
+  chmod +x /etc/init.d/nezha-agent
+  ```
+
+* run nezha-agent
+
+  ```shell
+  rc-service nezha-agent-hy start
+  ```
+
+* auto start on boot
+
+  ```shell
+  rc-update add nezha-agent
+  ```
 
 ### Installing Agent on Windows  
 - Please refer to the community article: 
@@ -48,7 +135,7 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.s
 ::: warning  
 If you are prompted with "macOS cannot verify this app" during installation, please go to system settings to allow the app to run.  
 :::  
-  
+
 + First add a server in the admin panel  
 + Go to the [Release](https://github.com/naiba/nezha/releases) page to download the Agent binary and choose whether to download the darwin amd64 or arm64 Agent depending on the CPU architecture  
 For example, download the amd64 version for Intel CPU and the arm64 version for Apple Silicon. After downloading, extract the Agent binary file, e.g. to the Download folder 
@@ -76,27 +163,27 @@ For example, download the amd64 version for Intel CPU and the arm64 version for 
 	<true/>
 </dict>
 </plist>
-```  
+```
 + Use the following command in Terminal to load the plist file into launchd  
  **Be sure to change the file path**  
 ```shell  
 launchctl load /Users/123/Desktop/nezha_agent.plist
-```  
+```
 + Start Service  
 ```shell  
 launchctl start nezha_agent
-```  
+```
 + Check if the service is running  
 ```shell  
 launchctl list | grep nezha_agent
-```  
+```
 + Stop service and remove
 ```shell  
 launchctl stop nezha_agent
-```  
+```
 ```shell  
 launchctl remove nezha_agent
-``` 
+```
 <br/>  
 
 ### Installing Agent on OpenWRT
