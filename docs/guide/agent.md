@@ -2,12 +2,12 @@
 <br/>
 ## 一键安装 Agent
 
-目前哪吒监控已支持在Windows和Linux上一键安装Agent，遵循本文档的步骤，你可以很轻松的在服务器上部署它  
+目前哪吒监控已支持在 Windows 和 Linux上一键安装 Agent，遵循本文档的步骤，你可以很轻松的在服务器上部署它  
 <br/>
 ### 准备工作
 
 你需要提前在管理面板中设置好通信域名，此域名不可以接入CDN，这里以前面提到过的示例通信域名 “data.example.com” 来做演示  
-进入后台管理面板，转到“设置”页，在“未接入CDN的面板服务器域名/IP”项中填入通信域名，然后点击"保存"  
+进入后台管理面板，转到“设置”页，在“未接入 CDN 的面板服务器域名/IP”项中填入通信域名，然后点击"保存"  
 <br/>
 ### 在 Linux 中一键安装 (Ubuntu、Debian、CentOS)
 
@@ -38,9 +38,9 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  
 ````bash
 curl -L https://jihulab.com/nezha/nezha/-/raw/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
 ````
-* 选择“安装监控Agent”  
+* 选择“安装监控 Agent”  
 * 输入通信域名，如：”data.example.com“  
-* 输入面板通信端口（RPC端口），默认为5555  
+* 输入面板通信端口（RPC端口），默认为 5555  
 * 输入 Agent 密钥，Agent 密钥在管理面板中添加服务器时生成，可以在管理面板中的“主机”页中找到  
 * 等待安装完成后返回 Dashboard 主页查看服务器是否上线  
 <br/>  
@@ -145,7 +145,7 @@ EOF
 ***本节内容改编自[Mitsea Blog](https://blog.mitsea.com/e796f93db38d49e4b18df234c6ee75f5)，改编已获得原作者授权***  
 <br/>  
 ::: warning  
-安装过程中如提示“macOS无法验证此app“，请前往系统设置手动允许程序运行  
+安装过程中如提示“macOS 无法验证此 app“，请前往系统设置手动允许程序运行  
 :::  
 
 + 首先在管理面板中添加一台服务器  
@@ -197,14 +197,14 @@ launchctl remove nezha_agent
 ```
 <br/>  
 
-### 在 OpenWRT 中安装Agent  
+### 在 OpenWRT 中安装 Agent  
 
-**如何使 旧版OpenWRT/LEDE 自启动**  
+**如何使 旧版 OpenWRT/LEDE 自启动**  
 - 请参考项目：  
 [哪吒监控 For OpenWRT](https://github.com/Erope/openwrt_nezha)  
 <br/>
 
-**如何使 新版OpenWRT 自启动？来自 @艾斯德斯**  
+**如何使 新版 OpenWRT 自启动？来自 @艾斯德斯**  
 * 首先在 release 下载对应的二进制解压 zip 包后放置到 `/root`  
 * 运行 `chmod +x /root/nezha-agent` 赋予执行权限，然后创建 `/etc/init.d/nezha-service`：
 

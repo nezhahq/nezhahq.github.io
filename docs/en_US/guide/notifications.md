@@ -136,4 +136,12 @@ Can be used as monthly transfer notificatin
 >>The servers with ID 3 and 4 (defined in the `ignore`) are counted on the 1st of each month, and a notification is triggered when the monthly outbound transfer reaches 1TB during the cycle.  
 >
 > `[{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]`
-  ![7QKaUx.md.png](https://s4.ax1x.com/2022/01/13/7QKaUx.md.png)
+ 
+ ## Description of mode of triggering notification
+- Always triggered: A notification is triggered each time the status reported by the Agent matches the rules of the notification  
+- Triggered only once: only one notification is triggered when the state changes, such as changing from normal state to abnormal state or abnormal state back to normal state  
+
+## Set the task to be executed when notification  
+If you need to perform a task while sending a notification message, you can set those items  
++ `Tasks to be triggered in case of failure` The task to be executed when the notification status matches the change from "normal" to "failure", the task should be set in advance in the tasks page  
++ `Tasks to be triggered after fault recovery` The task to be executed when the notification status matches the change from " failure " to " normal ", the task should be set in advance in the tasks page
