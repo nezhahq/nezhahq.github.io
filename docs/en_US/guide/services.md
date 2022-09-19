@@ -35,6 +35,13 @@ After setting, click "Add" and you are done.
 Wait for a moment to go to the "Services" page on the home page to view the monitoring results  
 <br/>
 
+## Notification of delay changes
+Nezha Monitoring monitors and statistics the delay between the Agent and the target server, and sends notifications in case of significant changes    
+Use this feature to help you monitor your server's routes for changes  
+
++ `Enable delay notifications`：When enabled, notifications will be sent when the Agent to target server delay is higher than the `Max delay` or lower than the `Min delay`  
+<br/>
+
 ## Management Monitor
 To manage existing service monitoring, you can go to the "Services" page in the administration panel  
 Select a monitoring configuration and click the icon on the right to edit or delete it  
