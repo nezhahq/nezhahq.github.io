@@ -11,6 +11,19 @@ Placeholders can also be placed inside the URL, and it will perform a simple str
 
 Refer to the example below, it is very flexible.
 
+   - Bark Example
+     -Name: Bark
+     -URL composition: the first part is the key, followed by three matches/: key/: body or/: key/: title/: body or/: key/: category/: title/: body
+     -Request method: GET
+     -Request Type: Default
+     -Body: null
+     
+     -Name: Bark
+     -URL composition:/push
+     -Request method: post
+     -Request type: form
+     - Body: {"title": "#SERVER.NAME#","device_key":"xxxxxxxxx","body":"#NEZHA#","icon":" https://xxxxxxxx/nz.png "}
+
    - Telegram Example, contributed by [@haitau](https://github.com/haitau)
 
      - Name：Telegram Robot message notification
