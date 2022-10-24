@@ -10,6 +10,19 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
 
 你可以参考以下的通知方式示例，也可以根据自己的需求灵活设置推送方式
 
+   - Bark 示例
+
+     - 名称：Bark
+     - URL 组成: 第一个部分是 key , 之后有三个匹配 /:key/:body or /:key/:title/:body or /:key/:category/:title/:body 
+     - 请求方式: GET
+     - 请求类型: 默认
+     - Body: 空
+     - 名称：Bark
+     - URL 组成: /push
+     - 请求方式: post
+     - 请求类型: form
+     - Body: {"title": "#SERVER.NAME#","device_key":"xxxxxxxxx","body":"#NEZHA#","icon":"https://xxxxxxxx/nz.png"}
+
    - server 酱示例
 
      - 名称：server 酱
