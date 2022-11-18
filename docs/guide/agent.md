@@ -124,7 +124,7 @@ EOF
 * 运行 Nezha-Agent
 
   ```shell
-  rc-service nezha-agent-hy start
+  rc-service nezha-agent start
   ```
 
 * 添加开机自启动
