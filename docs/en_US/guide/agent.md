@@ -192,6 +192,10 @@ launchctl remove nezha_agent
 <br/>  
 
 ### Installing Agent on OpenWRT
+**How to solve various problems during the installation process in one step**  
+- Please refer to the project:  
+[NZ-OpenWrt](https://github.com/dysf888/NZ-OpenWrt) (Chinese) 
+<br/>
 
 **How to make the old version of OpenWRT/LEDE self-boot?**  
 - Please refer to the project:   
