@@ -198,6 +198,10 @@ launchctl remove nezha_agent
 <br/>  
 
 ### 在 OpenWRT 中安装 Agent  
+**如何 一步到位,解决安装过程疑难杂症**  
+- 请参考项目：  
+[NZ-OpenWrt](https://github.com/dysf888/NZ-OpenWrt)  
+<br/>
 
 **如何使 旧版 OpenWRT/LEDE 自启动**  
 - 请参考项目：  
