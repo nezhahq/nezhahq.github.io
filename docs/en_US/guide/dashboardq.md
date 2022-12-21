@@ -28,4 +28,20 @@ If you still get iptables... etc. errors, then consider simply closing iptables 
 This issue may also be kernel related, try replacing the official kernel as well.  
 
 ## Dashboard reboot failed: Invalid hostPort: nz_site_port etc.
-Usually this does not occur, if it does, you can modify the configuration through the installation script. 
+Usually this does not occur, if it does, you can modify the configuration through the installation script.  
+
+## Wrong Dashboard layout, CSS resources cannot be loaded
+If the Dashboard page has an incorrect layout, the usual reason is that the CSS file is missing or cannot be loaded.  
+When such an issue occurs, you can first try `Reboot and update the Dashboard`. 
+If the problem is not resolved after updating the Dashboard, then there may be an unsuitable configuration within your vhost configuration file. You can edit the vhost file or within the Aapanel to:  
+1. Find the site you configured when installing Dashboard in `Website` and click `Conf` on the right side  
+2. Select `Config` and delete the following from the config file:  
+````nginx
+location ~ .*\.(js|css)?$
+    {
+        expires      12h;
+        error_log /dev/null;
+        access_log /dev/null;
+    }
+````  
+3. Save the configuration and clear the cache in the browser, NginX, and CDN, then refresh the page and it should return to normal.

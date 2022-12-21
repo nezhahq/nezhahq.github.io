@@ -101,7 +101,7 @@ function getGuideSidebarZhCN() {
     {
       text: '常见问题',
       children: [
-        { text: 'TG api被墙', link: '/guide/q1' },
+        { text: 'TG api 被墙', link: '/guide/q1' },
         { text: 'Agent 无法启动/上线 查看日志并进行排错的步骤', link: '/guide/q2' },
         { text: '反向代理 gRPC 端口的步骤', link: '/guide/q3' },
         { text: '实时通道断开/在线终端连接失败', link: '/guide/q4' },
@@ -113,8 +113,8 @@ function getGuideSidebarZhCN() {
     {
       text: '排障指南',
       children: [
-        { text: 'Dashboard相关', link: '/guide/dashboardq' },
-        { text: 'Agent相关', link: '/guide/agentq' },
+        { text: 'Dashboard 相关', link: '/guide/dashboardq' },
+        { text: 'Agent 相关', link: '/guide/agentq' },
         { text: '登录相关', link: '/guide/loginq' }
       ]
     }
