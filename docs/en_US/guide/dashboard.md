@@ -104,6 +104,9 @@ As with other websites, you can choose to automatically apply for a Let´s Encry
 After you finish setting up SSL, you need to go back to https://github.com/settings/developers and edit the authentication application you created before, change all the domain names in the "Homepage URL" and "Authorization callback URL" you filled in before from `http` to `https`, such as: "https://cdn.example.com" and "https://cdn.example.com/oauth2/callback",  **If you don't change these links, you may not be able to log into the admin panel**   
 
 ## FAQ
+### What should I do if /terminal or /ws cannot be connected after HTTPS is enabled?
+It is often caused by incomplete certificates. Please add -d to the agent running parameters. If there is x509: certificate signed by unknown authority in the log, replacing the complete certificate can solve the problem 100%.
+
 ### I am not satisfied with the data modification or addition function provided by the Dashboard, what if I want to modify or add data myself?
 Commonly used in requirements such as batch installation of Agents, where you can modify the database directly.  
 Please note that not everything can be modified in the database, wrong modification will lead to data confusion and failure to start Dashboard, **please do not modify the database at will!**  
