@@ -119,6 +119,9 @@ location ~ ^/(ws|terminal/.+)$  {
 完成 SSL 的设置后，你需要回到 https://github.com/settings/developers ，编辑之前创建的验证应用程序，将之前我们填入的 "Homepage URL" 和 "Authorization callback URL" 中的域名全部从`http`改为`https`，如："https://cdn.example.com" 和 "https://cdn.example.com/oauth2/callback" ，**不更改此项可能会导致你无法登录面板后台**  
 
 ## FAQ
+### 启用HTTPS后/terminal或/ws不能正常连接怎么办?
+常常是由于证书不完整造成的，请在agent运行参数中添加-d，若log中有x509:certificate signed by unknown authority,更换完整证书则可100%解决该问题。
+
 ### 我对面板提供的数据修改/增加功能不满意，我想要自己修改/增加数据怎么办？
 常见于批量插入 Agent 等需求中，可以直接修改数据库。  
 请注意，数据库中并非什么都可以修改，错误的修改会导致数据混乱无法启动 Dashboard，**请勿随意修改数据库！**  
