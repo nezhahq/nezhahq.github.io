@@ -10,7 +10,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
 
 你可以参考以下的通知方式示例，也可以根据自己的需求灵活设置推送方式
 
-   - Bark 示例
+   - **Bark 示例**
 
      - 名称：Bark
      - URL 组成: 第一个部分是 key,之后有三个匹配 /:key/:body or /:key/:title/:body or /:key/:category/:title/:body 
@@ -23,15 +23,15 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - 请求类型: form
      - Body: `{"title": "#SERVER.NAME#","device_key":"xxxxxxxxx","body":"#NEZHA#","icon":"https://xxxxxxxx/nz.png"}`
 
-   - server 酱示例
+   - **Server 酱示例**
 
-     - 名称：server 酱
+     - 名称：Server 酱
      - URL：https://sc.ftqq.com/SCUrandomkeys.send?text=#NEZHA#
      - 请求方式: GET
      - 请求类型: 默认
      - Body: 空
 
-   - wxpusher 示例，需要关注你的应用
+   - **wxpusher 示例，需要关注你的应用**
 
      - 名称: wxpusher
      - URL：http://wxpusher.zjiecode.com/api/send/message
@@ -39,7 +39,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - 请求类型: JSON
      - Body: `{"appToken":"你的appToken","topicIds":[],"content":"#NEZHA#","contentType":"1","uids":["你的uid"]}`
 
-   - Telegram 示例 贡献者：[@haitau](https://github.com/haitau) 
+   - **Telegram 示例 贡献者：[@haitau](https://github.com/haitau)** 
 
      - 名称：telegram 机器人消息通知
      - URL：https://api.telegram.org/botXXXXXX/sendMessage?chat_id=YYYYYY&text=#NEZHA#
@@ -48,34 +48,16 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - Body: 空
      - URL 参数获取说明：botXXXXXX 中的 XXXXXX 是在 telegram 中关注官方 @Botfather ，输入/newbot ，创建新的机器人（bot）时，会提供的 token（在提示 Use this token to access the HTTP API:后面一行）这里 'bot' 三个字母不可少。创建 bot 后，需要先在 telegram 中与 BOT 进行对话（随便发个消息），然后才可用 API 发送消息。YYYYYY 是 telegram 用户的数字 ID。与机器人@userinfobot 对话可获得。
 
-  - 邮件通知示例 - Outlook 贡献者：[@MIKU_N](https://github.com/MIKU-N) 
+  - **邮件通知示例 - SendCloud 贡献者：[@白歌](https://github.com/cantoblanco)**   
+  **注意：SendCloud 有每日免费发送邮件限额限制，这里仅作示例，你可以选择付费服务或其他类似的免费服务，使用方法类似。**
 
-     - 名称：MS邮件告警
-     - URL：https://graph.microsoft.com/v1.0/me/microsoft.graph.sendMail
+     - 名称：邮件告警
+     - URL：https://api.sendcloud.net/apiv2/mail/send?apiUser=<替换APIUSER>apiKey=<替换APIKEY>&from=<自定义发件邮箱>&fromName=Nezha&to=<自定义收件邮箱>&subject=Nezha-Notification&html=#NEZHA#
      - 请求方式: POST
      - 请求类型: JSON
-     - Header: `{"Content-type":"application/json",
-                  "Authorization":"Bearer {Token}"}`
-     - Body:
-  ```
-  {
-    "message": {
-        "subject": "服务器状态警报",
-        "body": {
-            "contentType": "Text",
-            "content": "#NEZHA#"
-        },
-        "toRecipients": [
-            {
-                "emailAddress": {
-                    "address": "接收邮件地址"
-                }
-            }
-        ]
-    }
-}
-  ```
-  - URL 参数获取说明：此方式调用 Microsoft Graph V1.0,需要前往 Microsoft Graph 自行创建应用程序，授予 `Mail.Send` 权限并获取 Token;或者你可以使用[Microsoft Graph Explorer](https://developer.microsoft.com/zh-cn/graph/graph-explorer)直接授予权限并获取 Token。将 Header 中的 Token 字段替换为实际字符段即可。
+     - Header: 留空
+     - Body: 留空
+  - URL 参数获取说明：此方式需提前在 [SendCloud](https://www.sendcloud.net/) 注册账号，创建发件邮箱，然后在[这里](https://www.sendcloud.net/sendSetting/apiuser)获取 APIUSER 和 APIKEY，替换 URL 中的 <替换APIUSER> 和 <替换APIKEY> 为自己的 APIUSER 和 APIKEY，替换 URL 中的 <自定义发件邮箱> 和 <自定义收件邮箱> 为自己的发件邮箱和收件邮箱。
      
 
 <br/>

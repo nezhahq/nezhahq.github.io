@@ -3,7 +3,7 @@
 <br/>
 
 ## 管理员列表
-+ 如果你修改了自己的Github, Gitlab, Jihulab或Gitee的用户名，可以在此项中同步修改，否则无法登录，多个用户请用逗号隔开: `user1,user2`  
++ 如果你修改了自己的 Github, Gitlab, Jihulab 或 Gitee 的用户名，可以在此项中同步修改，否则无法登录，多个用户请用逗号隔开: `user1,user2`  
 
 + 如需更改管理员账户，请前往 `/opt/nezha/dashboard/data/config.yaml` ，重新设置新的管理员 `Client ID` 和 `Client Secret` 
 <br/>
@@ -24,7 +24,7 @@
 <br/>
 
 ## 自定义代码  
-改LOGO、改色调、加统计代码等。
+改 LOGO、改色调、加统计代码等。
 
 :::warning 
 自定义代码仅在游客首页生效，管理面板不生效  
@@ -103,7 +103,7 @@
 设置密码后，需要输入密码才可以访问主页  
 <br/>
 
-## 未接入CDN的面板服务器域名/IP
+## 未接入 CDN 的面板服务器域名/IP
 此项设置是使用一键脚本安装 Agent 的前提，详情请查看[这里](/guide/agent.html#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C)
 <br/>
 

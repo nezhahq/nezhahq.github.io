@@ -11,20 +11,20 @@ Placeholders can also be placed inside the URL, and it will perform a simple str
 
 Refer to the example below, it is very flexible.
 
-   - Bark Example
-     - Name: Bark
-     - URL composition: the first part is the key, followed by three matches/: key/: body or/: key/: title/: body or/: key/: category/: title/: body
-     - Request method: GET
-     - Request Type: Default
-     - Body: null
+  - **Bark Example**
+    - Name: Bark
+    - URL: The first part is the key, followed by three matches/: key/: body or/: key/: title/: body or/: key/: category/: title/: body
+    - Request method: GET
+    - Request Type: Default
+    - Body: null
      
-     - Name: Bark
-     - URL composition:/push
-     - Request method: POST
-     - Request type: FORM
-     - Body: `{"title": "#SERVER.NAME#","device_key":"xxxxxxxxx","body":"#NEZHA#","icon":" https://xxxxxxxx/nz.png "}`
+    - Name: Bark
+    - URL:/push
+    - Request method: POST
+    - Request type: FORM
+    - Body: `{"title": "#SERVER.NAME#","device_key":"xxxxxxxxx","body":"#NEZHA#","icon":" https://xxxxxxxx/nz.png "}`
 
-   - Telegram Example, contributed by [@haitau](https://github.com/haitau)
+   - **Telegram Example, contributed by [@haitau](https://github.com/haitau)**
 
      - Name：Telegram Robot message notification
      - URL：https://api.telegram.org/botXXXXXX/sendMessage?chat_id=YYYYYY&text=#NEZHA#
@@ -33,8 +33,7 @@ Refer to the example below, it is very flexible.
      - Body: null
      - Notes for this method：The XXXXXX in botXXXXXX is the token provided when you follow the official @Botfather in Telegram and enter /newbot to create a new bot. (In the line after _Use this token to access the HTTP API_). The 'bot' are essential. After creating a bot, you need to talk to the BOT in Telegram (send a random message) before you can send a message by using API. YYYYYY is Telegram user's ID, you can get it by talking to the bot @userinfobot.    
 
-  - Email notification example - Outlook, contributed by [@MIKU_N
-](https://github.com/MIKU-N)
+  - **Email notification example - Outlook, contributed by [@Cantoblanco](https://github.com/cantoblanco)**   
 
      - Name: MS Mail Notification
      - URL：https://graph.microsoft.com/v1.0/me/microsoft.graph.sendMail

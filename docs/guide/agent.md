@@ -27,7 +27,7 @@
 
 ## 其他方式安装 Agent 
 
-### 在 Linux 中安装Agent (Ubuntu、Debian、CentOS)
+### 在 Linux 中安装 Agent (Ubuntu、Debian、CentOS)
 
 * 首先在管理面板中添加一台服务器  
 * 在被控服务器中，运行脚本（位于中国大陆的服务器请使用镜像）：
@@ -36,7 +36,7 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  
 ```
 如果你的被控服务器位于中国大陆，可以使用镜像：  
 ````bash
-curl -L https://jihulab.com/nezha/nezha/-/raw/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
+curl -L https://cdn.jsdelivr.net/gh/naiba/nezha/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
 ````
 * 选择“安装监控 Agent”  
 * 输入通信域名，如：”data.example.com“  
@@ -135,20 +135,20 @@ EOF
 
 
 
-### 在 Windows 中安装Agent  
+### 在 Windows 中安装 Agent  
 
 - 请参考社区文章：  
 [哪吒探针 - Windows 客户端安装](https://nyko.me/2020/12/13/nezha-windows-client.html)  
 <br/>  
 
-### 在 群晖DSM 中安装Agent  
+### 在 群晖DSM 中安装 Agent  
 
 - 请参考社区文章：  
 [哪吒探针——群晖客户端（被控端）安装教程](https://wl.gta5pdx.cn/archives/546/)  
 <br/>
 
-### 在 MacOS 中安装Agent  
-***本节内容改编自[Mitsea Blog](https://blog.mitsea.com/e796f93db38d49e4b18df234c6ee75f5)，改编已获得原作者授权***  
+### 在 MacOS 中安装 Agent  
+***本节内容改编自 [Mitsea Blog](https://blog.mitsea.com/e796f93db38d49e4b18df234c6ee75f5)，改编已获得原作者授权***  
 <br/>  
 ::: warning  
 安装过程中如提示“macOS 无法验证此 app“，请前往系统设置手动允许程序运行  

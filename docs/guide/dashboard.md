@@ -14,7 +14,7 @@
 
 **本文档将以宝塔面板反代面板的过程作为范例，随着未来版本的变化，部分功能的入口可能会发生改变，本文档仅供参考**  
 :::warning  
-本项目并不依赖宝塔，你可以选择使用你喜欢的任何服务器面板，如果你能力足够，可以手动安装 NginX 或 Caddy 来配置SSL和反代。  
+本项目并不依赖宝塔，你可以选择使用你喜欢的任何服务器面板，如果你能力足够，可以手动安装 NginX 或 Caddy 来配置 SSL 和反代。  
 如果你认为没有必要使用 80、443 端口来访问 Dashboard，你甚至不需要安装 NginX 就可以直接使用安装脚本。  
 :::  
 <br/>
@@ -44,7 +44,7 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  
 ```  
 如果你的面板服务器位于中国大陆，可以使用镜像：  
 ````bash
-curl -L https://jihulab.com/nezha/nezha/-/raw/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
+curl -L https://cdn.jsdelivr.net/gh/naiba/nezha/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
 ````
 
 * 等待Docker安装完毕后，分别输入以下值：  
