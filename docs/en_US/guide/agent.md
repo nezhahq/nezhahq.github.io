@@ -137,6 +137,50 @@ EOF
 ### Installing Agent on Synology DSM
 - Please refer to the community article: 
 [哪吒探针——群晖客户端（被控端）安装教程](https://wl.gta5pdx.cn/archives/546/)(Chinese)  
+
+- Using Systemd *Only available on DSM7*:
+  ```sh
+  # Path of the agent binary file.
+  EXEC="/PATH/TO/nezha-agent"
+  # Path of the agent's log.
+  LOG="${EXEC}.log"
+  # Extend arguments, can be blank.
+  ARGS="--disable-command-execute"
+  # The address of nezha server's GRPC.
+  SERVER="HOST_OR_IP:GRPC_PORT"
+  # The token of host.
+  SECRET="APP_SECRET"
+  # Specify `run_as` user. * Strongly suggest NOT use `root`! *
+  RUN_USER="nezha"
+  # Create the service file.
+  cat << EOF > /usr/lib/systemd/system/nezha.service
+  [Unit]
+  Description=Nezha Agent Service
+  After=network.target
+  [Service]
+  Type=simple
+  ExecStart=/bin/nohup ${EXEC} ${ARGS} -s ${SERVER} -p ${SECRET} &>> ${LOG} &
+  ExecStop=ps -fe |grep nezha-agent|awk '{print \$2}'|xargs kill
+  User=${RUN_USER}
+  Restart=on-abort
+  [Install]
+  WantedBy=multi-user.target
+  EOF
+  # Reload services
+  systemctl daemon-reload
+  # Start the agent service
+  systemctl start nezha
+  # Enable auto-start
+  systemctl enable nezha
+  ```
+  ‼️DO IT WHEN YOU HAVE MODIFIED THE ENVS‼️
+  
+  ‼️DO IT WHEN YOU HAVE MODIFIED THE ENVS‼️
+  
+  ‼️DO IT WHEN YOU HAVE MODIFIED THE ENVS‼️
+  
+  Using `root` to execute command above, that's all.
+
 <br/> 
 
 ### Installing Agent on MacOS  
