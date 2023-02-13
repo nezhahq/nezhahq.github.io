@@ -145,6 +145,54 @@ EOF
 
 - 请参考社区文章：  
 [哪吒探针——群晖客户端（被控端）安装教程](https://wl.gta5pdx.cn/archives/546/)  
+
+- Systemd实现 *仅适用于DSM7*:
+  ```sh
+  # 客户端路径
+  EXEC="/PATH/TO/nezha-agent"
+  # 日志路径地址
+  LOG="${EXEC}.log"
+  # 额外执行参数, 可留空
+  ARGS="--disable-command-execute"
+  # 哪吒服务端GRPC地址
+  SERVER="HOST_OR_IP:GRPC_PORT"
+  # 上一步获取的主机密钥
+  SECRET="APP_SECRET"
+  # 服务运行用户名, *强烈建议使用非root用户执行*
+  RUN_USER="nezha"
+
+  # 写入到systemd服务文件
+  cat << EOF > /usr/lib/systemd/system/nezha.service
+  [Unit]
+  Description=Nezha Agent Service
+  After=network.target
+
+  [Service]
+  Type=simple
+  ExecStart=/bin/nohup ${EXEC} ${ARGS} -s ${SERVER} -p ${SECRET} &>> ${LOG} &
+  ExecStop=ps -fe |grep nezha-agent|awk '{print \$2}'|xargs kill
+  User=${RUN_USER}
+  Restart=on-abort
+
+  [Install]
+  WantedBy=multi-user.target
+  EOF
+
+  # 重载服务
+  systemctl daemon-reload
+  # 启动服务
+  systemctl start nezha
+  # 服务自启动
+  systemctl enable nezha
+  ```
+  ‼️修改对应信息后‼️
+  
+  ‼️修改对应信息后‼️
+  
+  ‼️修改对应信息后‼️
+  
+  使用`root`账号执行上述命令即可安装完成
+
 <br/>
 
 ### 在 MacOS 中安装 Agent  
