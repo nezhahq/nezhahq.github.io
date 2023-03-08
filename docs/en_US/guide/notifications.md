@@ -17,7 +17,7 @@ Refer to the example below, it is very flexible.
     - Request method: GET
     - Request Type: Default
     - Body: null
-     
+    
     - Name: Bark
     - URL:/push
     - Request method: POST
@@ -34,7 +34,6 @@ Refer to the example below, it is very flexible.
      - Notes for this method：The XXXXXX in botXXXXXX is the token provided when you follow the official @Botfather in Telegram and enter /newbot to create a new bot. (In the line after _Use this token to access the HTTP API_). The 'bot' are essential. After creating a bot, you need to talk to the BOT in Telegram (send a random message) before you can send a message by using API. YYYYYY is Telegram user's ID, you can get it by talking to the bot @userinfobot.    
 
   - **Email notification example - Outlook, contributed by [@Cantoblanco](https://github.com/cantoblanco)**   
-
      - Name: MS Mail Notification
      - URL：https://graph.microsoft.com/v1.0/me/microsoft.graph.sendMail
      - Request method: POST
@@ -62,7 +61,61 @@ Refer to the example below, it is very flexible.
   ```
 
   - Notes for this method: This method requires calling Microsoft Graph V1.0, you need to go to Microsoft Graph and create your own application, give `Mail.Send` permission and get the Token, or you can go [Microsoft Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer) directly to give permission and get the Token, just replace the Token in the Header with the actual Token.
-     
+    
+  - **Wechat Work Group bot Example,  contributed by [@ChowRex](https://github.com/ChowRex)**
+    
+    Support placeholders:
+    
+    ```json
+    {
+        "content": "#NEZHA#",
+        "ServerName": "#SERVER.NAME#",
+        "ServerIP": "#SERVER.IP#",
+        "ServerIPV4": "#SERVER.IPV4#",
+        "ServerIPV6": "#SERVER.IPV6#",
+        "CPU": "#SERVER.CPU#",
+        "MEM": "#SERVER.MEM#",
+        "SWAP": "#SERVER.SWAP#",
+        "DISK": "#SERVER.DISK#",
+        "NetInSpeed": "#SERVER.NETINSPEED#",
+        "NetOutSpeed": "#SERVER.NETOUTSPEED#",
+        "TransferIn": "#SERVER.TRANSFERIN#",
+        "TranferOut": "#SERVER.TRANSFEROUT#",
+        "Load1": "#SERVER.LOAD1#",
+        "Load5": "#SERVER.LOAD5#",
+        "Load15": "#SERVER.LOAD15#",
+        "TCP_CONN_COUNT": "#SERVER.TCPCONNCOUNT",  # Invalid
+        "UDP_CONN_COUNT": "#SERVER.UDPCONNCOUNT",  # Invalid
+    }
+    ```
+    
+    > Sorry, this document is **NOT** available in English.
+    >
+    > [群机器人配置说明 - 文档 - 企业微信开发者中心](https://developer.work.weixin.qq.com/document/path/91770#markdown%E7%B1%BB%E5%9E%8B)
+    
+    - Name：WechatWork Group bot notification
+    
+    - URL：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_BOT_KEY
+    
+    - Request method: POST
+    
+    - Request type: JSON
+    
+    - Body: 
+    
+        ```json
+        {
+            "msgtype": "markdown",
+            "markdown": {
+                "content": "# Nezha Notification\n\n\"#NEZHA#\"\n\n> ServerName: \"#SERVER.NAME#\"\n> IP: \"#SERVER.IP#\"\n> IPv4: \"#SERVER.IPV4#\"\n> IPv6: \"#SERVER.IPV6#\"\n> CPU: \"#SERVER.CPU#\"\n> Memory: \"#SERVER.MEM#\"\n> SWAP: \"#SERVER.SWAP#\"\n> Storage: \"#SERVER.DISK#\"\n> Real-time Upload: \"#SERVER.NETINSPEED#\"\n> Real-time Download: \"#SERVER.NETOUTSPEED#\"\n> Total Upload: \"#SERVER.TRANSFERIN#\"\n> Total Download: \"#SERVER.TRANSFEROUT#\"\n> 1m Load: \"#SERVER.LOAD1#\"\n> 5m Load: \"#SERVER.LOAD5#\"\n> 15m Load: \"#SERVER.LOAD15#\"\n> TCP Connections: \"#SERVER.TCPCONNCOUNT\"\n> UDP Connections: \"#SERVER.UDPCONNCOUNT\"\n\n"
+            }
+        }
+        ```
+    
+        Delete relevant content information as needed
+        
+        ![Notice Picture](https://user-images.githubusercontent.com/30169860/223605886-b7736825-24b8-4b6c-8bc9-96ac388599ef.png)
+
 
 <br/>
 <br/>
@@ -90,21 +143,21 @@ Refer to the example below, it is very flexible.
 - ignore:   Select to ignore specific servers, use with `cover` with server id and boolean, e.g.: `{"1": true, "2":false}`  
 
 **Complete examples:**  
- 
+
 >>Add an offline notification
 >
 >   - Name: Offline notification
 >   - Rules: `[{"Type":"offline","Duration":10}]`
 >   - Enable: √
-  
 
-  
+
+
 >>Add an notification when the CPU exceeds 50% for 10s **but** the memory usage is below 20% for 20s  
 >
 >   - Name: CPU and RAM
 >   - Rules: `[{"Type":"cpu","Min":0,"Max":50,"Duration":10},{"Type":"memory","Min":20,"Max":0,"Duration":20}]`
 >   - Enable: √  
-  
+
 >>Send specific server notifications to specific notification groups  
 >
 >Case:  
@@ -127,7 +180,7 @@ Refer to the example below, it is very flexible.
 >   - Enable: √  
 
 **Using these rules flexibly will help you to make full use of the notification function**  
-  
+
 <br/> 
 
 ###  Special: Any-cycle transfer notification
@@ -148,7 +201,7 @@ Can be used as monthly transfer notificatin
 >>The servers with ID 3 and 4 (defined in the `ignore`) are counted on the 1st of each month, and a notification is triggered when the monthly outbound transfer reaches 1TB during the cycle.  
 >
 > `[{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]`
- 
+
  ## Description of mode of triggering notification
 - Always triggered: A notification is triggered each time the status reported by the Agent matches the rules of the notification  
 - Triggered only once: only one notification is triggered when the state changes, such as changing from normal state to abnormal state or abnormal state back to normal state  
