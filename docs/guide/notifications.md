@@ -49,7 +49,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - URL 参数获取说明：botXXXXXX 中的 XXXXXX 是在 telegram 中关注官方 @Botfather ，输入/newbot ，创建新的机器人（bot）时，会提供的 token（在提示 Use this token to access the HTTP API:后面一行）这里 'bot' 三个字母不可少。创建 bot 后，需要先在 telegram 中与 BOT 进行对话（随便发个消息），然后才可用 API 发送消息。YYYYYY 是 telegram 用户的数字 ID。与机器人@userinfobot 对话可获得。
 
   - **邮件通知示例 - SendCloud 贡献者：[@白歌](https://github.com/cantoblanco)**   
-  **注意：SendCloud 有每日免费发送邮件限额限制，这里仅作示例，你可以选择付费服务或其他类似的免费服务，使用方法类似。**
+    **注意：SendCloud 有每日免费发送邮件限额限制，这里仅作示例，你可以选择付费服务或其他类似的免费服务，使用方法类似。**
 
      - 名称：邮件告警
      - URL：https://api.sendcloud.net/apiv2/mail/send?apiUser=<替换APIUSER>apiKey=<替换APIKEY>&from=<自定义发件邮箱>&fromName=Nezha&to=<自定义收件邮箱>&subject=Nezha-Notification&html=#NEZHA#
@@ -57,8 +57,59 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - 请求类型: JSON
      - Header: 留空
      - Body: 留空
-  - URL 参数获取说明：此方式需提前在 [SendCloud](https://www.sendcloud.net/) 注册账号，创建发件邮箱，然后在[这里](https://www.sendcloud.net/sendSetting/apiuser)获取 APIUSER 和 APIKEY，替换 URL 中的 <替换APIUSER> 和 <替换APIKEY> 为自己的 APIUSER 和 APIKEY，替换 URL 中的 <自定义发件邮箱> 和 <自定义收件邮箱> 为自己的发件邮箱和收件邮箱。
      
+  - URL 参数获取说明：此方式需提前在 [SendCloud](https://www.sendcloud.net/) 注册账号，创建发件邮箱，然后在[这里](https://www.sendcloud.net/sendSetting/apiuser)获取 APIUSER 和 APIKEY，替换 URL 中的 <替换APIUSER> 和 <替换APIKEY> 为自己的 APIUSER 和 APIKEY，替换 URL 中的 <自定义发件邮箱> 和 <自定义收件邮箱> 为自己的发件邮箱和收件邮箱。
+
+  - **企业微信 群机器人 示例 贡献者：[@ChowRex](https://github.com/ChowRex)**
+
+      支持的占位符一览
+
+      ```json
+      {
+          "content": "#NEZHA#",
+          "ServerName": "#SERVER.NAME#",
+          "ServerIP": "#SERVER.IP#",
+          "ServerIPV4": "#SERVER.IPV4#",
+          "ServerIPV6": "#SERVER.IPV6#",
+          "CPU": "#SERVER.CPU#",
+          "MEM": "#SERVER.MEM#",
+          "SWAP": "#SERVER.SWAP#",
+          "DISK": "#SERVER.DISK#",
+          "NetInSpeed": "#SERVER.NETINSPEED#",
+          "NetOutSpeed": "#SERVER.NETOUTSPEED#",
+          "TransferIn": "#SERVER.TRANSFERIN#",
+          "TranferOut": "#SERVER.TRANSFEROUT#",
+          "Load1": "#SERVER.LOAD1#",
+          "Load5": "#SERVER.LOAD5#",
+          "Load15": "#SERVER.LOAD15#",
+          "TCP_CONN_COUNT": "#SERVER.TCPCONNCOUNT",  # 无效
+          "UDP_CONN_COUNT": "#SERVER.UDPCONNCOUNT",  # 无效
+      }
+      ```
+
+      > [群机器人配置说明 - 文档 - 企业微信开发者中心](https://developer.work.weixin.qq.com/document/path/91770#markdown%E7%B1%BB%E5%9E%8B)
+
+      - 名称：企业微信群机器人
+
+      - URL：https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_BOT_KEY
+
+      - 请求方式: POST
+
+      - 请求类型: JSON
+
+      - Body: 
+
+           ```json
+           {
+               "msgtype": "markdown",
+               "markdown": {
+                   "content": "# 哪吒通知消息\n\n\"#NEZHA#\"\n\n> 名称: \"#SERVER.NAME#\"\n> IP: \"#SERVER.IP#\"\n> IPv4: \"#SERVER.IPV4#\"\n> IPv6: \"#SERVER.IPV6#\"\n> CPU: \"#SERVER.CPU#\"\n> 内存: \"#SERVER.MEM#\"\n> 交换分区: \"#SERVER.SWAP#\"\n> 存储: \"#SERVER.DISK#\"\n> 实时上传速度: \"#SERVER.NETINSPEED#\"\n> 实时下载速度: \"#SERVER.NETOUTSPEED#\"\n> 总上传: \"#SERVER.TRANSFERIN#\"\n> 总下载: \"#SERVER.TRANSFEROUT#\"\n> 1分钟内负载: \"#SERVER.LOAD1#\"\n> 5分钟内负载: \"#SERVER.LOAD5#\"\n> 15分钟内负载: \"#SERVER.LOAD15#\"\n> TCP连接数: \"#SERVER.TCPCONNCOUNT\"\n> UDP连接数: \"#SERVER.UDPCONNCOUNT\"\n\n"
+               }
+           }
+           ```
+
+           根据需求删减相关内容信息即可
+
 
 <br/>
 <br/>
@@ -86,21 +137,21 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
 - ignore:  选择忽略特定服务器，搭配 `cover` 使用，内容为服务器 id 和布尔值，例如：`{"1": true, "2":false}`  
 
 **完整示例:**  
- 
+
 >>添加一个离线报警
 >
 >   - 名称：离线通知
 >   - 规则：`[{"Type":"offline","Duration":10}]`
 >   - 启用：√
-  
 
- 
+
+
 >>添加一个监控 CPU 持续 10s 超过 50% **且** 内存持续 20s 占用低于 20% 的报警
 >
 >   - 名称：CPU+内存
 >   - 规则：`[{"Type":"cpu","Min":0,"Max":50,"Duration":10},{"Type":"memory","Min":20,"Max":0,"Duration":20}]`
 >   - 启用：√
-  
+
 
 >>将特定的服务器通知发送到特定的通知分组  
 >
@@ -124,7 +175,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
 >   - 启用：√  
 
 **灵活使用参数可以让你的通知功能被充分使用**  
-  
+
 <br/> 
 
 ### 特殊：任意周期流量报警
