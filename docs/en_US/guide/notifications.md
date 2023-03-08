@@ -113,6 +113,9 @@ Refer to the example below, it is very flexible.
         ```
     
         Delete relevant content information as needed
+        
+        ![Notice Picture](https://user-images.githubusercontent.com/30169860/223605886-b7736825-24b8-4b6c-8bc9-96ac388599ef.png)
+
 
 <br/>
 <br/>
