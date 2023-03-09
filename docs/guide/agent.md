@@ -144,9 +144,10 @@ EOF
 ### 在 群晖DSM 中安装 Agent  
 
 - 请参考社区文章：  
+[群晖 DSM 7.x 安装 哪吒监控 Agent](https://blog.mitsea.com/3929551d08bd4bb0a8baa453e2d92b0c/)  
 [哪吒探针——群晖客户端（被控端）安装教程](https://wl.gta5pdx.cn/archives/546/)  
 
-- Systemd实现 *仅适用于DSM7*:
+- Systemd 实现 *仅适用于 DSM7*:
   ```sh
   # 客户端路径
   EXEC="/PATH/TO/nezha-agent"
@@ -187,11 +188,7 @@ EOF
   ```
   ‼️修改对应信息后‼️
   
-  ‼️修改对应信息后‼️
-  
-  ‼️修改对应信息后‼️
-  
-  使用`root`账号执行上述命令即可安装完成
+  使用 `root` 账号执行上述命令即可安装完成
 
 <br/>
 

@@ -130,13 +130,17 @@ EOF
   ```
 
 ### Installing Agent on Windows  
-- Please refer to the community article: 
-[哪吒探针 - Windows 客户端安装](https://nyko.me/2020/12/13/nezha-windows-client.html)(Chinese)  
+
+- Please refer to the community article:   
+[哪吒探针 - Windows 客户端安装](https://nyko.me/2020/12/13/nezha-windows-client.html) (Chinese)  
 <br/>  
 
 ### Installing Agent on Synology DSM
-- Please refer to the community article: 
-[哪吒探针——群晖客户端（被控端）安装教程](https://wl.gta5pdx.cn/archives/546/)(Chinese)  
+
+- Please refer to the community article:   
+[群晖 DSM 7.x 安装 哪吒监控 Agent](https://blog.mitsea.com/3929551d08bd4bb0a8baa453e2d92b0c/) (Chinese)  
+[哪吒探针——群晖客户端（被控端）安装教程](https://wl.gta5pdx.cn/archives/546/) (Chinese)  
+
 
 - Using Systemd *Only available on DSM7*:
   ```sh
@@ -173,10 +177,6 @@ EOF
   # Enable auto-start
   systemctl enable nezha
   ```
-  ‼️DO IT WHEN YOU HAVE MODIFIED THE ENVS‼️
-  
-  ‼️DO IT WHEN YOU HAVE MODIFIED THE ENVS‼️
-  
   ‼️DO IT WHEN YOU HAVE MODIFIED THE ENVS‼️
   
   Using `root` to execute command above, that's all.

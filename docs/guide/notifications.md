@@ -58,7 +58,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - Header: 留空
      - Body: 留空
      
-  - URL 参数获取说明：此方式需提前在 [SendCloud](https://www.sendcloud.net/) 注册账号，创建发件邮箱，然后在[这里](https://www.sendcloud.net/sendSetting/apiuser)获取 APIUSER 和 APIKEY，替换 URL 中的 <替换APIUSER> 和 <替换APIKEY> 为自己的 APIUSER 和 APIKEY，替换 URL 中的 <自定义发件邮箱> 和 <自定义收件邮箱> 为自己的发件邮箱和收件邮箱。
+    URL 参数获取说明：此方式需提前在 [SendCloud](https://www.sendcloud.net/) 注册账号，创建发件邮箱，然后在[这里](https://www.sendcloud.net/sendSetting/apiuser)获取 APIUSER 和 APIKEY，替换 URL 中的 <替换APIUSER> 和 <替换APIKEY> 为自己的 APIUSER 和 APIKEY，替换 URL 中的 <自定义发件邮箱> 和 <自定义收件邮箱> 为自己的发件邮箱和收件邮箱。
 
   - **企业微信 群机器人 示例 贡献者：[@ChowRex](https://github.com/ChowRex)**
 
