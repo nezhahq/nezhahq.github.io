@@ -26,7 +26,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
    - **Server 酱示例**
 
      - 名称：Server 酱
-     - URL：https://sc.ftqq.com/SCUrandomkeys.send?text=#NEZHA#
+     - URL：https://sc.ftqq.com/SCUrandomkeys.send?title=哪吒报警信息&desp=#NEZHA#
      - 请求方式: GET
      - 请求类型: 默认
      - Body: 空
