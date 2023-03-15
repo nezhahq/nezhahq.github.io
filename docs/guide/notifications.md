@@ -37,7 +37,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - 请求类型: FORM
      - Body: 
      ```json
-      {
+        {
     "title": "#SERVER.NAME#",
     "desp":"**#NEZHA#\n\n
 平均负载: \"#SERVER.LOAD1#\",\"#SERVER.LOAD5#\",\"#SERVER.LOAD15#\"\n\n
