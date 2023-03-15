@@ -41,7 +41,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
       "title": "#SERVER.NAME#",
       "desp":"**#NEZHA#\n\n
       平均负载: \"#SERVER.LOAD1#\",\"#SERVER.LOAD5#\",\"#SERVER.LOAD15#\"\n\n
-      ## [点击访问面板](你的面板域名)\n\n
+      ## [点击访问面板](https://你的面板域名)\n\n
       ![logo](https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg)"
      }
      ```
