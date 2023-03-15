@@ -30,7 +30,23 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - 请求方式: GET
      - 请求类型: 默认
      - Body: 空
-
+   - **Server 酱进阶**
+     - 名称：Server 酱
+     - URL：https://sc.ftqq.com/SCUrandomkeys.send
+     - 请求方式: POST
+     - 请求类型: FORM
+     - Body: 
+     ```json
+     {
+      "title": "#SERVER.NAME#",
+      "desp":"**#NEZHA#\n\n
+      平均负载: \"#SERVER.LOAD1#\",\"#SERVER.LOAD5#\",\"#SERVER.LOAD15#\"\n\n
+      ## [点击访问面板](https://你的面板域名)\n\n
+      ![logo](https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg)"
+     }
+     ```
+     ![展示](https://github.com/iilemon/nezhahq.github.io/blob/main/docs/images/photo_2023-03-16_00-22-47a.jpg?raw=true) 
+      
    - **wxpusher 示例，需要关注你的应用**
 
      - 名称: wxpusher
@@ -107,7 +123,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
                }
            }
            ```
-
+        
            根据需求删减相关内容信息即可
       
       ![通知效果](https://user-images.githubusercontent.com/30169860/223605620-eac53ee6-09f9-4583-94fa-9b0cdedba81c.png)
