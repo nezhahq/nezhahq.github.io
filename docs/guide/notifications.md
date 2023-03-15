@@ -45,7 +45,7 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
       ![logo](https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg)"
      }
      ```
-      
+     ![展示](https://github.com/iilemon/nezhahq.github.io/blob/main/docs/images/photo_2023-03-16_00-22-47a.jpg?raw=true) 
       
    - **wxpusher 示例，需要关注你的应用**
 
