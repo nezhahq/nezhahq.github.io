@@ -124,7 +124,6 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
            }
            ```
         
-
            根据需求删减相关内容信息即可
       
       ![通知效果](https://user-images.githubusercontent.com/30169860/223605620-eac53ee6-09f9-4583-94fa-9b0cdedba81c.png)
