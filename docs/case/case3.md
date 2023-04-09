@@ -4,6 +4,7 @@
 
 项目地址：[nezha_telegram_bot](https://github.com/tech-fever/nezha_telegram_bot)
 
+镜像备份（非实时更新）：[nezha_telegram_bot](https://github.com/nezhahq/nezha_telegram_bot)  
 
 ## 项目特色
 开源Telegram机器人项目，可以基于API实时查询哪吒面板的服务器信息。
