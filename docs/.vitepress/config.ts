@@ -129,7 +129,8 @@ function getCaseSidebarZhCN() {
         { text: '1. 搭建哪吒 Telegram 机器人', link: '/case/case1' },
         { text: '2. 使用Siri语音运行快捷指令查询服务器状态', link: '/case/case2' },
         { text: '3. 自建多用户多语言 Telegram 服务器状态查询机器人', link: '/case/case3' },
-        { text: '4. Fake-agent，监控数据作弊器', link: '/case/case4' }
+        { text: '4. Fake-agent，监控数据作弊器', link: '/case/case4' },
+        { text: '5. Nezha server over Argo tunnel 白嫖利器', link: '/case/case5' }
       ]
     }
   ]
@@ -197,7 +198,8 @@ function getCaseSidebarEnUS() {
         { text: '1. Build your own Telegram bot to query server information', link: '/en_US/case/case1' },
         { text: '2. Use Siri to run shortcut to check server status', link: '/en_US/case/case2' },
         { text: '3. Self-hosted, multi-user, multi-lingual server status query Telegram bot', link: '/en_US/case/case3' },
-        { text: '4. Fake-agent, monitoring data cheater', link: '/en_US/case/case4' }
+        { text: '4. Fake-agent, monitoring data cheater', link: '/en_US/case/case4' },
+        { text: '5. Nezha server over Argo tunnel', link: '/en_US/case/case5' }
       ]
     }
   ]
