@@ -1,13 +1,22 @@
 ---
-heroImage: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
-heroText: Nezha Monitoring Community Project
-tagline: Related projects contributed by Nezha Monitoring community, provide more extensions for Nezha Monitoring
-actionText: Learn More →
-actionLink: /en_US/case/case1
+layout: home
+
+title: Nezha Monitoring  
+titleTemplate: Community Project
+
+hero:
+  name: Nezha Monitoring
+  text: Community Project
+  tagline: Nezha Monitoring has benefited from various projects contributed by the community, which have provided it with additional extensions.
+  image: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
+  actions:
+    - theme: brand
+      text: Learn More →
+      link: /en_US/case/case1
+
 features:
-- title: Submit a project
-  details: We welcome you to submit your own projects, please join the Telegram group and contact the administrator for more information
-- title: Important Notes
-  details: All projects are contributed by community members. Please be aware that Nezha monitoring team cannot be held responsible for community projects including and not limited to warranty, availability, security, etc.
----  
-<br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+  - title: Submit a project
+    details: We welcome you to submit your own project. Please join the Telegram group to contact the administrator for further information.
+  - title: Important Notes
+    details: All projects are contributed by community members. Please be aware that the Nezha Monitoring Team cannot assume responsibility for community projects, including but not limited to warranty, availability, security, etc.
+---

@@ -1,8 +1,15 @@
 ---
-heroImage: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
-heroText: Development Manual
-tagline: Welcome to the Nezha Monitoring Development Manual.
-actionText: Start Now →
-actionLink: /en_US/developer/theme
----  
-<br/>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+layout: home
+
+title: Nezha Monitoring  
+titleTemplate: Development Manual
+
+hero:
+  name: Development Manual
+  text: Nezha Monitoring Development Manual.
+  image: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
+  actions:
+    - theme: brand
+      text: Start Now →
+      link: /en_US/developer/theme
+---
