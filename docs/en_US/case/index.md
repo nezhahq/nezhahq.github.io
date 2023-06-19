@@ -1,5 +1,4 @@
 ---
-home: true
 heroImage: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
 heroText: Nezha Monitoring Community Project
 tagline: Related projects contributed by Nezha Monitoring community, provide more extensions for Nezha Monitoring

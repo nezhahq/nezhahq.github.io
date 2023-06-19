@@ -2,78 +2,79 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   lastUpdated: true,
+  lang: 'zh-CN',
   locales: {
-    '/': {
-        lang: 'zh-CN',
-        title: '哪吒监控',
-        description: '哪吒监控是一个轻量化的运维工具',
-    },
-    '/en_US/': {
-        lang: 'en-US',
-        title: 'Nezha Monitoring',
-        description: 'Nezha Monitoring is a lightweight O&M tool',
-    }
-  },
-  
-  themeConfig: {
-    locales: {
-      '/': {
-        label: '简体中文',
+    root: {
+      lang: 'zh-CN',
+      label: '简体中文',
+      title: '哪吒监控',
+      description: '哪吒监控是一个轻量化的运维工具',
+      link: '/',
+      themeConfig: {
+        lastUpdatedText: '上次更新',
+        editLink: {
+          pattern: 'https://github.com/nezhahq/nezhahq.github.io/edit/main/docs/:path',
+          text: '在GitHub中编辑',
+        },
         nav: [
-          { text: '使用指南', 
-            link: '/', 
-            activeMatch: '^/$|^/guide/' 
+          {
+            text: '使用指南',
+            link: '/',
+            activeMatch: '^/$|^/guide/'
           },
-          { text: '社区项目', 
-            link: '/case/index', 
-            activeMatch: '^/case/' 
+          {
+            text: '社区项目',
+            link: '/case/index.html',
+            activeMatch: '^/case/'
           },
           {
             text: '开发手册',
-            link: '/developer/index',
+            link: '/developer/index.html',
             activeMatch: '^/developer/'
           }
         ],
-
         sidebar: {
+          '/': getGuideSidebarZhCN(),
           '/guide/': getGuideSidebarZhCN(),
           '/case/': getCaseSidebarZhCN(),
           '/developer/': getDeveloperSidebarZhCN(),
-          '/': getGuideSidebarZhCN()
+        }
+      }
+    },
+    en_US: {
+      lang: 'en-US',
+      label: 'English',
+      title: 'Nezha Monitoring',
+      description: 'Nezha Monitoring is a lightweight O&M tool',
+      link: '/en_US/',
+      themeConfig: {
+        lastUpdatedText: 'Last Updated',
+        editLink: {
+          text: 'Edit this page on GitHub',
+          pattern: 'https://github.com/nezhahq/nezhahq.github.io/edit/main/docs/:path',
         },
-        repo: 'nezhahq/nezhahq.github.io',
-        docsDir: 'docs',
-        docsBranch: 'main',
-        editLinks: true,
-        editLinkText: '在GitHub中编辑',
-        lastUpdated: '上次更新'
-      },
-      '/en_US/': {
-        label: 'English',
         nav: [
           { text: 'User Guide', link: '/en_US/', activeMatch: '^/en_US/guide/' },
-          { text: 'Community Projects', link: '/en_US/case/index', activeMatch: '^/en_US/case/' },
-          { text: 'Development Manual', link: '/en_US/developer/index', activeMatch: '^/en_US/developer/' }
+          { text: 'Community Projects', link: '/en_US/case/index.html', activeMatch: '^/en_US/case/' },
+          { text: 'Development Manual', link: '/en_US/developer/index.html', activeMatch: '^/en_US/developer/' }
         ],
-    
         sidebar: {
+          '/en_US/': getGuideSidebarEnUS(),
           '/en_US/guide/': getGuideSidebarEnUS(),
           '/en_US/case/': getCaseSidebarEnUS(),
           '/en_US/developer/': getDeveloperSidebarEnUS(),
-          '/en_US/': getGuideSidebarEnUS()
         },
-        repo: 'nezhahq/nezhahq.github.io',
-        docsDir: 'docs',
-        docsBranch: 'main',
-        editLinks: true,
-        editLinkText: 'Edit this page on GitHub',
-        lastUpdated: 'Last Updated'
-      }
+      },
     },
+  },
+  themeConfig: {
     algolia: {
       appId: 'HP6QF6KMZD',
       apiKey: 'fb8bae9ed373d1057e0c07fcf32b3f1a',
       indexName: 'nezhahq'
+    },
+    footer: {
+      copyright: 'Copyright © 2022-present Nezhahq'
     }
   }
 })
@@ -82,40 +83,40 @@ function getGuideSidebarZhCN() {
   return [
     {
       text: '安装手册',
-      children: [
-        { text: '安装 Dashboard', link: '/guide/dashboard' },
-        { text: '安装 Agent', link: '/guide/agent' }
+      items: [
+        { text: '安装 Dashboard', link: '/guide/dashboard.html' },
+        { text: '安装 Agent', link: '/guide/agent.html' }
       ]
     },
     {
       text: '管理面板配置',
-      children: [
-        { text: '主机', link: '/guide/servers' },
-        { text: '服务', link: '/guide/services' },
-        { text: '定时任务', link: '/guide/tasks' },
-        { text: '报警通知', link: '/guide/notifications' },
-        { text: '设置', link: '/guide/settings' },
-        { text: 'API', link: '/guide/api' }
-      ]
+      items: [
+        { text: '主机', link: '/guide/servers.html' },
+        { text: '服务', link: '/guide/services.html' },
+        { text: '定时任务', link: '/guide/tasks.html' },
+        { text: '报警通知', link: '/guide/notifications.html' },
+        { text: '设置', link: '/guide/settings.html' },
+        { text: 'API', link: '/guide/api.html' }
+      ],
     },
     {
       text: '常见问题',
-      children: [
-        { text: 'TG api 被墙', link: '/guide/q1' },
-        { text: 'Agent 无法启动/上线 查看日志并进行排错的步骤', link: '/guide/q2' },
-        { text: '反向代理 gRPC 端口的步骤', link: '/guide/q3' },
-        { text: '实时通道断开/在线终端连接失败', link: '/guide/q4' },
-        { text: '进行数据迁移、备份和恢复的步骤', link: '/guide/q5' },
-        { text: '设置每月重置流量统计的步骤', link: '/guide/q6' },
-        { text: '自定义 Agent 监控项目的步骤', link: '/guide/q7' }
+      items: [
+        { text: 'TG api 被墙', link: '/guide/q1.html' },
+        { text: 'Agent 无法启动/上线 查看日志并进行排错的步骤', link: '/guide/q2.html' },
+        { text: '反向代理 gRPC 端口的步骤', link: '/guide/q3.html' },
+        { text: '实时通道断开/在线终端连接失败', link: '/guide/q4.html' },
+        { text: '进行数据迁移、备份和恢复的步骤', link: '/guide/q5.html' },
+        { text: '设置每月重置流量统计的步骤', link: '/guide/q6.html' },
+        { text: '自定义 Agent 监控项目的步骤', link: '/guide/q7.html' }
       ]
     },
     {
       text: '排障指南',
-      children: [
-        { text: 'Dashboard 相关', link: '/guide/dashboardq' },
-        { text: 'Agent 相关', link: '/guide/agentq' },
-        { text: '登录相关', link: '/guide/loginq' }
+      items: [
+        { text: 'Dashboard 相关', link: '/guide/dashboardq.html' },
+        { text: 'Agent 相关', link: '/guide/agentq.html' },
+        { text: '登录相关', link: '/guide/loginq.html' }
       ]
     }
   ]
@@ -125,12 +126,12 @@ function getCaseSidebarZhCN() {
   return [
     {
       text: '社区项目',
-      children: [
-        { text: '1. 搭建哪吒 Telegram 机器人', link: '/case/case1' },
-        { text: '2. 使用Siri语音运行快捷指令查询服务器状态', link: '/case/case2' },
-        { text: '3. 自建多用户多语言 Telegram 服务器状态查询机器人', link: '/case/case3' },
-        { text: '4. Fake-agent，监控数据作弊器', link: '/case/case4' },
-        { text: '5. Nezha server over Argo tunnel 白嫖利器', link: '/case/case5' }
+      items: [
+        { text: '1. 搭建哪吒 Telegram 机器人', link: '/case/case1.html' },
+        { text: '2. 使用Siri语音运行快捷指令查询服务器状态', link: '/case/case2.html' },
+        { text: '3. 自建多用户多语言 Telegram 服务器状态查询机器人', link: '/case/case3.html' },
+        { text: '4. Fake-agent，监控数据作弊器', link: '/case/case4.html' },
+        { text: '5. Nezha server over Argo tunnel 白嫖利器', link: '/case/case5.html' }
       ]
     }
   ]
@@ -140,9 +141,9 @@ function getDeveloperSidebarZhCN() {
   return [
     {
       text: '开发手册',
-      children: [
-        { text: '创建新主题', link: '/developer/theme' },
-        { text: 'l10n', link: '/developer/l10n' }
+      items: [
+        { text: '创建新主题', link: '/developer/theme.html' },
+        { text: 'l10n', link: '/developer/l10n.html' }
       ]
     }
   ]
@@ -152,39 +153,39 @@ function getGuideSidebarEnUS() {
   return [
     {
       text: 'Installation Manual',
-      children: [
-        { text: 'Install Dashboard', link: '/en_US/guide/dashboard' },
-        { text: 'Install Agent', link: '/en_US/guide/agent' }
+      items: [
+        { text: 'Install Dashboard', link: '/en_US/guide/dashboard.html' },
+        { text: 'Install Agent', link: '/en_US/guide/agent.html' }
       ]
     },
     {
       text: 'Admin Panel',
-      children: [
-        { text: 'Servers', link: '/en_US/guide/servers' },
-        { text: 'Services', link: '/en_US/guide/services' },
-        { text: 'Tasks', link: '/en_US/guide/tasks' },
-        { text: 'Notifications', link: '/en_US/guide/notifications' },
-        { text: 'Settings', link: '/en_US/guide/settings' },
-        { text: 'API', link: '/en_US/guide/api' }
+      items: [
+        { text: 'Servers', link: '/en_US/guide/servers.html' },
+        { text: 'Services', link: '/en_US/guide/services.html' },
+        { text: 'Tasks', link: '/en_US/guide/tasks.html' },
+        { text: 'Notifications', link: '/en_US/guide/notifications.html' },
+        { text: 'Settings', link: '/en_US/guide/settings.html' },
+        { text: 'API', link: '/en_US/guide/api.html' }
       ]
     },
     {
       text: 'FAQ',
-      children: [
-        { text: 'Agent cannot start/on-line. Steps to review logs and troubleshoot', link: '/en_US/guide/q2' },
-        { text: 'Steps for Reverse Proxy gRPC Ports (support Cloudflare CDN)', link: '/en_US/guide/q3' },
-        { text: 'Real-time channel disconnection/online terminal connection failure', link: '/en_US/guide/q4' },
-        { text: 'Steps to perform data migration, backup and recovery', link: '/en_US/guide/q5' },
-        { text: 'Steps to set up monthly reset data statistics', link: '/en_US/guide/q6' },
-        { text: 'Steps to customize Agent monitoring items', link: '/en_US/guide/q7' }
+      items: [
+        { text: 'Agent cannot start/on-line. Steps to review logs and troubleshoot', link: '/en_US/guide/q2.html' },
+        { text: 'Steps for Reverse Proxy gRPC Ports (support Cloudflare CDN)', link: '/en_US/guide/q3.html' },
+        { text: 'Real-time channel disconnection/online terminal connection failure', link: '/en_US/guide/q4.html' },
+        { text: 'Steps to perform data migration, backup and recovery', link: '/en_US/guide/q5.html' },
+        { text: 'Steps to set up monthly reset data statistics', link: '/en_US/guide/q6.html' },
+        { text: 'Steps to customize Agent monitoring items', link: '/en_US/guide/q7.html' }
       ]
     },
     {
       text: 'Troubleshooting Guide',
-      children: [
-        { text: 'Dashboard', link: '/en_US/guide/dashboardq' },
-        { text: 'Agent', link: '/en_US/guide/agentq' },
-        { text: 'Login', link: '/en_US/guide/loginq' }
+      items: [
+        { text: 'Dashboard', link: '/en_US/guide/dashboardq.html' },
+        { text: 'Agent', link: '/en_US/guide/agentq.html' },
+        { text: 'Login', link: '/en_US/guide/loginq.html' }
       ]
     }
   ]
@@ -194,12 +195,12 @@ function getCaseSidebarEnUS() {
   return [
     {
       text: 'Community Projects',
-      children: [
-        { text: '1. Build your own Telegram bot to query server information', link: '/en_US/case/case1' },
-        { text: '2. Use Siri to run shortcut to check server status', link: '/en_US/case/case2' },
-        { text: '3. Self-hosted, multi-user, multi-lingual server status query Telegram bot', link: '/en_US/case/case3' },
-        { text: '4. Fake-agent, monitoring data cheater', link: '/en_US/case/case4' },
-        { text: '5. Nezha server over Argo tunnel', link: '/en_US/case/case5' }
+      items: [
+        { text: '1. Build your own Telegram bot to query server information', link: '/en_US/case/case1.html' },
+        { text: '2. Use Siri to run shortcut to check server status', link: '/en_US/case/case2.html' },
+        { text: '3. Self-hosted, multi-user, multi-lingual server status query Telegram bot', link: '/en_US/case/case3.html' },
+        { text: '4. Fake-agent, monitoring data cheater', link: '/en_US/case/case4.html' },
+        { text: '5. Nezha server over Argo tunnel', link: '/en_US/case/case5.html' }
       ]
     }
   ]
@@ -209,9 +210,9 @@ function getDeveloperSidebarEnUS() {
   return [
     {
       text: 'Development Manual',
-      children: [
-        { text: 'Create a new theme', link: '/en_US/developer/theme' },
-        { text: 'l10n', link: '/en_US/developer/l10n' }
+      items: [
+        { text: 'Create a new theme', link: '/en_US/developer/theme.html' },
+        { text: 'l10n', link: '/en_US/developer/l10n.html' }
       ]
     }
   ]

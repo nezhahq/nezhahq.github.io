@@ -10,3 +10,4 @@ TODOs.md
 .vscode
 .idea
 pnpm-global
+docs/.vitepress/cache

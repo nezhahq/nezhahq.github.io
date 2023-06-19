@@ -1,5 +1,4 @@
 ---
-home: true
 heroImage: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
 heroText: 哪吒监控社区项目
 tagline: 哪吒监控社区贡献的相关项目，为哪吒监控提供了更多扩展
