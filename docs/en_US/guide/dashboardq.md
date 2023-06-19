@@ -1,5 +1,5 @@
 ## Why the IP displayed in the admin panel and the actual IP of the Agent are not the same?  
-First of all, explain how the IP displayed in the admin panel is gotten: the Agent will request the IP-API every once in a while, get the IP information and report it to the Dashboard, the IP-API currently used can be viewed here: [myip.go](https://github.com/naiba/nezha/blob/master/cmd/agent/monitor/myip.go)  
+First of all, explain how the IP displayed in the admin panel is gotten: the Agent will request the IP-API every once in a while, get the IP information and report it to the Dashboard, the IP-API currently used can be viewed here: [myip.go](https://github.com/nezhahq/agent/blob/main/pkg/monitor/myip.go)  
 If you find that the IP displayed in the admin panel is not the same as the IP provided to you by the service provider, the biggest possibility is that the service provider gave you the **entry IP**, but the Agent tested out your **exit IP**. This problem may also occur in BGP servers and Leased line.  
 ::: tip  
 To take a simple and very common example, the service provider to provide you a anti-DDoS server, in order to meet the goals of both DDoS protection and low network disruption rate, the IP provided to you may be the mapped anti-DDoS IP and not the real exit IP of your server  
