@@ -68,6 +68,9 @@ export default defineConfig({
     },
   },
   themeConfig: {
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/nezhahq/nezhahq.github.io' }
+    ],
     algolia: {
       appId: 'HP6QF6KMZD',
       apiKey: 'fb8bae9ed373d1057e0c07fcf32b3f1a',
