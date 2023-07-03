@@ -14,7 +14,8 @@ Please make sure your path is `/oauth2/callback`, **all lowercase**.
 
 ## Dashboard errors after login
 ### http: named cookie not present
-Clear your browser cookies and log in again, or change your browser.  
+1. Clear your browser cookies and log in again, or change your browser.  
+2. Check the callback address to ensure that your callback address is correct and that both **the port and protocol** are correct! The address from which the request is initiated needs to be in the same domain as the callback address, and the port, protocol, and domain name (or IP) all need to be consistent.
 
 ### lookup xxx
 DNS resolution failure, in most cases, is due to iptables-related configuration changes.  

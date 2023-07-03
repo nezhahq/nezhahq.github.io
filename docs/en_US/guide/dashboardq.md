@@ -7,7 +7,7 @@ To take a simple and very common example, the service provider to provide you a 
 
 You can also test the exit IP by running the following command in the Agent server:  
 ```shell
-curl api.myip.la
+curl https://ipapi.co/ip/
 curl ip.sb
 curl ip-api.com
 ```  
@@ -28,7 +28,7 @@ If you still get iptables... etc. errors, then consider simply closing iptables 
 This issue may also be kernel related, try replacing the official kernel as well.  
 
 ## Dashboard reboot failed: Invalid hostPort: nz_site_port etc.
-Usually this does not occur, if it does, you can modify the configuration through the installation script.  
+Usually this does not occur, if it does, you can modify the configuration through the installation script or edit `/opt/nezha/dashboard/docker-compose.yaml` directly.  
 
 ## Wrong Dashboard layout, CSS resources cannot be loaded
 If the Dashboard page has an incorrect layout, the usual reason is that the CSS file is missing or cannot be loaded.  

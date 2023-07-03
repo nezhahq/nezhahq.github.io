@@ -7,7 +7,7 @@
 
 您也可以在 Agent 服务器中运行以下命令测试出口IP:   
 ```shell
-curl api.myip.la
+curl https://ipapi.co/ip/
 curl ip.sb
 curl ip-api.com
 ```
@@ -28,7 +28,7 @@ systemctl status docker
 这个问题也可能与内核有关，也可以尝试更换官方内核。  
 
 ## 面板重启失败：Invalid hostPort: nz_site_port 等
-通常不会出现这个情况，如出现可以通过安装脚本修改配置。  
+通常不会出现这个情况，如出现可以通过安装脚本修改配置，或者直接修改 `/opt/nezha/dashboard/docker-compose.yaml`文件。  
 
 ## 面板布局错误、CSS 资源无法被加载
 如果出现 Dashboard 页面布局出现错误，通常的原因是 CSS 文件丢失或无法被加载  
