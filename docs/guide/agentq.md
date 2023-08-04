@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 ## 后台显示的 IP 和 Agent 实际 IP 不一致？
 请查看 [Dashboard 相关-为什么管理面板中显示的 IP 和 Agent 实际 IP 不一致？](/guide/dashboardq.html#为什么管理面板中显示的ip和agent实际ip不一致？)  
 在此不再赘述。  

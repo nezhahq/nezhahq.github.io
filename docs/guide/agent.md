@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 **哪吒监控的被控端服务被称为 Agent，本文档将介绍如何在被控端服务器上安装 Agent，并与 Dashboard 连接**  
 <br/>
 ## 一键安装 Agent
