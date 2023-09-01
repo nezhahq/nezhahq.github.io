@@ -1,7 +1,10 @@
 Nezha Monitoring supports monitoring of server load, CPU, memory, hard disk, data transfer, monthly data transfer, number of processes, number of connections, and sends alarm notifications when one of these items reaches a user-set limit.  
 <br/>
 <br/>
-## Flexible notification methods  
+## Flexible notification methods 
+
+In panel messages, the placeholder `#DATETIME#` represents the timestamp of when an event occurs. When the notification is triggered, the panel automatically replaces #DATETIME# with the actual time of the event.
+
 `#NEZHA#` is the panel message placeholder, the panel will automatically replace the placeholder with the actual message when it triggers the notification    
 
 The content of Body is in `JSON` format：**When the request type is FORM**，the value is in the form of `key:value`，`value` can contain placeholders that will be automatically replaced when notified. **When the request type is JSON** It will only do string substitution and submit to the `URL` directly.
