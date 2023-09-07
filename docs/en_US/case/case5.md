@@ -11,6 +11,7 @@ Mirror backup (not live update): [Argo-Nezha-Service-Container](https://github.c
 # Catalog
 
 - [Project Features](case5.md#project-features)
+- [How to get Argo authentication: json or token](case5.md#How-to-get-Argo-authentication-json-or-token)
 - [Variables to be used](case5.md#prepare-variables-to-be-used)
 - [PaaS Deployment Example](case5.md#paas-deployment-example)
 - [VPS Deployment Example](case5.md#vps-deployment-example)
@@ -32,6 +33,7 @@ Mirror backup (not live update): [Argo-Nezha-Service-Container](https://github.c
 * One Argo tunnel for multiple domains and protocols --- Create an intranet-penetrating Argo tunnel for three domains (hostname) and protocols, which can be used for panel access (http), client reporting (tcp) and ssh (optional).
 * Nginx reverse proxy gRPC data port --- with a certificate for tls termination, then Argo's tunnel configuration with https service pointing to this reverse proxy, enable http2 back to the source, grpc(nezha)->h2(nginx)->argo->cf cdn edge->agent
 * Daily automatic backup --- every day at 04:00 BST, the entire Nezha panel folder is automatically backed up to a designated private github repository, including panel themes, panel settings, probe data and tunnel information, the backup retains nearly 5 days of data; the content is so important that it must be placed in the private repository.
+* Automatic daily panel update -- the latest official panel version is automatically detected every day at 4:00 BST, and updated when there is an upgrade.
 * Manual/automatic restore backup --- check the content of online restore file once a minute, and restore immediately when there is any update.
 * Default built-in local probes --- can easily monitor their own server information
 * More secure data --- Argo Tunnel uses TLS encrypted communication to securely transmit application traffic to the Cloudflare network, improving application security and reliability. In addition, Argo Tunnel protects against network threats such as IP leaks and DDoS attacks.
@@ -39,17 +41,31 @@ Mirror backup (not live update): [Argo-Nezha-Service-Container](https://github.c
 <img width="1298" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/6535a060-2138-4c72-9ffa-1175dc6f5c25.png">
 
 
-## Prepare variables to be used
-* Easily get Argo tunnel information through Cloudflare Json generation network: https://fscarmen.cloudflare.now.cc
+## How to get Argo authentication: json or token
+The Argo Tunnel authentication methods are json and token, use one of the two methods.
 
-<img width="772" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/98f2c80c-8d45-4c70-b46e-70f552e0b572">
+### (Methods 1 - Josn):
+#### Easily get Argo tunnel json information through Cloudflare Json Generation Network: https://fscarmen.cloudflare.now.cc
 
-* Visit Cloudflare website, add the domain name of the client reporting data (tcp) and ssh (optional) in the `DNS` record of the corresponding domain, and turn on Orange Cloud to enable CDN.
+<img width="862" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/7bf8fefd-328f-43a1-ada6-4472904e8adb">
+
+#### Visit Cloudflare website, add the domain name of the client reporting data (tcp) and ssh (optional) in the `DNS` record of the corresponding domain, and turn on Orange Cloud to enable CDN.
 
 <img width="1629" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/39ecc388-e66b-44a2-a339-c80e9d7ed8e2">
-
 <img width="1632" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/1ad2042e-46e6-41c3-9c16-14dc8699ee72">
 
+### (Methods 2 - Token): Manually generate Argo tunnel token information via Cloudflare website.
+#### Go to the cf website: https://dash.cloudflare.com/ and go to zero trust to generate token tunnels and messages.
+
+<img width="1672" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/c2952ef2-7a3d-4242-84bc-3cbada1d337c">
+<img width="1652" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/89b2b758-e550-413d-aa3e-216d226da7f4">
+<img width="1463" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/9f77e26b-a25d-4ff0-8425-1085708e19c3">
+<img width="1652" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/d0fba15c-f41b-4ee4-bea3-f0506d9b2d23">
+<img width="1670" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/2a28eab8-e434-4d06-85db-f2017b50f8de">
+<img width="1671" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/c6bcc511-e2f9-4616-bcca-47e1a8a25313">
+<img width="1670" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/7fbe3ef7-fb43-4925-9478-89ee08e44941">
+
+## Prepare variables to be used
 * Visit the Cloudflare website, select the domain name you want to use, and turn on the `network` option to turn the `gRPC` switch on.
 
 <img width="1605" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/533133dc-ab46-43ff-8eec-0b57d776e4a9">
@@ -59,13 +75,11 @@ Mirror backup (not live update): [Argo-Nezha-Service-Container](https://github.c
 Add `https://` to the beginning of the panel's domain name and `/oauth2/callback` to the end of the callback address.
 
 <img width="1031" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/b3218cca-171d-4869-8ff9-7a569d01234a">
-
 <img width="1023" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/c8e6370d-4307-4b88-b490-ce960b694541">
 
 * Get a PAT (Personal Access Token) for github: https://github.com/settings/tokens/new
 
 <img width="1368" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/96b09a43-910c-41c8-b407-1090d81ce728">
-
 <img width="1542" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/b2bf7d3e-2370-4e12-b01d-7cfb9f2d3115">
 
 * Create a private github repository for backups: https://github.com/new
@@ -76,17 +90,17 @@ Add `https://` to the beginning of the panel's domain name and `/oauth2/callback
 ## PaaS Deployment Example
 Image `fscarmen/argo-nezha:latest`, supports amd64 and arm64 architectures.
 
-Variables used 
+Variables used
   | Variable Name | Required | Remarks |
-  | ------------ | ------ | ---- | 
-  | GH_USER | Yes | github username for panel admin authorization | 
+  | ------------ | ------ | ---- |
+  | GH_USER | Yes | github username for panel admin authorization |
   | GH_CLIENTID | yes | apply on github |
   | GH_CLIENTSECRET | yes | apply on github |
   | GH_BACKUP_USER | No | The github username for backing up Nezha's server-side database on github, if not filled in, it is the same as the account GH_USER for panel management authorization |
   | GH_REPO | No | The github repository for backing up Nezha's server-side database files on github |
   | GH_EMAIL | No | github's mailbox for git push backups to remote repositories |
   | GH_PAT | No | github's PAT |
-  | ARGO_JSON | Yes | Argo Json from https://fscarmen.cloudflare.now.cc |
+  | ARGO_AUTH | Yes | Argo Json from https://fscarmen.cloudflare.now.cc<br>Argo token from Cloudflare official website  |
   | DATA_DOMAIN | Yes | Client-server communication argo domain name |
   | WEB_DOMAIN | Yes | Panel argo domain |
   | SSH_DOMAIN | No | ssh for argo domain |
@@ -94,11 +108,11 @@ Variables used
 
 Koyeb
 
-[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=docker&name=nezha&ports=80;http;/&env[GH_USER]=&env[GH_CLIENTID]=&env[GH_CLIENTSECRET]=&env[GH_REPO]=&env[GH_EMAIL]=&env[GH_PAT]=&env[ARGO_JSON]=&env[DATA_DOMAIN]=&env[WEB_DOMAIN]=&env[SSH_DOMAIN]=&env[SSH_PASSWORD]=&image=docker.io/fscarmen/argo-nezha)
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=docker&name=nezha&ports=80;http;/&env[GH_USER]=&env[GH_CLIENTID]=&env[GH_CLIENTSECRET]=&env[GH_REPO]=&env[GH_EMAIL]=&env[GH_PAT]=&env[ARGO_AUTH]=&env[DATA_DOMAIN]=&env[WEB_DOMAIN]=&env[SSH_DOMAIN]=&env[SSH_PASSWORD]=&image=docker.io/fscarmen/argo-nezha)
 
 <img width="927" alt="image" src="https://user-images.githubusercontent.com/92626977/231088411-fbac3e6e-a8a6-4661-bcf8-7c777aa8ffeb.png">
 <img width="1011" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/61fad972-1be9-4e8d-829a-8faea0c8ed64">
-<img width="763" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/ca294962-f10e-4f4c-b69c-9e95d3d25cac">
+<img width="778" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/c070b085-dd7a-4182-9439-857f3116814e">
 <img width="1214" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/ddabdf3a-ca63-4523-b839-62c4d4c0caf2">
 <img width="881" alt="image" src="https://github.com/fscarmen2/Argo-Nezha-Service-Container/assets/92626977/e623f92d-878f-4eb8-9dfe-55b59770ba2f">
 
@@ -120,7 +134,7 @@ docker run -dit \
            -e GH_REPO=<fill in customized> \
            -e GH_CLIENTID=<fill in acquired> \
            -e GH_CLIENTSECRET=<fill in acquired> \
-           -e ARGO_JSON='<fill in acquired>' \
+           -e ARGO_AUTH='<Fill in the fetched Argo json or token>' \
            -e WEB_DOMAIN=<fill in customized> \
            -e DATA_DOMAIN=<fill in customized> \
            -e SSH_DOMAIN=<fill in customized> \
@@ -143,7 +157,7 @@ services.
             - GH_REPO=<fill in customized>
             - GH_CLIENTID=<fill in obtained>
             - GH_CLIENTSECRET=<fill in fetched>
-            - ARGO_JSON='<fill in acquired>'
+            - ARGO_AUTH='<Fill in the fetched Argo json or token>'
             - WEB_DOMAIN=<fill customized>
             - DATA_DOMAIN=<fill in customized>
             - SSH_DOMAIN=<insert customized>
@@ -213,7 +227,8 @@ tar czvf dashboard.tar.gz /dashboard
 |   |-- nezha.key            # Private key information for SSL/TLS certificate.
 |   |-- nezha.pem            # SSL/TLS Privacy Enhancement Email
 |   `-- restore.sh           # Restore backup scripts
-`-- dbfile                   # Record the name of the latest restore or backup file
+|-- dbfile                   # Record the name of the latest restore or backup file
+`-- version                  # Record the current panel app version
 ```
 
 
@@ -224,6 +239,8 @@ tar czvf dashboard.tar.gz /dashboard
 * Akkia's Blog: https://blog.akkia.moe/
 * HiFeng's Blog: https://www.hicairo.com/
 * Intranet Penetration with Cloudflare Tunnel: https://blog.outv.im/2021/cloudflared-tunnel/
+* How to add your own Runner host to GitHub Actions: https://cloud.tencent.com/developer/article/1756690
+* github self-hosted runner addition and startup: https://blog.csdn.net/sinat_32188225/article/details/125978331
 
 
 ## Disclaimer
