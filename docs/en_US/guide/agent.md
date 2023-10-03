@@ -1,5 +1,8 @@
 **The service in the monitored server is called Agent. This document will describe how to install the Agent on the monitored server and connect it with Dashboard**  
-<br/>
+::: tip   
+Agent binary repository: https://github.com/nezhahq/agent/releases    
+:::   
+ 
 ## Install Agent using one-click script  
 Nezha Monitoring now supports one-click installation of the Agent on Windows and Linux. Follow the steps in this document and you can easily deploy it on your server  
 <br/>
@@ -191,7 +194,7 @@ If you are prompted with "macOS cannot verify this app" during installation, ple
 :::  
 
 + First add a server in the admin panel  
-+ Go to the [Release](https://github.com/naiba/nezha/releases) page to download the Agent binary and choose whether to download the darwin amd64 or arm64 Agent depending on the CPU architecture  
++ Go to the [Release](https://github.com/nezhahq/agent/releases) page to download the Agent binary and choose whether to download the darwin amd64 or arm64 Agent depending on the CPU architecture  
 For example, download the amd64 version for Intel CPU and the arm64 version for Apple Silicon. After downloading, extract the Agent binary file, e.g. to the Download folder 
 + Create a new file named `nezha_agent.plist` and save it, edit the contents of the file:    
 ```xml  

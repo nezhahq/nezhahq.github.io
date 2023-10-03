@@ -3,7 +3,9 @@ outline: deep
 ---
 
 **哪吒监控的被控端服务被称为 Agent，本文档将介绍如何在被控端服务器上安装 Agent，并与 Dashboard 连接**  
-<br/>
+::: tip  
+Agent 二进制文件仓库地址为：https://github.com/nezhahq/agent/releases   
+:::    
 ## 一键安装 Agent
 
 目前哪吒监控已支持在 Windows 和 Linux上一键安装 Agent，遵循本文档的步骤，你可以很轻松的在服务器上部署它  
@@ -204,7 +206,7 @@ EOF
 :::  
 
 + 首先在管理面板中添加一台服务器  
-+ 前往 [Release](https://github.com/naiba/nezha/releases) 页下载 Agent 二进制文件，根据 CPU 架构选择下载 darwin amd64 还是 arm64 的 Agent  
++ 前往 [Release](https://github.com/nezhahq/agent/releases) 页下载 Agent 二进制文件，根据 CPU 架构选择下载 darwin amd64 还是 arm64 的 Agent  
 如 Intel CPU 下载 amd64，Apple Silicon 下载 arm64 版本。下载完成后解压 Agent 二进制文件，如解压到下载文件夹  
 + 新建一个名为 `nezha_agent.plist` 的文件并保存，修改文件内容如下：  
 ```xml  
