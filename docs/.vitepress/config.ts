@@ -3,6 +3,9 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   lastUpdated: true,
   lang: 'zh-CN',
+  head: [
+    ['script', { src: 'https://cdn.wwads.cn/js/makemoney.js', async: 'true' }],
+  ],
   locales: {
     root: {
       lang: 'zh-CN',
