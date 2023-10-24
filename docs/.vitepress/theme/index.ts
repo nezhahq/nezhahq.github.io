@@ -1,12 +1,14 @@
 import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
-import SmallAd from './components/SmallAd.vue'
+import HorizontalAd from './components/HorizontalAd.vue'
+import VerticalAd from './components/VerticalAd.vue'
 
 export default {
     ...DefaultTheme,
     Layout() {
         return h(DefaultTheme.Layout, null, {
-            'aside-top': () => h(SmallAd)
+            'doc-top': () => h(HorizontalAd),
+            'aside-top': () => h(VerticalAd),
         })
     }
 }
