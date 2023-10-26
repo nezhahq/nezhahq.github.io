@@ -42,7 +42,7 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh  
 ```
 如果你的被控服务器位于中国大陆，可以使用镜像：  
 ````bash
-curl -L https://cdn.jsdelivr.net/gh/naiba/nezha@master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
+curl -L https://jihulab.com/nezha/dashboard/-/raw/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo CN=true ./nezha.sh
 ````
 * 选择“安装监控 Agent”  
 * 输入通信域名，如：”data.example.com“  

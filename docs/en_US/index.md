@@ -10,6 +10,9 @@ hero:
   image: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
   actions:
     - theme: brand
+      text: Preview
+      link: https://ops.naibahq.com  
+    - theme: alt
       text: Learn More → 
       link: /en_US/guide/dashboard
 
