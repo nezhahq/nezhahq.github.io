@@ -64,6 +64,15 @@ Refer to the example below, it is very flexible.
     ```
 
     Notes for this method: This method requires calling Microsoft Graph V1.0, you need to go to Microsoft Graph and create your own application, give `Mail.Send` permission and get the Token, or you can go [Microsoft Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer) directly to give permission and get the Token, just replace the Token in the Header with the actual Token.
+
+- **DingTalk Group bot notification Example**
+    - Name: DingTalk Group
+    - URL: https://oapi.dingtalk.com/robot/send?access_token=xxxxxxx
+    - Request method: POST
+    - Request Type: JSON
+    - Header: `{"Content-Type": "application/json"}`
+    - Body: `{"msgtype": "text","text": {"content":"nezha：\n#NEZHA#"}}`
+    - Notes for this method：URL:Creating bot in DingTalk groups to obtain bot URLs, Security settings validation set to custom keywords，The security settings validation is set to a custom keyword, and the keyword must be included in the content field of the body, such as nezha
     
   - **Wechat Work Group bot Example,  contributed by [@ChowRex](https://github.com/ChowRex)**
     
