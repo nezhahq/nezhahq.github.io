@@ -83,6 +83,16 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      
     URL 参数获取说明：此方式需提前在 [SendCloud](https://www.sendcloud.net/) 注册账号，创建发件邮箱，然后在[这里](https://www.sendcloud.net/sendSetting/apiuser)获取 APIUSER 和 APIKEY，替换 URL 中的 <替换APIUSER> 和 <替换APIKEY> 为自己的 APIUSER 和 APIKEY，替换 URL 中的 <自定义发件邮箱> 和 <自定义收件邮箱> 为自己的发件邮箱和收件邮箱。
 
+   - **钉钉群机器人配置 示例**
+
+     - 名称: 哪吒探针小跟班
+     - URL：https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxxxxxxxxxx
+     - 请求方式: POST
+     - 请求类型: JSON
+     - Header: `{"Content-Type": "application/json"}`
+     - Body: {"msgtype": "text","text": {"content":"哪吒探针：\n#NEZHA#"}}
+    URL 参数获取说明：机器人URL在钉钉群-管理机器人-创建机器人后获取，安全方式选择自定义关键词，Body中content中需包含该关键词
+
   - **企业微信 群机器人 示例 贡献者：[@ChowRex](https://github.com/ChowRex)**
 
       支持的占位符一览
