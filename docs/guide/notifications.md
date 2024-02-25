@@ -90,8 +90,8 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
      - 请求方式: POST
      - 请求类型: JSON
      - Header: `{"Content-Type": "application/json"}`
-     - Body: {"msgtype": "text","text": {"content":"哪吒探针：\n#NEZHA#"}}
-    URL 参数获取说明：机器人URL在钉钉群-管理机器人-创建机器人后获取，安全方式选择自定义关键词，Body中content中需包含该关键词
+     - Body: `{"msgtype": "text","text": {"content":"哪吒探针：\n#NEZHA#"}}`
+     - URL 参数获取说明：机器人URL在钉钉群-管理机器人-创建机器人后获取，安全方式选择自定义关键词，Body中content中需包含该关键词
 
   - **企业微信 群机器人 示例 贡献者：[@ChowRex](https://github.com/ChowRex)**
 
