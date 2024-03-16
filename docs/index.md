@@ -18,9 +18,9 @@ hero:
 
 features:
   - title: 一键安装
-    details: 支持一键脚本安装面板和监控服务，轻松使用；Linux、Windows、MacOS、OpenWRT等主流系统均受支持
+    details: 支持一键安装面板和监控服务，使用方便。主流系统包括Linux、Windows、MacOS、OpenWRT以及群晖均受支持  
   - title: 实时监控
-    details: 支持同时监控多个服务器的系统状态，支持监控网页、端口、SSL证书状态；支持故障、流量等状态报警，支持多种通知方式（Telegram、邮件、微信等）
+    details: 支持同时监控多个服务器的状态，提供历史延迟图表，并可监控网页、端口可用性和SSL证书状态。支持故障和流量等状态告警，可通过Telegram、邮件、微信等多种通知方式进行提醒  
   - title: 轻松运维
-    details: 支持WebSSH，支持流量循环监控，支持设置定时任务、服务器批量执行任务  
+    details: 可使用API获取服务器状态，支持WebSSH、DDNS和流量监控，可设置定时和触发任务并批量执行服务器任务  
 ---

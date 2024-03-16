@@ -98,10 +98,10 @@ function getGuideSidebarZhCN() {
     {
       text: '管理面板配置',
       items: [
-        { text: '主机', link: '/guide/servers.html' },
+        { text: '服务器', link: '/guide/servers.html' },
         { text: '服务', link: '/guide/services.html' },
-        { text: '定时任务', link: '/guide/tasks.html' },
-        { text: '报警通知', link: '/guide/notifications.html' },
+        { text: '任务', link: '/guide/tasks.html' },
+        { text: '告警', link: '/guide/notifications.html' },
         { text: '设置', link: '/guide/settings.html' },
         { text: 'API', link: '/guide/api.html' }
       ],

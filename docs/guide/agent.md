@@ -14,7 +14,7 @@ Agent 二进制文件仓库地址为：<https://github.com/nezhahq/agent/release
 
 ### 准备工作
 
-你需要提前在管理面板中设置好通信域名，此域名不可以接入CDN，这里以前面提到过的示例通信域名 “data.example.com” 来做演示  
+你需要提前在管理面板中设置好通信域名，此域名不可以接入CDN，这里以示例通信域名 “data.example.com” 来做演示  
 进入后台管理面板，转到“设置”页，在“未接入 CDN 的面板服务器域名/IP”项中填入通信域名，然后点击"保存"  
 <br/>
 
@@ -33,6 +33,9 @@ Agent 二进制文件仓库地址为：<https://github.com/nezhahq/agent/release
 * 如遇到确认「执行策略变更」请选择 Y
 * 等待安装完成后返回 Dashboard 主页查看服务器是否上线  
 <br/>  
+:::warning  
+如果在 Powershell 中运行一键安装命令时遇到错误，请尝试下方的**在 Windows 中手动安装 Agent**  
+:::  
 
 <br/>
 
@@ -55,8 +58,8 @@ curl -L https://gitee.com/naibahq/nezha/raw/master/script/install.sh -o nezha.sh
 
 * 选择“安装监控 Agent”  
 * 输入通信域名，如：”data.example.com“  
-* 输入面板通信端口（RPC端口），默认为 5555  
-* 输入 Agent 密钥，Agent 密钥在管理面板中添加服务器时生成，可以在管理面板中的“主机”页中找到  
+* 输入面板通信端口（ gRPC 端口），默认为 5555  
+* 输入 Agent 密钥，Agent 密钥在管理面板中添加服务器时生成，可以在管理面板中的“服务器”页中找到  
 * 等待安装完成后返回 Dashboard 主页查看服务器是否上线  
 <br/>  
 
@@ -149,7 +152,7 @@ EOF
   rc-update add nezha-agent
   ```
 
-### 在 Windows 中安装 Agent  
+### 在 Windows 中手动安装 Agent  
 
 * 请参考社区文章：  
 [哪吒探针 - Windows 客户端安装](https://nyko.me/2020/12/13/nezha-windows-client.html)  
@@ -170,8 +173,8 @@ EOF
   LOG="${EXEC}.log"
   # 额外执行参数, 可留空
   ARGS="--disable-command-execute"
-  # 哪吒服务端GRPC地址
-  SERVER="HOST_OR_IP:GRPC_PORT"
+  # 哪吒服务端gRPC地址
+  SERVER="HOST_OR_IP:gRPC_PORT"
   # 上一步获取的主机密钥
   SECRET="APP_SECRET"
   # 服务运行用户名, *强烈建议使用非root用户执行*
@@ -238,7 +241,7 @@ EOF
   <string>--password</string>
   <string>通信密钥，如：529664783eeb23cc25</string>
   <string>--server</string>
-  <string>通信网址和RPC端口，如:data.example.com:5555</string>
+  <string>通信网址和gRPC端口，如:data.example.com:5555</string>
  </array>
  <key>RunAtLoad</key>
  <true/>
