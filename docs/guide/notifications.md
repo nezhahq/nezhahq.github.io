@@ -145,6 +145,14 @@ URL 里面也可放置占位符，请求时会进行简单的字符串替换。
       
       ![通知效果](https://user-images.githubusercontent.com/30169860/223605620-eac53ee6-09f9-4583-94fa-9b0cdedba81c.png)
 
+   - **飞书群机器人配置 示例 贡献者：[@eya46](https://github.com/eya46)**
+     - 名称: 哪吒面板Bot
+     - URL：https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxxxxxxxxxxxxx
+     - 请求方式: POST
+     - 请求类型: JSON
+     - Body: `{"content":{"text":"#NEZHA#\n#DATETIME#"},"msg_type":"text"}`
+     - URL 参数获取说明：机器人URL通过飞书群-群机器人-添加机器人-自定义机器人(webhook)创建后获取
+
 
 <br/>
 <br/>
