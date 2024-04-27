@@ -34,7 +34,7 @@ DDNS feature is suitable for servers that have dynamic IP addresses. When a diff
 - Manage your DDNS configuration centrally, without deploying a single service on every server.
 - Save your credentials only on the Dashboard server to prevent data leaks.
 
-### 配置说明
+### Configuration description
 Currently, DDNS supports two types of configurations: Single and Multiple. If Single is chosen, all Agent servers will use the same configuration to update DNS records, whereas selecting Multiple allows each server to use a specified configuration.
 
 #### Single
@@ -126,7 +126,6 @@ Request headers of Webhook.
 Only applied to `webhook`.
 
 ### Dashboard configuration
-修改好配置文件后，还需要在 Dashboard 中修改服务器设置才能使 DDNS 生效。
 After configuring `config.yaml`, you will need to modify server settings in Dashboard to make DDNS function effective.
 
 Explanation of DDNS-related options:
