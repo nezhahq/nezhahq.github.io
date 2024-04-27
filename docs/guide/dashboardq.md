@@ -49,3 +49,9 @@ location ~ .*\.(js|css)?$
     }
 ````
 3. 保存配置，并清空浏览器、NginX、CDN 中的缓存，此时刷新页面应恢复正常
+
+## 面板无法启动：panic: 无法找到配置的DDNS提供者...
+填入的DDNS provider的值有误，目前仅支持 `webhook`、`cloudflare`，`tencentcloud` 和 `dummy`。
+
+## 面板更新DDNS崩溃：panic: interface conversion: interface {} is nil, not []interface {}
+填入的DDNS `AccessID` 或 `AccessSecret` 有误。
