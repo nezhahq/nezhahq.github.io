@@ -65,27 +65,54 @@ DDNS:
 DDNS 供应商的名称。目前支持 `webhook`、`cloudflare` 以及 `tencentcloud`。
 ##### AccessID
 DDNS 供应商的令牌 ID。
+
 仅适用于供应商 `tencentcloud`。
 ##### AccessSecret
 DDNS 供应商的令牌 Secret。
+
 仅适用于供应商 `cloudflare` 及 `tencentcloud`。
 ##### WebhookMethod
-Webhook 的请求方法。
-例如 `GET`、`POST`等。
+Webhook 的请求方法。例如 `GET`、`POST`等。
+
 仅适用于供应商 `webhook`。
 ##### WebhookURL
 Webhook 的请求地址。
+
 仅适用于供应商 `webhook`。
 ##### WebhookRequestBody
 Webhook 的请求体。
+
 仅适用于供应商 `webhook`。
 ##### WebhookHeaders
 Webhook 的请求头。
+
 仅适用于供应商 `webhook`。
 ##### MaxRetries
 当请求失败时，重试请求的次数。
 ##### Profiles
 多配置设定。在单配置设定中，此项不进行处理。
+
+:::tip
+`WebhookURL`、`WebhookRequestBody` 以及`WebhookHeaders`可以使用如下参数：
+
+`{ip}` - 主机当前IP
+
+`{domain}` - ddns域名
+
+`{type}` - IP类型，可能为"ipv4"和"ipv6"
+
+`{access_id}` - 凭据1
+
+`{access_secret}` - 凭据2
+
+例如以下配置：
+```
+WebhookHeaders: |
+    a:{access_id}
+    b:{access_secret}
+WebhookRequestBody: '{"domain": "{domain}", "ip": "{ip}", "type": "{type}"}'
+```
+:::
 
 #### 多配置
 当使用多配置时，请将 `DDNS.Provider` 留空。如 `DDNS.Provider` 的值不为空，多配置设定将被无视。
@@ -103,35 +130,12 @@ DDNS:
       WebhookRequestBody: ""
       WebhookHeaders: "" 
 ```
-##### Enable
-布尔值，选择是否开启 DDNS 功能。
-##### MaxRetries
-当请求失败时，重试请求的次数。
 ##### Profiles
 多配置设定。
-##### Provider
-DDNS 供应商的名称。目前支持 `webhook`、`cloudflare` 以及 `tencentcloud`。
 ##### example
 你的 DDNS 配置名，可填任意字符串。
-##### AccessID
-DDNS 供应商的令牌 ID。
-仅适用于供应商 `tencentcloud`。
-##### AccessSecret
-DDNS 供应商的令牌 Secret。
-仅适用于供应商 `cloudflare` 及 `tencentcloud`。
-##### WebhookMethod
-Webhook 的请求方法。
-例如 `GET`、`POST`等。
-仅适用于供应商 `webhook`。
-##### WebhookURL
-Webhook 的请求地址。
-仅适用于供应商 `webhook`。
-##### WebhookRequestBody
-Webhook 的请求体。
-仅适用于供应商 `webhook`。
-##### WebhookHeaders
-Webhook 的请求头。
-仅适用于供应商 `webhook`。
+
+其它选项请参考[单配置](#单配置)段。
 
 ### Dashboard 配置
 修改好配置文件后，还需要在 Dashboard 中修改服务器设置才能使 DDNS 生效。
@@ -149,7 +153,9 @@ DDNS 相关选项说明：
 
 ::: tip
 在 Dashboard 设置中修改配置并保存时，会在 `config.yaml` 中填入默认配置选项，此时 DDNS 段中会同时存在单配置和多配置的选项。
+
 如需使用单配置，请无视 `Profiles` 选项相关内容。
+
 如需使用多配置，请将 `DDNS.Provider` 留空。如 `DDNS.Provider` 的值不为空，多配置设定将被无视。
 :::
 
