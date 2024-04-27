@@ -45,3 +45,10 @@ location ~ .*\.(js|css)?$
     }
 ````  
 3. Save the configuration and clear the cache in the browser, NginX, and CDN, then refresh the page and it should return to normal.
+
+## Dashboard cannot start：panic: 无法找到配置的DDNS提供者...
+The value entered for the DDNS provider is incorrect. Currently, only `webhook`, `cloudflare`, `tencentcloud`, and `dummy` are supported.
+
+
+## Dashboard crashes when updating DDNS: panic: interface conversion: interface {} is nil, not []interface {}
+The DDNS `AccessID` or `AccessSecret` filled is incorrect.
