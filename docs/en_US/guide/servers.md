@@ -57,27 +57,54 @@ Boolean value indicating whether the DDNS function is enabled.
 Name of the DDNS provider, currently support `webhook`, `cloudflare` and `tencentcloud`.
 ##### AccessID
 Secret ID associated with DDNS provider.
+
 Only applied to `tencentcloud`.
 ##### AccessSecret
 Secret key associated with DDNS provider.
+
 Only applied to `cloudflare` and `tencentcloud`.
 ##### WebhookMethod
-Request method of Webhook.
-For example, `GET` and `POST`.
+Request method of Webhook. For example, `GET` and `POST`.
+
 Only applied to `webhook`.
 ##### WebhookURL
 Request URL of Webhook.
+
 Only applied to `webhook`.
 ##### WebhookRequestBody
 Request body of Webhook.
+
 Only applied to `webhook`.
 ##### WebhookHeaders
 Request headers of Webhook.
+
 Only applied to `webhook`.
 ##### MaxRetries
 The number of retry attempts after an update request has failed.
 ##### Profiles
 Multiple configuration setting. Will be ignored in Single configuration setting.
+
+:::tip
+`WebhookURL`, `WebhookRequestBody` and `WebhookHeaders` can use additional params：
+
+`{ip}` - Host IP
+
+`{domain}` - DDNS domain
+
+`{type}` - Your IP type, possibly "ipv4" or "ipv6"
+
+`{access_id}` - Credential #1
+
+`{access_secret}` - Credential #2
+
+Example:
+```
+WebhookHeaders: |
+    a:{access_id}
+    b:{access_secret}
+WebhookRequestBody: '{"domain": "{domain}", "ip": "{ip}", "type": "{type}"}'
+```
+:::
 
 #### Multiple
 Please leave `DDNS.Provider` field blank while using Multiple configuration. If not, the Multiple configuration will be ignored.
@@ -95,35 +122,12 @@ DDNS:
       WebhookRequestBody: ""
       WebhookHeaders: "" 
 ```
-##### Enable
-Boolean value indicating whether the DDNS function is enabled.
-##### MaxRetries
-The number of retry attempts after an update request has failed.
 ##### Profiles
 Multiple configuration setting.
-##### Provider
-Name of the DDNS provider, currently support `webhook`, `cloudflare` and `tencentcloud`.
 ##### example
 Name of DDNS configuration, can be any string.
-##### AccessID
-Secret ID associated with DDNS provider.
-Only applied to `tencentcloud`.
-##### AccessSecret
-Secret key associated with DDNS provider.
-Only applied to `cloudflare` and `tencentcloud`.
-##### WebhookMethod
-Request method of Webhook.
-For example, `GET` and `POST`.
-Only applied to `webhook`.
-##### WebhookURL
-Request URL of Webhook.
-Only applied to `webhook`.
-##### WebhookRequestBody
-Request body of Webhook.
-Only applied to `webhook`.
-##### WebhookHeaders
-Request headers of Webhook.
-Only applied to `webhook`.
+
+For other options, view [Single](#single).
 
 ### Dashboard configuration
 After configuring `config.yaml`, you will need to modify server settings in Dashboard to make DDNS function effective.
@@ -142,7 +146,9 @@ The DDNS configuration to use in case of multiple configurations.
 
 ::: tip
 When modifying settings in the Dashboard and saving them, default configuration options will be filled into the `config.yaml` file. At this time, in the DDNS field, there will be both single configuration and multiple configurations options available. 
+
 If you need to use a single configuration, please ignore the content related to the Profiles option. 
+
 Please leave `DDNS.Provider` field blank while using Multiple configuration. If not, the Multiple configuration will be ignored.
 :::
 
