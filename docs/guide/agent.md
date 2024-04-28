@@ -279,6 +279,58 @@ launchctl remove nezha_agent
 
 <br/>  
 
+### 在 macOS 中使用 Homebrew 安装 Agent
+
+***本节内容改编自 [🐿️松鼠收集🌰](https://blog.mre.red/archives/install_nezha_monitoring_agent_service_with_homebrew)，改编已获得原作者授权***
+
+* 添加 Homebrew 第三方仓库
+
+***由于暂未提交到 Homebrew Core 官方库，暂时放在上述博客作者参与维护的第三方 Homebrew 仓库中***
+
+```sh
+brew tap brewforge/chinese
+```
+
+* 安装 Nezha Agent
+
+```sh
+brew install nezha-agent
+```
+
+* 添加环境变量
+
+```sh
+echo 'export HOMEBREW_NEZHA_AGENT_PASSWORD="你的密钥，在你的服务页面获取"' >> ~/.zshrc
+echo 'export HOMEBREW_NEZHA_AGENT_SERVER="你的服务器和端口，格式 your.domain:5555 "' >> ~/.zshrc
+source ~/.zshrc
+```
+
+* 通过 Homebrew 启动 Nezha Agent 服务
+
+```sh
+brew services start nezha-agent
+```
+
+* 检查服务状态
+
+```sh
+brew services info nezha-agent
+```
+
+* 停止服务
+
+```sh
+brew services stop nezha-agent
+```
+
+* 卸载 Nezha Agent
+
+```sh
+brew rm nezha-agent
+```
+
+<br/>
+
 ### 在 OpenWRT 中安装 Agent  
 
 **如何 一步到位,解决安装过程疑难杂症**  
