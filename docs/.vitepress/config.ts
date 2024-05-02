@@ -115,7 +115,8 @@ function getGuideSidebarZhCN() {
         { text: '实时通道断开/在线终端连接失败', link: '/guide/q4.html' },
         { text: '进行数据迁移、备份和恢复的步骤', link: '/guide/q5.html' },
         { text: '设置每月重置流量统计的步骤', link: '/guide/q6.html' },
-        { text: '自定义 Agent 监控项目的步骤', link: '/guide/q7.html' }
+        { text: '自定义 Agent 监控项目的步骤', link: '/guide/q7.html' },
+        { text: '使用Cloudflare Access作为OAuth2提供方', link: '/guide/q8' },
       ]
     },
     {
@@ -184,7 +185,8 @@ function getGuideSidebarEnUS() {
         { text: 'Real-time channel disconnection/online terminal connection failure', link: '/en_US/guide/q4.html' },
         { text: 'Steps to perform data migration, backup and recovery', link: '/en_US/guide/q5.html' },
         { text: 'Steps to set up monthly reset data statistics', link: '/en_US/guide/q6.html' },
-        { text: 'Steps to customize Agent monitoring items', link: '/en_US/guide/q7.html' }
+        { text: 'Steps to customize Agent monitoring items', link: '/en_US/guide/q7.html' },
+        { text: 'Use Cloudflare Access as OAuth2 provider', link: '/guide/q8' },
       ]
     },
     {
