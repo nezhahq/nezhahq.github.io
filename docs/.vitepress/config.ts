@@ -5,6 +5,18 @@ export default defineConfig({
   lang: 'zh-CN',
   head: [
     ['script', { src: 'https://cdn.wwads.cn/js/makemoney.js', async: 'true' }],
+    [
+      'script',
+      {
+        async: '',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-FDME8GJGTW'
+      }
+    ],
+    [
+      'script',
+      {},
+      "window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', 'G-FDME8GJGTW');"
+    ]
   ],
   locales: {
     root: {
