@@ -9,7 +9,8 @@ outline: deep
 ## 一键脚本安装时出错  
 
 ### curl: Failed to connect to raw.githubusercontent.com......
-多出现在国内主机中，目前一键脚本只从 Github 直接获取安装脚本，您可以多尝试几次，或者[手动安装 Agent](/guide/agent.html#其他方式安装agent)，别忘了使用镜像。
+多出现在国内主机中，目前一键脚本只从 Github 直接获取安装脚本，您可以多尝试几次，或者[手动安装 Agent](/guide/agent.html#其他方式安装agent)。   
+另外，也可以自行寻找第三方 Github 加速服务或者镜像，并在一键安装脚本中设置。
 
 ### sudo: command not found
 请先手动安装 sudo。

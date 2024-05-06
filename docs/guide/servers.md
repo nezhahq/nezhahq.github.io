@@ -36,14 +36,14 @@ Linux 和 Windows 均可用，可使用 Ctrl+Shift+V 粘贴。
 注意在线终端功能中，Agent 也是通过 WebSocket 连接到**公开访问域名**，而非通过 gRPC 交互。
 
 ## DDNS 功能
-DDNS 功能适用于使用动态 IP 的服务器，当 Agent 上报了一个新的 IP，Dashboard 会根据配置自动更新 DNS 记录。
+DDNS 功能适用于使用动态 IP 的服务器，当 Agent 上报了一个新的 IP，Dashboard 会根据配置自动更新 DNS 记录
 
 ### 为什么我要使用哪吒监控的 DDNS 功能？
-- 方便集中管理 DDNS 设置，而不是在每台机器上都部署一个 DDNS 服务；
-- 仅在面板机上保存您的机密信息，防止外泄。
+- 方便集中管理 DDNS 设置，而不是在每台机器上都部署一个 DDNS 服务
+- 仅在面板机上保存您的机密信息，防止外泄
 
 ### 配置说明
-目前 DDNS 功能支持两种形式的配置：单配置和多配置。如使用单配置，则所有 Agent 服务器都使用相同的配置更新 DDNS；如使用多配置，则可为每台服务器指定一个配置更新 DDNS，灵活性更强。
+目前 DDNS 功能支持两种形式的配置：单配置和多配置。如使用单配置，则所有 Agent 服务器都使用相同的配置更新 DDNS；如使用多配置，则可为每台服务器指定一个配置更新 DDNS，灵活性更强
 
 #### 单配置
 ```yaml
@@ -59,63 +59,35 @@ DDNS:
   MaxRetries: 3
   Profiles: null
 ```
-##### Enable
-布尔值，选择是否开启 DDNS 功能。
-##### Provider
-DDNS 供应商的名称。目前支持 `webhook`、`cloudflare` 以及 `tencentcloud`。
-##### AccessID
-DDNS 供应商的令牌 ID。
+- `Enable` 布尔值，选择是否开启 DDNS 功能   
+- `Provider` DDNS 供应商的名称；目前支持 `webhook`、`cloudflare` 以及 `tencentcloud`   
+- `AccessID` DDNS 供应商的令牌 ID；仅适用于供应商 `tencentcloud`   
+- `AccessSecret` DDNS 供应商的令牌 Secret；仅适用于供应商 `cloudflare` 及 `tencentcloud` 
+- `WebhookMethod` Webhook 的请求方法。例如 `GET`、`POST`等；仅适用于供应商 `webhook`
+- `WebhookURL` Webhook 的请求地址；仅适用于供应商 `webhook`
+- `WebhookRequestBody` Webhook 的请求体；仅适用于供应商 `webhook`
+- `WebhookHeaders` Webhook 的请求头；仅适用于供应商 `webhook`
+- `MaxRetries`当请求失败时，重试请求的次数
+- `Profiles` 多配置设定；在单配置设定中，此项忽略
 
-仅适用于供应商 `tencentcloud`。
-##### AccessSecret
-DDNS 供应商的令牌 Secret。
+`WebhookURL`、`WebhookRequestBody` 以及`WebhookHeaders`可以包含以下参数：
+- `{ip}` - 主机当前IP
+- `{domain}` - ddns域名
+- `{type}` - IP类型，可能为"ipv4"和"ipv6"
+- `{access_id}` - 凭据1
+- `{access_secret}` - 凭据2
 
-仅适用于供应商 `cloudflare` 及 `tencentcloud`。
-##### WebhookMethod
-Webhook 的请求方法。例如 `GET`、`POST`等。
-
-仅适用于供应商 `webhook`。
-##### WebhookURL
-Webhook 的请求地址。
-
-仅适用于供应商 `webhook`。
-##### WebhookRequestBody
-Webhook 的请求体。
-
-仅适用于供应商 `webhook`。
-##### WebhookHeaders
-Webhook 的请求头。
-
-仅适用于供应商 `webhook`。
-##### MaxRetries
-当请求失败时，重试请求的次数。
-##### Profiles
-多配置设定。在单配置设定中，此项不进行处理。
-
-:::tip
-`WebhookURL`、`WebhookRequestBody` 以及`WebhookHeaders`可以使用如下参数：
-
-`{ip}` - 主机当前IP
-
-`{domain}` - ddns域名
-
-`{type}` - IP类型，可能为"ipv4"和"ipv6"
-
-`{access_id}` - 凭据1
-
-`{access_secret}` - 凭据2
-
-例如以下配置：
+配置示例：
 ```
 WebhookHeaders: |
     a:{access_id}
     b:{access_secret}
 WebhookRequestBody: '{"domain": "{domain}", "ip": "{ip}", "type": "{type}"}'
 ```
-:::
+<br>   
 
 #### 多配置
-当使用多配置时，请将 `DDNS.Provider` 留空。如 `DDNS.Provider` 的值不为空，多配置设定将被无视。
+当使用多配置时，请将 `DDNS.Provider` 留空。如 `DDNS.Provider` 的值不为空，多配置设定将被忽略
 ```yaml
 DDNS:
   Enable: true
@@ -130,36 +102,31 @@ DDNS:
       WebhookRequestBody: ""
       WebhookHeaders: "" 
 ```
-##### Profiles
-多配置设定。
-##### example
-你的 DDNS 配置名，可填任意字符串。
+- `Profiles` 多配置设定
+- `example` 可替换为 DDNS 配置名，可填任意字符串
 
-其它选项请参考[单配置](#单配置)段。
+其它选项请参考[单配置](#单配置)段。   
+<br>   
 
-### Dashboard 配置
-修改好配置文件后，还需要在 Dashboard 中修改服务器设置才能使 DDNS 生效。
+#### Dashboard 配置
+修改配置文件后，还需要在 Dashboard 中修改服务器设置才能使 DDNS 生效  
+<br>    
 DDNS 相关选项说明：
-- 启用DDNS
-为此服务器启用 DDNS 功能。
-- 启用DDNS IPv4
-更新 DDNS 记录时，启用 IPv4 解析。
-- 启用DDNS IPv6
-更新 DDNS 记录时，启用 IPv6 解析。
-- DDNS域名
-记录指向的域名。
-- DDNS配置
-在多配置情况下，要使用的 DDNS 配置。
+- `启用DDNS` 为此服务器启用 DDNS 功能
+- `启用DDNS IPv4` 更新 DDNS 记录时，启用 IPv4 解析
+- `启用DDNS IPv6` 更新 DDNS 记录时，启用 IPv6 解析
+- `DDNS域名` 记录指向的域名
+- `DDNS配置` 在多配置情况下，要使用的 DDNS 配置名
 
-::: tip
-在 Dashboard 设置中修改配置并保存时，会在 `config.yaml` 中填入默认配置选项，此时 DDNS 段中会同时存在单配置和多配置的选项。
+::: warning
+在 Dashboard 设置中修改配置并保存时，会在 `config.yaml` 中填入默认配置选项，此时 DDNS 段中会同时存在单配置和多配置
 
-如需使用单配置，请无视 `Profiles` 选项相关内容。
-
-如需使用多配置，请将 `DDNS.Provider` 留空。如 `DDNS.Provider` 的值不为空，多配置设定将被无视。
+- 如需使用单配置，请配置`DDNS.Provider`，并忽略 `Profiles` 选项相关内容。
+- 如需使用多配置，请将 `DDNS.Provider` 留空。如 `DDNS.Provider` 的值不为空，多配置设定将被忽略。
 :::
+<br>   
 
-### 查看日志
+#### 查看日志
    在 Dashboard 的日志中，可以看到 DDNS 功能的相关日志，配置正确时，更新 DNS 记录时会有相应的日志记录。
    ```shell
    dashboard_1  | 2024/03/16 23:16:25 NEZHA>> 正在尝试更新域名(ddns.example.com)DDNS(1/3)

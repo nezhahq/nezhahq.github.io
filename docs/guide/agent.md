@@ -19,7 +19,6 @@ Agent 二进制文件仓库地址为：<https://github.com/nezhahq/agent/release
 <br/>
 
 ### 在 Linux 中一键安装 (Ubuntu、Debian、CentOS)
-
 * 首先在管理面板中添加一台服务器
 * 点击新添加的服务器旁，绿色的 Linux 图标按钮，复制一键安装命令
 * 在被控端服务器中运行复制的一键安装命令，等待安装完成后返回到 Dashboard 主页查看服务器是否上线  
@@ -42,6 +41,8 @@ Agent 二进制文件仓库地址为：<https://github.com/nezhahq/agent/release
 ## 其他方式安装 Agent
 
 ### 在 Linux 中安装 Agent (Ubuntu、Debian、CentOS)
+<details>
+  <summary>点击展开/收起</summary>
 
 * 首先在管理面板中添加一台服务器  
 * 在被控服务器中，运行脚本（位于中国大陆的服务器请使用镜像）：
@@ -58,13 +59,16 @@ curl -L https://gitee.com/naibahq/nezha/raw/master/script/install.sh -o nezha.sh
 
 * 选择“安装监控 Agent”  
 * 输入通信域名，如：”data.example.com“  
-* 输入面板通信端口（ gRPC 端口），默认为 5555  
+* 输入面板通信端口（gRPC 端口），默认为 5555  
 * 输入 Agent 密钥，Agent 密钥在管理面板中添加服务器时生成，可以在管理面板中的“服务器”页中找到  
 * 等待安装完成后返回 Dashboard 主页查看服务器是否上线  
+</details>
 <br/>  
 
 ### 在 其他 Linux 如 Alpine 使用 Openrc 的发行版 安装 Agent
-
+<details>
+  <summary>点击展开/收起</summary>
+  
 本节内容由 [unknown0054](https://github.com/unknwon0054) 贡献
 
 * 修改 SERVER、SECRET、TLS 然后在 shell 中执行
@@ -151,6 +155,7 @@ EOF
   ```shell
   rc-update add nezha-agent
   ```
+</details>
 
 ### 在 Windows 中手动安装 Agent  
 
@@ -159,6 +164,8 @@ EOF
 <br/>  
 
 ### 在 群晖DSM 中安装 Agent  
+<details>
+  <summary>点击展开/收起</summary>
 
 * 请参考社区文章：  
 [群晖 DSM 7.x 安装 哪吒监控 Agent](https://blog.mitsea.com/3929551d08bd4bb0a8baa453e2d92b0c/)  
@@ -208,10 +215,12 @@ EOF
   ‼️修改对应信息后‼️
   
   使用 `root` 账号执行上述命令即可安装完成
-
+</details>
 <br/>
 
-### 在 MacOS 中安装 Agent  
+### 在 macOS 中安装 Agent  
+<details>
+  <summary>点击展开/收起</summary>
 
 ***本节内容改编自 [Mitsea Blog](https://blog.mitsea.com/e796f93db38d49e4b18df234c6ee75f5)，改编已获得原作者授权***  
 <br/>  
@@ -276,16 +285,22 @@ launchctl stop nezha_agent
 ```shell  
 launchctl remove nezha_agent
 ```
-
+</details>
 <br/>  
 
 ### 在 macOS 中使用 Homebrew 安装 Agent
+<details>
+  <summary>点击展开/收起</summary>
 
 ***本节内容改编自 [🐿️松鼠收集🌰](https://blog.mre.red/archives/install_nezha_monitoring_agent_service_with_homebrew)，改编已获得原作者授权***
 
 * 添加 Homebrew 第三方仓库
+::: danger
+请注意，此 Homebrew 仓库由第三方维护，与哪吒监控无关。   
+Nezha 项目组不对该仓库的可用性和安全性等方面作出背书。在使用前，请自行评估风险！！
+:::   
+*由于暂未提交到 Homebrew Core 官方库，暂时放在上述博客作者参与维护的第三方 Homebrew 仓库中*
 
-***由于暂未提交到 Homebrew Core 官方库，暂时放在上述博客作者参与维护的第三方 Homebrew 仓库中***
 
 ```sh
 brew tap brewforge/chinese
@@ -300,7 +315,7 @@ brew install nezha-agent
 * 添加环境变量
 
 ```sh
-echo 'export HOMEBREW_NEZHA_AGENT_PASSWORD="你的密钥，在你的服务页面获取"' >> ~/.zshrc
+echo 'export HOMEBREW_NEZHA_AGENT_PASSWORD="通信密钥，在服务页面获取"' >> ~/.zshrc
 echo 'export HOMEBREW_NEZHA_AGENT_SERVER="你的服务器和端口，格式 your.domain:5555 "' >> ~/.zshrc
 source ~/.zshrc
 ```
@@ -328,10 +343,12 @@ brew services stop nezha-agent
 ```sh
 brew rm nezha-agent
 ```
-
+</details>
 <br/>
 
 ### 在 OpenWRT 中安装 Agent  
+<details>
+  <summary>点击展开/收起</summary>
 
 **如何 一步到位,解决安装过程疑难杂症**  
 * 请参考项目：  
@@ -374,11 +391,10 @@ restart() {
 
 * 运行 `chmod +x /etc/init.d/nezha-service` 赋予执行权限  
 * 启动服务： `/etc/init.d/nezha-service enable && /etc/init.d/nezha-service start`  
-<br/>  
-
+</details>
 <br/>
 
-## FAQ
+## 常见问题
 
 ### Agent 有 Docker 镜像吗？
 
