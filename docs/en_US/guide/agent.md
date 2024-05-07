@@ -247,19 +247,11 @@ Using Homebrew to install the Agent on macOS
 
 The content of this section is adapted from [🐿️松鼠收集🌰](https://blog.mre.red/archives/install_nezha_monitoring_agent_service_with_homebrew), with the permission of the original author.
 
-* Adding the Homebrew third-party repository
+::: danger
+Please ensure to set environment variables first, and then proceed with the installation of Nezha-agent using Homebrew!
 
-As the package has not yet been submitted to the official Homebrew Core repository, it is currently available in the third-party Homebrew repository maintained by the author of the blog mentioned above.
-
-```sh
-brew tap brewforge/chinese
-```
-
-* Installing the Nezha Agent
-
-```sh
-brew install nezha-agent
-```
+Due to the creation of service configuration files (PLIST) by Homebrew during software installation, if you install first and then add environment variables, it will fail to start due to missing parameters!
+:::
 
 * Adding environment variables
 
@@ -267,6 +259,14 @@ brew install nezha-agent
 echo 'export HOMEBREW_NEZHA_AGENT_PASSWORD="your key, obtained from your service page"' >> ~/.zshrc
 echo 'export HOMEBREW_NEZHA_AGENT_SERVER="your server and port, in the format your.domain:5555"' >> ~/.zshrc
 source ~/.zshrc
+```
+
+* Installing the Nezha Agent
+
+As the package has not yet been submitted to the official Homebrew Core repository, it is currently available in the [third-party Homebrew repository](https://github.com/Brewforge/homebrew-chinese) maintained by the author of the blog mentioned above.
+
+```sh
+brew install brewforge/chinese/nezha-agent
 ```
 
 * Starting the Nezha Agent service through Homebrew
@@ -292,6 +292,23 @@ brew services stop nezha-agent
 ```sh
 brew rm nezha-agent
 ```
+
+* Error handling first check environment variables
+
+```sh
+echo $HOMEBREW_NEZHA_AGENT_PASSWORD
+echo $HOMEBREW_NEZHA_AGENT_SERVER
+```
+
+* If the environment variable configuration is correct, attempt reinstallation
+
+```sh
+brew services stop nezha-agent
+brew reinstall nezha-agent
+brew services start nezha-agent
+```
+
+* If the issue persists, please proceed to the [third-party Homebrew repository](https://github.com/Brewforge/homebrew-chinese) and submit a ticket
 
 <br/>
 

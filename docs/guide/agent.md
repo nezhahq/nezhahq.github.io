@@ -294,23 +294,10 @@ launchctl remove nezha_agent
 
 ***本节内容改编自 [🐿️松鼠收集🌰](https://blog.mre.red/archives/install_nezha_monitoring_agent_service_with_homebrew)，改编已获得原作者授权***
 
-* 添加 Homebrew 第三方仓库
 ::: danger
-请注意，此 Homebrew 仓库由第三方维护，与哪吒监控无关。   
-Nezha 项目组不对该仓库的可用性和安全性等方面作出背书。在使用前，请自行评估风险！！
-:::   
-*由于暂未提交到 Homebrew Core 官方库，暂时放在上述博客作者参与维护的第三方 Homebrew 仓库中*
-
-
-```sh
-brew tap brewforge/chinese
-```
-
-* 安装 Nezha Agent
-
-```sh
-brew install nezha-agent
-```
+请务必先添加环境变量，再通过 Homebrew 安装 nezha-agent ！
+因 Homebrew 在软件安装时创建服务所需 plist 文件，若先安装再添加环境变量，会因缺少参数而启动失败！
+:::
 
 * 添加环境变量
 
@@ -318,6 +305,19 @@ brew install nezha-agent
 echo 'export HOMEBREW_NEZHA_AGENT_PASSWORD="通信密钥，在服务页面获取"' >> ~/.zshrc
 echo 'export HOMEBREW_NEZHA_AGENT_SERVER="你的服务器和端口，格式 your.domain:5555 "' >> ~/.zshrc
 source ~/.zshrc
+```
+
+* 安装 Nezha Agent
+
+::: danger
+请注意，此 Homebrew 仓库由第三方维护，与哪吒监控无关。
+Nezha 项目组不对该仓库的可用性和安全性等方面作出背书。在使用前，请自行评估风险！！
+:::
+
+*由于暂未提交到 Homebrew Core 官方库，暂时放在上述博客作者参与维护的 [第三方 Homebrew 仓库](https://github.com/Brewforge/homebrew-chinese) 中*
+
+```sh
+brew install brewforge/chinese/nezha-agent
 ```
 
 * 通过 Homebrew 启动 Nezha Agent 服务
@@ -343,6 +343,24 @@ brew services stop nezha-agent
 ```sh
 brew rm nezha-agent
 ```
+
+* 报错时先检查环境变量
+
+```sh
+echo $HOMEBREW_NEZHA_AGENT_PASSWORD
+echo $HOMEBREW_NEZHA_AGENT_SERVER
+```
+
+* 若环境变量配置正确，再尝试重装
+
+```sh
+brew services stop nezha-agent
+brew reinstall nezha-agent
+brew services start nezha-agent
+```
+
+* 若仍未解决，请前往上述 [第三方 Homebrew 仓库](https://github.com/Brewforge/homebrew-chinese) 提交工单
+
 </details>
 <br/>
 
