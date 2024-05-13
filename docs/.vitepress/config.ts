@@ -127,7 +127,7 @@ function getGuideSidebarZhCN() {
         { text: '实时通道断开/在线终端连接失败', link: '/guide/q4.html' },
         { text: '面板数据迁移、备份和恢复', link: '/guide/q5.html' },
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
-        { text: '自定义 Agent 监控项目的', link: '/guide/q7.html' },
+        { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
         { text: '使用Cloudflare Access作为OAuth2提供方', link: '/guide/q8' },
       ]
     },

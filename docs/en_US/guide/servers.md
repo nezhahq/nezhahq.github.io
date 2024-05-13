@@ -1,43 +1,61 @@
-# Servers
+---
+outline: deep
+---
+
+# Server
+
 ## Introduction
-The Servers area is responsible for managing the Agent, the most basic area in Nezha Monitoring, and the basis for other functions.  
 
-## Add a server
-The first step is to add a servers, which can be customized with names, groups, display index and notes.  
-Servers in the same group will be displayed in groups in supported themes, and notes will only be displayed in the admin panel, no need to worry about leaking information.  
+The server section is responsible for managing Agents, forming the most fundamental part of Nezha monitoring and serving as the basis for other functionalities.
 
-## Install Agent
-Please refer to the previous article: [Install Agent](/en_US/guide/agent.html)  
-We recommend using one-click installation, that is, **after configuring the communication domain name**, click the button on the column **one-click installation** and copy it to the monitored servers for installation.
+## Adding a Server
 
-## Forced Updates
-The flags related to the update of the Agent are: `--disable-auto-update` and `--disable-force-update`. Please refer to [Customize Agent](/en_US/guide/agent.html#customize-agent)  
-By default, the Agent is updated automatically, but when the user turns off automatic updates, the specified servers can also be selected for forced updates.  
-This feature does not take effect when `-disable-force-update` is turned on.
+The first step is to add a server, where you can customize the name, group, sorting, and notes.  
+Servers in the same group will be displayed together in supported themes. Notes will only be visible in the Admin Panel, so there's no need to worry about leaking information.
 
-## Data List
-* Version number: Record the current version of Agent
-* Secret: Used when configuring the Agent
-* One-Click Installation: A more convenient way to install Agent
-* Manage: WebShell on the left, Edit in the middle, Delete on the right
+## Installing the Agent
 
-## Webshell
-This feature does not take effect when `disable-command-execute` is turned on.  
-Both Linux and Windows are available and can be pasted using Ctrl+Shift+V.    
-For connection failure, please refer to [Real-time channel disconnection/online terminal connection failure](/en_US/guide/q4.html).  
-Note that in theWebShell function, the Agent also connects to the **Domain names for public access** via WebSocket, not via grpc.
+Please refer to the previous section on [installing the Agent](/en_US/guide/agent.html).  
+It is recommended to use the one-click installation. After configuring the parameters, click the corresponding system icon in the **one-click installation** column of the server to copy the installation command and execute it on the respective server.
 
-## DDNS
-DDNS feature is suitable for servers that have dynamic IP addresses. When a different IP is reported by Agent, Dashboard will update DNS record automatically using configured settings.
+## Forced Update
 
-### Why choose Nezha's DDNS feature
-- Manage your DDNS configuration centrally, without deploying a single service on every server.
-- Save your credentials only on the Dashboard server to prevent data leaks.
+Agent update-related parameters include `--disable-auto-update` and `--disable-force-update` as described in [Custom Agent Monitoring Projects](/en_US/guide/q7.html).  
+By default, the Agent will update automatically without intervention. However, if the user disables automatic updates, you can select specific servers for a forced update.  
+The forced update will not work if `disable-force-update` is enabled.
 
-### Configuration description
-Currently, DDNS supports two types of configurations: Single and Multiple. If Single is chosen, all Agent servers will use the same configuration to update DNS records, whereas selecting Multiple allows each server to use a specified configuration.
+## Data Columns
 
-#### Single
+* Version: Records the current version of the Agent.
+* Hide from Guests: When true, guests cannot see this server in the Dashboard.
+* Enable DDNS: When true, if the server IP changes, the Dashboard will automatically update the DNS records.
+* DDNS Domain: The DDNS domain configured for this server.
+* Secret: The secret/key used for configuring the Agent, which is used to verify communication between the Agent and the Dashboard.
+* One-Click Install: Click the corresponding system button to copy the command and execute it on the server for a one-click installation.
+* Management: Connects to WebShell, modifies server configuration, or deletes the server.
+
+## WebSSH Terminal
+
+This is WebShell; the feature will not work if `disable-command-execute` is enabled.  
+It is available for both Linux and Windows and supports Ctrl+Shift+V for pasting.  
+If the connection fails, refer to [Real-Time Channel Disconnection/Online Terminal Connection Failure](/en_US/guide/q4.html).  
+Note that in the WebSSH terminal function, the Agent connects to the **public access domain** via WebSocket, not through gRPC.
+
+## DDNS Functionality
+
+The DDNS functionality is suitable for servers with dynamic IPs. When the Agent reports a new IP, the Dashboard will automatically update the DNS records based on the configuration.
+
+### Why Use Nezha Monitoring's DDNS Functionality?
+
+- Centralized management of DDNS settings instead of deploying a DDNS service on each server.
+- Confidential information is only stored on the Dashboard server, preventing leakage.
+
+### Configuration Instructions
+
+Currently, the DDNS functionality supports two configuration forms: single configuration and multiple configurations. If single configuration is used, all Agent servers will use the same configuration to update DDNS. If multiple configurations are used, each server can be assigned a specific configuration to update DDNS, offering greater flexibility.
+
+#### Single Configuration
+
 ```yaml
 DDNS:
   Enable: true
@@ -51,110 +69,83 @@ DDNS:
   MaxRetries: 3
   Profiles: null
 ```
-##### Enable
-Boolean value indicating whether the DDNS function is enabled.
-##### Provider
-Name of the DDNS provider, currently support `webhook`, `cloudflare` and `tencentcloud`.
-##### AccessID
-Secret ID associated with DDNS provider.
 
-Only applied to `tencentcloud`.
-##### AccessSecret
-Secret key associated with DDNS provider.
+- `Enable`: Boolean value to enable or disable the DDNS functionality.
+- `Provider`: The name of the DDNS provider; currently supports `webhook`, `cloudflare`, and `tencentcloud`.
+- `AccessID`: Token ID for the DDNS provider; only applicable to the `tencentcloud` provider.
+- `AccessSecret`: Token Secret for the DDNS provider; only applicable to the `cloudflare` and `tencentcloud` providers.
+- `WebhookMethod`: The request method for the webhook, such as `GET` or `POST`; only applicable to the `webhook` provider.
+- `WebhookURL`: The request URL for the webhook; only applicable to the `webhook` provider.
+- `WebhookRequestBody`: The request body for the webhook; only applicable to the `webhook` provider.
+- `WebhookHeaders`: The request headers for the webhook; only applicable to the `webhook` provider.
+- `MaxRetries`: The number of retry attempts when a request fails.
+- `Profiles`: Multi-configuration settings; ignored in single configuration settings.
 
-Only applied to `cloudflare` and `tencentcloud`.
-##### WebhookMethod
-Request method of Webhook. For example, `GET` and `POST`.
+The `WebhookURL`, `WebhookRequestBody`, and `WebhookHeaders` can include the following parameters:
 
-Only applied to `webhook`.
-##### WebhookURL
-Request URL of Webhook.
+- `{ip}`: The current IP of the server.
+- `{domain}`: The DDNS domain.
+- `{type}`: The IP type, which could be "ipv4" or "ipv6".
+- `{access_id}`: Credential 1.
+- `{access_secret}`: Credential 2.
 
-Only applied to `webhook`.
-##### WebhookRequestBody
-Request body of Webhook.
+Example Configuration:
 
-Only applied to `webhook`.
-##### WebhookHeaders
-Request headers of Webhook.
-
-Only applied to `webhook`.
-##### MaxRetries
-The number of retry attempts after an update request has failed.
-##### Profiles
-Multiple configuration setting. Will be ignored in Single configuration setting.
-
-:::tip
-`WebhookURL`, `WebhookRequestBody` and `WebhookHeaders` can use additional params：
-
-`{ip}` - Host IP
-
-`{domain}` - DDNS domain
-
-`{type}` - Your IP type, possibly "ipv4" or "ipv6"
-
-`{access_id}` - Credential #1
-
-`{access_secret}` - Credential #2
-
-Example:
-```
+```yaml
 WebhookHeaders: |
     a:{access_id}
     b:{access_secret}
 WebhookRequestBody: '{"domain": "{domain}", "ip": "{ip}", "type": "{type}"}'
 ```
-:::
 
-#### Multiple
-Please leave `DDNS.Provider` field blank while using Multiple configuration. If not, the Multiple configuration will be ignored.
+#### Multiple Configurations
+
+When using multiple configurations, leave the `DDNS.Provider` value empty. If `DDNS.Provider` is not empty, the multiple configuration settings will be ignored.
+
 ```yaml
 DDNS:
   Enable: true
   MaxRetries: 3
   Profiles:
-   example:
+    example:
       Provider: ""
       AccessID: ""
       AccessSecret: ""
       WebhookMethod: ""
       WebhookURL: ""
       WebhookRequestBody: ""
-      WebhookHeaders: "" 
+      WebhookHeaders: ""
 ```
-##### Profiles
-Multiple configuration setting.
-##### example
-Name of DDNS configuration, can be any string.
 
-For other options, view [Single](#single).
+- `Profiles`: Multi-configuration settings.
+- `example`: Can be replaced with any string as the DDNS configuration name.
 
-### Dashboard configuration
-After configuring `config.yaml`, you will need to modify server settings in Dashboard to make DDNS function effective.
+Other options can be referenced from the [Single Configuration](#Single-Configuration) section.
 
-Explanation of DDNS-related options:
-- Enable DDNS
-Enable the DDNS functionality for this server.
-- Enable DDNS IPv4
-Enable IPv4 resolution when updating DDNS records.
-- Enable DDNS IPv6
-Enable IPv6 resolution when updating DDNS records.
-- DDNS Domain
-The domain name the record points to.
-- DDNS Configuration
-The DDNS configuration to use in case of multiple configurations.
+#### Dashboard Configuration
 
-::: tip
-When modifying settings in the Dashboard and saving them, default configuration options will be filled into the `config.yaml` file. At this time, in the DDNS field, there will be both single configuration and multiple configurations options available. 
+After modifying the configuration file, you also need to modify the server settings in the Dashboard for the DDNS to take effect.
 
-If you need to use a single configuration, please ignore the content related to the Profiles option. 
+DDNS related options:
 
-Please leave `DDNS.Provider` field blank while using Multiple configuration. If not, the Multiple configuration will be ignored.
+- `Enable DDNS`: Enable the DDNS functionality for this server.
+- `Enable DDNS IPv4`: Enable IPv4 parsing when updating DDNS records.
+- `Enable DDNS IPv6`: Enable IPv6 parsing when updating DDNS records.
+- `DDNS Domain`: The domain the record points to.
+- `DDNS Configuration`: The DDNS configuration name to use in multiple configurations.
+
+::: warning
+When you modify the configuration and save it in the Dashboard settings, it will populate the default configuration options in `config.yaml`, and both single and multiple configurations will exist in the DDNS section.
+
+- To use single configuration, configure `DDNS.Provider` and ignore the `Profiles` options.
+- To use multiple configurations, leave `DDNS.Provider` empty. If `DDNS.Provider` is not empty, the multiple configuration settings will be ignored.
 :::
 
-### View log
-   In the Dashboard's logs, you can view the relevant logs for the DDNS. When configured correctly, there will be corresponding log entries when the DNS records are updated.
-   ```shell
-   dashboard_1  | 2024/03/16 23:16:25 NEZHA>> 正在尝试更新域名(ddns.example.com)DDNS(1/3)
-   dashboard_1  | 2024/03/16 23:16:28 NEZHA>> 尝试更新域名(ddns.example.com)DDNS成功
-   ```
+#### Viewing Logs
+
+In the Dashboard logs, you can see the relevant logs for the DDNS functionality. When configured correctly, there will be corresponding log entries when updating DNS records.
+
+```shell
+dashboard_1  | 2024/03/16 23:16:25 NEZHA>> 正在尝试更新域名(ddns.example.com)DDNS(1/3) # Attempting to update domain (ddns.example.com) DDNS (1/3)
+dashboard_1  | 2024/03/16 23:16:28 NEZHA>> 尝试更新域名(ddns.example.com)DDNS成功 # Successfully updated domain (ddns.example.com) DDNS
+```
