@@ -122,12 +122,12 @@ function getGuideSidebarZhCN() {
       text: '常见问题',
       items: [
         { text: 'TG api 被墙', link: '/guide/q1.html' },
-        { text: 'Agent 无法启动/上线 查看日志并进行排错的步骤', link: '/guide/q2.html' },
-        { text: '反向代理 gRPC 端口的步骤', link: '/guide/q3.html' },
+        { text: 'Agent 启动/上线 问题自检流程', link: '/guide/q2.html' },
+        { text: '反向代理 gRPC 端口', link: '/guide/q3.html' },
         { text: '实时通道断开/在线终端连接失败', link: '/guide/q4.html' },
-        { text: '进行数据迁移、备份和恢复的步骤', link: '/guide/q5.html' },
-        { text: '设置每月重置流量统计的步骤', link: '/guide/q6.html' },
-        { text: '自定义 Agent 监控项目的步骤', link: '/guide/q7.html' },
+        { text: '面板数据迁移、备份和恢复', link: '/guide/q5.html' },
+        { text: '设置每月重置流量统计', link: '/guide/q6.html' },
+        { text: '自定义 Agent 监控项目的', link: '/guide/q7.html' },
         { text: '使用Cloudflare Access作为OAuth2提供方', link: '/guide/q8' },
       ]
     },
@@ -192,13 +192,13 @@ function getGuideSidebarEnUS() {
     {
       text: 'FAQ',
       items: [
-        { text: 'Agent cannot start/on-line. Steps to review logs and troubleshoot', link: '/en_US/guide/q2.html' },
-        { text: 'Steps for Reverse Proxy gRPC Ports (support Cloudflare CDN)', link: '/en_US/guide/q3.html' },
-        { text: 'Real-time channel disconnection/online terminal connection failure', link: '/en_US/guide/q4.html' },
-        { text: 'Steps to perform data migration, backup and recovery', link: '/en_US/guide/q5.html' },
-        { text: 'Steps to set up monthly reset data statistics', link: '/en_US/guide/q6.html' },
-        { text: 'Steps to customize Agent monitoring items', link: '/en_US/guide/q7.html' },
-        { text: 'Use Cloudflare Access as OAuth2 provider', link: '/guide/q8' },
+        { text: 'Agent Startup/Online Troubleshooting Process', link: '/en_US/guide/q2.html' },
+        { text: 'Reverse Proxy gRPC Port (Support Cloudflare CDN)', link: '/en_US/guide/q3.html' },
+        { text: 'Real-Time Channel Disconnection/Online Terminal Connection Failure', link: '/en_US/guide/q4.html' },
+        { text: 'Perform Data Migration and Backup Recovery', link: '/en_US/guide/q5.html' },
+        { text: 'Reset Traffic Statistics Monthly', link: '/en_US/guide/q6.html' },
+        { text: 'Custom Agent Monitoring Projects', link: '/en_US/guide/q7.html' },
+        { text: 'Use Cloudflare Access As OAuth2 Provider', link: '/guide/q8' },
       ]
     },
     {
