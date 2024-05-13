@@ -1,9 +1,21 @@
-## Why the IP displayed in the admin panel and the actual IP of the Agent are not the same?  
-Please check [Dashboard - Why the IP displayed in the admin panel and the actual IP of the Agent are not the same?](/en_US/guide/dashboardq.html#why-the-ip-displayed-in-the-admin-panel-and-the-actual-ip-of-the-agent-are-not-the-same)  
-  
-## Error on one-click script installation  
-### curl: Failed to connect to raw.githubusercontent.com...  
-Please check if your server can connect to Github, try again, or check [Other ways to install Agent](/en_US/guide/agent.html#other-ways-to-install-agent)  
-  
+---
+outline: deep
+---
+
+## The IP Displayed in the Admin Panel is Different from the Actual Agent IP?
+
+Please refer to [Dashboard Related - Why is the IP Displayed in the Admin Panel Different from the Actual Agent IP?](/en_US/guide/dashboardq.html#why-is-the-ip-displayed-in-the-admin-panel-different-from-the-actual-agent-ip). This will not be repeated here.
+
+## Errors During One-Click Script Installation
+
+### curl: Failed to connect to raw.githubusercontent.com......
+
+This mostly occurs on servers in mainland China. Currently, the one-click script fetches the installation script directly from Github. You may try several times, or [manually install the Agent](/en_US/guide/agent.html#other-ways-to-install-agent). Additionally, you can find third-party Github acceleration services or mirrors and set them in the one-click installation script.
+
 ### sudo: command not found
-Please install sudo first
+
+Please manually install sudo first, for example, in Ubuntu:
+
+```shell
+apt install sudo
+```

@@ -1,54 +1,76 @@
-## Why the IP displayed in the admin panel and the actual IP of the Agent are not the same?  
-First of all, explain how the IP displayed in the admin panel is gotten: the Agent will request the IP-API every once in a while, get the IP information and report it to the Dashboard, the IP-API currently used can be viewed here: [myip.go](https://github.com/nezhahq/agent/blob/main/pkg/monitor/myip.go)  
-If you find that the IP displayed in the admin panel is not the same as the IP provided to you by the service provider, the biggest possibility is that the service provider gave you the **entry IP**, but the Agent tested out your **exit IP**. This problem may also occur in BGP servers and Leased line.  
-::: tip  
-To take a simple and very common example, the service provider to provide you a anti-DDoS server, in order to meet the goals of both DDoS protection and low network disruption rate, the IP provided to you may be the mapped anti-DDoS IP and not the real exit IP of your server  
-:::   
+---
+outline: deep
+---
 
-You can also test the exit IP by running the following command in the Agent server:  
+## Why is the IP Displayed in the Admin Panel Different from the Actual Agent IP?
+
+First, let's explain how the IP displayed in the Admin panel is obtained: The Agent periodically requests IP-API to get IP information and reports it to the Dashboard. The currently used IP-API can be viewed here: [myip.go](https://github.com/nezhahq/agent/blob/main/pkg/monitor/myip.go).  
+If you find that the IP displayed in the Admin panel is different from the IP provided by your service provider, it is most likely that the service provider has given you an **entry IP**, but the Agent is testing your **exit IP**. This issue can also occur with multi-line servers and IPLC private lines.
+
+::: tip
+For example, a common scenario is that the service provider gives you a high-defense server. To meet both high defense and low network interruption rate goals, the IP provided may be a mapped high-defense IP rather than your server's real exit IP.
+:::
+
+You can also test the exit IP on the Agent server by running the following commands:
+
 ```shell
 curl https://ipapi.co/ip/
 curl ip.sb
 curl ip-api.com
-```  
+```
 
-## Forgot your access password or deleted your access password
+## Forgot or Deleted Viewing Password
+
 Please view or edit the `/opt/nezha/dashboard/data/config.yaml` file.   
-The password is located in the site-viewpassword item.  
+The password is located under the `site-viewpassword` item.
 
-## Dashboard install/restart/update failed: iptables ......
-First, try restarting docker and retrying again  
+## Dashboard Installation/Restart/Update Failure: iptables ......
+
+First, try restarting Docker before proceeding:
+
 ```shell
 systemctl status docker
 systemctl restart docker
 systemctl status docker
-```  
-Restart and try to reinstall the Dashboard.  
-If you still get iptables... etc. errors, then consider simply closing iptables or even removing it.  
-This issue may also be kernel related, try replacing the official kernel as well.  
+```
 
-## Dashboard reboot failed: Invalid hostPort: nz_site_port etc.
-Usually this does not occur, if it does, you can modify the configuration through the installation script or edit `/opt/nezha/dashboard/docker-compose.yaml` directly.  
+After restarting, try reinstalling the Dashboard.  
+If iptables errors persist, consider disabling or removing iptables.  
+This issue might also be related to the kernel, so switching to the official kernel can be another solution.
 
-## Wrong Dashboard layout, CSS resources cannot be loaded
-If the Dashboard page has an incorrect layout, the usual reason is that the CSS file is missing or cannot be loaded.  
-When such an issue occurs, you can first try `Reboot and update the Dashboard`. 
-If the problem is not resolved after updating the Dashboard, then there may be an unsuitable configuration within your vhost configuration file. You can edit the vhost file or within the Aapanel to:  
-1. Find the site you configured when installing Dashboard in `Website` and click `Conf` on the right side  
-2. Select `Config` and delete the following from the config file:  
-````nginx
-location ~ .*\.(js|css)?$
-    {
-        expires      12h;
-        error_log /dev/null;
-        access_log /dev/null;
-    }
-````  
-3. Save the configuration and clear the cache in the browser, NginX, and CDN, then refresh the page and it should return to normal.
+## Dashboard Restart Failure: Invalid hostPort: nz_site_port
 
-## Dashboard cannot start：panic: 无法找到配置的DDNS提供者...
+If this issue occurs, you can modify the configuration via the installation script or directly edit the `/opt/nezha/dashboard/docker-compose.yaml` file.
+
+## Dashboard Layout Error, CSS Resources Not Loading
+
+If the Dashboard page layout is incorrect, it's usually due to missing or inaccessible CSS files.  
+To resolve this, try `restarting and updating the Dashboard` first.  
+If the problem persists after updating, the issue may be due to inappropriate configurations in your vhost file. You can edit the Nginx vhost file or use the aaPanel to:
+
+1. Find the site configured during Dashboard installation in `Websites` and click `Settings` on the right.
+2. Select `Configuration File` and remove the following lines:
+
+    ```nginx
+    location ~ .*\.(js|css)?$
+        {
+            expires      12h;
+            error_log /dev/null;
+            access_log /dev/null;
+        }
+    ```
+
+3. Save the configuration, clear the browser, Nginx, and CDN caches, and refresh the page to see if it returns to normal.
+
+## Dashboard Cannot Start: panic: Unable to find the configured DDNS provider...
+
 The value entered for the DDNS provider is incorrect. Currently, only `webhook`, `cloudflare`, `tencentcloud`, and `dummy` are supported.
 
+## Dashboard DDNS Update Crash: panic: interface conversion: interface {} is nil, not []interface {}
 
-## Dashboard crashes when updating DDNS: panic: interface conversion: interface {} is nil, not []interface {}
-The DDNS `AccessID` or `AccessSecret` filled is incorrect.
+The entered DDNS `AccessID` or `AccessSecret` is incorrect.
+
+## Network Monitoring Page Shows: server monitor history not found
+
+This error indicates that no TCP-Ping or ICMP-Ping type monitoring has been set in the services page or monitoring data has not yet been generated.   
+If it has been set up, wait for some time and then check again.
