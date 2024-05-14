@@ -15,7 +15,7 @@ hero:
       link: https://ops.naibahq.com
     - theme: alt
       text: Get Started →
-      link: /guide/dashboard
+      link: en_US/guide/dashboard
 
 features:
   - title: One-Click Installation
