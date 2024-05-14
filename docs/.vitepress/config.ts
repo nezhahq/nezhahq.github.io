@@ -121,14 +121,14 @@ function getGuideSidebarZhCN() {
     {
       text: '常见问题',
       items: [
-        { text: 'TG api 被墙', link: '/guide/q1.html' },
+        { text: '反向代理 Telegram API', link: '/guide/q1.html' },
         { text: 'Agent 启动/上线 问题自检流程', link: '/guide/q2.html' },
         { text: '反向代理 gRPC 端口', link: '/guide/q3.html' },
         { text: '实时通道断开/在线终端连接失败', link: '/guide/q4.html' },
         { text: '面板数据迁移、备份和恢复', link: '/guide/q5.html' },
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
-        { text: '使用Cloudflare Access作为OAuth2提供方', link: '/guide/q8' },
+        { text: '使用 Cloudflare Access 作为 OAuth2 提供方', link: '/guide/q8' },
       ]
     },
     {
@@ -148,7 +148,7 @@ function getCaseSidebarZhCN() {
       text: '社区项目',
       items: [
         { text: '1. 搭建哪吒 Telegram 机器人', link: '/case/case1.html' },
-        { text: '2. 使用Siri语音运行快捷指令查询服务器状态', link: '/case/case2.html' },
+        { text: '2. 使用 Siri 语音运行快捷指令查询服务器状态', link: '/case/case2.html' },
         { text: '3. 自建多用户多语言 Telegram 服务器状态查询机器人', link: '/case/case3.html' },
         { text: '4. Fake-agent，监控数据作弊器', link: '/case/case4.html' },
         { text: '5. 使用 Argo 隧道的哪吒服务端', link: '/case/case5.html' }
