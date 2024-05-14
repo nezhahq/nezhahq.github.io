@@ -1,47 +1,51 @@
-**Service area is a function setting area for setting up Agents to monitor external websites or servers**  
-**The monitoring results can be viewed on the "Services" page in the home page**
-<br/>
+---
+outline: deep
+---
 
-## How to use
+**The Services section is where you set up monitoring for external websites or servers using Agents.**  
+**Configured service monitors can be viewed on the "Services" page of the homepage, displaying the availability monitoring results for the past 30 days.**
 
-To add a new monitor, you can go to the "Services" page in the administration panel and click "Add Service Monitor".  
+## How to Use
 
-To add a service monitor, you need to complete the following settings:
-+ `Name` - Customize a name    
+To add a new monitor, go to the "Services" page in the Admin Panel and click "Add Monitor."
 
-+ `Type` - Select a monitoring type. Nezha currently supports three monitoring types: "HTTP-GET", "ICMP-Ping" and "TCP-Ping".
+When adding a new service monitor, you need to set the following parameters:
 
-+ `Target` - Depending on the type you choose, the target is set in different ways
-> + `HTTP-GET`: Selecting this type, you should enter a URL as the target, the URL should be added with `http://` or `https://`  **If your target URL is `https://`, it will also monitor the SSL certificate of that URL and trigger a notification when the SSL certificate expires or changes.**  
-For example: https://example.com  
+- **Name**: Customize a name.
 
-> + `ICMP-Ping`: When selecting this type, you should enter a domain name or IP without a port number  
-For example: 1.1.1.1 or example.com 
+- **Type**: Select a monitor type. Nezha Monitoring currently supports three types: "HTTP-GET," "ICMP-Ping," and "TCP-Ping."
 
-> + `TCP-Ping`: When selecting this type, you should enter a domain name or IP and include the port number  
-For example: 1.1.1.1:80 or example.com:22  
+- **Target**: Depending on the type you choose, the method for setting the target differs:
+  - `HTTP-GET`: For this type, you should enter a URL as the target, including `http://` or `https://`. **If your target URL is `https://`, the SSL certificate of that URL will also be monitored. Notifications will be triggered when the SSL certificate expires or changes.** Example: https://example.com.
+  - `ICMP-Ping`: For this type, you should enter a domain name or IP without a port number. Example: 1.1.1.1 or example.com.
+  - `TCP-Ping`: For this type, you should enter a domain name or IP with a port number. Example: 1.1.1.1:80 or example.com:22.
 
-+ `Interval`： Sets the time interval in seconds between each time Agent sends requests to the target  
+- **Request Interval**: Set the interval in seconds at which the Agent requests the target.
 
-+ `Coverage`： Select a rule to determine which Agents to use to send requests to the target  
+- **Coverage**: Select a rule to determine which Agents will request the target.
 
-+ `Specific Servers`： Use with coverage to select the Agent to be excluded from the rule  
+- **Specific Servers**: Used in conjunction with the coverage scope, select Agents within the rule to exclude.
 
-+ `Notification Group`： Select the notification method you have set up on the "Notification" page. [Click here](/en_US/guide/notifications.html#flexible-notification-methods) for more information
+- **Notification Group**: Choose the notification methods you have already set up on the "Notification" page. [Click here](/en_US/guide/notifications.html#flexible-notification-methods) for more details.
 
-+ `Enable Failure Notification`： Select whether to receive target failure notifications as needed, default is inactive  
+- **Enable Fault Notification**: Choose whether to receive fault notifications for the target as needed. The default is unchecked.
 
-After setting, click "Add" and you are done.  
-Wait for a moment to go to the "Services" page on the home page to view the monitoring results  
-<br/>
+After setting it up, click "Add." Wait a moment and go to the "Services" page on the homepage to view the monitoring results.
 
-## Notification of delay changes
-Nezha Monitoring monitors and statistics the delay between the Agent and the target server, and sends notifications in case of significant changes    
-Use this feature to help you monitor your server's routes for changes  
+## Latency Change Notification
 
-+ `Enable delay notifications`：When enabled, notifications will be sent when the Agent to target server delay is higher than the `Max delay` or lower than the `Min delay`  
-<br/>
+Nezha Monitoring can monitor and record the latency between the Agent and the target server, sending notifications when there are significant changes. This feature helps you monitor if the server's network route has changed.
 
-## Management Monitor
-To manage existing service monitoring, you can go to the "Services" page in the administration panel  
-Select a monitoring configuration and click the icon on the right to edit or delete it  
+- **Enable Latency Notifications**: When enabled, Notification will be sent if the latency from the Agent to the target server is greater than the `Maximum Latency` or less than the `Minimum Latency`.
+
+## Trigger Tasks on Notification
+
+If you need to execute tasks when service monitoring Notification are triggered, you can check "Enable Trigger Tasks" and select the pre-configured trigger tasks in "Task on Notification" and "Task on Recovery."
+
+## Network Latency Chart
+
+The TCP-Ping and ICMP-Ping monitoring types set in the Services page will automatically enable the monitoring chart feature. On the "Network" page of the homepage, you can view historical network latency charts. The data in the charts is based on the latency from the Agent to the target server. You can click the Agent's name to toggle the chart display. In the chart, you can uncheck the target server's name to hide or show the corresponding data.
+
+## Managing Monitors
+
+To manage existing service monitors, go to the "Services" page in the Admin Panel. Select a monitor configuration and click the icons on the right to edit or delete it.
