@@ -1,34 +1,51 @@
-**Nezha Monitoring now supports querying the status information of the Agent in the Dashboard using the API**  
+---
+outline: deep
+---
 
-## Create Token
-API allows Token authentication method and Cookies authentication method   
-To create a new Token, after entering the admin panel, click on the avatar in the upper right corner and select "API Token" to enter the Token management page    
-Click "Add Token" and after customizing the notes, click "Add"  
-To delete a Token, please select the corresponding Token and click the delete icon on the right  
-::: warning  
-Token is the authentication tool of API, it is very important for your Dashboard's information security, please don't leak your Token to others  
+**Nezha Monitoring supports querying the status information of Agents using the API interface**
+
+## Creating a Token
+
+Nezha Monitoring's API interface allows for Token authentication and Cookies authentication. To create a new Token, go to the admin panel, click on the avatar in the top right corner, select "API Token," and enter the Token management page. Click "Add Token", add a custom note, and click "Add".
+
+To delete a Token, select the corresponding Token and click the delete icon on the right.
+
+::: warning
+Tokens are the authentication credentials for the API interface. They are critical to the security of your Dashboard's information, so do not share your Token with others.
 :::
 
-## Authentication method
-Token authentication method:  
-```  
-Request Headers:  
+## Authentication Method
+
+Ensure the request header contains `Authorization: Token` for authentication.
+
+Token authentication method:
+``` 
+Request Headers:
 Authorization: Token
-```  
-## How to use    
-::: warning  
-The negative timestamp in the example below is (0000-00-00)  
-It is currently used to indicate that the Agent has never reported since the Dashboard went live  
-However, it is not recommended to use positivity or negativity to determine the status  
-:::  
-::: tip
-**The request method is `Get` and the return format is `JSON`.**  
-:::
-+ Get a list of servers: `GET /api/v1/server/list?tag=`  
-query: tag (ServerTag means the group of servers, if this value is provided, only the servers in this group are queried)   
-
-JSON Return Example:
 ```
+
+## Usage Instructions
+
+::: warning
+Negative timestamps in the following examples represent `0000-00-00`. This currently indicates that the Agent has never reported since the Dashboard went online, but it is not recommended to use the positive or negative value to determine the status.
+:::
+
+::: tip
+**The request method is `GET`, and the response format is `JSON`.**
+:::
+
+### Get Server List
+
+Request:
+``` 
+GET /api/v1/server/list?tag= 
+```
+
+Parameters:
+- `tag` (optional): ServerTag is the server group. Provide this parameter to query only servers in that group.
+
+Example response:
+```json
 {
     "code": 0,
     "message": "success",
@@ -53,14 +70,21 @@ JSON Return Example:
         }
     ]
 }
-```  
-  
-+ Get server details: `GET /api/v1/server/details?id=&tag=`  
-query: id (ServerID. Multiple IDs are separated by commas, provide this value to query the server corresponding to the ID, while ignoring the tag value)  
-query: tag (ServerTag, if this value is provided, only the servers in this group are queried)  
-
-JSON Return Example:
 ```
+
+### Get Server Details
+
+Request:
+``` 
+GET /api/v1/server/details?id=&tag= 
+```
+
+Parameters:
+- `id` (optional): ServerID, multiple IDs separated by commas. Provide this parameter to query the server corresponding to that ID and ignore the `tag` parameter.
+- `tag` (optional): ServerTag, provide this parameter to query only servers in that group.
+
+Example response:
+```json
 {
     "code": 0,
     "message": "success",
@@ -89,7 +113,7 @@ JSON Return Example:
                 "Version": ""
             },
             "status": {
-                "CPU": 17.330210772540017,
+                "CPU": 17.33,
                 "MemUsed": 14013841408,
                 "SwapUsed": 0,
                 "DiskUsed": 2335048912896,
@@ -98,9 +122,9 @@ JSON Return Example:
                 "NetInSpeed": 10806,
                 "NetOutSpeed": 5303,
                 "Uptime": 331080,
-                "Load1": 5.23486328125,
-                "Load5": 4.873046875,
-                "Load15": 3.99267578125,
+                "Load1": 5.23,
+                "Load5": 4.87,
+                "Load15": 3.99,
                 "TcpConnCount": 195,
                 "UdpConnCount": 70,
                 "ProcessCount": 437
@@ -148,3 +172,47 @@ JSON Return Example:
     ]
 }
 ```
+
+## Usage Examples
+
+### Get All Server Information
+
+```python
+import requests
+
+url = "http://your-dashboard/api/v1/server/list"
+headers = {
+    "Authorization": "your_token"
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+for server in data['result']:
+    print(f"Server Name: {server['name']}, Last Active: {server['last_active']}, IP: {server['valid_ip']}")
+```
+
+### Get Specific Server Details
+
+```python
+import requests
+
+server_id = 1  # Replace with your server ID
+url = f"http://your-dashboard/api/v1/server/details?id={server_id}"
+headers = {
+    "Authorization": "your_token"
+}
+
+response = requests.get(url, headers=headers)
+data = response.json()
+
+server = data['result'][0]
+print(f"Server Name: {server['name']}")
+print(f"CPU Usage: {server['status']['CPU']}%")
+print(f"Memory Used: {server['status']['MemUsed']} bytes")
+print(f"Disk Used: {server['status']['DiskUsed']} bytes")
+print(f"Network In Speed: {server['status']['NetInSpeed']} bytes/s")
+print(f"Network Out Speed: {server['status']['NetOutSpeed']} bytes/s")
+```
+
+With the above example code, you can easily obtain and process server status information, enabling automated monitoring and management.
