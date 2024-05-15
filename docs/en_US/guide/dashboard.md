@@ -1,72 +1,89 @@
-## Preparations
-To setup a Nezha monitorning Dashboard, you need these things:
-1. A VPS that can connect to the Internet, firewall and security policies need to open ports 8008 and 5555, otherwise it will be inaccessible and unable to receive data. A 1 core 512MB RAM server is sufficient for most usage scenarios
-2. A domain name that has been set up with an A record that resolves to the Dashboard server IP  
+---
+outline: deep
+---
+
+## Preparation
+
+To set up Nezha Monitoring, you need:
+1. A server with public internet access, with firewall and security policies allowing traffic on ports 8008 and 5555. These ports are necessary for accessing and receiving data. A server with a single core and 512MB of RAM is sufficient for most use cases.
+2. A domain with an A record set to point to your Dashboard server IP.
 ::: tip 
-If you want to use CDN, please prepare two domains, one connect to CDN for public access, CDN needs to support WebSocket protocol; the other domain should not connect to CDN, use it as Agent to send data to Dashboard.   
-This document uses "cdn.example.com" and "data.example.com" domains to demonstrate respectively
+If you want to use a CDN, prepare two domains: one configured with CDN for public access (CDN must support WebSocket protocol), and another domain not using CDN for communication between the Agent and Dashboard.  
+
+This document uses "dashboard.example.com" and "data.example.com" as example domains.
 :::
-3. A Github or Gitlab account
+3. A Github account (or Gitlab, Gitee).
 
-**This document will use the aaPanel as an example, with future versions of the changes, some of the features may change, this document is for reference only**  
-:::warning  
-This project does not rely on aaPanel, you can choose to use any server panel you like, and if you are capable enough, you can manually install NginX or Caddy to configure SSL and reverse proxy.  
-If you don't think it's necessary to use port 80 or 443 to access Dashboard, you don't even need to install NginX and you can just use the install script.  
+**This document uses the aaPanel for reverse proxying the Dashboard as an example. As future versions change, some features may change their entry points. This document is for reference only.**  
+::: warning  
+This project does not depend on the aaPanel; you can choose any server panel you prefer or manually install Nginx or Caddy to configure SSL and reverse proxy.  
+If you do not need to use ports 80 and 443 to access the Dashboard, you can directly use the installation script to install and run Nezha Monitoring without installing Nginx.
 :::  
-<br/>
-<br/>
 
-## Get the Client ID and Client Secret on Github/Gitlab
-Nezha Monitor uses a Github account as the login account for the admin panel    
-+ First we need to create a new authentication application, after logging into Github, open https://github.com/settings/developers and select "OAuth Apps" - "New OAuth App "      
-`Application name` - Fill in as you like  
-`Homepage URL` - Fill in the panel's access domain name, such as: "http://cdn.example.com"    
-`Authorization callback URL` - Fill in the callback address, e.g., "http://cdn.example.com/oauth2/callback"  
-+ Click on "Registration Application"  
-+ Remember the Client ID in the page, then click "Generate a new client secret" to create a new Client Secret, the new secret will be displayed only once, please save it properly
-<br/>
-<br/>  
-+ If you're using Gitlab, you'll need to go to https://gitlab.com/-/profile/applications to create a new application  
-+ Fill in `Redirect URL` with the callback address    
-+ In `Scopes`, select `read_user` and `read_api`   
-+ Once created, save the Application ID and Secret  
-## Installing Dashboard on the server
-* In the panel server, run the installation script:    
+## Obtaining Github Client ID and Secret
+
+Nezha Monitoring uses Github, Gitlab, or Gitee as admin accounts.  
+1. First, create an OAuth application. For Github, log in to Github, open [Github OAuth Apps](https://github.com/settings/developers), and select "OAuth Apps" -> "New OAuth App".  
+`Application name` - Fill in as you like.  
+`Homepage URL` - Fill in with the domain for accessing the dashboard, such as "http://dashboard.example.com" (your domain).  
+`Authorization callback URL` - Fill in with the callback address, such as "http://dashboard.example.com/oauth2/callback" (don't forget `/oauth2/callback`).  
+1. Click “Register application”.  
+2. Save the Client ID on the page, then click “Generate a new client secret” to create a new Client Secret, which will be displayed only once, **please keep it safe**.
+
+## Using Cloudflare Access as OAuth2 Provider
+
+If you encounter issues using Github, Gitlab, or Gitee as admin login, consider switching to [using Cloudflare Access as the OAuth2 provider](/en_US/guide/q8.html).
+
+### Creating a SaaS-OIDC Application
+
+1. Go to [Zero Trust Dashboard](https://one.dash.cloudflare.com) and log in with your Cloudflare account.
+2. `My Team` -> `Users` -> `<specific user>` -> Get `User ID` and save it.
+3. `Access` -> `Application` -> `Add an Application`.
+4. Choose `SaaS`, enter a custom application name in `Application` (e.g., nezha), select `OIDC`, and click `Add application`.
+5. Select `Scopes`: `openid`, `email`, `profile`, `groups`.
+6. Fill in your callback address in `Redirect URLs`, such as `https://dashboard.example.com/oauth2/callback`.
+7. Save the `Client ID`, `Client Secret`, and `Issuer` address (protocol and domain part), e.g., `https://xxxxx.cloudflareaccess.com`.
+
+**If using this method, after installing the Dashboard, modify the configuration file `/opt/nezha/dashboard/data/config.yaml`, and change the `Endpoint` configuration to the `Issuer` address saved earlier, e.g., `https://xxxxx.cloudflareaccess.com`, and restart the Dashboard.**
+
+## Installing the Dashboard on the Server
+
+Run the installation script on the dashboard server:
 ```bash
-curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
+curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
 ```  
 
-* After waiting for the Docker installation to complete, input the following settings:    
-`OAuth2 provider` -   Github or Gitlab  
-`Client ID` - Previously saved Client ID   
-`Client Secret` - Previously saved secret   
-`GitHub/Gitee login name` - Github o Gitlab username   
-`Site title` - Custom site title   
-`Site access port` - Public access port, customizable, default 8008   
-`RPC port` - The communication port between Agent and Dashboard, default 5555   
+After Docker installation completes, enter the following values:
+- `OAuth provider` - choose one from github, cloudflare, gitlab, gitee.
+- `Client ID` - the previously saved Client ID.
+- `Client Secret` - the previously saved Client Secret.
+- `Username` - the username/User ID from the OAuth provider.
+- `Site title` - custom site title.
+- `Access port` - public access port, customizable, default is 8008.
+- `Agent communication port` - port for Agent and Dashboard communication, default is 5555.
 
-* After the input is complete, wait to pull the mirror  
-After the installation, if everything is fine, you can visit the domain + port number, such as "http://cdn.example.com:8008" to view the Dashboard  
+After inputting the values, wait for the image to be pulled.  
+When the installation completes, you can access the dashboard by visiting your domain and port number, such as “http://dashboard.example.com:8008”.
 
-* In the future, if you need to run the script again, you can run:    
+In the future, if you need to run the script again, run:
 ```bash
 ./nezha.sh
 ``` 
-to open the management script  
-<br/>
-<br/>
-## Configure reverse proxy
-* Create a new site in the aaPanel, fill in the public access domain name, such as "http://cdn.example.com", then click "Settings" to enter the site settings option, select " Reverse proxy" - "New reverse proxy"  
+to open the management script.  
 
-* Customize a proxy name, fill in `http://127.0.0.1` in the "Target URL" and click "Save"  
+## Configuring Reverse Proxy
 
-* Open the " configuration" to the right of the new reverse proxy you just created and replace the configuration file with the following:  
-````nginx
+Create a new site in the aaPanel, with the domain filled in as the public access domain, such as “http://dashboard.example.com”. Then click “Settings” to enter the site settings options, select “Reverse Proxy” - “New Reverse Proxy”.
+
+Customize a proxy name and fill in `http://127.0.0.1` in the "Target URL" below, then click “Save”.
+
+Open the “Configuration File” on the right side of the newly created reverse proxy and replace the configuration file with the following content:
+```nginx
 #PROXY-START/
 location / {
     proxy_pass http://127.0.0.1:8008;
     proxy_set_header Host $http_host;
-    proxy_set_header      Upgrade $http_upgrade;
+    proxy_set_header Upgrade $http_upgrade;
 }
 location ~ ^/(ws|terminal/.+)$  {
     proxy_pass http://127.0.0.1:8008;
@@ -76,52 +93,31 @@ location ~ ^/(ws|terminal/.+)$  {
     proxy_set_header Host $http_host;
 }
 #PROXY-END/
-````
-* Click "Save"    
-Now, you should be able to access the panel directly using a domain name such as: "http://cdn.example.com"    
-<br/>
-#### Other:   
+```
+Click “Save”.  
+Now you should be able to access the dashboard directly using the domain, such as “http://dashboard.example.com”.
 
+### Additional Content:
 
-* CaddyServer v1（v2 no special configuration required）  
+CaddyServer v1 (v2 does not require special configuration):
 
-  ```
-  proxy /ws http://ip:8008 {
-      websocket
-      header_upstream -Origin
-  }
-  proxy /terminal/* http://ip:8008 {
-      websocket
-      header_upstream -Origin
-  }
-  ```
-
-<br/>
-<br/>
+```caddy
+proxy /ws http://ip:8008 {
+    websocket
+    header_upstream -Origin
+}
+proxy /terminal/* http://ip:8008 {
+    websocket
+    header_upstream -Origin
+}
+```
 
 ## Configuring SSL in the aaPanel
-First, temporarily disable the reverse proxy    
-As with other websites, you can choose to automatically apply for a Let´s Encrypt certificate or manually configure an existing certificate by going to "SSL" in the site settings  
-After you finish setting up SSL, you need to go back to https://github.com/settings/developers and edit the authentication application you created before, change all the domain names in the "Homepage URL" and "Authorization callback URL" you filled in before from `http` to `https`, such as: "https://cdn.example.com" and "https://cdn.example.com/oauth2/callback",  **If you don't change these links, you may not be able to log into the admin panel**   
 
-## FAQ
-### What should I do if /terminal or /ws cannot be connected after HTTPS is enabled?
-It is often caused by incomplete certificates. Please add -d to the agent running parameters. If there is x509: certificate signed by unknown authority in the log, replacing the complete certificate can solve the problem 100%.
+First, temporarily disable the reverse proxy.  
+Like configuring SSL certificates for other websites, enter the “SSL” in the site settings, and you can choose to automatically apply for a Let’s Encrypt certificate or manually configure an existing certificate.  
+After completing the SSL settings, go back to [Github OAuth Apps](https://github.com/settings/developers) and edit the previously created OAuth application. Change all the domain parts in "Homepage URL" and "Authorization callback URL" from `http` to `https`, such as "https://dashboard.example.com" and "https://dashboard.example.com/oauth2/callback". **Failing to change this may result in being unable to log in to the admin panel.**
 
-### I am not satisfied with the data modification or addition function provided by the Dashboard, what if I want to modify or add data myself?
-Commonly used in requirements such as batch installation of Agents, where you can modify the database directly.  
-Please note that not everything can be modified in the database, wrong modification will lead to data confusion and failure to start Dashboard, **please do not modify the database at will!**  
-::: danger  
-Again, **please do not modify the database at will!**  
-:::    
-If you need to modify the data in the database, please **stop** the Dashboard container before modifying it.  
-The database type is sqlite3, located in `/opt/nezha/dashboard/data/sqlite.db`, please backup before modifying the data
+## Updating the Dashboard
 
-### What are each table or column in the database?
-The documentation does not provide an explanation of the database. If you have the ability to modify the database, you should be able to read it with a little thinking.
-
-### Does Dashboard update automatically?
-The Agent normally updates automatically, but the Dashboard does not and needs to be updated manually.  
-
-### How do I update the Dashboard?
-Run the script `. /nezha.sh` and select restart Dashboard and update
+Run the script `./nezha.sh`, and select to restart and update the dashboard.

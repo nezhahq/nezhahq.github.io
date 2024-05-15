@@ -74,3 +74,21 @@ The entered DDNS `AccessID` or `AccessSecret` is incorrect.
 
 This error indicates that no TCP-Ping or ICMP-Ping type monitoring has been set in the services page or monitoring data has not yet been generated.   
 If it has been set up, wait for some time and then check again.
+
+### What to do if /terminal or /ws can't connect properly after enabling HTTPS?
+
+This is often due to an incomplete certificate. Add the -d parameter to the agent run command. If the log contains `x509:certificate signed by unknown authority`, replacing with a complete certificate will solve the problem.
+
+### What if I'm not satisfied with the data modification/addition functionality provided by the dashboard and want to modify/add data myself?
+
+Common in scenarios like batch adding Agents, you can directly modify the database.  
+Note that not everything in the database can be modified; incorrect modifications can lead to data corruption and inability to start the Dashboard. **Do not modify the database casually!**
+::: danger  
+Again, **do not modify the database casually!**  
+:::  
+If you need to modify data in the database, **stop** the dashboard container first.  
+The database type is sqlite3, located at `/opt/nezha/dashboard/data/sqlite.db`. Backup before modifying.
+
+### Will the Dashboard automatically update?
+
+Agents typically update automatically, but the Dashboard does not and requires manual updates.
