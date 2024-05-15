@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# Service Monitoring
+
 **The Services section is where you set up monitoring for external websites or servers using Agents.**  
 **Configured service monitors can be viewed on the "Services" page of the homepage, displaying the availability monitoring results for the past 30 days.**
 

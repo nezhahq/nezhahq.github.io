@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# Install Dashboard
+
 ## Preparation
 
 To set up Nezha Monitoring, you need:

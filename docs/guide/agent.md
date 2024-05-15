@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# 安装 Agent
+
 **哪吒监控的被控端服务被称为 Agent，本文档将介绍如何在被控端服务器上安装 Agent，并与 Dashboard 连接。**  
 ::: tip  
 Agent 二进制文件仓库地址为：<https://github.com/nezhahq/agent/releases>

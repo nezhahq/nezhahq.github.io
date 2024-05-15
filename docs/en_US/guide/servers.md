@@ -2,7 +2,7 @@
 outline: deep
 ---
 
-# Server
+# Server Management
 
 ## Introduction
 

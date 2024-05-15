@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# Frequently Asked Questions about the Dashboard
+
 ## Why is the IP Displayed in the Admin Panel Different from the Actual Agent IP?
 
 First, let's explain how the IP displayed in the Admin panel is obtained: The Agent periodically requests IP-API to get IP information and reports it to the Dashboard. The currently used IP-API can be viewed here: [myip.go](https://github.com/nezhahq/agent/blob/main/pkg/monitor/myip.go).  

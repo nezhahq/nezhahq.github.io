@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# API Interface
+
 **Nezha Monitoring supports querying the status information of Agents using the API interface**
 
 ## Creating a Token

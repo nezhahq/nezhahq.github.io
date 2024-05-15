@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# Notification Configuration
+
 Nezha Monitoring supports monitoring server load, CPU, memory, disk, traffic, monthly traffic, process count, and connection count, and sending notifications when user-defined thresholds are reached.
 
 ## Flexible Notification Methods

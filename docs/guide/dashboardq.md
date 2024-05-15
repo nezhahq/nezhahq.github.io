@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# Dashboard 常见问题
+
 ## 为什么管理面板中显示的 IP 和 Agent 实际 IP 不一致？
 
 首先解释管理面板中显示的IP是怎么得到的：Agent 会每隔一段时间请求一遍 IP-API，获取到 IP 信息后上报到 Dashboard，目前使用的 IP-API 可在此查看：[myip.go](https://github.com/nezhahq/agent/blob/main/pkg/monitor/myip.go)。  

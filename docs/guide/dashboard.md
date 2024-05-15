@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# 安装 Dashboard
+
 ## 准备工作  
 
 搭建一个哪吒监控，你需要：

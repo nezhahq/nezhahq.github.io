@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# Settings
+
 ## Site Title
 
 You can customize the site title in this section.

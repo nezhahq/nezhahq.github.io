@@ -198,7 +198,7 @@ function getGuideSidebarEnUS() {
         { text: 'Perform Data Migration and Backup Recovery', link: '/en_US/guide/q5.html' },
         { text: 'Reset Traffic Statistics Monthly', link: '/en_US/guide/q6.html' },
         { text: 'Custom Agent Monitoring Projects', link: '/en_US/guide/q7.html' },
-        { text: 'Use Cloudflare Access As OAuth2 Provider', link: '/guide/q8' },
+        { text: 'Use Cloudflare Access As OAuth2 Provider', link: '/en_US/guide/q8' },
       ]
     },
     {

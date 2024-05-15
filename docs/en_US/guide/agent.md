@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# Install Agent
+
 **This document will introduce how to install the Agent on the monitored server and connect it to the Dashboard.**  
 ::: tip  
 The repository for Agent binaries can be found at: <https://github.com/nezhahq/agent/releases>

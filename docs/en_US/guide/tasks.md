@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# Task Management
+
 **In the Tasks section, you can set up scheduled tasks, trigger tasks, and batch execute tasks on multiple servers.**
 
 Nezha Monitoring supports pushing commands to Agents for execution. This feature is highly flexible and can be used for regular backups using tools like restic or rclone, periodically restarting a service to reset network connections, or executing a task when an notification is triggered, such as running a script when CPU usage is high for an extended period.

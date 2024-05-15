@@ -2,6 +2,8 @@
 outline: deep
 ---
 
+# Frequently Asked Questions about logging into the Dashboard
+
 ## Stuck Page/Connection Refused/Long Response Time After Login Callback
 
 These issues can manifest in various ways, but ultimately the browser cannot display correctly after login.
