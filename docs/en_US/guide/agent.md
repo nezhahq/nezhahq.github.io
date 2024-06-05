@@ -46,7 +46,7 @@ If you encounter errors when running the one-click installation command in Power
 2. Run the script on the monitored server:
 
 ```bash
-curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
+curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
 ```
 
 1. Select “Install monitoring Agent.”
