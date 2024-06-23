@@ -129,6 +129,7 @@ function getGuideSidebarZhCN() {
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
         { text: '使用 Cloudflare Access 作为 OAuth2 提供方', link: '/guide/q8' },
+        { text: '启用 GPU 监控', link: '/guide/q9' },
       ]
     },
     {
@@ -199,6 +200,7 @@ function getGuideSidebarEnUS() {
         { text: 'Reset Traffic Statistics Monthly', link: '/en_US/guide/q6.html' },
         { text: 'Custom Agent Monitoring Projects', link: '/en_US/guide/q7.html' },
         { text: 'Use Cloudflare Access As OAuth2 Provider', link: '/en_US/guide/q8' },
+        { text: 'Enable GPU monitoring', link: '/en_US/guide/q9' },
       ]
     },
     {
