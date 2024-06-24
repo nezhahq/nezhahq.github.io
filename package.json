@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/nezhahq/nezhahq.github.io#readme",
   "devDependencies": {
-    "vitepress": "^1.0.0-beta.2"
+    "vitepress": "^1.2.3"
   }
 }
