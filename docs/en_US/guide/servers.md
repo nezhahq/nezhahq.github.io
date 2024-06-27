@@ -129,8 +129,8 @@ After modifying the configuration file, you also need to modify the server setti
 DDNS related options:
 
 - `Enable DDNS`: Enable the DDNS functionality for this server.
-- `Enable DDNS IPv4`: Enable IPv4 parsing when updating DDNS records.
-- `Enable DDNS IPv6`: Enable IPv6 parsing when updating DDNS records.
+- `Enable DDNS IPv4`: Enable IPv4 resolution when updating DDNS records.
+- `Enable DDNS IPv6`: Enable IPv6 resolution when updating DDNS records.
 - `DDNS Domain`: The domain the record points to.
 - `DDNS Configuration`: The DDNS configuration name to use in multiple configurations.
 
