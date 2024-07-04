@@ -187,12 +187,13 @@ You can remove or add relevant information as needed.
 ### Basic Rules
 
 - `type`: You can choose one or more types. If multiple types are selected in one rule, **all selected types must be satisfied** to trigger a notification (refer to the examples below)
-  - `cpu`, `memory`, `swap`, `disk`
+  - `cpu`, `gpu`, `memory`, `swap`, `disk`
   - `net_in_speed` inbound network speed, `net_out_speed` outbound network speed, `net_all_speed` total network speed, `transfer_in` inbound traffic, `transfer_out` outbound traffic, `transfer_all` total traffic
   - `offline` offline monitoring
   - `load1`, `load5`, `load15` load
   - `process_count` process count (currently resource-intensive due to thread count, not supported temporarily)
   - `tcp_conn_count`, `udp_conn_count` connection count
+  - `temperature_max` maximum temperature
 - `duration`: Duration in seconds. An notification is triggered if 30% or more of the samples exceed the threshold within this duration (to prevent data spikes).
 - `min` or `max`:
   - For traffic and network speed, the unit is bytes (1KB = 1024B, 1MB = 1024 * 1024B)
