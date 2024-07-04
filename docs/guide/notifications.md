@@ -222,12 +222,13 @@ outline: deep
 ### 基本规则
 
 - `type`：可选取一个或多个类型，如在一个规则中选择了多个类型，需要**同时满足**所有选择的类型才会触发通知（可参考后面的示例）
-  - `cpu`、`memory`、`swap`、`disk`
+  - `cpu`、`gpu`、`memory`、`swap`、`disk`
   - `net_in_speed` 入站网速、`net_out_speed` 出站网速、`net_all_speed` 双向网速、`transfer_in` 入站流量、`transfer_out` 出站流量、`transfer_all` 双向流量
   - `offline` 离线监控
   - `load1`、`load5`、`load15` 负载
   - `process_count` 进程数（目前取线程数占用资源太多，暂时不支持）
   - `tcp_conn_count`、`udp_conn_count` 连接数
+  - `temperature_max` 最高温度值
 - `duration`：持续数秒，数秒内采样记录 30% 以上触发阈值才会告警（防数据插针）
 - `min` 或 `max`：
   - 流量、网速类单位为字节（1KB=1024B，1MB=1024*1024B）
