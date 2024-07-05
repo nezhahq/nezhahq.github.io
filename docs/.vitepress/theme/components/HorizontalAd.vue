@@ -9,7 +9,7 @@ export default {
     }
   },
   mounted() {
-    this.show = navigator.userAgent.match(/(iPhone|iPod|Android|ios|iPad)/i)
+    this.show = navigator.userAgent.match(/(iPhone|iPod|Android|ios|iPad)/i) && navigator.language.indexOf('zh') > -1
   }
 }
 </script>
