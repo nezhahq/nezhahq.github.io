@@ -22,5 +22,8 @@
   "homepage": "https://github.com/nezhahq/nezhahq.github.io#readme",
   "devDependencies": {
     "vitepress": "^1.2.3"
+  },
+  "dependencies": {
+    "sass": "^1.77.6"
   }
 }
