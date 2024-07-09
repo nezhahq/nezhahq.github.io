@@ -1,4 +1,4 @@
-## Nezha Theme Development Environment
+# Nezha Theme Development Environment
 
 Nezha Monitoring provides a theme development environment that you can use to create new Nezha Monitoring themes
 

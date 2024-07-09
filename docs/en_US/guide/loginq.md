@@ -2,7 +2,7 @@
 outline: deep
 ---
 
-# Frequently Asked Questions about logging into the Dashboard
+# FAQ about logging into the Dashboard
 
 ## Stuck Page/Connection Refused/Long Response Time After Login Callback
 

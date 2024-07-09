@@ -1,7 +1,7 @@
 ---
 layout: home
 
-title: Nezha Monitoring - Server monitoring and maintenance tools  
+title: Nezha Monitoring - Server monitoring tool  
 titleTemplate: Community Project
 
 hero:
