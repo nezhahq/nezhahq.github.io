@@ -31,8 +31,8 @@ export default defineConfig({
     root: {
       lang: 'zh-CN',
       label: '简体中文',
-      title: '哪吒监控',
-      description: '哪吒监控是一个轻量化的运维工具',
+      title: '哪吒服务器监控',
+      description: '哪吒监控是一款轻量化的服务器监控和运维工具，提供实时性能监控与告警通知。作为开源项目，它支持企业自托管，保护数据隐私，并支持多语言。哪吒服务器监控安装简便，支持自定义监控项目，可满足不同服务器运维需求。',
       link: '/',
       themeConfig: {
         lastUpdatedText: '上次更新',
@@ -68,8 +68,8 @@ export default defineConfig({
     en_US: {
       lang: 'en-US',
       label: 'English',
-      title: 'Nezha Monitoring',
-      description: 'Nezha Monitoring is a lightweight O&M tool',
+      title: 'Nezha Server Monitoring',
+      description: 'Nezha Monitoring is a lightweight server monitoring and maintenance tool that offers real-time performance monitoring and alert notifications. As an open-source project, it supports enterprise self-hosting to protect data privacy and supports multiple languages. Nezha server monitoring is easy to deploy, supports customizable monitoring projects, and meets various server maintenance needs.',
       link: '/en_US/',
       themeConfig: {
         lastUpdatedText: 'Last Updated',

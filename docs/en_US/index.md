@@ -2,7 +2,7 @@
 
 layout: home
 
-title: Nezha Monitoring
+title: NeZha Monitoring - Server monitoring and maintenance tools
 titleTemplate: User Manual
 
 hero:

@@ -8,7 +8,7 @@ GitHub project:  [Argo-Nezha-Service-Container](https://github.com/fscarmen2/Arg
 Mirror backup (not live update): [Argo-Nezha-Service-Container](https://github.com/nezhahq/Argo-Nezha-Service-Container)
 * * * *
 
-# Catalog
+## Catalog
 
 - [Project Features](case5.md#project-features)
 - [How to get Argo authentication: json or token](case5.md#How-to-get-Argo-authentication-json-or-token)

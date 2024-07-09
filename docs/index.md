@@ -1,7 +1,7 @@
 ---
 layout: home
 
-title: 哪吒监控
+title: 哪吒监控 - 服务器监控与运维工具
 titleTemplate: 使用文档
 
 hero:

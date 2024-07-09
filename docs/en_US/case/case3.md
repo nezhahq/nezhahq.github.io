@@ -1,4 +1,4 @@
-# Build your own server status query Telegram bot with multi-language and multi-user support
+# Build your own server status query Telegram bot
 Contributor: 
 + [tech-fever](https://github.com/tech-fever)
 
