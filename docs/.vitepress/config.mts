@@ -187,8 +187,8 @@ function getGuideSidebarZhCN() {
         { text: '面板数据迁移、备份和恢复', link: '/guide/q5.html' },
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
-        { text: '使用 Cloudflare Access 作为 OAuth2 提供方', link: '/guide/q8' },
-        { text: '启用 GPU 监控', link: '/guide/q9' },
+        { text: '使用 Cloudflare Access 作为 OAuth2 提供方', link: '/guide/q8.html' },
+        { text: '启用 GPU 监控', link: '/guide/q9.html' },
       ]
     },
     {
@@ -257,9 +257,9 @@ function getGuideSidebarEnUS() {
         { text: 'Real-Time Channel Disconnection/Online Terminal Connection Failure', link: '/en_US/guide/q4.html' },
         { text: 'Perform Data Migration and Backup Recovery', link: '/en_US/guide/q5.html' },
         { text: 'Reset Traffic Statistics Monthly', link: '/en_US/guide/q6.html' },
-        { text: 'Custom Agent Monitoring Projects', link: '/en_US/guide/q7.html' },
-        { text: 'Use Cloudflare Access As OAuth2 Provider', link: '/en_US/guide/q8' },
-        { text: 'Enable GPU monitoring', link: '/en_US/guide/q9' },
+        { text: 'Customizing Agent Monitoring Items', link: '/en_US/guide/q7.html' },
+        { text: 'Use Cloudflare Access As OAuth2 Provider', link: '/en_US/guide/q8.html' },
+        { text: 'Enable GPU monitoring', link: '/en_US/guide/q9.html' },
       ]
     },
     {
