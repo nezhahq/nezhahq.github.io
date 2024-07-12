@@ -34,9 +34,13 @@ outline: deep
 
 ## 使用 Cloudflare Access 作为 OAuth2 提供方
 
-位于中国大陆的用户可能无法直接连接 Github，如您在使用 Github、Gitlab、Gitee 作为管理员账户登录时遇到问题，可以优先考虑切换 [使用 Cloudflare Access 作为 OAuth2 提供方](/guide/q8.html) 作为登录方式。
+对于位于中国大陆的用户，直接连接到 GitHub 可能会遇到困难。如果您在使用 GitHub、GitLab 或 Gitee 作为管理员账户登录时遇到问题，建议切换到使用 [Cloudflare Access 作为 OAuth2 提供方](/guide/q8.html) 进行登录。
 
 ### 新建 SaaS-OIDC 应用流程
+
+:::warning
+以下步骤适用于已经开始使用 Zero Trust 的用户。如果您尚未使用过 Cloudflare Zero Trust，强烈建议您首先阅读 [Cloudflare Access 作为 OAuth2 提供方的使用指南](/guide/q8.html)，以了解 Cloudflare Access 的配置示例和流程。
+:::
 
 1. 前往 [Zero Trust Dashboard](https://one.dash.cloudflare.com)，使用 Cloudflare 账号登录。
 2. `My Team` -> `Users` -> `<具体用户>` -> 获取 `User ID` 并保存。

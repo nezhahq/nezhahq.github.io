@@ -58,3 +58,8 @@ If you are configuring Github login on a server in mainland China, switching to 
 ### net/http: TLS handshake timeout
 
 Same as above.
+
+### Unable to receive email verification codes using Cloudflare Access as an OAuth2 Provider
+
+- Ensure that the email verification policy has been correctly configured in `Policies`.
+- Verify that the email address you provided is correct. Note that email addresses not on the policy whitelist will not receive verification codes.

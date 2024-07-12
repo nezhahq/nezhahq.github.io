@@ -58,3 +58,8 @@ Cloudflare Access 用户请注意，您的用户名不是邮箱，而是 User ID
 ### net/http: TLS handshake timeout
 
 同上。
+
+### 使用 Cloudflare Access 作为 OAuth2 提供方时无法收到邮件验证码
+
+- 确认在 `Policies` 中已正确配置了邮件验证策略。
+- 检查您提供的邮箱地址是否正确无误。注意，不在策略白名单中的邮箱地址将不会接收到验证码。

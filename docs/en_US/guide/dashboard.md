@@ -32,11 +32,15 @@ Nezha Monitoring uses Github, Gitlab, or Gitee as admin accounts.
 1. Click “Register application”.  
 2. Save the Client ID on the page, then click “Generate a new client secret” to create a new Client Secret, which will be displayed only once, **please keep it safe**.
 
-## Using Cloudflare Access as OAuth2 Provider
+## Using Cloudflare Access as an OAuth2 Provider
 
-If you encounter issues using Github, Gitlab, or Gitee as admin login, consider switching to [using Cloudflare Access as the OAuth2 provider](/en_US/guide/q8.html).
+If you encounter issues using GitHub, GitLab, or Gitee for admin account logins, consider switching to [Cloudflare Access as your OAuth2 provider](/en_US/guide/q8.html) for authentication.
 
-### Creating a SaaS-OIDC Application
+### Setting Up a New SaaS-OIDC Application
+
+:::warning
+The following steps are for users who have already started using Zero Trust. If you have not previously used Cloudflare Zero Trust, we strongly recommend that you first read the [Guide on Using Cloudflare Access as an OAuth2 Provider](/en_US/guide/q8.html) to understand the configuration examples and setup process.
+:::
 
 1. Go to [Zero Trust Dashboard](https://one.dash.cloudflare.com) and log in with your Cloudflare account.
 2. `My Team` -> `Users` -> `<specific user>` -> Get `User ID` and save it.
