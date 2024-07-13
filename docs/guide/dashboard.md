@@ -52,6 +52,9 @@ outline: deep
 
 **如使用此方式，安装 Dashboard 完成后，需要修改配置文件 `/opt/nezha/dashboard/data/config.yaml`，将 `Endpoint` 配置修改为之前保存的 `Issuer` 地址，例如 `https://xxxxx.cloudflareaccess.com`，保存后需重启 Dashboard。**   
 
+### OIDC配置 （可选）
+哪吒支持自定义OIDC验证登录，配置详情可参考文档: [OIDC配置文档](/guide/q10.html)
+
 ## 在服务器中安装 Dashboard
 
 在面板服务器中，运行安装脚本：
