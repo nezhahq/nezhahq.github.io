@@ -18,10 +18,16 @@ Nezha Monitoring supports one-click installation of the Agent on both Windows an
 You need to set up a communication domain in the admin panel in advance, and this domain should not be connected to a CDN. This document uses the example communication domain “data.example.com”.  
 Go to the settings page in the admin panel, fill in the communication domain in the “Non-CDN Dashboard Server Domain/IP” field, and click "Save".
 
-### One-Click Installation on Linux (Ubuntu, Debian, CentOS)
+### One-Click Installation on Linux
 
 1. First, add a server in the admin panel.
 2. Click the green Linux icon button next to the newly added server and copy the one-click installation command.
+3. Run the copied installation command on the monitored server, and wait for the installation to complete. Then, check if the server is online in the Dashboard home page.
+
+### One-Click Installation on macOS
+
+1. First, add a server in the admin panel.
+2. Click the green Apple icon button next to the newly added server and copy the one-click installation command.
 3. Run the copied installation command on the monitored server, and wait for the installation to complete. Then, check if the server is online in the Dashboard home page.
 
 ### One-Click Installation on Windows
@@ -38,7 +44,7 @@ If you encounter errors when running the one-click installation command in Power
 
 ## Other Ways to Install the Agent
 
-### Installing the Agent on Linux (Ubuntu, Debian, CentOS)
+### Installing the Agent on Linux (Support most distros)
 <details>
   <summary>Click to expand/collapse</summary>
 
@@ -57,95 +63,98 @@ curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.s
 
 </details>
 
-### Installing the Agent on Other Linux Distributions (e.g., Alpine using Openrc)
+### Installing the Agent using the built-in service command (Support most systems)
 <details>
   <summary>Click to expand/collapse</summary>
 
-This section is contributed by [unknown0054](https://github.com/unknwon0054).
+First, get a copy of Nezha Agent: https://github.com/nezhahq/agent/releases
 
-1. Modify SERVER, SECRET, TLS, and execute in the shell:
+After extracting the archive, run the following command to install the service (may require root permission):
 
-```shell
-cat >/etc/init.d/nezha-agent<< EOF
-#!/sbin/openrc-run
-SERVER="" # Dashboard domain ip:port
-SECRET="" # SECRET
-TLS="" # Enable TLS if yes "--tls", leave empty if no
-NZ_BASE_PATH="/opt/nezha"
-NZ_AGENT_PATH="${NZ_BASE_PATH}/agent"
-pidfile="/run/${RC_SVCNAME}.pid"
-command="/opt/nezha/agent/nezha-agent"
-command_args="-s ${SERVER} -p ${SECRET} ${TLS}"
-command_background=true
-depend() {
-  need net
-}
-checkconfig() {
-  GITHUB_URL="github.com"
-  if [ ! -f "${NZ_AGENT_PATH}/nezha-agent" ]; then
-    if [[ $(uname -m | grep 'x86_64') != "" ]]; then
-      os_arch="amd64"
-    elif [[ $(uname -m | grep 'i386\|i686') != "" ]]; then
-      os_arch="386"
-    elif [[ $(uname -m | grep 'aarch64\|armv8b\|armv8l') != "" ]]; then
-      os_arch="arm64"
-    elif [[ $(uname -m | grep 'arm') != "" ]]; then
-      os_arch="arm"
-    elif [[ $(uname -m | grep 's390x') != "" ]]; then
-      os_arch="s390x"
-    elif [[ $(uname -m | grep 'riscv64') != "" ]]; then
-      os_arch="riscv64"
-    fi
-    local version=$(curl -m 10 -sL "https://api.github.com/repos/nezhahq/agent/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
-    if [ ! -n "$version" ]; then
-      version=$(curl -m 10 -sL "https://fastly.jsdelivr.net/gh/nezhahq/agent/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/nezhahq\/agent@/v/g')
-    fi
-    if [ ! -n "$version" ]; then
-      version=$(curl -m 10 -sL "https://gcore.jsdelivr.net/gh/nezhahq/agent/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/nezhahq\/agent@/v/g')
-    fi
-    if [ ! -n "$version" ]; then
-      echo -e "Failed to get the version number. Please check if the server can connect to https://api.github.com/repos/nezhahq/agent/releases/latest"
-      return 0
-    else
-      echo -e "The latest version is: ${version}"
-    fi
-    wget -t 2 -T 10 -O nezha-agent_linux_${os_arch}.zip https://${GITHUB_URL}/nezhahq/agent/releases/download/${version}/nezha-agent_linux_${os_arch}.zip >/dev/null 2>&1
-    if [[ $? != 0 ]]; then
-      echo -e "Failed to download Release. Please check if the server can connect to ${GITHUB_URL}"
-      return 0
-    fi
-    mkdir -p $NZ_AGENT_PATH
-    chmod 755 -R $NZ_AGENT_PATH
-    unzip -qo nezha-agent_linux_${os_arch}.zip && mv nezha-agent $NZ_AGENT_PATH && rm -rf nezha-agent_linux_${os_arch}.zip README.md
-  fi
-  if [ ! -x "${NZ_AGENT_PATH}/nezha-agent" ]; then
-    chmod +x ${NZ_AGENT_PATH}/nezha-agent
-  fi
-}
-start_pre() {
-  if [ "${RC_CMD}" != "restart" ]; then
-    checkconfig || return $?
-  fi
-}
-EOF
+```bash
+./nezha-agent service install -s server_name:port -p password
 ```
 
-2. Add execute permissions
+You can also add other arguments except the server address and password. For more details, refer to the documentation: [Customizing Agent Monitoring Items](/en_US/guide/q7.html).
 
-```shell
-chmod +x /etc/init.d/nezha-agent
+Uninstall the service:
+
+```bash
+./nezha-agent service uninstall
 ```
 
-3. Start Nezha-Agent
+Start the service:
 
-```shell
-rc-service nezha-agent start
+```bash
+./nezha-agent service start
 ```
 
-4. Add to startup
+Stop the service:
 
-```shell
-rc-update add nezha-agent
+```bash
+./nezha-agent service stop
+```
+
+Restart the service:
+
+```bash
+./nezha-agent service restart
+```
+
+</details>
+
+### Installing the Agent with runit
+<details>
+  <summary>Click to expand/collapse</summary>
+
+The built-in service command of Agent supports most init systems, including FreeBSD rc.d and openrc, but still missing some of them.
+
+Here we take Void Linux's runit as an example:
+
+1. Create directory `/etc/sv/nezha-agent`:
+
+```bash
+mkdir /etc/sv/nezha-agent
+```
+
+2. Create service file `/etc/sv/nezha-agent/run`, with following content:
+
+```bash
+#!/bin/sh
+exec 2>&1
+exec /opt/nezha/agent/nezha-agent -s server_name:port -p password 2>&1
+```
+
+You can add other arguments here as well.
+
+3. Create logging service file `/etc/sv/nezha-agent/log/run`:
+
+```bash
+#!/bin/sh
+exec vlogger -t nezha-agent -p daemon
+```
+
+4. Enable the service:
+
+```bash
+sudo ln -s /etc/sv/nezha-agent/ /var/service
+```
+
+Use the `sv` command to manage the service.
+
+How to view logs:
+
+1. Install `socklog` and enable it:
+
+```bash
+sudo xbps-install -S socklog-void
+sudo ln -s /etc/sv/socklog-unix /var/service
+```
+
+2. Run `svlogtail`:
+
+```bash
+sudo svlogtail | grep nezha-agent
 ```
 
 </details>
