@@ -18,10 +18,16 @@ Agent 二进制文件仓库地址为：<https://github.com/nezhahq/agent/release
 你需要提前在管理面板中设置好通信域名，此域名不可以接入 CDN。本文档以示例通信域名 “data.example.com” 为例。  
 进入后台管理面板，转到“设置”页，在“未接入 CDN 的面板服务器域名/IP”项中填入通信域名，然后点击"保存"。
 
-### 在 Linux 中一键安装 (Ubuntu、Debian、CentOS)
+### 在 Linux 中一键安装
 
 1. 首先在管理面板中添加一台服务器。
 2. 点击新添加的服务器旁的绿色 Linux 图标按钮，复制一键安装命令。
+3. 在被控端服务器中运行复制的一键安装命令，等待安装完成后返回到 Dashboard 主页查看服务器是否上线。
+
+### 在 macOS 中一键安装
+
+1. 首先在管理面板中添加一台服务器。
+2. 点击新添加的服务器旁的绿色 Apple 图标按钮，复制一键安装命令。
 3. 在被控端服务器中运行复制的一键安装命令，等待安装完成后返回到 Dashboard 主页查看服务器是否上线。
 
 ### 在 Windows 中一键安装
@@ -38,7 +44,7 @@ Agent 二进制文件仓库地址为：<https://github.com/nezhahq/agent/release
 
 ## 其他方式安装 Agent
 
-### 在 Linux 中安装 Agent (Ubuntu、Debian、CentOS)
+### 在 Linux 中安装 Agent（支持大部分发行版）
 <details>
   <summary>点击展开/收起</summary>
 
@@ -63,95 +69,98 @@ curl -L https://gitee.com/naibahq/nezha/raw/master/script/install.sh -o nezha.sh
 
 </details>
 
-### 在其他 Linux 发行版（如 Alpine 使用 Openrc）中安装 Agent
+### 使用 Agent 内置服务命令安装（支持主流系统）
 <details>
   <summary>点击展开/收起</summary>
 
-本节内容由 [unknown0054](https://github.com/unknwon0054) 贡献。
+首先获取 Agent 的二进制文件：https://github.com/nezhahq/agent/releases
 
-1. 修改 SERVER、SECRET、TLS，然后在 shell 中执行：
+解压后输入以下命令安装服务（可能需要 root 权限）：
 
-```shell
-cat >/etc/init.d/nezha-agent<< EOF
-#!/sbin/openrc-run
-SERVER="" # Dashboard 地址 ip:port
-SECRET="" # SECRET
-TLS="" # 是否启用 TLS，是 "--tls" ，否留空
-NZ_BASE_PATH="/opt/nezha"
-NZ_AGENT_PATH="${NZ_BASE_PATH}/agent"
-pidfile="/run/${RC_SVCNAME}.pid"
-command="/opt/nezha/agent/nezha-agent"
-command_args="-s ${SERVER} -p ${SECRET} ${TLS}"
-command_background=true
-depend() {
-  need net
-}
-checkconfig() {
-  GITHUB_URL="github.com"
-  if [ ! -f "${NZ_AGENT_PATH}/nezha-agent" ]; then
-    if [[ $(uname -m | grep 'x86_64') != "" ]]; then
-      os_arch="amd64"
-    elif [[ $(uname -m | grep 'i386\|i686') != "" ]]; then
-      os_arch="386"
-    elif [[ $(uname -m | grep 'aarch64\|armv8b\|armv8l') != "" ]]; then
-      os_arch="arm64"
-    elif [[ $(uname -m | grep 'arm') != "" ]]; then
-      os_arch="arm"
-    elif [[ $(uname -m | grep 's390x') != "" ]]; then
-      os_arch="s390x"
-    elif [[ $(uname -m | grep 'riscv64') != "" ]]; then
-      os_arch="riscv64"
-    fi
-    local version=$(curl -m 10 -sL "https://api.github.com/repos/nezhahq/agent/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
-    if [ ! -n "$version" ]; then
-      version=$(curl -m 10 -sL "https://fastly.jsdelivr.net/gh/nezhahq/agent/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/nezhahq\/agent@/v/g')
-    fi
-    if [ ! -n "$version" ]; then
-      version=$(curl -m 10 -sL "https://gcore.jsdelivr.net/gh/nezhahq/agent/" | grep "option\.value" | awk -F "'" '{print $2}' | sed 's/nezhahq\/agent@/v/g')
-    fi
-    if [ ! -n "$version" ]; then
-      echo -e "获取版本号失败，请检查本机能否链接 https://api.github.com/repos/nezhahq/agent/releases/latest"
-      return 0
-    else
-      echo -e "当前最新版本为: ${version}"
-    fi
-    wget -t 2 -T 10 -O nezha-agent_linux_${os_arch}.zip https://${GITHUB_URL}/nezhahq/agent/releases/download/${version}/nezha-agent_linux_${os_arch}.zip >/dev/null 2>&1
-    if [[ $? != 0 ]]; then
-      echo -e "Release 下载失败，请检查本机能否连接 ${GITHUB_URL}${plain}"
-      return 0
-    fi
-    mkdir -p $NZ_AGENT_PATH
-    chmod 755 -R $NZ_AGENT_PATH
-    unzip -qo nezha-agent_linux_${os_arch}.zip && mv nezha-agent $NZ_AGENT_PATH && rm -rf nezha-agent_linux_${os_arch}.zip README.md
-  fi
-  if [ ! -x "${NZ_AGENT_PATH}/nezha-agent" ]; then
-    chmod +x ${NZ_AGENT_PATH}/nezha-agent
-  fi
-}
-start_pre() {
-  if [ "${RC_CMD}" != "restart" ]; then
-    checkconfig || return $?
-  fi
-}
-EOF
+```bash
+./nezha-agent service install -s server_name:port -p password
 ```
 
-2. 增加运行权限
+除了服务器地址和密码，还可以添加其它支持的参数。具体参考[自定义 Agent 监控项目](/guide/q7.html)
 
-```shell
-chmod +x /etc/init.d/nezha-agent
+卸载服务：
+
+```bash
+./nezha-agent service uninstall
 ```
 
-3. 运行 Nezha-Agent
+启动服务：
 
-```shell
-rc-service nezha-agent start
+```bash
+./nezha-agent service start
 ```
 
-4. 添加开机自启动
+停止服务：
 
-```shell
-rc-update add nezha-agent
+```bash
+./nezha-agent service stop
+```
+
+重启服务：
+
+```bash
+./nezha-agent service restart
+```
+
+</details>
+
+### runit 安装 Agent
+<details>
+  <summary>点击展开/收起</summary>
+
+目前 Agent 内置的服务功能已经支持了绝大部分 init 系统，包括 FreeBSD rc.d 和 openrc。尽管如此还是有一些漏网之鱼。
+
+这里使用 Void Linux 的 runit 作为示例：
+
+1. 创建 `/etc/sv/nezha-agent` 目录：
+
+```bash
+mkdir /etc/sv/nezha-agent
+```
+
+2. 创建 `/etc/sv/nezha-agent/run` 服务文件，写入以下内容：
+
+```bash
+#!/bin/sh
+exec 2>&1
+exec /opt/nezha/agent/nezha-agent -s server_name:port -p password 2>&1
+```
+
+这里同样可以添加其它参数。
+
+3. 创建 `/etc/sv/nezha-agent/log/run`：
+
+```bash
+#!/bin/sh
+exec vlogger -t nezha-agent -p daemon
+```
+
+4. 启用服务：
+
+```bash
+sudo ln -s /etc/sv/nezha-agent/ /var/service
+```
+
+之后可以通过 `sv` 命令来操作服务。
+
+如何查看日志：
+
+1. 安装 `socklog`，并启用：
+
+```bash
+sudo xbps-install -S socklog-void
+sudo ln -s /etc/sv/socklog-unix /var/service
+```
+
+2. 运行 `svlogtail` 查看日志：
+
+```bash
+sudo svlogtail | grep nezha-agent
 ```
 
 </details>
@@ -213,75 +222,6 @@ systemctl enable nezha
 
 ‼️修改对应信息后‼️  
 使用 `root` 账号执行上述命令即可安装完成。
-
-</details>
-
-### 在 macOS 中安装 Agent
-<details>
-  <summary>点击展开/收起</summary>
-
-***本节内容改编自 [Mitsea Blog](https://blog.mitsea.com/e796f93db38d49e4b18df234c6ee75f5)，改编已获得原作者授权***  
-::: warning  
-安装过程中如提示“macOS 无法验证此 app“，请前往系统设置手动允许程序运行。  
-:::  
-
-1. 首先在管理面板中添加一台服务器。  
-2. 前往 [Release](https://github.com/nezhahq/agent/releases) 页下载 Agent 二进制文件，根据 CPU 架构选择下载 darwin amd64 还是 arm64 的 Agent。  
-如 Intel CPU 下载 amd64，Apple Silicon 下载 arm64 版本。下载完成后解压 Agent 二进制文件，如解压到下载文件夹。  
-3. 新建一个名为 `nezha_agent.plist` 的文件并保存，修改文件内容如下：
-
-```xml  
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
- <key>KeepAlive</key>
- <true/>
- <key>Label</key>
- <string>nezha_agent</string>
- <key>Program</key>
- <string>在这里修改 Agent 二进制文件的的路径，如：/Users/123/Downloads/nezha-agent</string>
- <key>ProgramArguments</key>
- <array>
-  <string>在这里修改 Agent 二进制文件的的路径，同上</string>
-  <string>--password</string>
-  <string>通信密钥，如：529664783eeb23cc25</string>
-  <string>--server</string>
-  <string>通信网址和 gRPC 端口，如:data.example.com:5555</string>
- </array>
- <key>RunAtLoad</key>
- <true/>
-</dict>
-</plist>
-```
-
-4. 在 Terminal 中使用下面的命令加载 plist 文件到 launchd 里，**注意替换文件路径**：
-
-```shell  
-launchctl load /Users/123/Desktop/nezha_agent.plist
-```
-
-5. 启动进程：
-
-```shell  
-launchctl start nezha_agent
-```
-
-6. 检查进程是否运行：
-
-```shell  
-launchctl list | grep nezha_agent
-```
-
-7. 停止进程并移除：
-
-```shell  
-launchctl stop nezha_agent
-```
-
-```shell  
-launchctl remove nezha_agent
-```
 
 </details>
 
