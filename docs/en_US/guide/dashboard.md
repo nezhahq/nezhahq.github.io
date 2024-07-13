@@ -77,27 +77,6 @@ In the future, if you need to run the script again, run:
 ``` 
 to open the management script.  
 
-## Config OIDC
-Edit `config.ymal` to enable **OIDC**
-```yaml
-oauth2:
-  type: oidc  # (Required) Specifies the authentication type as OIDC
-  oidcDisplayName: OIDC  # (Optional, default is OIDC) The name displayed on the login page button
-  admin: ""  # (At least one of admin or adminGroups must be provided; default is empty) List of admin usernames, separated by commas. If a user is one of these, they will be considered an admin
-  adminGroups: ""  # (At least one of admin or adminGroups must be provided; default is empty) List of admin groups, separated by commas. If a user belongs to one of these groups, they will be considered an admin. Can be left blank if not using group management
-  clientid: # (Required) OIDC client ID
-  clientsecret: # (Required) OIDC client secret
-  oidcIssuer: https://auth.example.com/realms/master  # (Required) The issuer URL of the OIDC provider, can be found from the OIDC provider
-  # oidcLogoutUrl: https://auth.example.com/realms/master/protocol/openid-connect/logout  # (Has a bug, currently not working)
-  # oidcRegisterUrl: # (Optional) Registration URL of the OIDC provider
-  oidcScopes: openid,profile,email  # (Optional, default is openid,profile,email) Scopes requested from OIDC, separated by commas
-  oidcLoginClaim: sub  # (Optional, default is sub) The username field returned from OIDC, can be preferred_username, sub, or email
-  oidcGroupsClaim: groups  # (Required if using adminGroups; default is groups) The field returned from OIDC containing user group information, can be groups or roles
-  oidcAutoCreate: false  # (Optional, default is false) Whether to automatically create a user if they do not exist
-  oidcAutoLogin: false  # (Optional, default is false) Automatically redirect to the OIDC login page when the URL is /login
-
-```
-
 ## Configuring Reverse Proxy
 
 Create a new site in the aaPanel, with the domain filled in as the public access domain, such as “http://dashboard.example.com”. Then click “Settings” to enter the site settings options, select “Reverse Proxy” - “New Reverse Proxy”.

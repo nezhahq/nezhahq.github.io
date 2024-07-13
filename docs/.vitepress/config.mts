@@ -189,6 +189,7 @@ function getGuideSidebarZhCN() {
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
         { text: '使用 Cloudflare Access 作为 OAuth2 提供方', link: '/guide/q8.html' },
         { text: '启用 GPU 监控', link: '/guide/q9.html' },
+        { text: '启用 OIDC 认证', link: '/guide/q10.html' },
       ]
     },
     {

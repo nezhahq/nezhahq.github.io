@@ -81,27 +81,6 @@ curl -L https://gitee.com/naibahq/nezha/raw/master/script/install.sh -o nezha.sh
 ``` 
 来打开管理脚本。  
 
-## 使用OIDC验证
-修改`config.ymal`的内容来配置OIDC
-```yaml
-oauth2:
-  type: oidc  # (必填) 指定验证类型为OIDC
-  oidcDisplayName: OIDC  # (可选，默认值为OIDC) 登录页面按钮显示的名字
-  admin: ""  # (与adminGroups至少填写一项; 默认值为空) 管理员用户名，多个用户名用半角逗号分隔。如果用户在这些用户名列表中，则视为管理员
-  adminGroups: ""  # (与admin至少填写一项; 默认值为空) 管理员组，多个组名用半角逗号分隔。如果用户属于这些组，则视为管理员。如果不使用组管理，此项可省略
-  clientid: # (必填) OIDC客户端ID
-  clientsecret: # (必填) OIDC客户端密钥
-  oidcIssuer: https://auth.example.com/realms/master  # (必填) OIDC提供商的issuer地址，可从OIDC提供商查询
-  # oidcLogoutUrl: https://auth.example.com/realms/master/protocol/openid-connect/logout  # (有bug，目前不能使用)
-  # oidcRegisterUrl: # (可选) OIDC提供商的注册链接
-  oidcScopes: openid,profile,email  # (可选，默认值为openid,profile,email) OIDC请求的scope，多个scope用半角逗号分隔
-  oidcLoginClaim: sub  # (可选，默认值为sub) 从OIDC返回的用户名字段，可以是preferred_username、sub或email
-  oidcGroupsClaim: groups  # (如果使用adminGroups，则必填，默认值为groups) 从OIDC返回的用户组信息字段，可以是groups或roles
-  oidcAutoCreate: false  # (可选，默认值为false) 如果用户不存在，是否自动创建用户
-  oidcAutoLogin: false  # (可选，默认值为false) 当地址是/login时，是否自动跳转到OIDC登录页面
-
-```
-
 ## 配置反向代理
 
 在宝塔面板中新建一个站点，域名填写公开访问域名，如 “http://dashboard.example.com“ ，然后点击“设置”进入站点设置选项，选择“反向代理” - “新建反向代理”。
