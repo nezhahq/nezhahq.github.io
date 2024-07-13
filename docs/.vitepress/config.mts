@@ -261,6 +261,7 @@ function getGuideSidebarEnUS() {
         { text: 'Customizing Agent Monitoring Items', link: '/en_US/guide/q7.html' },
         { text: 'Use Cloudflare Access As OAuth2 Provider', link: '/en_US/guide/q8.html' },
         { text: 'Enable GPU monitoring', link: '/en_US/guide/q9.html' },
+        { text: 'Enable OIDC authorization', link: '/en_US/guide/q10.html' },
       ]
     },
     {
