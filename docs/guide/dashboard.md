@@ -54,7 +54,7 @@ outline: deep
 
 ## OIDC 验证配置（可选）
 
-哪吒支持自定义 OIDC 验证登录。有关配置详情，请参考文档：[OIDC 配置文档](/guide/q10.html)。
+哪吒支持自定义 OIDC 验证登录。有关配置详情，请参考文档：[启用 OIDC 认证](/guide/q10.html)。
 
 ## 在服务器中安装 Dashboard
 
