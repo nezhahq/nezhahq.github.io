@@ -189,6 +189,7 @@ function getGuideSidebarZhCN() {
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
         { text: '使用 Cloudflare Access 作为 OAuth2 提供方', link: '/guide/q8.html' },
         { text: '启用 GPU 监控', link: '/guide/q9.html' },
+        { text: '启用 OIDC 认证', link: '/guide/q10.html' },
       ]
     },
     {
@@ -260,6 +261,7 @@ function getGuideSidebarEnUS() {
         { text: 'Customizing Agent Monitoring Items', link: '/en_US/guide/q7.html' },
         { text: 'Use Cloudflare Access As OAuth2 Provider', link: '/en_US/guide/q8.html' },
         { text: 'Enable GPU monitoring', link: '/en_US/guide/q9.html' },
+        { text: 'Enable OIDC authorization', link: '/en_US/guide/q10.html' },
       ]
     },
     {
