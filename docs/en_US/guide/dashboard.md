@@ -52,10 +52,8 @@ The following steps are for users who have already started using Zero Trust. If 
 
 **If using this method, after installing the Dashboard, modify the configuration file `/opt/nezha/dashboard/data/config.yaml`, and change the `Endpoint` configuration to the `Issuer` address saved earlier, e.g., `https://xxxxx.cloudflareaccess.com`, and restart the Dashboard.**
 
-### OIDC Configuration (Optional)
-Nezha supports OIDC authorization. For more details, visit the [OIDC Configuration](/en_US/guide/q10.html)
-
-
+## OIDC Authentication Configuration (Optional)
+Nazha supports custom OIDC authentication login. For configuration details, please refer to the documentation: [Enable OIDC authorization](/en_US/guide/q10.html).
 
 ## Installing the Dashboard on the Server
 
