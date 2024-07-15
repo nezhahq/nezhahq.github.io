@@ -77,11 +77,11 @@ systemctl status docker
 出现此错误说明没有在服务页中设置 TCP-Ping 和 ICMP-Ping 类型的监控或者监控数据还未生成。   
 如已经设置完毕，可以等待一段时间后再查看。
 
-### 启用 HTTPS 后 /terminal 或 /ws 不能正常连接
+## 启用 HTTPS 后 /terminal 或 /ws 不能正常连接
 
 常常是由于证书不完整造成的，请在 agent 运行参数中添加 -d，若 log 中有 `x509:certificate signed by unknown authority`，更换完整证书则可解决该问题。
 
-### 对面板提供的数据修改/增加功能不满意，想要修改/增加数据
+## 对面板提供的数据修改/增加功能不满意，想要修改/增加数据
 
 常见于批量新建 Agent 等需求中，可以直接修改数据库。  
 请注意，数据库中并非什么都可以修改，错误的修改会导致数据混乱无法启动 Dashboard，**请勿随意修改数据库！**  
@@ -91,6 +91,11 @@ systemctl status docker
 如需要在数据库中修改数据，请先**停止**面板容器再修改。  
 数据库类型是 sqlite3，位于 `/opt/nezha/dashboard/data/sqlite.db`，修改前请备份。
 
-### Dashboard 会自动更新吗？
+## Dashboard 会自动更新吗？
 
 Agent 通常情况下会自动更新，但 Dashboard 并不会，需要手动更新。
+
+## 连接在线终端时提示：`Agent 信令下发失败`
+
+当 Agent 离线，或与 Dashboard 之间的连接不稳定时，可能会导致在线终端无法正常连接。
+请检查 Agent 是否正常运行，是否与 Dashboard 保持稳定的连接。

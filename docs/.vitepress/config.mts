@@ -173,6 +173,7 @@ function getGuideSidebarZhCN() {
         { text: '服务', link: '/guide/services.html' },
         { text: '任务', link: '/guide/tasks.html' },
         { text: '告警', link: '/guide/notifications.html' },
+        { text: '内网穿透', link: '/guide/nat.html' },
         { text: '设置', link: '/guide/settings.html' },
         { text: 'API', link: '/guide/api.html' }
       ],
@@ -183,7 +184,7 @@ function getGuideSidebarZhCN() {
         { text: '反向代理 Telegram API', link: '/guide/q1.html' },
         { text: 'Agent 启动/上线 问题自检流程', link: '/guide/q2.html' },
         { text: '反向代理 gRPC 端口', link: '/guide/q3.html' },
-        { text: '实时通道断开/在线终端连接失败', link: '/guide/q4.html' },
+        { text: '实时通道断开', link: '/guide/q4.html' },
         { text: '面板数据迁移、备份和恢复', link: '/guide/q5.html' },
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
@@ -246,6 +247,7 @@ function getGuideSidebarEnUS() {
         { text: 'Services', link: '/en_US/guide/services.html' },
         { text: 'Tasks', link: '/en_US/guide/tasks.html' },
         { text: 'Notifications', link: '/en_US/guide/notifications.html' },
+        { text: 'NAT traversal', link: '/en_US/guide/nat.html' },
         { text: 'Settings', link: '/en_US/guide/settings.html' },
         { text: 'API', link: '/en_US/guide/api.html' }
       ]
@@ -255,7 +257,7 @@ function getGuideSidebarEnUS() {
       items: [
         { text: 'Agent Startup/Online Troubleshooting Process', link: '/en_US/guide/q2.html' },
         { text: 'Reverse Proxy gRPC Port (Support Cloudflare CDN)', link: '/en_US/guide/q3.html' },
-        { text: 'Real-Time Channel Disconnection/Online Terminal Connection Failure', link: '/en_US/guide/q4.html' },
+        { text: 'Real-Time Channel Disconnection', link: '/en_US/guide/q4.html' },
         { text: 'Perform Data Migration and Backup Recovery', link: '/en_US/guide/q5.html' },
         { text: 'Reset Traffic Statistics Monthly', link: '/en_US/guide/q6.html' },
         { text: 'Customizing Agent Monitoring Items', link: '/en_US/guide/q7.html' },
