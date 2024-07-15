@@ -31,4 +31,4 @@ outline: deep
 ## 使用须知
 
 - 保持 Agent 与 Dashboard 之间的连接是内网穿透功能正常运作的前提。若 Agent 连接中断，已配置的穿透将暂时失效。
-- 考虑到内网穿透隧道本身不加密数据，建议在 Agent 与 Dashboard 之间以及 Dashboard 与客户端浏览器之间**使用 HTTPS 协议**，以确保数据传输过程的安全性。
+- 考虑到内网穿透隧道本身不加密数据，建议在 Agent 与 Dashboard 之间以及 Dashboard 与客户端浏览器之间均**使用 TLS/SSL**，以确保数据传输过程的安全性。

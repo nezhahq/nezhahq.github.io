@@ -31,4 +31,4 @@ If your Dashboard server uses tools like the aaPanel or similar management platf
 ## Usage Notes
 
 - Continuous connectivity between the Agent and the Dashboard is crucial for the NAT traversal functionality to operate correctly. If the connection to the Agent is lost, the traversal setup will temporarily cease to function.
-- Given that the NAT traversal does not encrypt traffic by itself, it is recommended to secure data transmissions by employing HTTPS protocol between the Agent and the Dashboard, as well as between the Dashboard and the client browser, to ensure data security during transmission.
+- Given that the NAT traversal does not encrypt traffic by itself, it is recommended to secure data transmissions by employing TLS/SSL between the Agent and the Dashboard, as well as between the Dashboard and the client browser, to ensure data security during transmission.
