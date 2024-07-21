@@ -64,13 +64,23 @@ systemctl status docker
 
 3. 保存配置，并清空浏览器、Nginx、CDN 中的缓存，此时刷新页面应恢复正常。
 
-## 面板无法启动：panic: 无法找到配置的 DDNS 提供者...
+## 面板无法启动：panic：无法找到配置的 DDNS 提供者...
 
 填入的 DDNS provider 的值有误，目前仅支持 `webhook`、`cloudflare`、`tencentcloud` 和 `dummy`。
 
-## 面板更新 DDNS 崩溃：panic: interface conversion: interface {} is nil, not []interface {}
+## 面板更新 DDNS 崩溃：panic：interface conversion: interface {} is nil, not []interface {}
 
 填入的 DDNS `AccessID` 或 `AccessSecret` 有误。
+
+## 面板警告：NEZHA>> 错误的服务监控上报...
+
+1. Dashboard 与 Agent 版本不兼容导致含有对端不支持的 `TaskType` 导致，全部更新至最新版本即可解决。
+
+2. Dashboard v0.17.10 - v0.18.0 也存在此问题，更新至最新版本可以解决。
+
+## 无法启动 Agent 服务：Unix syslog delivery error
+
+此报错见于 Agent v0.16.9+。原因为系统的 `/dev/log` 套接字工作不正常或不存在。可参考 <https://unix.stackexchange.com/questions/317064/how-do-i-restore-dev-log-in-systemdrsyslog-host> 解决。如果使用的是 Docker，请避免使用 `systemd` 等 init 系统。
 
 ## 打开网络监控页显示：server monitor history not found
 
