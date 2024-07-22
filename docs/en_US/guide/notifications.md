@@ -265,6 +265,13 @@ For servers with IDs 3 and 4 (defined in ignore), if the monthly outbound traffi
 [{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]
 ```
 
+::: tip
+If you still have trouble editing rules, you can try the rule generators below to simplify the process. Note that Nezha Monitoring does not guarantee the functionality of these generated rules.
+
+- [Nezha Rule Generator](https://nz.sina.us.kg/): for common cases
+- [Nezha-Traffic-Alarm-Generator](https://wiziscool.github.io/Nezha-Traffic-Alarm-Generator/): for editing cycle traffic rules only and may be more convenient to use. Chinese only.
+:::
+
 ## Notification Trigger Modes
 
 - **Always Trigger**: A notification is triggered every time the Agent reports a status that matches the notification rule.

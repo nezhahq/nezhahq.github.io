@@ -72,6 +72,16 @@ The value entered for the DDNS provider is incorrect. Currently, only `webhook`,
 
 The entered DDNS `AccessID` or `AccessSecret` is incorrect.
 
+## Dashboard warning: NEZHA>> 错误的服务监控上报...
+
+1. The installed versions of the Dashboard and Agent are not compatible and have a `TaskType` that is unsupported by its counterpart. Updating both to the latest version could solve this problem.
+
+2. This could be a specific issue in Dashboard v0.17.10 - v0.18.0. Updating to the latest version could solve this.
+
+## Unable to start the Agent service: Unix syslog delivery error
+
+Appears in Agent v0.16.9+. Mostly caused by a malfunctioning `/dev/log` socket (or it does not exist at all). You can refer to <https://unix.stackexchange.com/questions/317064/how-do-i-restore-dev-log-in-systemdrsyslog-host> to solve this problem. Try avoiding using init systems like `systemd` in a Docker installation.
+
 ## Network Monitoring Page Shows: server monitor history not found
 
 This error indicates that no TCP-Ping or ICMP-Ping type monitoring has been set in the services page or monitoring data has not yet been generated.   
