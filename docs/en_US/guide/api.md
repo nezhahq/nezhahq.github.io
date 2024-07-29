@@ -175,6 +175,72 @@ Example response:
 }
 ```
 
+### Get ICMP Ping / TCPing monitor value
+
+This API does not require authentication, except for servers with `HideForGuest` option enabled.
+
+Request:
+``` 
+GET /api/v1/monitor/{id}
+```
+
+Parameters:
+- `id` (required): ServerID, must be an positive integer.
+
+Example response:
+```json
+{
+    "code": 0,
+    "message": "success",
+    "result": [
+        {
+            "monitor_id": 1,
+            "server_id": 1,
+            "monitor_name": "Monitor1",
+            "server_name": "Server1",
+            "created_at": [
+                1722142860000,
+                1722142920000
+            ],
+            "avg_delay": [
+                68.2275,
+                70.1129
+            ]
+        },
+        {
+            "monitor_id": 2,
+            "server_id": 1,
+            "monitor_name": "Monitor2",
+            "server_name": "Server1",
+            "created_at": [
+                1722142860000,
+                1722142920000
+            ],
+            "avg_delay": [
+                66.656,
+                68.2153
+            ]
+        },
+        {
+            "monitor_id": 3,
+            "server_id": 1,
+            "monitor_name": "Monitor3",
+            "server_name": "Server1",
+            "created_at": [
+                1722142860000,
+                1722142920000
+            ],
+            "avg_delay": [
+                61.4525,
+                62.342
+            ]
+        }
+    ]
+}
+```
+
+Note: `created_at` corresponds with `avg_delay`.
+
 ## Usage Examples
 
 ### Get All Server Information
