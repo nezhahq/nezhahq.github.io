@@ -175,6 +175,72 @@ GET /api/v1/server/details?id=&tag=
 }
 ```
 
+### 获取 ICMP Ping / TCPing 数据
+
+此 API 无需认证。（除限制游客访问的服务器）
+
+请求：
+```
+GET /api/v1/monitor/{id}
+```
+
+参数：
+- `id`（必填）：ServerID，只能是一个正整数。
+
+返回示例：
+```json
+{
+    "code": 0,
+    "message": "success",
+    "result": [
+        {
+            "monitor_id": 1,
+            "server_id": 1,
+            "monitor_name": "Monitor1",
+            "server_name": "Server1",
+            "created_at": [
+                1722142860000,
+                1722142920000
+            ],
+            "avg_delay": [
+                68.2275,
+                70.1129
+            ]
+        },
+        {
+            "monitor_id": 2,
+            "server_id": 1,
+            "monitor_name": "Monitor2",
+            "server_name": "Server1",
+            "created_at": [
+                1722142860000,
+                1722142920000
+            ],
+            "avg_delay": [
+                66.656,
+                68.2153
+            ]
+        },
+        {
+            "monitor_id": 3,
+            "server_id": 1,
+            "monitor_name": "Monitor3",
+            "server_name": "Server1",
+            "created_at": [
+                1722142860000,
+                1722142920000
+            ],
+            "avg_delay": [
+                61.4525,
+                62.342
+            ]
+        }
+    ]
+}
+```
+
+注： `created_at` 和 `avg_delay` 为对应关系。
+
 ## 使用案例
 
 ### 获取所有服务器信息
