@@ -214,7 +214,8 @@ function getCaseSidebarZhCN() {
         { text: '2. 使用 Siri 语音运行快捷指令查询服务器状态', link: '/case/case2.html' },
         { text: '3. 自建多用户多语言 Telegram 服务器状态查询机器人', link: '/case/case3.html' },
         { text: '4. Fake-agent，监控数据作弊器', link: '/case/case4.html' },
-        { text: '5. 使用 Argo 隧道的哪吒服务端', link: '/case/case5.html' }
+        { text: '5. 使用 Argo 隧道的哪吒服务端', link: '/case/case5.html' },
+        { text: '6. Nezha Mobile - Nezha Dashboard 的 iOS 客户端', link: '/case/case6.html' }
       ]
     }
   ]
@@ -288,7 +289,8 @@ function getCaseSidebarEnUS() {
         { text: '2. Use Siri to run shortcut to check server status', link: '/en_US/case/case2.html' },
         { text: '3. Self-hosted, multi-user, multi-lingual server status query Telegram bot', link: '/en_US/case/case3.html' },
         { text: '4. Fake-agent, monitoring data cheater', link: '/en_US/case/case4.html' },
-        { text: '5. Nezha server over Argo tunnel', link: '/en_US/case/case5.html' }
+        { text: '5. Nezha server over Argo tunnel', link: '/en_US/case/case5.html' },
+        { text: '6. Nezha Mobile - An iOS Client For Nezha Dashboard', link: '/en_US/case/case6.html' }
       ]
     }
   ]
