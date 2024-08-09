@@ -14,19 +14,16 @@ We appreciate any contribution to the project, and we will actively merge your c
 Due to **ICP Filing Policy**, Nezha Mobile is not available in **China mainland**.
 :::
 
+## TestFlight Testing Program
+[Join TestFlight Testing](https://testflight.apple.com/join/C6vTc2dN)
+
 ## Instructions
-+ Enter your domain of Dashboard like `server.hidandelion.com` on your first use. Do not add a protocol prefix or a trailing slash.
++ Enter your Dashboard link like `server.hidandelion.com` and API token on your first use. Do not add a protocol prefix or a trailing slash to the link. API Token can be retrieved from Admin Center of Dashboard.
 <img src="/images/case6/1_en_US.png" alt="step1" width="200"/>
 
-## Configure Widget
-+ Tap the blue button on the bottom right corner to navigate to settings. Tap **Configure Widget**.
-<img src="/images/case6/2_en_US.png" alt="step1" width="200"/>
+## Configure Widget(Optional)
++ Add a widget on your Springboard. Long-tap the widget and then tap **Edit Widget**.
+<img src="/images/case6/2_en_US.png" alt="step2" width="200"/>
 
-+ Enter domain of Dashboard, API token obtained from Nezha Dashboard and Server ID, then tap **Apply configuration now**. If you want to change the monitored server in Widget, modify **Server ID** and tap **Apply configuration now**.
-<img src="/images/case6/3_en_US.png" alt="step1" width="200"/>
-
-+ You can find **Server ID** in **ID** column on server detail page.
-<img src="/images/case6/4_en_US.png" alt="step1" width="200"/>
-
-+ Add Widget on your Springboard and lock screen. Last refresh time of the information is marked on the top right corner of Widget. You can tap **Refresh** button to fetch the newest information. Gernerally, iOS manages data refresh automatically.
-<img src="/images/case6/5_en_US.png" alt="step1" width="200"/>
++ Choose a server you want to monitor on the next view. You can choose different servers for each widget.
+<img src="/images/case6/3_en_US.png" alt="step3" width="200"/>
