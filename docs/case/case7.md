@@ -11,11 +11,11 @@ Broker for Nezha 是一个 Nezha Agent 的修改版本，其通过分离 Agent �
 ## 与原项目的不同
 - 使用外置数据源，而不是从本地获取。
 - 多数据源与多面板支持
-- 仅支持 `TaskTypeCommand` 和 `TaskTypeTerminalGRPC` 两种任务类型，均通过 SSH 实现。其它任务类型暂无计划。
+- 仅支持部分任务类型，可参考项目 README 获取详细信息。
 
 Broker for Nezha 需要与特定的数据收集软件一同使用。目前提供两种数据获取方式：
 1. HTTP 主动获取（HTTP/1.1）
-2. TCP 被动获取（推荐，可避免创建新连接）
+2. TCP 被动获取（推荐，可避免创建额外连接）
 
 如需获取现有的数据收集软件，可以参考项目 README。
 

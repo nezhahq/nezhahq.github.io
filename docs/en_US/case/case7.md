@@ -11,11 +11,11 @@ Online Documentation: [Broker for Nezha](https://broker.kuzu.uk/)
 ## Difference from Nezha Agent
 - Utilizes external data sources to report to **Nezha Dashboard**.
 - Supports configuring multiple sources and connecting to multiple Dashboards.
-- Currently supports two task types only: `TaskTypeCommand` and `TaskTypeTerminalGRPC`, implemented using SSH. Other task types are not planned.
+- Only has limited task support. For details, view the project README.
 
-Broker for Nezha needs to be used with specific data collection software. Currently, it provides two data acquisition methods:
+Broker for Nezha needs to be used with specific data collection software. Currently, it provides two data collection methods:
 1. HTTP (HTTP/1.1) - Active polling
-2. TCP - Passive collection (recommended to avoid creating new connections)
+2. TCP - Passive collection (recommended to avoid creating redundant connections)
 
 For existing data collection software, refer to the project README. Due to security concerns, it's recommended to use this only in a trusted network.
 
