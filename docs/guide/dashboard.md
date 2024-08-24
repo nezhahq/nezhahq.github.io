@@ -99,7 +99,7 @@ location / {
     proxy_set_header Host $http_host;
     proxy_set_header      Upgrade $http_upgrade;
 }
-location ~ ^/(ws|terminal/.+)$  {
+location ~ ^/(ws|terminal/.+|file/.+)$ {
     proxy_pass http://127.0.0.1:8008;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
@@ -121,6 +121,10 @@ proxy /ws http://ip:8008 {
     header_upstream -Origin
 }
 proxy /terminal/* http://ip:8008 {
+    websocket
+    header_upstream -Origin
+}
+proxy /file/* http://ip:8008 {
     websocket
     header_upstream -Origin
 }
