@@ -9,7 +9,7 @@ outline: deep
 
 ## How to Use
 
-To add a new monitor, go to the "Services" page in the Admin Panel and click "Add Monitor."
+To add a new monitor, go to the "Services" page in the Admin dashboard and click "Add Monitor."
 
 When adding a new service monitor, you need to set the following parameters:
 

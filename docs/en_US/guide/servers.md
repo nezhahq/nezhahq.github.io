@@ -38,8 +38,10 @@ The forced update will not work if `disable-force-update` is enabled.
 
 This is WebShell; the feature will not work if `disable-command-execute` is enabled.  
 It is available for both Linux and Windows and supports Ctrl+Shift+V for pasting.  
-If the connection fails, refer to [Real-Time Channel Disconnection/Online Terminal Connection Failure](/en_US/guide/q4.html).  
-Note that in the WebSSH terminal function, the Agent connects to the **public access domain** via WebSocket, not through gRPC.
+If the connection fails, refer to [Real-Time Channel Disconnection/Online Terminal Connection Failure](/en_US/guide/q4.html).
+
+## FM
+Added in Dashboard v0.19.1 / Agent v0.19.0. A pseudo file manager embedded in WebShell, supports file download/upload, directory navigation and copying current path. Access it by clicking the blue button in the bottom-right corner of the WebShell.
 
 ## DDNS Functionality
 
@@ -52,9 +54,12 @@ The DDNS functionality is suitable for servers with dynamic IPs. When the Agent 
 
 ### Configuration Instructions
 
-Currently, the DDNS functionality supports two configuration forms: single configuration and multiple configurations. If single configuration is used, all Agent servers will use the same configuration to update DDNS. If multiple configurations are used, each server can be assigned a specific configuration to update DDNS, offering greater flexibility.
+You can choose to use profiles or not; If no profile is set, all Agent servers will use the same configuration to update DDNS. If profiles are used, each server can have a specific configuration for updating DDNS, providing greater flexibility.
 
-#### Single Configuration
+#### Without Profiles
+::: warning
+This configuration is deprecated and will be removed in a future release. Please switch to using profiles instead.
+:::
 
 ```yaml
 DDNS:
@@ -81,11 +86,11 @@ DDNS:
 - `MaxRetries`: The number of retry attempts when a request fails.
 - `Profiles`: Multi-configuration settings; ignored in single configuration settings.
 
-The `WebhookURL`, `WebhookRequestBody`, and `WebhookHeaders` can include the following parameters:
+The `WebhookURL`, `WebhookRequestBody`, and `WebhookHeaders` can include the following placeholders:
 
 - `{ip}`: The current IP of the server.
-- `{domain}`: The DDNS domain.
-- `{type}`: The IP type, which could be "ipv4" or "ipv6".
+- `{domain}`: The DDNS domain. If used with `WebhookURL`, only query values will be replaced.
+- `{type}`: The IP type, either "ipv4" or "ipv6".
 - `{access_id}`: Credential 1.
 - `{access_secret}`: Credential 2.
 
@@ -98,9 +103,9 @@ WebhookHeaders: |
 WebhookRequestBody: '{"domain": "{domain}", "ip": "{ip}", "type": "{type}"}'
 ```
 
-#### Multiple Configurations
+#### With Profiles
 
-When using multiple configurations, leave the `DDNS.Provider` value empty. If `DDNS.Provider` is not empty, the multiple configuration settings will be ignored.
+When using profiles, leave the `DDNS.Provider` value empty. If `DDNS.Provider` is not empty, this configuration will be ignored.
 
 ```yaml
 DDNS:
@@ -117,10 +122,10 @@ DDNS:
       WebhookHeaders: ""
 ```
 
-- `Profiles`: Multi-configuration settings.
+- `Profiles`: Profile field.
 - `example`: Can be replaced with any string as the DDNS configuration name.
 
-Other options can be referenced from the [Single Configuration](#Single-Configuration) section.
+Other options can be referenced from the [Without Profiles](#Without-Profiles) section.
 
 #### Dashboard Configuration
 
@@ -135,10 +140,10 @@ DDNS related options:
 - `DDNS Configuration`: The DDNS configuration name to use in multiple configurations.
 
 ::: warning
-When you modify the configuration and save it in the Dashboard settings, it will populate the default configuration options in `config.yaml`, and both single and multiple configurations will exist in the DDNS section.
+When you modify the configuration and save it in the Dashboard settings, it will populate the default configuration options in `config.yaml`, and all options in the DDNS field will be set with a default value (see [Without Profiles](#Without-Profiles)).
 
-- To use single configuration, configure `DDNS.Provider` and ignore the `Profiles` options.
-- To use multiple configurations, leave `DDNS.Provider` empty. If `DDNS.Provider` is not empty, the multiple configuration settings will be ignored.
+- If not using profiles, configure `DDNS.Provider` and ignore the `Profiles` options.
+- To use profiles, leave `DDNS.Provider` empty. If `DDNS.Provider` is not empty, the `Profiles` field will be ignored.
 :::
 
 #### Viewing Logs
