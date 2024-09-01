@@ -25,7 +25,7 @@ outline: deep
 ## 获取 Github 的 Client ID 和密钥
 
 哪吒监控接入 Github、Gitlab、Gitee 作为后台管理员账号。  
-1. 首先我们需要新建一个验证应用，以 Github 为例，登录 Github 后，打开 https://github.com/settings/developers，依次选择“OAuth Apps” - “New OAuth App”。  
+1. 首先我们需要新建一个验证应用，以 Github 为例，登录 Github 后，打开 https://github.com/settings/developers ，依次选择“OAuth Apps” - “New OAuth App”。  
 `Application name` - 随意填写。  
 `Homepage URL` - 填写面板的访问域名，如："http://dashboard.example.com"（你的域名）。  
 `Authorization callback URL` - 填写回调地址，如："http://dashboard.example.com/oauth2/callback"（不要忘记`/oauth2/callback`）。  
