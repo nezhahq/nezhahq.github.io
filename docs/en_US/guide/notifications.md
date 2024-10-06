@@ -182,6 +182,55 @@ You can remove or add relevant information as needed.
 
 </details>
 
+### Matrix Notification Example
+
+<details>
+  <summary>Click to expand/collapse</summary>
+
+#### Parameter Explanation
+
+* All variables starting with `$` need to be replaced with your actual values.
+  * **`YOUR_HOME_SERVER`**: The address of your Matrix server.
+  * **`YOUR_NEZHA_URL`**: The URL of your Nezha dashboard.
+  * **`YOUR_MATRIX_USERNAME`** and **`YOUR_MATRIX_PASSWD`**: Your Matrix username and password.
+  * **`YOUR_MATRIX_TOKEN`** retrieval method:
+    ```sh
+    curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRIX_USERNAME", "type": "m.id.user"}, "password": "$YOUR_MATRIX_PASSWD"}' "https://$YOUR_HOME_SERVER/_matrix/client/r0/login"
+    ```
+
+#### Request Configuration
+
+- **Name**: Matrix
+- **URL**: `https://$YOUR_HOME_SERVER/_matrix/client/r0/rooms/$ROOM_ID/send/m.room.message`
+- **Request Method**: `POST`
+- **Request Type**: `JSON`
+- **Header**:
+  ```json
+  {
+    "Authorization": "Bearer $YOUR_MATRIX_TOKEN"
+  }
+  ```
+- **Body**:
+  ```json
+  {
+    "msgtype": "m.text",
+    "format": "org.matrix.custom.html",
+    "formatted_body": "<html><head><title>Nezha Dashboard</title></head><body><h1><a href=\"$YOUR_NEZHA_URL\" target=\"_blank\">Nezha Dashboard</a></h1><ul><li>datetime: #DATETIME#</li><li>Message: #NEZHA#</li></ul></body></html>",
+    "body": "#NEZHA#"
+  }
+  ```
+
+#### Usage Steps
+
+1. **Replace Variables**: Replace `$YOUR_HOME_SERVER`, `$YOUR_NEZHA_URL`, `$YOUR_MATRIX_USERNAME`, `$YOUR_MATRIX_PASSWD`, and `$YOUR_MATRIX_TOKEN` with your own values.
+2. **Retrieve Token**: Use the `curl` command provided above to get `YOUR_MATRIX_TOKEN`, making sure to replace all relevant variables.
+3. **Configure Request**: Set up your request using the configuration provided above, ensuring the correct URL, headers, and body are used.
+4. **Send Notification**: Send the Matrix message using the configured request to integrate Nezha monitoring notifications into your Matrix room.
+
+Once configured, you will receive formatted Nezha dashboard information in your Matrix room whenever a notification is triggered.
+
+</details>
+
 ## Notification Rule Explanation
 
 ### Basic Rules
