@@ -217,6 +217,54 @@ outline: deep
 
 </details>
 
+### Matrix 通知示例
+
+<details>
+  <summary>点击展开/收起</summary>
+
+#### 参数说明
+
+* 以 `$` 开头的大写变量都需要替换为你的实际值。
+  * **`YOUR_HOME_SERVER`**: Matrix 服务器的地址。
+  * **`YOUR_NEZHA_URL`**: 你的哪吒面板的 URL。
+  * **`YOUR_MATRIX_USERNAME`** 和 **`YOUR_MATRIX_PASSWD`**: Matrix 用户名和密码。
+  * **`YOUR_MATRIX_TOKEN`** 获取方式：
+    ```sh
+    curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRIX_USERNAME", "type": "m.id.user"}, "password": "$YOUR_MATRIX_PASSWD"}' "https://$YOUR_HOME_SERVER/_matrix/client/r0/login"
+    ```
+
+#### 请求配置
+
+- **名称**: Matrix
+- **URL**: `https://$YOUR_HOME_SERVER/_matrix/client/r0/rooms/$ROOM_ID/send/m.room.message`
+- **请求方式**: `POST`
+- **请求类型**: `JSON`
+- **Header**:
+  ```json
+  {
+    "Authorization": "Bearer $YOUR_MATRIX_TOKEN"
+  }
+  ```
+- **Body**:
+  ```json
+  {
+    "msgtype": "m.text",
+    "format": "org.matrix.custom.html",
+    "formatted_body": "<html><head><title>Nezha Dashboard</title></head><body><h1><a href=\"$YOUR_NEZHA_URL\" target=\"_blank\">Nezha Dashboard</a></h1><ul><li>datetime: #DATETIME#</li><li>Message: #NEZHA#</li></ul></body></html>",
+    "body": "#NEZHA#"
+  }
+  ```
+#### 使用步骤
+
+1. **替换变量**: 将 `$YOUR_HOME_SERVER`, `$YOUR_NEZHA_URL`, `$YOUR_MATRIX_USERNAME`, `$YOUR_MATRIX_PASSWD`, 以及 `$YOUR_MATRIX_TOKEN` 替换为你自己的值。
+2. **获取 Token**: 使用上面提供的 `curl` 命令来获取 `YOUR_MATRIX_TOKEN`，确保替换所有相关的变量。
+3. **配置请求**: 使用上述配置来设置你的请求，确保使用正确的 URL、请求头和请求体。
+4. **发送通知**: 通过配置后的请求发送 Matrix 消息，完成哪吒监控的通知集成。
+
+这样设置好后，每次触发通知时，你的 Matrix 房间中就会收到格式化的哪吒面板信息。
+
+</details>
+
 ## 告警规则说明
 
 ### 基本规则
