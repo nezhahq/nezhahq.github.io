@@ -11,7 +11,7 @@ Please note: This development environment only supports `dashboard v0.13.16` and
 2. Modify the Oauth2 configuration in `data/config.yaml`（The callback connection can be filled with `http://localhost`）
 3. Run `docker-compose up`
 4. Start development
-5. Once the theme has been created, you can place `theme-custom` in `/opt/nezha/dashboard/theme-custom` on the server
+5. After completing the theme creation, you can place `theme-custom` (frontend theme), `static-custom` (frontend theme static files), and `dashboard-custom` (backend theme) into the `/opt/nezha/dashboard/` directory on the server (if installed using Docker).
 
 ## FAQ
 
