@@ -3,7 +3,7 @@
 Nezha Monitoring provides a theme development environment that you can use to create new Nezha Monitoring themes
 
 ::: warning 
-Please note: This development environment only supports `dashboard v0.13.16` and newer versions.  
+Please note: This development environment only supports `dashboard v0.19.20` and newer versions.  
 :::
 ## How to use
 
