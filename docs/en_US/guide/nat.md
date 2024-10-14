@@ -3,7 +3,7 @@ outline: deep
 ---
 # NAT Traversal Configuration
 
-Nezha Server Monitoring includes built-in NAT traversal capabilities, allowing users to expose internal services running on an Agent (such as home OpenWrt routers or NAS devices) to the public internet. This functionality facilitates remote access and is currently limited to supporting HTTP protocol traversal.
+Nezha Server Monitoring includes built-in NAT traversal capabilities, allowing users to expose internal services running on an Agent (such as home OpenWrt routers or NAS devices) to the public internet. This functionality facilitates remote access and is currently limited to supporting plain HTTP traversal.
 
 ## Preparation
 
@@ -23,8 +23,8 @@ If your Dashboard server uses tools like the aaPanel or similar management platf
 2. Click the "Add" button and provide the following required details:
    - **Name**: Assign a custom name to this traversal setup, for example, `OpenWrt Login Page`.
    - **Agent ID**: Input the ID of the Agent for which traversal is needed.
-   - **Internal Service Address**: Specify the internal service address that requires traversal, in the `IP:port` format, such as `127.0.0.1:80`.
-   - **Domain Name**: Enter the previously configured public domain name, like `service-1.example.com`.
+   - **Local service**: Specify the internal service address that requires traversal, in the `IP:port` format, such as `127.0.0.1:80`.
+   - **Bind hostname**: Enter the previously configured public domain name, such as `service-1.example.com`. If a non-standard port is used by Dashboard (e.g. default `8008`), be sure to include it as well.
 3. After filling in the details, click the "Add" button and wait for the traversal setup to activate.
 4. Test the configuration by accessing `http://service-1.example.com` to ensure the internal service on the Agent is successfully accessible.
 

@@ -41,11 +41,12 @@ It is available for both Linux and Windows and supports Ctrl+Shift+V for pasting
 If the connection fails, refer to [Real-Time Channel Disconnection/Online Terminal Connection Failure](/en_US/guide/q4.html).
 
 ## FM
+
 Added in Dashboard v0.19.1 / Agent v0.19.0. A pseudo file manager embedded in WebShell, supports file download/upload, directory navigation and copying current path. Access it by clicking the blue button in the bottom-right corner of the WebShell.
 
 ## DDNS Functionality
 
-The DDNS functionality is suitable for servers with dynamic IPs. When the Agent reports a new IP, the Dashboard will automatically update the DNS records based on the configuration.
+The DDNS functionality is suitable for servers with dynamic IPs. When the Agent reports a new IP (every 10 minutes), the Dashboard will automatically update the DNS records based on the configuration.
 
 ### Why Use Nezha Monitoring's DDNS Functionality?
 
