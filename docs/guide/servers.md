@@ -41,11 +41,12 @@ Linux 和 Windows 均可用，可使用 Ctrl+Shift+V 粘贴。
 连接失败请参考[实时通道断开/在线终端连接失败](/guide/q4.html)。
 
 ## FM
+
 Dashboard v0.19.1 / Agent v0.19.0 加入的新功能，是嵌入 WebShell 的一个伪文件管理器，提供文件下载和上传功能，也可以进行目录跳转或者复制路径。点击 WebShell 右下角的蓝色按钮就可以打开。
 
 ## DDNS 功能
 
-DDNS 功能适用于使用动态 IP 的服务器，当 Agent 上报了一个新的 IP，Dashboard 会根据配置自动更新 DNS 记录。
+DDNS 功能适用于使用动态 IP 的服务器，当 Agent 上报了一个新的 IP（10分钟一次），Dashboard 会根据配置自动更新 DNS 记录。
 
 ### 为什么我要使用哪吒监控的 DDNS 功能？
 
