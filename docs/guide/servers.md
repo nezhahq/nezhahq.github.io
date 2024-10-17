@@ -32,6 +32,8 @@ Agent 更新相关的参数是 [自定义 Agent 监控项目](/guide/q7.html) �
 * DDNS 域名：为该服务器配置的 DDNS 域名。
 * 密钥：即 secret/key，配置 Agent 时会用到，用于验证 Agent 与 Dashboard 的通信。
 * 一键安装：点击相应的系统按钮，复制命令到服务器执行即可一键安装。
+* 备注：服务器备注，仅验证后可见。
+* 公开备注：服务器公开备注，前台可见。可以根据此字段做一些自定义，具体见[公开备注示例](#公开备注示例)。
 * 管理：分别为连接 WebShell，修改服务器配置，删除服务器。
 
 ## 在线终端
@@ -44,114 +46,85 @@ Linux 和 Windows 均可用，可使用 Ctrl+Shift+V 粘贴。
 
 Dashboard v0.19.1 / Agent v0.19.0 加入的新功能，是嵌入 WebShell 的一个伪文件管理器，提供文件下载和上传功能，也可以进行目录跳转或者复制路径。点击 WebShell 右下角的蓝色按钮就可以打开。
 
-## DDNS 功能
+## 公开备注示例
 
-DDNS 功能适用于使用动态 IP 的服务器，当 Agent 上报了一个新的 IP（10分钟一次），Dashboard 会根据配置自动更新 DNS 记录。
+### ServerStatus主题agent账单信息展示
+<details>
+  <summary>点击展开/收起</summary>
 
-### 为什么我要使用哪吒监控的 DDNS 功能？
+<strong>配置位置：后台-> 服务器 -> 编辑服务器 -> 公开备注</strong>
 
-- 方便集中管理 DDNS 设置，而不是在每台服务器上都部署一个 DDNS 服务。
-- 仅在面板服务器上保存您的机密信息，防止外泄。
-
-### 配置说明
-
-目前 DDNS 功能支持两种形式的配置：**单配置** 和 **多配置**。如使用 **单配置**，则所有 Agent 服务器都使用相同的信息更新 DDNS；如使用 **多配置**，则可为每台服务器指定一个配置更新 DDNS，灵活性更强。
-
-#### 单配置
-::: warning
-此功能已废弃，并将在之后的版本中删除，请尽快迁移至 **多配置** 方式。
-:::
-
-```yaml
-DDNS:
-  Enable: true
-  Provider: "webhook"
-  AccessID: ""
-  AccessSecret: ""
-  WebhookMethod: ""
-  WebhookURL: ""
-  WebhookRequestBody: ""
-  WebhookHeaders: ""
-  MaxRetries: 3
-  Profiles: null
+<strong>完整配置，包含过期时间和价格展示</strong>
+```json
+{
+   "billingDataMod": {
+       "startDate": "2024-10-01T00:00:00+08:00",
+       "endDate": "2024-11-01T00:00:00+08:00",
+       "autoRenewal": "1",
+       "cycle": "月",
+       "amount": "$3.99"
+   }
+}
 ```
 
-- `Enable`：布尔值，选择是否开启 DDNS 功能。
-- `Provider`：DDNS 供应商的名称；目前支持 `webhook`、`cloudflare` 以及 `tencentcloud`。
-- `AccessID`：DDNS 供应商的令牌 ID；仅适用于供应商 `tencentcloud`。
-- `AccessSecret`：DDNS 供应商的令牌 Secret；仅适用于供应商 `cloudflare` 及 `tencentcloud`。
-- `WebhookMethod`：Webhook 的请求方法。例如 `GET`、`POST` 等；仅适用于供应商 `webhook`。
-- `WebhookURL`：Webhook 的请求地址；仅适用于供应商 `webhook`。
-- `WebhookRequestBody`：Webhook 的请求体；仅适用于供应商 `webhook`。
-- `WebhookHeaders`：Webhook 的请求头；仅适用于供应商 `webhook`。
-- `MaxRetries`：当请求失败时，重试请求的次数。
-- `Profiles`：多配置设定；在单配置设定中，此项忽略。
-
-`WebhookURL`（仅对参数生效）、`WebhookRequestBody` 以及 `WebhookHeaders` 可以包含以下占位符：
-
-- `{ip}`：主机当前 IP，开启 IPv4 则为 IPv4 地址，开启 IPv6 则为 IPv6 地址。
-- `{domain}`：ddns 域名。
-- `{type}`：IP 类型，可能为 "ipv4" 和 "ipv6"。
-- `{access_id}`：凭据 1。
-- `{access_secret}`：凭据 2。
-
-配置示例：
-
-```yaml
-WebhookHeaders: |
-    a:{access_id}
-    b:{access_secret}
-WebhookRequestBody: '{"domain": "{domain}", "ip": "{ip}", "type": "{type}"}'
+<strong>单独配置过期时间</strong>
+```json
+{
+   "billingDataMod": {
+       "startDate": "2024-10-01T00:00:00+08:00",
+       "endDate": "2024-11-01T00:00:00+08:00",
+       "autoRenewal": "1",
+       "cycle": "月"
+   }
+}
 ```
 
-#### 多配置
+<strong>配置详细说明：</strong>
 
-当使用 **多配置** 时，请将 `DDNS.Provider` 留空。如 `DDNS.Provider` 的值不为空，**多配置** 设定将被忽略。
-
-```yaml
-DDNS:
-  Enable: true
-  MaxRetries: 3
-  Profiles:
-    example:
-      Provider: ""
-      AccessID: ""
-      AccessSecret: ""
-      WebhookMethod: ""
-      WebhookURL: ""
-      WebhookRequestBody: ""
-      WebhookHeaders: ""
+<strong>startDate 账单开始时间</strong>
+```
+格式如 2022-04-01T23:59:59+08:00
 ```
 
-- `Profiles`：配置字段。
-- `example`：可替换为 DDNS 配置名，可填任意字符串。
-
-其它选项请参考[单配置](#单配置)段。
-
-#### Dashboard 配置
-
-修改配置文件后，还需要在 Dashboard 中修改服务器设置才能使 DDNS 生效。
-
-DDNS 相关选项说明：
-
-- `启用 DDNS`：为此服务器启用 DDNS 功能。
-- `启用 DDNS IPv4`：更新 DDNS 记录时，启用 IPv4 解析。
-- `启用 DDNS IPv6`：更新 DDNS 记录时，启用 IPv6 解析。
-- `DDNS 域名`：记录指向的域名。
-- `DDNS 配置`：在 **多配置** 情况下，要使用的 DDNS 配置名。
-
-::: warning
-在 Dashboard 设置中修改配置并保存时，会在 `config.yaml` 中填入默认配置选项，此时 DDNS 段中会同时存在 **单配置** 和 **多配置** 字段。
-
-- 如使用 **单配置**，请配置 `DDNS.Provider`，并忽略 `Profiles` 选项相关内容。
-- 如使用 **多配置**，请将 `DDNS.Provider` 留空。如 `DDNS.Provider` 的值不为空，多配置设定将被忽略。
-:::
-
-#### 查看日志
-
-在 Dashboard 的日志中，可以看到 DDNS 功能的相关日志，配置正确时，更新 DNS 记录时会有相应的日志记录。
-
-```shell
-dashboard_1  | 2024/03/16 23:16:25 NEZHA>> 正在尝试更新域名(ddns.example.com)DDNS(1/3)
-dashboard_1  | 2024/03/16 23:16:28 NEZHA>> 尝试更新域名(ddns.example.com)DDNS成功
+<strong>endDate 账单到期时间</strong>
 ```
+格式如 2022-05-01T23:59:59+08:00
+当以0000-00-00开头时，表示账单无期限，适用于永久免费的vps，如0000-00-00T23:59:59+08:00
+```
+
+<strong>Date格式说明</strong>
+```
+分3部分
+1. 日期：2022-04-01
+2. 时间：T23:59:59
+3. 时区：+08:00
+例如：
+2024-10-01T23:59:59+05:00
+2024-09-21T12:00:00-05:00
+2024-03-15T23:59:59+00:00
+```
+
+<strong>autoRenewal 自动续期</strong>
+```
+支持值
+1：自动续期
+0：不自动续期
+当设置 "autoRenewal": 1 时，程序会根据当前时间自动判断，vps账单到期后无需手动更改startDate和endDate
+```
+
+<strong>amount 价格</strong>
+```
+格式如 $9.99 、€19.92 、¥199、19.99HKD、9.99USD、49.99CNY
+如果vps是免费的，请设置为"0" , 如 "amount": "0", 前台展示为 FREE
+如果vps是按量收费，请设置为"-1" , 如 "amount": "-1", 前台展示为PAYG
+```
+
+<strong>cycle 付费周期</strong>
+```
+支持格式（英文大小写字母都支持，大小写字母混用也支持）
+1. 月、month、monthly、m、mo
+2. 季、quarterly、q
+3. 半年、半、half、semi-annually、h
+4. 年、year、annually、y、yr
+```
+</details>
