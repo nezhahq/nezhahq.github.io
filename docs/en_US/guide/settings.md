@@ -15,8 +15,11 @@ You can customize the site title in this section.
 
 ## Theme
 
-Select the theme for the homepage and admin panel here. If a theme that already exists is not in the options, update the Dashboard.  
-Before enabling the Custom theme, ensure you have installed the custom theme; otherwise, the Dashboard will not display correctly after enabling this option.
+Select the theme for the frontend and dashboard here. If a theme that already exists is not in the options, update the Dashboard. 
+
+To use a custom frontend theme, you need to create a theme description file. For more information on custom themes, please refer to [Nezha Theme Development Environment](/en_US/developer/theme.html).
+
+Before enabling the dashboard Custom theme, ensure you have installed the custom theme; otherwise, the Dashboard will not display correctly after enabling this option.
 
 ## Language
 
