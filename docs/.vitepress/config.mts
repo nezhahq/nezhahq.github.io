@@ -173,6 +173,7 @@ function getGuideSidebarZhCN() {
         { text: '服务', link: '/guide/services.html' },
         { text: '任务', link: '/guide/tasks.html' },
         { text: '告警', link: '/guide/notifications.html' },
+        { text: 'DDNS', link: '/guide/ddns.html' },
         { text: '内网穿透', link: '/guide/nat.html' },
         { text: '设置', link: '/guide/settings.html' },
         { text: 'API', link: '/guide/api.html' }
@@ -250,6 +251,7 @@ function getGuideSidebarEnUS() {
         { text: 'Services', link: '/en_US/guide/services.html' },
         { text: 'Tasks', link: '/en_US/guide/tasks.html' },
         { text: 'Notifications', link: '/en_US/guide/notifications.html' },
+        { text: 'DDNS', link: '/en_US/guide/ddns.html' },
         { text: 'NAT traversal', link: '/en_US/guide/nat.html' },
         { text: 'Settings', link: '/en_US/guide/settings.html' },
         { text: 'API', link: '/en_US/guide/api.html' }
