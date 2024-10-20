@@ -5,7 +5,6 @@ Contributors:
 
 GitHub project:  [Argo-Nezha-Service-Container](https://github.com/fscarmen2/Argo-Nezha-Service-Container)  
 
-Mirror backup (not live update): [Argo-Nezha-Service-Container](https://github.com/nezhahq/Argo-Nezha-Service-Container)
 * * * *
 
 ## Catalog

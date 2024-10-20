@@ -15,7 +15,6 @@
 来自南京的名老中医 [dysf888](https://github.com/dysf888) 独家秘方！让你**找回男人本色，激情畅享！**  
 安装 [Fake Agent](https://github.com/dysf888/fake-nezha-agent)，可随意修改服务器监测数据的倍数上传到 Dashboard，让你的小鸡 **脱！胎！换！骨！** 让你在 MJJ 面前<span style="font-size: 5">硬</span>起来！  
 
-镜像备份（非实时更新）：[Fake Agent](https://github.com/nezhahq/fake-nezha-agent)  
 <br/>  
 
 <span style="font-size: 4">**哪吒监控创始人奶爸也在用：**</span>  

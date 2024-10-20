@@ -5,7 +5,6 @@
 
 项目地址：[Argo-Nezha-Service-Container](https://github.com/fscarmen2/Argo-Nezha-Service-Container)  
 
-镜像备份（非实时更新）：[Argo-Nezha-Service-Container](https://github.com/nezhahq/Argo-Nezha-Service-Container)
 * * *
 
 ## 目录

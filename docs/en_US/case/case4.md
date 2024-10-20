@@ -3,7 +3,6 @@ Contributor:
 + [dysf888](https://github.com/dysf888)
 
 GitHub project: [fake-nezha-agent](https://github.com/dysf888/fake-nezha-agent)（Chinese）  
-Mirror backup, non-real-time update ：[fake-nezha-agent](https://github.com/nezhahq/fake-nezha-agent)（Chinese）  
 
 You can modify the monitoring data uploaded to Dashboard by the Agent  
 Use it for cheating 😈

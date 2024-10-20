@@ -4,8 +4,6 @@ Contributor:
 
 GitHub project: [nezha_telegram_bot](https://github.com/tech-fever/nezha_telegram_bot)（English is already supported）  
 
-Mirror backup, non-real-time update : [nezha_telegram_bot](https://github.com/nezhahq/nezha_telegram_bot)（English is already supported）  
-
 ## Features
 
 - [x] Support Chinese/English multi-language switch
