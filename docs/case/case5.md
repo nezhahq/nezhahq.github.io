@@ -169,7 +169,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/fscarmen2/Argo-Nezha-Service-
 ## 客户端接入
 通过gRPC传输，无需额外配置。使用面板给到的安装方式，举例
 ```
-curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent nezha.seales.nom.za 443 eAxO9IF519fKFODlW0 --tls
+curl -L https://raw.githubusercontent.com/nezhahq/scripts/main/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent nezha.seales.nom.za 443 eAxO9IF519fKFODlW0 --tls
 ```
 
 
