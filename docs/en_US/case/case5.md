@@ -169,7 +169,7 @@ bash <(wget -qO- https://raw.githubusercontent.com/fscarmen2/Argo-Nezha-Service-
 ## Client Access
 Transfer via gRPC, no additional configuration required. Use the installation method given in the panel, for example
 ```
-curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent data.seales.nom.za 443 eAxO9IF519fKFODlW0 --tls
+curl -L https://raw.githubusercontent.com/nezhahq/scripts/main/install_en.sh -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh install_agent data.seales.nom.za 443 eAxO9IF519fKFODlW0 --tls
 ```
 
 

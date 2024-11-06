@@ -60,7 +60,7 @@ Nazha supports custom OIDC authentication login. For configuration details, plea
 
 Run the installation script on the dashboard server:
 ```bash
-curl -L https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
+curl -L https://raw.githubusercontent.com/nezhahq/scripts/main/install_en.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
 ```  
 
 After Docker installation completes, enter the following values:
