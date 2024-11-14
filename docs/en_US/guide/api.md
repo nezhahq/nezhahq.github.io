@@ -241,6 +241,37 @@ Example response:
 
 Note: `created_at` corresponds with `avg_delay`.
 
+### Automatic Node Registration
+
+Description: Script for automating node registration. Example code is provided below.
+Reference: [https://github.com/naiba/nezha/pull/472](https://github.com/naiba/nezha/pull/472)
+
+```http
+POST /api/v1/server/register?simple=1
+```
+
+Parameters:
+
+- `simple`: (optional): Specifies the format of the response data.
+    - When set to `simple=1` or `simple=true`, the response will only include a Token string (e.g., `8GYwaxYuLfU7zl7ndC`).
+    - Otherwise the response will return a complete JSON object:：`{"code": 200, "message": "Server created successfully","secret": "8GYwaxYuLfU7zl7ndC"}`
+
+Request Payload:
+
+The payload can be completely empty (`{}`), and the system will apply the following default values:
+- `Name`: Defaults to the node’s IP address ($IP).
+- `Tag`: Defaults to "AutoRegister".
+- `Note`: Defaults to an empty string ("").
+- `HideForGuest`: Defaults to "on".
+
+You can also customize your data:
+```json
+  "Name": "abcd",        // Node name
+  "Tag": "",             // Tag (optional)
+  "Note": "",            // Note or description (optional)
+  "HideForGuest": "on"   // Whether to hide from guests
+```
+
 ## Usage Examples
 
 ### Get All Server Information
@@ -284,3 +315,75 @@ print(f"Network Out Speed: {server['status']['NetOutSpeed']} bytes/s")
 ```
 
 With the above example code, you can easily obtain and process server status information, enabling automated monitoring and management.
+
+### Automatic Node Registration
+1. Create a file named `nezha_register.sh`, and copy the following content into it:
+```bash
+#!/bin/bash
+
+# Exit if NEZHA_TOKEN is not set
+if [ -z "${NEZHA_TOKEN}" ]; then
+    echo "NEZHA_TOKEN is not set. Exiting."
+    exit 0
+fi
+
+# Set default values if variables are not set
+NEZHA_PROBE_ADDRESS="${NEZHA_PROBE_ADDRESS:-probe.example.com}"
+NEZHA_PROBE_PORT="${NEZHA_PROBE_PORT:-5555}"
+NEZHA_DASHBOARD_URL="${NEZHA_DASHBOARD_URL:-https://nezha.example.com}"
+
+NODE_NAME=${NODE_NAME:-$(hostname)}
+
+# Send POST request and capture response and HTTP status code
+response=$(curl -s -o response_body.json -w "%{http_code}" -X POST "${NEZHA_DASHBOARD_URL}/api/v1/server/register?simple=true" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${NEZHA_TOKEN}" \
+  -d "{\"Name\": \"${NODE_NAME}\"}")
+
+# Extract HTTP status code and Nezha secret
+HTTP_CODE="$response"
+NEZHA_SECRET=$(cat response_body.json)
+rm -f response_body.json
+
+if [ "$HTTP_CODE" != "200" ]; then
+    echo "Failed to get Nezha Secret. HTTP status code: $HTTP_CODE"
+    exit 1
+fi
+
+# Additional check for NEZHA_SECRET to ensure it's not JSON-formatted (indicating failure)
+if [[ "${NEZHA_SECRET:0:1}" == "{" ]]; then
+    echo "Failed to get Nezha Secret. Received response: ${NEZHA_SECRET}"
+    exit 1
+fi
+
+# Download and execute the install script with cleanup
+curl -fsSL https://raw.githubusercontent.com/naiba/nezha/master/script/install_en.sh -o nezha.sh && \
+chmod +x nezha.sh || { echo "Failed to download or make the script executable"; exit 1; }
+
+# Clean up nezha.sh on exit
+trap 'rm -f nezha.sh' EXIT
+
+# Run the Nezha agent installation script
+CMD="./nezha.sh install_agent "${NEZHA_PROBE_ADDRESS}" "${NEZHA_PROBE_PORT}" "${NEZHA_SECRET}" --tls"
+
+echo "Run commnad : ${CMD}"
+
+eval $CMD
+```
+2. Grant execution permission to the script: `chmod +x nezha_register.sh`
+3. Get `Token` from Nezha dashboard, e.g. `POXbxorKJBM8wPMKX8r2PdMblyXvpggB`
+4. Set Environment Variables
+```bash
+export NEZHA_TOKEN="POXbxorKJBM8wPMKX8r2PdMblyXvpggB" # Obtain this token from the dashboard
+export NEZHA_PROBE_ADDRESS="your_probe_address"        # Set your probe address
+export NEZHA_DASHBOARD_URL="https://nezha.example.com" # Replace with your dashboard URL
+export NEZHA_PROBE_PORT="5555"                         # Modify this port if needed
+```
+5. Run the script to complete node registration and probe installation:
+```bash
+./nezha_register.sh
+```
+6. If the script runs successfully, you will see output like the following:
+```bash
+Run command: ./nezha.sh install_agent probe.example.com 5555 YOUR_SECRET --tls
+```
