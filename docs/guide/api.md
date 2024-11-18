@@ -241,6 +241,40 @@ GET /api/v1/monitor/{id}
 
 注： `created_at` 和 `avg_delay` 为对应关系。
 
+### 自动注册节点
+
+说明: 用于自动化注册节点的脚本，示例代码详见下文。
+
+参考: [https://github.com/naiba/nezha/pull/472](https://github.com/naiba/nezha/pull/472)
+
+```http
+POST /api/v1/server/register?simple=1
+```
+
+参数:
+
+- `simple`:(可选) 指定返回数据的格式。
+    - 当设置为 `simple=1`或者`simple=true` 时，返回的数据仅包含 Token 字符串（如 `8GYwaxYuLfU7zl7ndC`）。
+    - 其他则返回完整的 JSON 对象：`{"code": 200, "message": "Server created successfully","secret": "8GYwaxYuLfU7zl7ndC"}`
+
+请求体 (Payload):
+
+你可以设置为空内容(`{}`), 然后nezha面板会使用默认值进行填充
+- `Name`: 默认是节点的IP
+- `Tag`: 默认是 "AutoRegister".
+- `Note`:默认是 "".
+- `HideForGuest`: 默认是 "on".
+
+你也可以设置自己的请求参数:
+```json
+{
+  "Name": "abcd",        // 节点名称
+  "Tag": "",             // 标签，可选
+  "Note": "",            // 备注信息，可选
+  "HideForGuest": "on"   // 是否对访客隐藏
+}
+```
+
 ## 使用案例
 
 ### 获取所有服务器信息
@@ -284,3 +318,75 @@ print(f"Network Out Speed: {server['status']['NetOutSpeed']} bytes/s")
 ```
 
 通过以上示例代码，可以轻松获取和处理服务器的状态信息，从而实现自动化监控和管理。
+
+### 自动注册节点
+1. 创建文件 `nezha_register.sh`，将以下内容复制到文件中：
+```bash
+#!/bin/bash
+
+# Exit if NEZHA_TOKEN is not set
+if [ -z "${NEZHA_TOKEN}" ]; then
+    echo "NEZHA_TOKEN is not set. Exiting."
+    exit 0
+fi
+
+# Set default values if variables are not set
+NEZHA_PROBE_ADDRESS="${NEZHA_PROBE_ADDRESS:-probe.example.com}"
+NEZHA_PROBE_PORT="${NEZHA_PROBE_PORT:-5555}"
+NEZHA_DASHBOARD_URL="${NEZHA_DASHBOARD_URL:-https://nezha.example.com}"
+
+NODE_NAME=${NODE_NAME:-$(hostname)}
+
+# Send POST request and capture response and HTTP status code
+response=$(curl -s -o response_body.json -w "%{http_code}" -X POST "${NEZHA_DASHBOARD_URL}/api/v1/server/register?simple=true" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: ${NEZHA_TOKEN}" \
+  -d "{\"Name\": \"${NODE_NAME}\"}")
+
+# Extract HTTP status code and Nezha secret
+HTTP_CODE="$response"
+NEZHA_SECRET=$(cat response_body.json)
+rm -f response_body.json
+
+if [ "$HTTP_CODE" != "200" ]; then
+    echo "Failed to get Nezha Secret. HTTP status code: $HTTP_CODE"
+    exit 1
+fi
+
+# Additional check for NEZHA_SECRET to ensure it's not JSON-formatted (indicating failure)
+if [[ "${NEZHA_SECRET:0:1}" == "{" ]]; then
+    echo "Failed to get Nezha Secret. Received response: ${NEZHA_SECRET}"
+    exit 1
+fi
+
+# Download and execute the install script with cleanup
+curl -fsSL https://raw.githubusercontent.com/nezhahq/scripts/main/install.sh -o nezha.sh && \
+chmod +x nezha.sh || { echo "Failed to download or make the script executable"; exit 1; }
+
+# Clean up nezha.sh on exit
+trap 'rm -f nezha.sh' EXIT
+
+# Run the Nezha agent installation script
+CMD="./nezha.sh install_agent "${NEZHA_PROBE_ADDRESS}" "${NEZHA_PROBE_PORT}" "${NEZHA_SECRET}" --tls"
+
+echo "Run commnad : ${CMD}"
+
+eval $CMD
+```
+2. 为脚本赋予可执行权限： `chmod +x nezha_register.sh`
+3. 从dashboard获取token, 比如为 `POXbxorKJBM8wPMKX8r2PdMblyXvpggB`
+4. 配置环境变量
+```bash
+export NEZHA_TOKEN="POXbxorKJBM8wPMKX8r2PdMblyXvpggB" # 从面板获取
+export NEZHA_PROBE_ADDRESS="your_probe_address"        # 填写探针地址
+export NEZHA_DASHBOARD_URL="https://nezha.example.com" # 修改为你的面板地址
+export NEZHA_PROBE_PORT="5555"                         # 修改为你的探针端口（如有不同）
+```
+5. 运行注册脚本
+```bash
+./nezha_register.sh
+```
+6. 如果脚本成功运行，你会看到类似以下的日志：
+```bash
+Run command: ./nezha.sh install_agent probe.example.com 5555 YOUR_SECRET --tls
+```
