@@ -1,10 +1,10 @@
 # Broker for Nezha - Advancing on more platforms
 Contributor: 
-+ [uubulb](https://github.com/uubulb)
++ [uubulb](https://codeberg.org/uubulb)
 
 Broker for Nezha is a modified version of the Nezha Agent that separates data collection from gRPC reporting, enabling small devices to connect to the Nezha Dashboard.
 
-Project link: <https://github.com/uubulb/broker>
+Project link: <https://codeberg.org/uubulb/broker>
 
 Online Documentation: [Broker for Nezha](https://broker.kuzu.uk/)
 
