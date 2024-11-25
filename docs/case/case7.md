@@ -1,10 +1,10 @@
 # Broker for Nezha - 拓展 Nezha 接入平台
 贡献者:  
-+ [uubulb](https://github.com/uubulb)
++ [uubulb](https://codeberg.org/uubulb)
 
 Broker for Nezha 是一个 Nezha Agent 的修改版本，其通过分离 Agent 的数据收集和 gRPC 上报功能，可使小型设备接入 Nezha Dashboard。
 
-项目地址：<https://github.com/uubulb/broker>
+项目地址：<https://codeberg.org/uubulb/broker>
 
 文档：[Broker for Nezha](https://broker.kuzu.uk/)
 
@@ -15,7 +15,7 @@ Broker for Nezha 是一个 Nezha Agent 的修改版本，其通过分离 Agent �
 
 Broker for Nezha 需要与特定的数据收集软件一同使用。目前提供两种数据获取方式：
 1. HTTP 主动获取（HTTP/1.1）
-2. TCP 被动获取（推荐，可避免创建额外连接）
+2. TCP 被动获取（推荐）
 
 如需获取现有的数据收集软件，可以参考项目 README。
 
