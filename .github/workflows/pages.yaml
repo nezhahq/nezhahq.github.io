@@ -25,6 +25,12 @@ jobs:
         run: npm install
       - name: Build
         run: npm run build
+
+      - name: maintaince
+        run: |
+          rm -rf ./docs/.vitepress/dist/*
+          cp index.html ./docs/.vitepress/dist/
+          
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
