@@ -184,7 +184,7 @@ function getGuideSidebarZhCN() {
       items: [
         { text: '反向代理 Telegram API', link: '/guide/q1.html' },
         { text: 'Agent 启动/上线 问题自检流程', link: '/guide/q2.html' },
-        { text: '反向代理 gRPC 端口', link: '/guide/q3.html' },
+        { text: '反向代理 面板', link: '/guide/q3.html' },
         { text: 'Websocket 连接失败', link: '/guide/q4.html' },
         { text: '面板数据迁移、备份和恢复', link: '/guide/q5.html' },
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
