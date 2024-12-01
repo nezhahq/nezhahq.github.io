@@ -172,11 +172,11 @@ function getGuideSidebarZhCN() {
         { text: '服务器', link: '/guide/servers.html' },
         { text: '服务', link: '/guide/services.html' },
         { text: '任务', link: '/guide/tasks.html' },
-        { text: '告警', link: '/guide/notifications.html' },
+        { text: '通知', link: '/guide/notifications.html' },
         { text: 'DDNS', link: '/guide/ddns.html' },
         { text: '内网穿透', link: '/guide/nat.html' },
         { text: '设置', link: '/guide/settings.html' },
-        { text: 'API', link: '/guide/api.html' }
+        { text: '分组', link: '/guide/group.html' }
       ],
     },
     {
@@ -185,22 +185,18 @@ function getGuideSidebarZhCN() {
         { text: '反向代理 Telegram API', link: '/guide/q1.html' },
         { text: 'Agent 启动/上线 问题自检流程', link: '/guide/q2.html' },
         { text: '反向代理 gRPC 端口', link: '/guide/q3.html' },
-        { text: '实时通道断开', link: '/guide/q4.html' },
+        { text: 'Websocket 连接失败', link: '/guide/q4.html' },
         { text: '面板数据迁移、备份和恢复', link: '/guide/q5.html' },
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
-        { text: '使用 Cloudflare Access 作为 OAuth2 提供方', link: '/guide/q8.html' },
-        { text: '启用 GPU 监控', link: '/guide/q9.html' },
-        { text: '启用 OIDC 认证', link: '/guide/q10.html' },
-        { text: '自定义 IP 地理位置数据库', link: '/guide/q11.html' },
+        { text: '自定义 IP 地理位置数据库', link: '/guide/q11.html' }
       ]
     },
     {
       text: '排障指南',
       items: [
         { text: 'Dashboard 相关', link: '/guide/dashboardq.html' },
-        { text: 'Agent 相关', link: '/guide/agentq.html' },
-        { text: '登录相关', link: '/guide/loginq.html' }
+        { text: 'Agent 相关', link: '/guide/agentq.html' }
       ]
     }
   ]
