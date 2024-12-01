@@ -109,3 +109,9 @@ Agents typically update automatically, but the Dashboard does not and requires m
 
 When the Agent is offline, or the connection between the Agent and the Dashboard is unstable, it may cause issues with connecting to the Web Terminal.
 Please check if the Agent is running normally and maintaining a stable connection with the Dashboard.
+
+## FM freezes during downloading/uploading
+
+Ensure your proxy's buffer is larger than 1 MiB, as FM sends data chunks of this size.
+
+Using a CDN may cause severe performance degradation. Try connecting directly instead.
