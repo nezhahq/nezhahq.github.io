@@ -184,12 +184,12 @@ function getGuideSidebarZhCN() {
       items: [
         { text: '反向代理 Telegram API', link: '/guide/q1.html' },
         { text: 'Agent 启动/上线 问题自检流程', link: '/guide/q2.html' },
-        { text: '反向代理 面板', link: '/guide/q3.html' },
+        { text: 'Dashboard 反向代理配置', link: '/guide/q3.html' },
         { text: 'Websocket 连接失败', link: '/guide/q4.html' },
         { text: '面板数据迁移、备份和恢复', link: '/guide/q5.html' },
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
-        { text: '自定义 IP 地理位置数据库', link: '/guide/q11.html' }
+        { text: '启用 GPU 监控', link: '/guide/q9.html' }
       ]
     },
     {

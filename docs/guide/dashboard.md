@@ -99,24 +99,6 @@ location ~ ^/(ws|terminal/.+|file/.+)$ {
 现在，你可以直接通过域名访问面板，例如：  
 `http://dashboard.example.com`  
 
-### 扩展内容  
-
-**CaddyServer v1 配置**（v2 无需特殊配置）：
-```caddy
-proxy /ws http://127.0.0.1:8008 {
-    websocket
-    header_upstream -Origin
-}
-proxy /terminal/* http://127.0.0.1:8008 {
-    websocket
-    header_upstream -Origin
-}
-proxy /file/* http://127.0.0.1:8008 {
-    websocket
-    header_upstream -Origin
-}
-```
-
 ## 更新 Dashboard
 
 运行脚本：
