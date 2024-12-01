@@ -155,3 +155,53 @@ Agent 在默认情况下会自动更新。
 
 3. **保存设置**  
    完成配置后，保存设置并返回安装命令页面，重新复制安装命令。
+
+---
+
+## File Manager 下载/上传时卡住
+
+### 问题原因
+
+1. **缓冲区设置问题**  
+   File Manager (FM) 在传输文件时，每次发送的数据块大小为 **1 MiB**。如果代理的缓冲区小于 1 MiB，可能会导致传输卡住。
+
+2. **CDN 影响性能**  
+   使用 CDN 可能会严重降低文件传输性能，甚至导致卡顿。
+
+
+### 解决方法
+
+#### 1. 检查并调整代理缓冲区
+
+对于常见的代理服务器（如 Nginx 和 Caddy），确保其缓冲区大于 1 MiB：
+
+**Nginx 配置示例**：
+```nginx
+proxy_buffer_size 2m;
+proxy_buffers 4 2m;
+proxy_busy_buffers_size 4m;
+```
+- 将以上配置添加到 Nginx 的站点配置中，保存后重新加载配置：
+  ```bash
+  sudo nginx -s reload
+  ```
+
+**Caddy 配置示例**：
+```caddy
+reverse_proxy {
+    transport http {
+        read_buffer 2MB
+        write_buffer 2MB
+    }
+}
+```
+- 将缓冲区大小设置为至少 2 MiB，保存配置并重启 Caddy 服务。
+
+#### 2. 尝试直接连接
+
+如果使用 CDN，建议绕过 CDN，直接连接到源服务器进行文件传输。  
+检查连接方式是否直接指向源服务器的 IP 或域名，并确保网络畅通。
+
+---
+
+
