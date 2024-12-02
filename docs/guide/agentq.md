@@ -37,3 +37,12 @@ outline: deep
      yum install sudo
      ```
 2. **检查安装成功**：安装完成后，再次运行一键脚本进行安装。
+
+---
+
+## Agent 有 Docker 镜像吗？
+
+**Agent 目前没有推出 Docker 镜像。**  
+Agent 的设计思路和 Dashboard 相反：Dashboard 的目标是尽量减少对宿主机的干扰，而 Agent 则需要深度与宿主机集成以执行监控服务和命令任务。  
+
+虽然将 Agent 放入容器中可以继续执行监控任务，但 WebShell 等功能将无法正常运行，因此官方不提供 Docker 镜像支持。
