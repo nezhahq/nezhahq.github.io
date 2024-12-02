@@ -189,7 +189,8 @@ function getGuideSidebarZhCN() {
         { text: '面板数据迁移、备份和恢复', link: '/guide/q5.html' },
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
-        { text: '启用 GPU 监控', link: '/guide/q9.html' }
+        { text: '启用 GPU 监控', link: '/guide/q9.html' },
+        { text: '真实IP请求头', link: '/guide/q12.html' }
       ]
     },
     {
