@@ -49,22 +49,7 @@ Agent 二进制文件仓库地址为：<https://github.com/nezhahq/agent/release
    - 登录群晖的管理界面，或通过 SSH 使用管理员账户登录设备。
 
 2. **安装必要的依赖**  
-   如果群晖设备尚未安装 `wget`、`unzip` 或 `curl`，请按照以下步骤安装依赖：
-   
-   - **启用 SynoCommunity 仓库**  
-     访问 [SynoCommunity](https://synocommunity.com/) 并按照指南启用，以支持更多软件包。
-   
-   - **安装 Entware**  
-     ```bash
-     # 下载并安装 Entware
-     wget -O - https://raw.githubusercontent.com/Entware/entware-installer/master/installer.sh | /bin/sh
-     ```
-   
-   - **通过 Entware 安装所需依赖**  
-     ```bash
-     opkg update
-     opkg install wget unzip curl
-     ```
+   确定群晖设备已安装 `wget`、`unzip` 或 `curl`
 
 :::tip
 
