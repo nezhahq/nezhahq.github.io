@@ -204,4 +204,23 @@ reverse_proxy {
 
 ---
 
+## 使用 Nginx 反代 gRPC 无法连接 Agent
 
+### 问题原因
+
+Nginx 默认不允许 Header 中含有下划线，而 Agent 使用 `client_secret` 与 `client_uuid` 进行认证。
+
+### 解决方法
+
+#### 1. 允许下划线
+
+在 server 块中添加 `underscores_in_headers on;`。
+
+#### 2. 手动发送 Header
+
+在 server 块中添加 `ignore_invalid_headers off;`，之后在 gRPC 反代选项中加入：
+
+```ini
+grpc_set_header client_secret $http_client_secret;
+grpc_set_header client_uuid $http_client_uuid;
+```
