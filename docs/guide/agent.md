@@ -326,8 +326,7 @@ OpenWrt 是轻量级 Linux 系统，需通过手动下载和配置安装 Nezha A
    uname -m
    ```
    常见架构对应关系：
-   - `mips` 对应 `nezha-agent_linux_mips.zip`
-   - `mipsel` 对应 `nezha-agent_linux_mipsle.zip`
+   - `x86_64` 对应 `nezha-agent_linux_amd64.zip`
    - `arm` 或 `aarch64` 对应 `nezha-agent_linux_arm.zip`
 
 2. **下载适配的 Nezha Agent**  

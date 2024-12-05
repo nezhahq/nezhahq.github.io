@@ -251,30 +251,27 @@ function getGuideSidebarEnUS() {
         { text: 'DDNS', link: '/en_US/guide/ddns.html' },
         { text: 'NAT traversal', link: '/en_US/guide/nat.html' },
         { text: 'Settings', link: '/en_US/guide/settings.html' },
-        { text: 'API', link: '/en_US/guide/api.html' }
+        { text: 'Grouping', link: '/en_US/guide/group.html' }
       ]
     },
     {
       text: 'FAQ',
       items: [
         { text: 'Agent Startup/Online Troubleshooting Process', link: '/en_US/guide/q2.html' },
-        { text: 'Reverse Proxy gRPC Port (Support Cloudflare CDN)', link: '/en_US/guide/q3.html' },
-        { text: 'Real-Time Channel Disconnection', link: '/en_US/guide/q4.html' },
-        { text: 'Perform Data Migration and Backup Recovery', link: '/en_US/guide/q5.html' },
-        { text: 'Reset Traffic Statistics Monthly', link: '/en_US/guide/q6.html' },
-        { text: 'Customizing Agent Monitoring Items', link: '/en_US/guide/q7.html' },
-        { text: 'Use Cloudflare Access As OAuth2 Provider', link: '/en_US/guide/q8.html' },
+        { text: 'Dashboard Reverse Proxy Configuration', link: '/en_US/guide/q3.html' },
+        { text: 'Websocket Connection Failure', link: '/en_US/guide/q4.html' },
+        { text: 'Data Migration, Backup, and Recovery', link: '/en_US/guide/q5.html' },
+        { text: 'Set Monthly Traffic Statistics ResetReset', link: '/en_US/guide/q6.html' },
+        { text: 'Custom Agent Monitoring Items', link: '/en_US/guide/q7.html' },
         { text: 'Enable GPU monitoring', link: '/en_US/guide/q9.html' },
-        { text: 'Enable OIDC authorization', link: '/en_US/guide/q10.html' },
-        { text: 'Customize GeoIP database', link: '/en_US/guide/q11.html' },
+        { text: 'Real IP Request Header', link: '/en_US/guide/q12.html' }
       ]
     },
     {
       text: 'Troubleshooting Guide',
       items: [
         { text: 'Dashboard', link: '/en_US/guide/dashboardq.html' },
-        { text: 'Agent', link: '/en_US/guide/agentq.html' },
-        { text: 'Login', link: '/en_US/guide/loginq.html' }
+        { text: 'Agent', link: '/en_US/guide/agentq.html' }
       ]
     }
   ]

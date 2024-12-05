@@ -1,347 +1,465 @@
 ---
 outline: deep
 ---
+# Installing the Agent
 
-# Install Agent
-
-**This document will introduce how to install the Agent on the monitored server and connect it to the Dashboard.**  
+**The client-side service of Nezha Monitoring is called the Agent. This document will guide you on how to install the Agent on the client server and connect it to the Dashboard.**  
 ::: tip  
-The repository for Agent binaries can be found at: <https://github.com/nezhahq/agent/releases>
+The binary repository for the Agent is available at: <https://github.com/nezhahq/agent/releases>  
 :::
 
-## One-Click Installation of the Agent
+## One-click Installation of the Agent
 
-Nezha Monitoring supports one-click installation of the Agent on both Windows and Linux. By following the steps in this document, you can easily deploy it on your server.
+Nezha Monitoring supports one-click installation of the Agent on Windows, macOS, and Linux. By following the steps in this document, you can easily deploy it on your server.
 
-### Preparation
+### Prerequisites
 
-You need to set up a communication domain in the admin panel in advance, and this domain should not be connected to a CDN. This document uses the example communication domain “data.example.com”.  
-Go to the settings page in the admin panel, fill in the communication domain in the “Non-CDN Dashboard Server Domain/IP” field, and click "Save".
+Before installation, you need to set up a communication domain in the Dashboard Admin Panel. It is not recommended to route this domain through a CDN. This document uses the example communication domains "data.example.com".  
+1. In the Dashboard Admin Panel, click on your avatar to navigate to the **System Settings** page.  
+2. In the **Agent Connection Address [Domain/IP:Port]** field, enter the communication domain and port, e.g., `data.example.com:8008`.  
+3. Click **Confirm** to save the settings.
 
-### One-Click Installation on Linux
+### One-click Installation Steps
 
-1. First, add a server in the admin panel.
-2. Click the green Linux icon button next to the newly added server and copy the one-click installation command.
-3. Run the copied installation command on the monitored server, and wait for the installation to complete. Then, check if the server is online in the Dashboard home page.
+1. On the **Servers** page, click **Install Command** and select your corresponding operating system. The installation command will be automatically copied to your clipboard.  
+2. Run the installation command on the client server. After the installation completes, return to the **Servers** page to check if the Agent has come online.  
+3. If the installation is successful, a new server  will automatically appear on the page. You can click the **Edit** button to assign a name to it.  
 
-### One-Click Installation on macOS
+### Platform-specific Instructions
 
-1. First, add a server in the admin panel.
-2. Click the green Apple icon button next to the newly added server and copy the one-click installation command.
-3. Run the copied installation command on the monitored server, and wait for the installation to complete. Then, check if the server is online in the Dashboard home page.
+#### Windows Specific Instructions
+1. On the Windows server, open PowerShell.  
+2. Paste and run the installation command in PowerShell.  
+3. If prompted with an **"Execution Policy Change"** confirmation, type `Y` and press Enter.
 
-### One-Click Installation on Windows
+## Alternative Methods to Install the Agent
 
-1. First, add a server in the admin panel.
-2. Click the green Windows icon button next to the newly added server and copy the one-click installation command.
-3. Go to the Windows server, run PowerShell, and execute the copied installation command in PowerShell.
-4. If you encounter a prompt to "change execution policy," choose Y.
-5. Wait for the installation to complete, then check if the server is online in the Dashboard home page.
+---
 
-::: warning  
-If you encounter errors when running the one-click installation command in PowerShell, try the **Manual Installation of the Agent on Windows** below.
+### Installing the Agent on Synology DSM 7
+
+<details>
+  <summary>Click to Expand/Collapse</summary>
+
+Since Synology NAS devices are based on specific versions of Linux, their shell environments and package managers differ from standard Linux systems, making one-click installation scripts unsupported. Therefore, you need to manually install the Agent by following these steps:
+
+---
+
+#### 1. Preparation
+
+1. **Ensure Administrator Privileges**  
+   - Log in to the Synology management interface or SSH into the device using an administrator account.
+
+2. **Install Necessary Dependencies**  
+   Ensure that your Synology device has `wget`, `unzip`, or `curl` installed.
+
+::: tip  
+Alternatively, you can download and extract the Nezha Agent binaries in advance and manually upload them via Synology's DSM File Station, bypassing the need to install dependencies.
 :::
 
-## Other Ways to Install the Agent
+---
 
-### Installing the Agent on Linux (Support most distros)
-<details>
-  <summary>Click to expand/collapse</summary>
+#### 2. Download the Nezha Agent
 
-1. First, add a server in the admin panel.
-2. Run the script on the monitored server:
+1. **Determine the Synology CPU Architecture**  
+   Use the following command to identify your device's architecture:
+   ```bash
+   uname -m
+   ```
+   Common architecture mappings:
+   - `x86_64` corresponds to `amd64`
+   - `armv7l` or `aarch64` corresponds to `arm`
 
-```bash
-curl -L https://raw.githubusercontent.com/nezhahq/scripts/main/install_en.sh  -o nezha.sh && chmod +x nezha.sh && sudo ./nezha.sh
-```
+2. **Download the Appropriate Nezha Agent Binary**  
+   Select the correct download link based on your device's architecture. For example, for `amd64`:
+   ```bash
+   wget -O nezha-agent.zip https://github.com/nezhahq/agent/releases/latest/download/nezha-agent_linux_amd64.zip
+   ```
 
-1. Select “Install monitoring Agent.”
-2. Enter the communication domain, such as "data.example.com".
-3. Enter the dashboard communication port (gRPC port), default is 5555.
-4. Enter the Agent secret, which is generated when you add a server in the admin panel and can be found on the “Servers” page in the admin panel.
-5. Wait for the installation to complete, then check if the server is online in the Dashboard home page.
+3. **Extract the Files**  
+   Extract the downloaded archive to a specified directory, such as `/opt/nezha`:
+   ```bash
+   mkdir -p /opt/nezha
+   unzip nezha-agent.zip -d /opt/nezha
+   ```
 
-</details>
+4. **Grant Execute Permissions**
+   ```bash
+   chmod +x /opt/nezha/nezha-agent
+   ```
+---
 
-### Installing the Agent using the built-in service command (Support most systems)
-<details>
-  <summary>Click to expand/collapse</summary>
+#### 3. Create the Configuration File
 
-First, get a copy of Nezha Agent: https://github.com/nezhahq/agent/releases
+1. **Create and Edit the Configuration File**  
+   In the `/opt/nezha` directory, create a `config.yml` file with the following content:
+   ```yaml
+   client_secret: your_agent_secret
+   debug: false
+   disable_auto_update: false
+   disable_command_execute: false
+   disable_force_update: false
+   disable_nat: false
+   disable_send_query: false
+   gpu: false
+   insecure_tls: false
+   ip_report_period: 1800
+   report_delay: 1
+   server: data.example.com:8008
+   skip_connection_count: false
+   skip_procs_count: false
+   temperature: false
+   tls: false 
+   use_gitee_to_upgrade: false
+   use_ipv6_country_code: false
+   uuid: your_uuid
+   ```
+   - **Field Descriptions**:
+     - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008`.
+     - `client_secret`: Replace with the `agentsecretkey` from the Dashboard's configuration file, typically located at `/opt/nezha/dashboard/data/config.yaml`.
+     - `uuid`: Generate a unique identifier for this Agent using the `uuidgen` command:
+       ```bash
+       uuidgen
+       ```
+   - **Save the File**: Save the file to `/opt/nezha/config.yml`.
 
-After extracting the archive, run the following command to install the service (may require root permission):
+---
 
-```bash
-./nezha-agent service install -s server_name:port -p password
-```
+#### 4. Create a systemd Service File
 
-You can also add other arguments except the server address and password. For more details, refer to the documentation: [Customizing Agent Monitoring Items](/en_US/guide/q7.html).
+1. **Create the Service File**  
+   In the `/etc/systemd/system/` directory, create a `nezha-agent.service` file:
+   ```bash
+   sudo nano /etc/systemd/system/nezha-agent.service
+   ```
 
-Uninstall the service:
+2. **Add the Following Content**:
+   ```ini
+   [Unit]
+   Description=Nezha Agent
+   After=network.target
 
-```bash
-./nezha-agent service uninstall
-```
+   [Service]
+   Type=simple
+   User=root
+   Group=root
+   ExecStart=/opt/nezha/nezha-agent -c /opt/nezha/config.yml
+   Restart=always
+   RestartSec=5
 
-Start the service:
+   [Install]
+   WantedBy=multi-user.target
+   ```
 
-```bash
-./nezha-agent service start
-```
+3. **Save the File and Reload Service Configuration**:
+   ```bash
+   sudo systemctl daemon-reload
+   ```
 
-Stop the service:
+---
+    
+#### 5. Start the Agent
 
-```bash
-./nezha-agent service stop
-```
+1. **Start the Service**  
+   Use the following command to start the Agent:
+   ```bash
+   sudo systemctl start nezha-agent
+   ```
 
-Restart the service:
+2. **Enable the Service to Start on Boot**  
+   ```bash
+   sudo systemctl enable nezha-agent
+   ```
 
-```bash
-./nezha-agent service restart
-```
+3. **Check Service Status**  
+   Ensure the Agent is running correctly:
+   ```bash
+   sudo systemctl status nezha-agent
+   ```
 
-</details>
+---
+    
+#### 6. Verify Agent Connection
 
-### Installing the Agent with runit
-<details>
-  <summary>Click to expand/collapse</summary>
-
-The built-in service command of Agent supports most init systems, including FreeBSD rc.d and openrc, but still missing some of them.
-
-Here we take Void Linux's runit as an example:
-
-1. Create directory `/etc/sv/nezha-agent`:
-
-```bash
-mkdir /etc/sv/nezha-agent
-```
-
-2. Create service file `/etc/sv/nezha-agent/run`, with following content:
-
-```bash
-#!/bin/sh
-exec 2>&1
-exec /opt/nezha/agent/nezha-agent -s server_name:port -p password 2>&1
-```
-
-You can add other arguments here as well.
-
-3. Create logging service file `/etc/sv/nezha-agent/log/run`:
-
-```bash
-#!/bin/sh
-exec vlogger -t nezha-agent -p daemon
-```
-
-4. Enable the service:
-
-```bash
-sudo ln -s /etc/sv/nezha-agent/ /var/service
-```
-
-Use the `sv` command to manage the service.
-
-How to view logs:
-
-1. Install `socklog` and enable it:
-
-```bash
-sudo xbps-install -S socklog-void
-sudo ln -s /etc/sv/socklog-unix /var/service
-```
-
-2. Run `svlogtail`:
-
-```bash
-sudo svlogtail | grep nezha-agent
-```
-
-</details>
-
-### Manual Installation of the Agent on Windows
-* Refer to the community article:  
-[Nezha - Windows Client Installation](https://nyko.me/2020/12/13/nezha-windows-client.html) (Chinese)
-
-### Installing the Agent on Synology DSM
-<details>
-  <summary>Click to expand/collapse</summary>
-
-* Refer to community articles:  
-[Installing Nezha Monitoring Agent on Synology DSM 7.x](https://blog.mitsea.com/3929551d08bd4bb0a8baa453e2d92b0c/) (Chinese)  
-[Nezha - Synology Client (Agent) Installation Tutorial](https://wl.gta5pdx.cn/archives/546/) (Chinese)
-
-* Using Systemd *for DSM7 only*:
-
-```sh
-# Agent path
-EXEC="/PATH/TO/nezha-agent"
-# Log path
-LOG="${EXEC}.log"
-# Additional execution parameters, can be empty
-ARGS=""
-# Nezha server gRPC address
-SERVER="HOST_OR_IP:gRPC_PORT"
-# The secret key obtained in the previous step
-SECRET="APP_SECRET"
-# User running the service, *strongly recommended to use non-root user*
-RUN_USER="nezha"
-
-# Write to systemd service file
-cat << EOF > /usr/lib/systemd/system/nezha.service
-[Unit]
-Description=Nezha Agent Service
-After=network.target
-
-[Service]
-Type=simple
-ExecStart=/bin/nohup ${EXEC} ${ARGS} -s ${SERVER} -p ${SECRET} &>> ${LOG} &
-ExecStop=ps -fe |grep nezha-agent|awk '{print \$2}'|xargs kill
-User=${RUN_USER}
-
-Restart=on-abort
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# Reload service
-systemctl daemon-reload
-# Start service
-systemctl start nezha
-# Enable service startup
-systemctl enable nezha
-```
-
-‼️ Modify the corresponding information before running the above commands with the `root` account to complete the installation.
+1. Log in to the Dashboard and check if a new device has come online.
+2. Ensure the Agent is running smoothly without any error logs.
 
 </details>
 
-### Installing the Agent on macOS Using Homebrew
+---
+
+### Manually Installing the Agent on Windows
+
 <details>
-  <summary>Click to expand/collapse</summary>
+  <summary>Click to Expand/Collapse</summary>
 
-***This section is adapted from [🐿️松鼠收集🌰](https://blog.mre.red/archives/install_nezha_monitoring_agent_service_with_homebrew) with the author's permission***
+In addition to the one-click script, Windows systems can also install the Agent by downloading the corresponding binary files and manually configuring them. Follow the steps below:
 
-::: warning	
-Please be sure to add environment variables before installing nezha-agent through Homebrew!
-Homebrew creates the service-required plist file during software installation, and if you add the environment variables after installation, it will fail to start due to missing parameters.
-:::
+---
 
-1. Add environment variables:
+#### 1. Preparation
 
-```shell
-echo 'export HOMEBREW_NEZHA_AGENT_PASSWORD="Communication key, obtained from the service page"' >> ~/.zshrc
-echo 'export HOMEBREW_NEZHA_AGENT_SERVER="Your server and port, format your.domain:5555 "' >> ~/.zshrc
-source ~/.zshrc
-```
+1. **Ensure Administrator Privileges**  
+   Log in to the Windows system using an administrator account.
 
-2. Install Nezha Agent:
+2. **Install Necessary Tools**  
+   - Ensure you have a decompression tool installed, such as `7-Zip` or `WinRAR`.
 
-::: danger
-Note that this Homebrew repository is maintained by a third party and is unrelated to Nezha Monitoring.
-The Nezha project team does not endorse this repository's usability, security, etc. Please evaluate the risks yourself before using!
-:::
+---
 
-Since it has not yet been submitted to the Homebrew Core official library, it is temporarily placed in the [third-party Homebrew repository](https://github.com/Brewforge/homebrew-chinese) maintained by the author of the blog:
+#### 2. Download the Nezha Agent
 
-```shell
-brew install brewforge/chinese/nezha-agent
-```
+1. **Confirm System Architecture**  
+   - Windows systems are generally `amd64` architecture, so download the corresponding binary.
 
-3. Start Nezha Agent service through Homebrew:
+2. **Download the Nezha Agent Files**  
+   - Visit the [Nezha Agent Releases](https://github.com/nezhahq/agent/releases) page and download the version suitable for `Windows`, for example:
+     ```plaintext
+     nezha-agent_windows_amd64.zip
+     ```
 
-```shell
-brew services start nezha-agent
-```
+3. **Extract the Files**  
+   - Extract the downloaded archive to a designated directory, such as `C:\nezha`.
 
-4. Check the service status:
+---
 
-```shell
-brew services info nezha-agent
-```
+#### 3. Create the Configuration File
 
-5. Stop the service:
+1. **Create and Edit the Configuration File**  
+   In the extracted directory, create a `config.yml` file with the following content:
+   ```yaml
+   client_secret: your_agent_secret
+   debug: false
+   disable_auto_update: false
+   disable_command_execute: false
+   disable_force_update: false
+   disable_nat: false
+   disable_send_query: false
+   gpu: false
+   insecure_tls: false
+   ip_report_period: 1800
+   report_delay: 1
+   server: data.example.com:8008
+   skip_connection_count: false
+   skip_procs_count: false
+   temperature: false
+   tls: false 
+   use_gitee_to_upgrade: false
+   use_ipv6_country_code: false
+   uuid: your_uuid
+   ```
+   - **Field Descriptions**:
+     - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008`.
+     - `client_secret`: Replace with the `agentsecretkey` from the Dashboard's configuration file, typically located at `/opt/nezha/dashboard/data/config.yaml`.
+     - `uuid`: Generate a unique identifier for this Agent using an online tool.
+    
+2. **Save the File**  
+   Save the file as `config.yml` in the Agent's directory.
 
-```shell
-brew services stop nezha-agent
-```
+---
 
-6. Uninstall Nezha Agent:
+#### 4. Run the Agent
 
-```shell
-brew rm nezha-agent
-```
+1. **Run the Agent with Administrator Privileges**  
+   Open CMD with administrator rights, navigate to the Agent's directory, and execute the following command:
+   ```powershell
+   nezha-agent.exe -c config.yml
+   ```
 
-7. If there is an error, first check the environment variables:
+2. **Verify the Connection**  
+   - Log in to the Dashboard and check if a new device has come online.
+   - If there are no error messages in the Agent's logs, the installation is successful.
 
-```shell
-echo $HOMEBREW_NEZHA_AGENT_PASSWORD
-echo $HOMEBREW_NEZHA_AGENT_SERVER
-```
+---
 
-8. If the environment variables are configured correctly, try reinstalling:
+#### 5. Configure the Agent to Run as a Service
 
-```shell
-brew services stop nezha-agent
-brew reinstall nezha-agent
-brew services start nezha-agent
-```
+1. **Install as a Service**  
+   - Navigate to the Agent's directory in CMD and run:
+     ```powershell
+     nezha-agent.exe service install
+     ```
 
-9. If the issue persists, submit a issue to the [third-party Homebrew repository](https://github.com/Brewforge/homebrew-chinese).
+2. **Start the Service**  
+   - After successful installation, the Agent will automatically start as a service and will run on system boot.
+
+3. **Uninstall the Service**  
+   - To uninstall the service, run the following command:
+     ```powershell
+     nezha-agent.exe service uninstall
+     ```
 
 </details>
 
-### Installing the Agent on OpenWRT
+---
+    
+### Installing the Agent on OpenWrt
+
 <details>
-  <summary>Click to expand/collapse</summary>
+  <summary>Click to Expand/Collapse</summary>
 
-**How to solve installation difficulties and issues in one step?**
+OpenWrt is a lightweight Linux distribution. Installing the Nezha Agent on OpenWrt requires manual downloading and configuration. Follow the steps below:
 
-* Refer to the project:  
-[NZ-OpenWrt](https://github.com/dysf888/NZ-OpenWrt)  
+---
 
-**How to enable autostart on older OpenWRT/LEDE?**
+#### 1. Preparation
 
-* Refer to the project:  
-[Nezha Monitoring for OpenWRT](https://github.com/Erope/openwrt_nezha)  
+1. **Ensure Administrator Privileges**  
+   - SSH into the OpenWrt device using the `root` account.
 
-**How to enable autostart on newer OpenWRT? Contributor: @艾斯德斯**
+2. **Install Necessary Tools**  
+   - Update the package list and install required tools:
+     ```bash
+     opkg update
+     opkg install wget unzip
+     ```
 
-* First, download the corresponding binary from the release, unzip the zip package, and place it in `/root`.
-* Run `chmod +x /root/nezha-agent` to grant execution permission, then create `/etc/init.d/nezha-service`:
+---
 
-```shell
-#!/bin/sh /etc/rc.common
+#### 2. Download the Nezha Agent
 
-START=99
-USE_PROCD=1
+1. **Determine System Architecture**  
+   Use the following command to identify the device's architecture:
+   ```bash
+   uname -m
+   ```
+   Common architecture mappings:
+   - `x86_64` corresponds to `nezha-agent_linux_amd64.zip`
+   - `arm` or `aarch64` corresponds to `nezha-agent_linux_arm.zip`
 
-start_service() {
- procd_open_instance
- procd_set_param command /root/nezha-agent -s Dashboard communication domain:port -p Key -d
- procd_set_param respawn
- procd_close_instance
-}
+2. **Download the Appropriate Nezha Agent**  
+   Replace `<arch>` with your device's architecture:
+   ```bash
+   wget -O nezha-agent.zip https://github.com/nezhahq/agent/releases/latest/download/nezha-agent_linux_<arch>.zip
+   ```
 
-stop_service() {
-  killall nezha-agent
-}
+3. **Extract the Files**  
+   Extract the archive to the `/etc/nezha` directory:
+   ```bash
+   mkdir -p /etc/nezha
+   unzip nezha-agent.zip -d /etc/nezha
+   ```
 
-restart() {
- stop
- sleep 2
- start
-}
-```
+---
 
-* Run `chmod +x /etc/init.d/nezha-service` to grant execution permission.  
-* Start the service: `/etc/init.d/nezha-service enable && /etc/init.d/nezha-service start`
+#### 3. Create the Configuration File
 
+1. **Create the Configuration File**  
+   Create and edit the `/etc/nezha/config.yml` file:
+   ```bash
+   touch /etc/nezha/config.yml
+   vi /etc/nezha/config.yml
+   ```
+   Add the following content:
+   ```yaml
+   client_secret: your_agent_secret
+   debug: false
+   disable_auto_update: false
+   disable_command_execute: false
+   disable_force_update: false
+   disable_nat: false
+   disable_send_query: false
+   gpu: false
+   insecure_tls: false
+   ip_report_period: 1800
+   report_delay: 1
+   server: data.example.com:8008
+   skip_connection_count: false
+   skip_procs_count: false
+   temperature: false
+   tls: false 
+   use_gitee_to_upgrade: false
+   use_ipv6_country_code: false
+   uuid: your_uuid
+   ```
+
+2. **Save the Configuration File**  
+   Ensure the configuration file is saved at `/etc/nezha/config.yml`.
+
+---
+
+#### 4. Run the Agent
+
+1. **Grant Execute Permissions and Start the Agent**  
+   ```bash
+   chmod +x /etc/nezha/nezha-agent
+   /etc/nezha/nezha-agent -c /etc/nezha/config.yml
+   ```
+
+2. **Verify Agent Connection**  
+   - Log in to the Dashboard Admin Panel and check if a new device has come online.
+   - Ensure the Agent is running correctly.
+
+---
+
+#### 5. Configure the Agent to Start on Boot
+
+1. **Create a Service Script**  
+   Create a service script at `/etc/init.d/nezha-service`:
+   ```bash
+   vi /etc/init.d/nezha-service
+   ```
+
+2. **Add the Following Content**  
+   Replace `/etc/nezha/nezha-agent` and `/etc/nezha/config.yml` with the correct paths if different:
+   ```bash
+   #!/bin/sh /etc/rc.common
+
+   START=99
+   USE_PROCD=1
+
+   start_service() {
+       procd_open_instance
+       procd_set_param command /etc/nezha/nezha-agent -c /etc/nezha/config.yml
+       procd_set_param respawn
+       procd_close_instance
+   }
+
+   stop_service() {
+       killall nezha-agent
+   }
+
+   restart() {
+       stop
+       sleep 2
+       start
+   }
+   ```
+
+3. **Grant Execute Permissions**  
+   ```bash
+   chmod +x /etc/init.d/nezha-service
+   ```
+
+4. **Enable and Start the Service**  
+   ```bash
+   /etc/init.d/nezha-service enable
+   /etc/init.d/nezha-service start
+   ```
+
+5. **Verify Service Status**  
+   Check if the service is running correctly:
+   ```bash
+   ps | grep nezha-agent
+   ```
+
+---
+    
+### Note
+
+- **Configuration File Path**: Ensure the paths to the configuration files (e.g., `/etc/nezha/config.yml`) are correct in the service scripts.
+- **Service Management**: You can manage the service using the following commands:
+  - Manually start the service:
+    ```bash
+    /etc/init.d/nezha-service start
+    ```
+  - Stop the service:
+    ```bash
+    /etc/init.d/nezha-service stop
+    ```
+  - Restart the service:
+    ```bash
+    /etc/init.d/nezha-service restart
+    ```
+- **Log Troubleshooting**: If the Agent fails to start correctly, check relevant logs using `logread` to identify issues.
 </details>
-
-## Does the Agent Have a Docker Image?
-
-**The Agent does not currently have a Docker image.**  
-The design philosophy of the Agent is opposite to that of the Dashboard. While the Dashboard should minimally impact the server, the Agent needs to execute monitoring services and run commands within the server.  
-Running the Agent inside a container can still perform monitoring tasks, but features like WebShell will not function properly, so no Docker image is provided.
