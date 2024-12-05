@@ -12,5 +12,5 @@ hero:
   actions:
     - theme: brand
       text: 开始使用 →  
-      link: /developer/theme  
+      link: /developer/api
 ---
