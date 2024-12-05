@@ -225,8 +225,8 @@ function getDeveloperSidebarZhCN() {
     {
       text: '开发手册',
       items: [
-        { text: '创建新主题', link: '/developer/theme.html' },
-        { text: 'l10n', link: '/developer/l10n.html' }
+        { text: 'API 文档', link: '/developer/api.html' },
+        { text: 'i18n', link: '/developer/i18n.html' }
       ]
     }
   ]
