@@ -220,7 +220,7 @@ Nginx 默认不允许 Header 中含有下划线，而 Agent 使用 `client_secre
 
 在 server 块中添加 `ignore_invalid_headers off;`，之后在 gRPC 反代选项中加入：
 
-```ini
+```nginx
 grpc_set_header client_secret $http_client_secret;
 grpc_set_header client_uuid $http_client_uuid;
 ```
