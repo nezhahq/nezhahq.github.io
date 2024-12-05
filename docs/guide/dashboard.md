@@ -60,6 +60,8 @@ curl -L https://gitee.com/naibahq/scripts/raw/main/install.sh -o nezha.sh && chm
 
 **本文档以宝塔面板配置反向代理 Dashboard 的过程作为示范。随着未来版本的变化，部分功能入口可能会有所调整，本文档仅供参考。**  
 
+**如需配置Agent通过反向代理连接面板，请参阅[Dashboard反向代理配置](/guide/q3.html#dashboard-反向代理配置)。**
+
 ::: warning  
 本项目并不依赖宝塔面板。你可以使用任何服务器面板，或手动安装 Nginx 或 Caddy 来配置 SSL 和反向代理。  
 
