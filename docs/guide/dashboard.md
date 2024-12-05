@@ -58,46 +58,7 @@ curl -L https://gitee.com/naibahq/scripts/raw/main/install.sh -o nezha.sh && chm
 
 ## 配置反向代理
 
-**本文档以宝塔面板配置反向代理 Dashboard 的过程作为示范。随着未来版本的变化，部分功能入口可能会有所调整，本文档仅供参考。**  
-
-::: warning  
-本项目并不依赖宝塔面板。你可以使用任何服务器面板，或手动安装 Nginx 或 Caddy 来配置 SSL 和反向代理。  
-
-如果你认为无需通过 80 或 443 端口访问 Dashboard，可以直接使用安装脚本部署并运行哪吒监控，无需安装 Nginx 或其他 Web 服务器。  
-:::
-
-以宝塔面板为例，在宝塔面板中新建站点，填写公开访问域名，如 `http://dashboard.example.com`，然后点击“设置”，进入站点设置，选择“反向代理” → “新建反向代理”。
-
-1. 自定义代理名称，在“目标 URL”中填入：  
-   `http://127.0.0.1:8008`  
-   点击“保存”。  
-2. 打开刚创建的反向代理右边的“配置文件”，将内容替换为以下代码：
-```nginx
-#PROXY-START/
-location / {
-    proxy_pass http://127.0.0.1:8008;
-    proxy_set_header Host $host;
-    proxy_set_header Origin https://$host;
-    proxy_set_header nz-realip $http_CF_Connecting_IP;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection 'upgrade';
-}
-location ~ ^/(ws|terminal/.+|file/.+)$ {
-    proxy_pass http://127.0.0.1:8008;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "Upgrade";
-    proxy_set_header Host $http_host;
-}
-#PROXY-END/
-```
-3. 点击“保存”。
-
-现在，你可以直接通过域名访问面板，例如：  
-`http://dashboard.example.com`  
+[Dashboard 反向代理配置](/guide/q3.html)
 
 ## 更新 Dashboard
 
