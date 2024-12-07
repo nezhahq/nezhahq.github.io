@@ -2,22 +2,50 @@
 outline: deep
 ---
 
-# Frequently Asked Questions about the Agent
+# Agent FAQ
 
-## The IP Displayed in the Admin Panel is Different from the Actual Agent IP?
+---
 
-Please refer to [Dashboard Related - Why is the IP Displayed in the Admin Panel Different from the Actual Agent IP?](/en_US/guide/dashboardq.html#why-is-the-ip-displayed-in-the-admin-panel-different-from-the-actual-agent-ip). This will not be repeated here.
+## Why is the IP displayed in the Dashboard different from the Agent's actual IP?
+
+If the IP displayed in the Dashboard is inconsistent with the Agent's actual IP, please refer to [Dashboard FAQ - Why is the IP shown in the management panel different from the Agent's actual IP?](en_US/guide/dashboardq.html).  
+Detailed solutions to this issue are provided in the related document and will not be repeated here.
+
+---
 
 ## Errors During One-Click Script Installation
 
-### curl: Failed to connect to raw.githubusercontent.com......
+### 1. `curl: Failed to connect to raw.githubusercontent.com......`
 
-This mostly occurs on servers in mainland China. Currently, the one-click script fetches the installation script directly from Github. You may try several times, or [manually install the Agent](/en_US/guide/agent.html#other-ways-to-install-agent). Additionally, you can find third-party Github acceleration services or mirrors and set them in the one-click installation script.
+This issue commonly occurs on servers located in Mainland China due to unstable connections to GitHub. Solutions include:
 
-### sudo: command not found
+1. **Retry the script multiple times**: Simply rerun the one-click installation script a few more times.  
+2. **Manual Installation**: Follow the guide for [manual Agent installation](en_US/guide/agent.html#alternative-methods-to-install-the-agent).  
+3. **Use an acceleration service**: Utilize third-party GitHub acceleration services or mirrors. Replace the download URL in the installation script with the accelerated link.
 
-Please manually install sudo first, for example, in Ubuntu:
+---
 
-```shell
-apt install sudo
-```
+### 2. `sudo: command not found`
+
+If the error `sudo: command not found` appears, it means the `sudo` tool is not installed on the target server. Solutions include:
+
+1. **Install `sudo` manually**:
+   - For Ubuntu systems:
+     ```shell
+     apt install sudo
+     ```
+   - For CentOS systems:
+     ```shell
+     yum install sudo
+     ```
+
+2. **Verify installation**: After installing `sudo`, rerun the one-click installation script.
+
+---
+
+## Does the Agent Have a Docker Image?
+
+**The Agent currently does not offer a Docker image.**  
+Unlike the Dashboard, which aims to minimize its impact on the host system, the Agent is designed to deeply integrate with the host to perform monitoring services and command execution tasks.
+
+Although running the Agent inside a container may still allow monitoring, functionalities like WebShell will not work properly. Therefore, the official project does not provide Docker image support.

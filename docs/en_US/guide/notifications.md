@@ -2,209 +2,142 @@
 outline: deep
 ---
 
-# Notification Configuration
+# Notification Settings
 
-Nezha Monitoring supports monitoring server load, CPU, memory, disk, traffic, monthly traffic, process count, and connection count, and sending notifications when user-defined thresholds are reached.
+Nezha Monitoring supports monitoring server metrics such as load, CPU, memory, disk, bandwidth, monthly traffic, process count, and connections. Notifications are triggered when user-defined thresholds are reached.
+
+---
 
 ## Flexible Notification Methods
 
-- In Dashboard messages, the placeholder `#DATETIME#` represents the timestamp of the event. When the notification is triggered, the Dashboard automatically replaces `#DATETIME#` with the actual event time.
-- `#NEZHA#` is a placeholder for Dashboard messages, and the Dashboard automatically replaces the placeholder with the actual message when the notification is triggered.
-- The body content is in `JSON` format: **When the request type is FORM**, the value is in `key:value` form, and placeholders can be placed inside `value`. The placeholders will be automatically replaced during notification. **When the request type is JSON**, only simple string replacement is performed before being submitted to the `URL`.
-- Placeholders can also be placed inside the URL, and simple string replacement will be performed during the request.
+- **Message Placeholders**: 
+  - `#DATETIME#`: Represents the event timestamp, automatically replaced with the actual time when a notification is triggered.
+  - `#NEZHA#`: A placeholder for notification content, replaced with the actual message.
 
-**Refer to the following notification method examples, and you can also flexibly set the push method according to your needs.**
+- **Request Body Formats**:
+  - For **FORM** requests, use `key:value` pairs, with placeholders in `value` replaced dynamically.
+  - For **JSON** requests, strings are replaced before submission to the `URL`.
+
+- **URL Placeholders**: Placeholders in the URL are replaced with corresponding values during the request.
+
+**Refer to the examples below or customize notification methods based on your needs.**
+
+---
 
 ### Bark Example
+
 <details>
-  <summary>Click to expand/collapse</summary>
+  <summary>Expand/Collapse</summary>
 
-- Name: Bark
-- URL structure: /:key/:body or /:key/:title/:body or /:key/:category/:title/:body
-- Request Method: GET
-- Request Type: Default
-- Body: Empty
-
-- Name: Bark
-- URL structure: /push
-- Request Method: POST
-- Request Type: form
-- Body: `{"title": "#SERVER.NAME#","device_key":"xxxxxxxxx","body":"#NEZHA#","icon":"https://xxxxxxxx/nz.png"}`
+- **Name**: Bark
+- **URL Composition**:
+  - GET Requests: `/:key/:body`, `/:key/:title/:body`, or `/:key/:category/:title/:body`
+  - POST Requests: `/push`
+- **Request Method**: GET or POST
+- **Request Type**: 
+  - GET: Default
+  - POST: `form`
+- **Body** (POST Example):
+  ```json
+  {
+    "title": "#SERVER.NAME#",
+    "device_key": "xxxxxxxxx",
+    "body": "#NEZHA#",
+    "icon": "https://xxxxxxxx/nz.png"
+  }
+  ```
 
 </details>
 
-### Slack Example Contributor: [@白歌](https://github.com/cantoblanco)
+---
+
+### Slack Example (Contributed by [@cantoblanco](https://github.com/cantoblanco))
+
 <details>
-  <summary>Click to expand/collapse</summary>
+  <summary>Expand/Collapse</summary>
 
-#### URL Parameter Acquisition Instructions
+#### URL Parameter Setup
 
-Prepare your Slack Workspace in advance and create an App for this Workspace. If you have not created one, you can create an App at [Slack API](https://api.slack.com/apps).
+1. **Create a Slack App**: Visit [Slack API](https://api.slack.com/apps) and create a new App.
+2. **Enable Incoming Webhook**: Add and activate Incoming Webhooks on the App's settings page.
+3. **Generate Webhook URL**: Add a new webhook to a workspace, select a channel, and authorize. Copy the generated URL.
 
-After creating the App, you need to add an Incoming Webhook to the App. In the App's settings page, find Incoming Webhooks, enable Activate Incoming Webhooks, and at the bottom of the page, find and click Add New Webhook to Workspace, choose a Channel, and click Allow. After creating, you will get a Webhook URL, which you will use to replace the example URL below.
+**Notification Configuration:**
 
-- Name: Slack
-- URL: https://hooks.slack.com/services/xxxxxxxxx/xxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxx
-- Request Method: POST
-- Request Type: JSON
-- Body: `{"text":"#NEZHA#"}`
+- **Name**: Slack
+- **URL**: `https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXXXXXXX`
+- **Request Method**: POST
+- **Request Type**: JSON
+- **Body**:
+  ```json
+  {
+    "text": "#NEZHA#"
+  }
+  ```
 
 </details>
 
-### Telegram Example Contributor: [@白歌](https://github.com/cantoblanco)
+---
+
+### Telegram Example (Contributed by [@cantoblanco](https://github.com/cantoblanco))
+
 <details>
-  <summary>Click to expand/collapse</summary>
+  <summary>Expand/Collapse</summary>
 
-#### URL Parameter Acquisition Instructions
+#### URL Parameter Setup
 
-Create a bot in Telegram and get the bot's token and your Telegram user ID.
+1. **Create a Bot**: Use [@BotFather](https://t.me/BotFather) to create a bot and get its token.
+2. **Retrieve User ID**: Use [@userinfobot](https://t.me/userinfobot) to find your user ID.
+3. **Send a Test Message**: Send a message to your bot to activate communication.
 
-The token and user ID are alphanumeric strings. You can get your user ID by chatting with @userinfobot on Telegram. Create a bot by chatting with @BotFather, and you will get the bot's token.
+**Notification Configuration:**
 
-Replace botXXXXXX with your bot token and YYYYYY with your user ID in the URL below. Note that you need to chat with the bot first, otherwise the bot cannot send messages to you.
+- **Name**: Telegram
+- **URL**: `https://api.telegram.org/bot<Your_Bot_Token>/sendMessage?chat_id=<Your_User_ID>&text=#NEZHA#`
+- **Request Method**: GET
+- **Request Type**: Default
+- **Body**: None
 
-- Name: Telegram
-- URL: https://api.telegram.org/botXXXXXX/sendMessage?chat_id=YYYYYY&text=#NEZHA#
-- Request Method: GET
-- Request Type: Default
-- Body: Empty
+**Note**: Replace `<Your_Bot_Token>` and `<Your_User_ID>` with actual values.
 
 </details>
 
-
-### Email Notification Example - Outlook Contributor: [@白歌](https://github.com/cantoblanco)
-<details>
-  <summary>Click to expand/collapse</summary>
-
-**Note: SendCloud has a daily free email sending limit. This is just an example. You can choose a paid service or other similar free services. The usage method is similar.**
-
-#### URL Parameter Acquisition Instructions
-
-This example uses SendCloud as the email service. You need to register an account on [SendCloud](https://www.sendcloud.net/), create a sender email, and then obtain the APIUSER and APIKEY [here](https://www.sendcloud.net/sendSetting/apiuser).
-
-Replace `<replaceAPIUSER>` and `<replaceAPIKEY>` in the example URL below with your APIUSER and APIKEY, and replace `<customSenderEmail>` and `<customRecipientEmail>` with any sender and recipient email addresses.
-
-- Name: MS Mail Notification
-- URL：https://graph.microsoft.com/v1.0/me/microsoft.graph.sendMail
-- Request method: POST
-- Request type: JSON
-- Header: `{"Content-type":"application/json",
-            "Authorization":"Bearer {Token}"}`
-- Body:
-    ```json
-    {
-      "message": {
-          "subject": "Server Status Notification",
-          "body": {
-          "contentType": "Text",
-          "content": "#NEZHA#"
-          },
-          "toRecipients": [
-            {
-              "emailAddress": {
-                  "address": "ADDRESS FOR RECEVING EMAILS"
-                  }
-            }
-          ]
-      }
-    } 
-    ```
-
-</details>
-
-### DingTalk Group Bot Configuration Example
-<details>
-  <summary>Click to expand/collapse</summary>
-
-#### URL Parameter Acquisition Instructions
-
-Create a bot in DingTalk in advance and get the bot's token.
-
-The bot URL is obtained after creating a bot in the DingTalk group - Manage Bot - Create Bot. Choose custom keywords for the security method, and the Body content value must contain these keywords.
-
-- Name: Nezha Assistant
-- URL: https://oapi.dingtalk.com/robot/send?access_token=xxxxxxxxxxxxxxxxx
-- Request Method: POST
-- Request Type: JSON
-- Header: `{"Content-Type": "application/json"}`
-- Body: `{"msgtype": "text","text": {"content":"Nezha Probe:\n#NEZHA#"}}`
-
-</details>
-
-### WeChat Work Group Bot Example Contributor: [@ChowRex](https://github.com/ChowRex)
-<details>
-  <summary>Click to expand/collapse</summary>
-
-Supported placeholders list
-
-```json
-{
-    "content": "#NEZHA#",
-    "ServerName": "#SERVER.NAME#",
-    "ServerIP": "#SERVER.IP#",
-    "ServerIPV4": "#SERVER.IPV4#",
-    "ServerIPV6": "#SERVER.IPV6#",
-    "CPU": "#SERVER.CPU#",
-    "MEM": "#SERVER.MEM#",
-    "SWAP": "#SERVER.SWAP#",
-    "DISK": "#SERVER.DISK#",
-    "NetInSpeed": "#SERVER.NETINSPEED#",
-    "NetOutSpeed": "#SERVER.NETOUTSPEED#",
-    "TransferIn": "#SERVER.TRANSFERIN#",
-    "TranferOut": "#SERVER.TRANSFEROUT#",
-    "Load1": "#SERVER.LOAD1#",
-    "Load5": "#SERVER.LOAD5#",
-    "Load15": "#SERVER.LOAD15#",
-    "TCP_CONN_COUNT": "#SERVER.TCPCONNCOUNT",  # invalid
-    "UDP_CONN_COUNT": "#SERVER.UDPCONNCOUNT",  # invalid
-}
-```
-
-> This document is **NOT** available in English.
-> 
-> [Group Bot Configuration Instructions - Document - WeChat Work Developer Center](https://developer.work.weixin.qq.com/document/path/91770#markdown%E7%B1%BB%E5%9E%8B)
-
-- Name: WeChat Work Group Bot
-- URL: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=YOUR_BOT_KEY
-- Request Method: POST
-- Request Type: JSON
-- Body: 
-    ```json
-    {
-        "msgtype": "markdown",
-        "markdown": {
-            "content": "# Nezha Notification\n\n\"#NEZHA#\"\n\n> Name: \"#SERVER.NAME#\"\n> IP: \"#SERVER.IP#\"\n> IPv4: \"#SERVER.IPV4#\"\nIPv6: \"#SERVER.IPV6#\"\n> CPU: \"#SERVER.CPU#\"\n> Memory: \"#SERVER.MEM#\"\n> Swap: \"#SERVER.SWAP#\"\n> Disk: \"#SERVER.DISK#\"\n> Upload Speed: \"#SERVER.NETINSPEED#\"\n> Download Speed: \"#SERVER.NETOUTSPEED#\"\n> Total Upload: \"#SERVER.TRANSFERIN#\"\n> Total Download: \"#SERVER.TRANSFEROUT#\"\n> Load1: \"#SERVER.LOAD1#\"\n> Load5: \"#SERVER.LOAD5#\"\n> Load15: \"#SERVER.LOAD15#\"\n> TCP Connection Count: \"#SERVER.TCPCONNCOUNT\"\n> UDP Connection Count: \"#SERVER.UDPCONNCOUNT\"\n\n"
-        }
-    }
-    ```
-
-You can remove or add relevant information as needed.
-
-</details>
+---
 
 ### Matrix Notification Example
 
 <details>
-  <summary>Click to expand/collapse</summary>
+  <summary>Click to Expand/Collapse</summary>
 
-#### Parameter Explanation
+#### Parameter Description
 
-* All variables starting with `$` need to be replaced with your actual values.
-  * **`YOUR_HOME_SERVER`**: The address of your Matrix server.
-  * **`YOUR_NEZHA_URL`**: The URL of your Nezha dashboard.
-  * **`YOUR_MATRIX_USERNAME`** and **`YOUR_MATRIX_PASSWD`**: Your Matrix username and password.
-  * **`YOUR_MATRIX_TOKEN`** retrieval method:
-    ```sh
-    curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRIX_USERNAME", "type": "m.id.user"}, "password": "$YOUR_MATRIX_PASSWD"}' "https://$YOUR_HOME_SERVER/_matrix/client/r0/login"
-    ```
+- **Variable Replacement**: Replace the following variables with actual values:
+  - `$YOUR_HOME_SERVER`: Address of your Matrix server.
+  - `$YOUR_NEZHA_URL`: URL of your Nezha Dashboard.
+  - `$YOUR_MATRIX_USERNAME`: Your Matrix username.
+  - `$YOUR_MATRIX_PASSWD`: Your Matrix password.
+  - `$YOUR_MATRIX_TOKEN`: Matrix access token.
+  - `$ROOM_ID`: ID of the Matrix room where notifications will be sent.
 
-#### Request Configuration
+---
+
+#### Retrieve Access Token
+
+Use the following command to obtain `YOUR_MATRIX_TOKEN`:
+
+```bash
+curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRIX_USERNAME", "type": "m.id.user"}, "password": "$YOUR_MATRIX_PASSWD"}' "https://$YOUR_HOME_SERVER/_matrix/client/r0/login"
+```
+
+---
+
+#### Notification Configuration
 
 - **Name**: Matrix
 - **URL**: `https://$YOUR_HOME_SERVER/_matrix/client/r0/rooms/$ROOM_ID/send/m.room.message`
 - **Request Method**: `POST`
 - **Request Type**: `JSON`
-- **Header**:
+- **Headers**:
   ```json
   {
     "Authorization": "Bearer $YOUR_MATRIX_TOKEN"
@@ -215,120 +148,142 @@ You can remove or add relevant information as needed.
   {
     "msgtype": "m.text",
     "format": "org.matrix.custom.html",
-    "formatted_body": "<html><head><title>Nezha Dashboard</title></head><body><h1><a href=\"$YOUR_NEZHA_URL\" target=\"_blank\">Nezha Dashboard</a></h1><ul><li>datetime: #DATETIME#</li><li>Message: #NEZHA#</li></ul></body></html>",
+    "formatted_body": "<h1><a href=\"$YOUR_NEZHA_URL\" target=\"_blank\">Nezha Dashboard</a></h1><ul><li>Time: #DATETIME#</li><li>Message: #NEZHA#</li></ul>",
     "body": "#NEZHA#"
   }
   ```
 
-#### Usage Steps
+---
 
-1. **Replace Variables**: Replace `$YOUR_HOME_SERVER`, `$YOUR_NEZHA_URL`, `$YOUR_MATRIX_USERNAME`, `$YOUR_MATRIX_PASSWD`, and `$YOUR_MATRIX_TOKEN` with your own values.
-2. **Retrieve Token**: Use the `curl` command provided above to get `YOUR_MATRIX_TOKEN`, making sure to replace all relevant variables.
-3. **Configure Request**: Set up your request using the configuration provided above, ensuring the correct URL, headers, and body are used.
-4. **Send Notification**: Send the Matrix message using the configured request to integrate Nezha monitoring notifications into your Matrix room.
+### Steps to Use
 
-Once configured, you will receive formatted Nezha dashboard information in your Matrix room whenever a notification is triggered.
+1. **Replace Variables**: Replace all `$` prefixed variables with your actual values.
+2. **Obtain Token**: Use the command above to retrieve `YOUR_MATRIX_TOKEN`.
+3. **Configure Request**: Fill in the URL, Headers, and Body as described.
+4. **Send Notifications**: The configured notification will be sent to the specified Matrix room.
 
 </details>
 
-## Notification Rule Explanation
+---
+
+# Alert Rule Configuration
+
+**Before configuring alert rules, set up notification methods and group them into notification groups. Alert rules send notifications at the group level.**
+
+---
 
 ### Basic Rules
 
-- `type`: You can choose one or more types. If multiple types are selected in one rule, **all selected types must be satisfied** to trigger a notification (refer to the examples below)
-  - `cpu`, `gpu`, `memory`, `swap`, `disk`
-  - `net_in_speed` inbound network speed, `net_out_speed` outbound network speed, `net_all_speed` total network speed, `transfer_in` inbound traffic, `transfer_out` outbound traffic, `transfer_all` total traffic
-  - `offline` offline monitoring
-  - `load1`, `load5`, `load15` load
-  - `process_count` process count (currently resource-intensive due to thread count, not supported temporarily)
-  - `tcp_conn_count`, `udp_conn_count` connection count
-  - `temperature_max` maximum temperature
-- `duration`: Duration in seconds. An notification is triggered if 30% or more of the samples exceed the threshold within this duration (to prevent data spikes).
-- `min` or `max`:
-  - For traffic and network speed, the unit is bytes (1KB = 1024B, 1MB = 1024 * 1024B)
-  - For memory, disk, and CPU, the unit is percentage
-  - No need to set this for offline monitoring
-- `cover`: 
-  - `0` monitors all servers, use `ignore` to exclude specific servers
-  - `1` ignores all servers, use `ignore` to monitor specific servers  
-  Example: `[{"type":"offline","duration":10, "cover":0, "ignore":{"5": true}}]`
-- `ignore`: Select specific servers to exclude, used with `cover`, content is server ID and boolean value, e.g., `{"1": true, "2": false}`
+- **`type`**: Select one or more types. All selected types **must be satisfied** to trigger a notification.
+  - **Resource Types**: `cpu`, `gpu`, `memory`, `swap`, `disk`
+  - **Network Types**: `net_in_speed`, `net_out_speed`, `net_all_speed`, `transfer_in`, `transfer_out`, `transfer_all`
+  - **System Types**: `offline`, `load1`, `load5`, `load15`, `process_count`
+  - **Connection Counts**: `tcp_conn_count`, `udp_conn_count`
+  - **Temperature**: `temperature_max` (maximum temperature)
+- **`duration`**: Duration in seconds. Alerts are triggered if the condition persists for this duration with at least 30% of the data satisfying the threshold.
+- **`min` / `max`**:
+  - Bandwidth and traffic are measured in bytes (1KB = 1024B, 1MB = 1024\*1024B).
+  - Memory, disk, and CPU usage are measured as percentages (0-100).
+  - Offline monitoring does not require these fields.
+- **`cover`**:
+  - `0`: Monitor all servers, exclude specific ones with `ignore`.
+  - `1`: Ignore all servers, include specific ones with `ignore`.
+- **`ignore`**: Specifies servers to exclude or include for monitoring, in the format `{ServerID: true/false}`.
 
-**Complete Examples:**  
+---
 
-Add an offline notification:
+### Examples
 
-- Name: Offline Notification
-- Rule: `[{"Type":"offline","Duration":10}]`
-- Enabled: √
+#### Offline Notification
 
-Add an notification for CPU usage exceeding 50% for 10 seconds **and** memory usage below 20% for 20 seconds:
+- **Name**: Offline Alert
+- **Rule**:
+  ```json
+  [{"Type": "offline", "Duration": 10}]
+  ```
+- **Enabled**: √
 
-- Name: CPU+Memory
-- Rule: `[{"Type":"cpu","Min":0,"Max":50,"Duration":10},{"Type":"memory","Min":20,"Max":0,"Duration":20}]`
-- Enabled: √
+#### CPU and Memory Monitoring
 
-Send notifications for specific servers to specific notification groups:
+- **Name**: CPU + Memory Alert
+- **Rule**:
+  ```json
+  [
+    {"Type": "cpu", "Min": 0, "Max": 50, "Duration": 10},
+    {"Type": "memory", "Min": 20, "Max": 0, "Duration": 20}
+  ]
+  ```
+- **Enabled**: √
 
-Scenario example:  
-There are 4 servers (1, 2, 3, 4) and two notification groups (A, B).  
-Notify group A if servers 1 and 2 are offline for 10 minutes.  
-Notify group B if servers 3 and 4 are offline for 10 minutes.
+#### Specific Server Notifications to Groups
 
-First, set up notification groups A and B, then add two notification rules:
+**Scenario**: Notify group A when servers 1 and 2 are offline for 10 minutes. Notify group B for servers 3 and 4.
 
-**Rule 1:**
+- **Rule for Group A**:
+  - **Name**: Alert for 1, 2
+  - **Rule**:
+    ```json
+    [{"Type": "offline", "Duration": 600, "Cover": 1, "Ignore": {"1": true, "2": true}}]
+    ```
+  - **Notification Group**: A
+  - **Enabled**: √
 
-- Name: 1, 2 Offline, Send to Notification Group A
-- Rule: `[{"type":"offline","duration":600,"cover":1,"ignore":{"1":true,"2":true}}]`
-- Notification Group: A
-- Enabled: √
+- **Rule for Group B**:
+  - **Name**: Alert for 3, 4
+  - **Rule**:
+    ```json
+    [{"Type": "offline", "Duration": 600, "Cover": 1, "Ignore": {"3": true, "4": true}}]
+    ```
+  - **Notification Group**: B
+  - **Enabled**: √
 
-**Rule 2:**
+---
 
-- Name: 3, 4 Offline, Send to Notification Group B
-- Rule: `[{"type":"offline","duration":600,"cover":1,"ignore":{"3":true,"4":true}}]`
-- Notification Group: B
-- Enabled: √
+### Special Rules: Periodic Traffic Alerts
 
-**Flexibly using parameters can make your notification function fully utilized**
+Useful for monitoring monthly traffic.
 
-### Special: Any Cycle Traffic notification
+- **`type`**:
+  - `transfer_in_cycle`: Periodic inbound traffic.
+  - `transfer_out_cycle`: Periodic outbound traffic.
+  - `transfer_all_cycle`: Combined inbound and outbound traffic.
+- **`cycle_start`**: Start date of the cycle (RFC3339 format, e.g., `2022-01-01T00:00:00+08:00`).
+- **`cycle_interval`**: Cycle interval in units (e.g., 1 month).
+- **`cycle_unit`**: Unit of the cycle (`hour`, `day`, `week`, `month`, `year`).
+- **`min` / `max`, `cover`, `ignore`**: Same as basic rules.
 
-Can be used for monthly traffic monitoring
+---
 
-- `type`:
-  - `transfer_in_cycle` inbound traffic during the cycle
-  - `transfer_out_cycle` outbound traffic during the cycle
-  - `transfer_all_cycle` total traffic during the cycle
-- `cycle_start`: The start date of the statistical cycle (can be the start date of your server billing cycle). The time format is RFC3339, e.g., Beijing time is `2022-01-11T08:00:00.00+08:00`
-- `cycle_interval`: The number of statistical cycle units (e.g., if the cycle unit is days, and this value is 7, it means statistics are collected every 7 days)
-- `cycle_unit`: Statistical cycle unit, default is `hour`, optional (`hour`, `day`, `week`, `month`, `year`)
-- `min/max`, `cover`, `ignore` refer to basic rule configuration
+#### Example: Monthly Traffic Alert
 
-Example:  
+- **Rule**:
+  ```json
+  [
+    {
+      "Type": "transfer_out_cycle",
+      "Max": 1099511627776,
+      "Cycle_start": "2022-01-01T00:00:00+08:00",
+      "Cycle_interval": 1,
+      "Cycle_unit": "month",
+      "Cover": 1,
+      "Ignore": {"3": true, "4": true}
+    }
+  ]
+  ```
+- **Explanation**: Sends an alert when the outbound traffic of servers 3 and 4 exceeds 1TB in a monthly cycle starting on the 1st.
 
-For servers with IDs 3 and 4 (defined in ignore), if the monthly outbound traffic exceeds 1TB starting from the 1st of each month, send an notification:
+---
 
-```json
-[{"type":"transfer_out_cycle","max":1099511627776,"cycle_start":"2022-01-01T00:00:00+08:00","cycle_interval":1,"cycle_unit":"month","cover":1,"ignore":{"3":true,"4":true}}]
-```
+### Notification Trigger Modes
 
-::: tip
-If you still have trouble editing rules, you can try the rule generators below to simplify the process. Note that Nezha Monitoring does not guarantee the functionality of these generated rules.
+- **Always**: Sends notifications whenever the Agent reports a state satisfying the alert rule.
+- **Once**: Sends notifications only when the state changes (e.g., normal to abnormal, or abnormal to normal).
 
-- [Nezha Rule Generator](https://nz.sina.us.kg/): for common cases
-- [Nezha-Traffic-Alarm-Generator](https://wiziscool.github.io/Nezha-Traffic-Alarm-Generator/): for editing cycle traffic rules only and may be more convenient to use. Chinese only.
-:::
+---
 
-## Notification Trigger Modes
+### Execute Tasks on Notification
 
-- **Always Trigger**: A notification is triggered every time the Agent reports a status that matches the notification rule.
-- **Single Trigger**: A notification is triggered only once when the status changes, such as from normal to abnormal or from abnormal to normal.
+To execute tasks when a notification is triggered:
 
-## Set Tasks to Execute on notifications
-
-If you need to execute a task while sending an notification message, you can set this item.
-
-- **Task on Notification**: The task to be executed when the notification status changes from "normal" to "event". The task should be set in the tasks page in advance.
-- **Task on Recovery**: The task to be executed when the notification status changes from "event" to "normal". The task should be set in the tasks page in advance.
+- **Always Execute**: Executes the specified task when the state changes from "normal" to "alert".
+- **Execute Once**: Executes the specified task when the state changes from "alert" to "normal".

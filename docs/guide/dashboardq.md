@@ -97,7 +97,7 @@ DDNS `AccessID` 或 `AccessSecret` 填写有误，请检查并更正。
 ## 启用 HTTPS 后 `/terminal` 或 `/ws` 无法正常连接
 
 此问题多因证书不完整导致：
-1. 在 Agent 参数中添加 `-d`，查看日志是否出现：
+1. 查看日志是否出现：
    ```plaintext
    x509:certificate signed by unknown authority
    ```
@@ -212,11 +212,11 @@ Nginx 默认不允许 Header 中含有下划线，而 Agent 使用 `client_secre
 
 ### 解决方法
 
-#### 1. 允许下划线
+1. **允许下划线**
 
 在 server 块中添加 `underscores_in_headers on;`。
 
-#### 2. 手动发送 Header
+2. **手动发送 Header**
 
 在 server 块中添加 `ignore_invalid_headers off;`，之后在 gRPC 反代选项中加入：
 
