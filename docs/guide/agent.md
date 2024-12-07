@@ -484,3 +484,9 @@ OpenWrt 是轻量级 Linux 系统，需通过手动下载和配置安装 Nezha A
    ```bash
    rm -rf /opt/nezha/agent/
    ```
+
+如果安装了多个服务并想要全部卸载，可以使用 Agent 安装脚本的卸载功能：
+
+```bash
+./agent.sh uninstall
+```
