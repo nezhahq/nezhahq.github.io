@@ -479,7 +479,7 @@ Uninstalling the Agent involves stopping the service, uninstalling it, and remov
    rm -rf /opt/nezha/agent/
    ```
 
-If multiple services are installed and removing all of them would be necessary, The Agent installation script could be used to simplify the process.
+If multiple services are installed and removing all of them would be necessary, the Agent installation script can be used to simplify the process.
 
 ```bash
 ./agent.sh uninstall
