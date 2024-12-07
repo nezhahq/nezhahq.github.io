@@ -445,7 +445,7 @@ OpenWrt is a lightweight Linux distribution. Installing the Nezha Agent on OpenW
 
 ---
     
-### Note
+#### Note
 
 - **Configuration File Path**: Ensure the paths to the configuration files (e.g., `/etc/nezha/config.yml`) are correct in the service scripts.
 - **Service Management**: You can manage the service using the following commands:
@@ -463,3 +463,18 @@ OpenWrt is a lightweight Linux distribution. Installing the Nezha Agent on OpenW
     ```
 - **Log Troubleshooting**: If the Agent fails to start correctly, check relevant logs using `logread` to identify issues.
 </details>
+
+## Uninstalling the Agent
+
+Uninstalling the Agent involves stopping the service, uninstalling it, and removing related files. Below are the steps for Ubuntu:
+
+1. Stop and uninstall the service:
+   ```bash
+   cd /opt/nezha/agent/
+   ./nezha-agent service uninstall
+   ```
+
+2. Remove the Agent folder:
+   ```bash
+   rm -rf /opt/nezha/agent/
+   ```

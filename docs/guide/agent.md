@@ -451,7 +451,7 @@ OpenWrt 是轻量级 Linux 系统，需通过手动下载和配置安装 Nezha A
 
 ---
 
-### 注意事项
+#### 注意事项
 
 - **配置文件路径**：确保脚本中配置文件的路径（如 `/etc/nezha/config.yml`）正确。
 - **服务管理**：可以使用以下命令管理服务：
@@ -469,3 +469,18 @@ OpenWrt 是轻量级 Linux 系统，需通过手动下载和配置安装 Nezha A
     ```
 - **日志排查**：如 Agent 无法正常启动，可通过 `logread` 检查相关日志。
 </details>
+
+## 卸载 Agent
+
+卸载 Agent 包括停止服务、卸载服务，以及删除相关文件。以下是 Ubuntu 系统的卸载步骤：
+
+1. 停止并卸载服务：
+   ```bash
+   cd /opt/nezha/agent/
+   ./nezha-agent service uninstall
+   ```
+
+2. 删除 Agent 文件夹：
+   ```bash
+   rm -rf /opt/nezha/agent/
+   ```
