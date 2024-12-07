@@ -8,7 +8,7 @@ outline: deep
 
 ## Why is the IP displayed in the Dashboard different from the Agent's actual IP?
 
-If the IP displayed in the Dashboard is inconsistent with the Agent's actual IP, please refer to [Dashboard FAQ - Why is the IP shown in the management panel different from the Agent's actual IP?](en_US/guide/dashboardq.html).  
+If the IP displayed in the Dashboard is inconsistent with the Agent's actual IP, please refer to [Dashboard FAQ - Why is the IP shown in the management panel different from the Agent's actual IP?](/en_US/guide/dashboardq.html).  
 Detailed solutions to this issue are provided in the related document and will not be repeated here.
 
 ---
@@ -20,7 +20,7 @@ Detailed solutions to this issue are provided in the related document and will n
 This issue commonly occurs on servers located in Mainland China due to unstable connections to GitHub. Solutions include:
 
 1. **Retry the script multiple times**: Simply rerun the one-click installation script a few more times.  
-2. **Manual Installation**: Follow the guide for [manual Agent installation](en_US/guide/agent.html#alternative-methods-to-install-the-agent).  
+2. **Manual Installation**: Follow the guide for [manual Agent installation](/en_US/guide/agent.html#alternative-methods-to-install-the-agent).  
 3. **Use an acceleration service**: Utilize third-party GitHub acceleration services or mirrors. Replace the download URL in the installation script with the accelerated link.
 
 ---
