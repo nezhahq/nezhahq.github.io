@@ -5,7 +5,7 @@ title: 哪吒监控 - 服务器监控与运维工具
 titleTemplate: 使用文档
 
 hero:
-  name: 哪吒监控
+  name: 哪吒监控 V1
   text: 开源、轻量、易用的服务器监控与运维工具
   image: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
   actions:

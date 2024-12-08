@@ -4,41 +4,63 @@ outline: deep
 
 # Task Management
 
-**In the Tasks section, you can set up scheduled tasks, trigger tasks, and batch execute tasks on multiple servers.**
+**The Task Management section supports scheduling tasks, trigger-based tasks, and bulk execution across multiple servers.**  
+Nezha Monitoring enables pushing commands to Agents for execution, supporting diverse scenarios such as:
+- Periodic backups using `restic` or `rclone`.
+- Scheduled service restarts to reset network connections.
+- Triggered tasks based on alert rules, e.g., running a script when CPU usage remains high for an extended period.
 
-Nezha Monitoring supports pushing commands to Agents for execution. This feature is highly flexible and can be used for regular backups using tools like restic or rclone, periodically restarting a service to reset network connections, or executing a task when an notification is triggered, such as running a script when CPU usage is high for an extended period.
+---
 
 ## How to Use
 
-Go to the "Tasks" page in the admin panel and click "Add Scheduled Task." When adding a scheduled task, you need to fill in the following parameters:
+### Adding a Task
 
-- **Name**: Customize a task name.
+1. **Access the Task Page**  
+   Navigate to the **`Tasks`** page in the management panel and click the **`+`** button to add a new task.
 
-- **Task Type**: Choose the type of task.
-  - **Scheduled Task**: Executes periodically according to the schedule set below.
-  - **Trigger Task**: Only executed when triggered by an API call or notification rule, runs once per trigger.
+2. **Configure Task Parameters**  
+   When adding a task, the following parameters must be configured:
+   - **Name**: Assign a custom name for easy identification and management.
+   - **Task Type**:
+     - **Scheduled Task**: Executes periodically based on the specified schedule.
+     - **Trigger Task**: Executes only when triggered via API or notification rules, running once per trigger.
+   - **Schedule**: Time schedule for task execution (only applies to scheduled tasks).  
+     Format: `second minute hour day month weekday`.  
+     Refer to the [CRON Expression Format](https://pkg.go.dev/github.com/robfig/cron/v3#hdr-CRON_Expression_Format) for details.  
+     Example: `0 0 3 * * *` runs the task daily at 3:00 AM.
+   - **Command**: The command to execute.  
+     - The command format follows standard Shell/Bat scripting. Use `&&` (Linux) or `&` (Windows) to chain multiple commands.
+     - Example: To reboot the server, enter `reboot`.
+   - **Coverage Scope** and **Specific Servers**: Specify which Agents should execute the task:
+     - Select coverage rules or specific servers.
+     - For trigger tasks, choose "Execute on servers triggering the alert."
+   - **Notification Group**: Select a notification method group configured in the **`Notifications`** page. See [Notification Configuration](/en_US/guide/notifications.html#flexible-notification-methods) for details.
 
-- **Schedule**: Set the schedule time (not enable when using trigger task type). The time format is `* * * * * *`, corresponding to `second minute hour day month weekday`. For more details, see [Cron Expression Format](https://pkg.go.dev/github.com/robfig/cron/v3#hdr-CRON_Expression_Format).  
-For example: `0 0 3 * * *` means "3 AM every day."
+3. **Submit Task**  
+   After completing the configuration, click **`Submit`** to save the task.
 
-- **Command**: Set the command to execute, similar to writing Shell/Bat scripts, but it's recommended not to use new lines; connect multiple commands with `&&` or `&`.  
-For example, to schedule a reboot, you can enter `reboot` here.
-
-- **Coverage** and **Specific Servers**: Select rules to determine which Agents execute the scheduled task, similar to the settings on the "Services" page. When using the trigger task type, you can choose "executed by the triggered server."
-
-- **Notification Group**: Choose the notification methods you have set up on the "Notifications" page. [Click here](/en_US/guide/notifications.html#flexible-notification-methods) for more details.
-
-- **Send Success Notification**: Check this option to trigger a notification upon successful task execution.
+---
 
 ## Managing Tasks
 
-To manage existing scheduled tasks, go to the "Tasks" page in the admin panel. For each task configuration, the three icons on the right are:
+To manage existing tasks:
+1. Go to the **`Tasks`** page and locate the desired task.
+2. Use the icons on the right:
+   - **Execute Immediately**: Bypasses the schedule and executes the task instantly.
+   - **Edit**: Modify the task configuration.
+   - **Delete**: Remove the task.
 
-- **Execute Immediately**: Click to ignore the scheduled time and execute the task immediately.
-- **Edit**: Click to modify the task configuration.
-- **Delete**: Delete the scheduled task.
+---
 
-## Frequently Asked Questions
+## Common Issues
 
-1. **Command not found error**  
-   If a command fails to run with a "command not found" error, it may be a PATH environment variable issue. On Linux servers, you can add `source ~/.bashrc` at the beginning of the command or use the absolute path to execute the command.
+### 1. **Command Not Found**
+
+- If execution fails with a "command not found" error, it is usually due to the PATH environment variable not being properly loaded.
+- **Solution**:
+  - In Linux, prepend the command with `source ~/.bashrc`:
+    ```bash
+    source ~/.bashrc && your_command
+    ```
+  - Alternatively, use the command's absolute path (e.g., `/usr/bin/command`).

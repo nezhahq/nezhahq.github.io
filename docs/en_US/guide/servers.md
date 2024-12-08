@@ -2,55 +2,117 @@
 outline: deep
 ---
 
-# Server Management
+# Servers
 
-## Introduction
+## Overview
 
-The server section is responsible for managing Agents, forming the most fundamental part of Nezha monitoring and serving as the basis for other functionalities.
+The **Servers** section is responsible for managing Agents, serving as the core foundation for Nezha monitoring and enabling additional functionalities.
 
-## Adding a Server
+---
 
-The first step is to add a server, where you can customize the name, group, sorting, and notes.  
-Servers in the same group will be displayed together in supported themes. Notes will only be visible in the Admin Panel, so there's no need to worry about leaking information.
+## Installation Commands
 
-## Installing the Agent
+Refer to the [Agent Installation Guide](/en_US/guide/agent.html).  
+The recommended approach is **one-click installation**:
+1. Configure the necessary parameters.
+2. Navigate to the servers page in the Dashboard and click the `Installation Command` icon.
+3. Copy the generated installation command and run it on the target server to complete the setup.
 
-Please refer to the previous section on [installing the Agent](/en_US/guide/agent.html).  
-It is recommended to use the one-click installation. After configuring the parameters, click the corresponding system icon in the **one-click installation** column of the server to copy the installation command and execute it on the respective server.
+---
 
-## Forced Update
+## Forced Updates
 
-Agent update-related parameters include `--disable-auto-update` and `--disable-force-update` as described in [Custom Agent Monitoring Projects](/en_US/guide/q7.html).  
-By default, the Agent will update automatically without intervention. However, if the user disables automatic updates, you can select specific servers for a forced update.  
-The forced update will not work if `disable-force-update` is enabled.
+Agent update behavior is controlled by the following parameters:
+- `disable-auto-update`: Disables automatic updates.
+- `disable-force-update`: Disables forced updates.
 
-## Data Columns
+### Default Behavior
+By default, the Agent updates automatically without manual intervention.
 
-* Version: Records the current version of the Agent.
-* Hide from Guests: When true, guests cannot see this server in the Dashboard.
-* Enable DDNS: When true, if the server IP changes, the Dashboard will automatically update the DNS records.
-* DDNS Domain: The DDNS domain configured for this server.
-* Secret: The secret/key used for configuring the Agent, which is used to verify communication between the Agent and the Dashboard.
-* Note: Server notes, visible only after verification.
-* Public Note: Server public notes, visible on the frontend. You can customize frontend theme based on this field; see [Public Note Example](#public-note-example) for details.
-* Installation commands: Click the corresponding system button to copy the command and execute it on the server for an instant installation.
-* Management: Connects to WebShell, modifies server configuration, or deletes the server.
+### Manual Forced Updates
+If automatic updates are disabled, you can manually update the Agent by selecting the target server and executing a **forced update**.  
+**Note**: If the `disable-force-update` parameter is enabled, forced updates will not work.
 
-## WebSSH Terminal
+---
 
-This is WebShell; the feature will not work if `disable-command-execute` is enabled.  
-It is available for both Linux and Windows and supports Ctrl+Shift+V for pasting.  
-If the connection fails, refer to [Real-Time Channel Disconnection/Online Terminal Connection Failure](/en_US/guide/q4.html).
+## Data Column Descriptions
 
-## FM
+The servers page in the Dashboard displays the following fields:
 
-Added in Dashboard v0.19.1 / Agent v0.19.0. A pseudo file manager embedded in WebShell, supports file download/upload, directory navigation and copying current path. Access it by clicking the blue button in the bottom-right corner of the WebShell.
+- **Version**: Displays the current Agent version.
+- **Enable DDNS**: `True` indicates that the Dashboard will automatically update DNS records if the server's IP changes.
+- **Hidden from Guests**: `True` hides the server from guest users in the Dashboard.
+- **Remarks**:
+  - **Private Remarks**: Visible only to authenticated users.
+  - **Public Remarks**: Visible to all users, suitable for displaying general information.
+  - Users can customize remarks based on their needs. Refer to [Public Remarks Configuration](#public-remarks-configuration) for details.
+- **Command Line**: Provides access to WebShell and the File manager. Users can remotely execute commands, manage files, and upload/download files directly through the Dashboard.
 
-## Public Note Example
+---
 
-### ServerStatus Theme Agent Billing Information Display
-<details>
-  <summary>Click to expand/collapse</summary>
+## WebShell
 
-See https://github.com/naiba/nezha/pull/425.
-</details>
+The WebShell feature allows users to remotely access the server's command-line interface through the Dashboard. It supports both Linux and Windows systems.
+- **Quick Commands**: Use `Ctrl+Shift+V` to paste commands.
+- **Restrictions**: If the `disable-command-execute` parameter is enabled, the WebShell feature will be disabled.
+- **Connection Issues**: If you encounter connection problems, refer to the [WebSocket Connection Issues Guide](/en_US/guide/q4.html) for troubleshooting.
+
+---
+
+## Public Remarks Configuration
+
+Nezha monitoring allows users to configure and display custom public information on the Dashboard, such as billing details or traffic information.
+
+---
+
+### Configuration Example
+
+Below is a JSON configuration example for public remarks:
+
+```json
+{
+    "billingDataMod": {
+        "startDate": "2024-12-08T12:58:17.636Z", 
+        "endDate": "2024-12-08T12:58:17.636Z",   
+        "autoRenewal": "1",                     
+        "cycle": "Year",                        
+        "amount": "200EUR"                     
+    },
+    "planDataMod": {
+        "bandwidth": "30Mbps",                  
+        "trafficVol": "1TB/Month",              
+        "trafficType": "2",                    
+        "IPv4": "1",                            
+        "IPv6": "1",                            
+        "networkRoute": "4837",                 
+        "extra": "Einstein"                     
+    }
+}
+```
+
+#### Field Descriptions
+
+1. **Billing Information (`billingDataMod`)**:
+   - **`startDate`**: Start date of the billing period (ISO format).
+   - **`endDate`**: End date of the billing period (ISO format).
+   - **`autoRenewal`**: Automatic renewal status, `1` for enabled.
+   - **`cycle`**: Billing cycle (e.g., `Month`, `Year`).
+   - **`amount`**: Billing amount and currency.
+
+2. **Traffic and Network Configuration (`planDataMod`)**:
+   - **`bandwidth`**: Server bandwidth information.
+   - **`trafficVol`**: Traffic quota and cycle.
+   - **`trafficType`**: Traffic type, `1` for inbound only, `2` for both inbound and outbound.
+   - **`IPv4` / `IPv6`**: Number of supported IPv4 or IPv6 addresses.
+   - **`networkRoute`**: Network route information (e.g., AS4837).
+   - **`extra`**: Additional remarks for custom information.
+
+---
+
+::: tip
+**Use Tools for Easy Configuration**  
+If you're unfamiliar with JSON configuration, you can use a third-party generator to quickly create public remarks:  
+[Public Remarks Generator](https://nezhainfojson.pages.dev/)
+
+Copy the generated JSON into the corresponding public remarks section in the Dashboard and save the changes to display the information on the Dashboard front end.
+:::

@@ -40,7 +40,7 @@ outline: deep
 ## 仪表板服务器域名/IP（无 CDN）
 
 - 此项为使用一键脚本安装 Agent 的必要设置。  
-- 设置内容需为无 CDN 的域名或 IP，例如：`data.example.com`。  
+- 设置内容需为无 CDN 的域名或 IP，例如：`data.example.com:8008`。  
 - 详情请参考 [Agent 安装准备工作](/guide/agent.html#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C)。
 
 ---

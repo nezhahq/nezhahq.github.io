@@ -4,50 +4,73 @@ outline: deep
 
 # Service Monitoring
 
-**The Services section is where you set up monitoring for external websites or servers using Agents.**  
-**Configured service monitors can be viewed on the "Services" page of the homepage, displaying the availability monitoring results for the past 30 days.**
+**The Service section is where you configure Agents to monitor external websites or servers.**  
+Once a service monitor is set up, you can view the availability results from the past 30 days by clicking the **`Service`** icon on the homepage.
+
+---
 
 ## How to Use
 
-To add a new monitor, go to the "Services" page in the Admin dashboard and click "Add Monitor."
+### Add a New Service Monitor
 
-When adding a new service monitor, you need to set the following parameters:
+Follow these steps to add a new service monitor:
 
-- **Name**: Customize a name.
+1. **Access the Admin Panel**  
+   Go to the **`Services`** page and click the **`+`** button to add a new service monitor.
 
-- **Type**: Select a monitor type. Nezha Monitoring currently supports three types: "HTTP-GET," "ICMP-Ping," and "TCP-Ping."
+2. **Configure Parameters**  
+   When adding a monitor, fill in the following details:
+   - **Name**: Give the service a custom name.
+   - **Target**: Set the target based on the monitoring type:
+     - `HTTP GET`: Enter a complete URL (including `http://` or `https://`), e.g., `https://example.com`.  
+       **Note**: If the target URL uses `https://`, Nezha Monitoring will also monitor its SSL certificate. Notifications will be triggered for certificate expiration or changes.
+     - `ICMP Ping`: Enter a domain or IP address (without a port number), e.g., `1.1.1.1` or `example.com`.
+     - `TCP Ping`: Enter a domain or IP address with a port number, e.g., `1.1.1.1:80` or `example.com:22`.
+   - **Type**: Choose the monitoring type (`HTTP GET`, `ICMP Ping`, or `TCP Ping`).
+   - **Display in Services**: Choose whether this monitor is visible to guest users (privacy option).
+   - **Interval**: Set the monitoring interval (in seconds).
+   - **Coverage Scope**: Select a rule to determine which Agents will request the target.
+   - **Specific Servers**: Specify which Agents within the coverage scope will perform the monitoring.
+   - **Notification Group ID**: Choose a pre-configured notification method from the **`Notifications`** page. See [Notification Configuration](/guide/notifications.html#flexible-notification-methods) for details.
+   - **Enable Failure Notification**: Optionally enable notifications for target failures (disabled by default).
 
-- **Target**: Depending on the type you choose, the method for setting the target differs:
-  - `HTTP-GET`: For this type, you should enter a URL as the target, including `http://` or `https://`. **If your target URL is `https://`, the SSL certificate of that URL will also be monitored. Notifications will be triggered when the SSL certificate expires or changes.** Example: https://example.com.
-  - `ICMP-Ping`: For this type, you should enter a domain name or IP without a port number. Example: 1.1.1.1 or example.com.
-  - `TCP-Ping`: For this type, you should enter a domain name or IP with a port number. Example: 1.1.1.1:80 or example.com:22.
+3. **Submit the Monitor**  
+   Click the **`Submit`** button to save the configuration. Wait a few moments, then check the homepage for monitoring results.
 
-- **Request Interval**: Set the interval in seconds at which the Agent requests the target.
+---
 
-- **Coverage**: Select a rule to determine which Agents will request the target.
+## Delay Change Notifications
 
-- **Specific Servers**: Used in conjunction with the coverage scope, select Agents within the rule to exclude.
+Nezha Monitoring tracks and records the latency between Agents and target servers. When significant latency changes occur, notifications can be sent to help monitor network conditions.
 
-- **Notification Group**: Choose the notification methods you have already set up on the "Notification" page. [Click here](/en_US/guide/notifications.html#flexible-notification-methods) for more details.
+- **Enable Delay Notification**: Once enabled, notifications will be sent when latency exceeds the specified range (`Max Latency` or `Min Latency`).
 
-- **Enable Fault Notification**: Choose whether to receive fault notifications for the target as needed. The default is unchecked.
+---
 
-After setting it up, click "Add." Wait a moment and go to the "Services" page on the homepage to view the monitoring results.
+## Trigger Tasks on Notifications
 
-## Latency Change Notification
+To execute specific tasks when a service monitor triggers a notification:
 
-Nezha Monitoring can monitor and record the latency between the Agent and the target server, sending notifications when there are significant changes. This feature helps you monitor if the server's network route has changed.
+1. Check the **`Enable Trigger Tasks`** option.
+2. Configure:
+   - **Tasks on Alarm Trigger**: Select the task to execute when an alarm is triggered.
+   - **Tasks on Recovery**: Select the task to execute when the service returns to normal.
 
-- **Enable Latency Notifications**: When enabled, Notification will be sent if the latency from the Agent to the target server is greater than the `Maximum Latency` or less than the `Minimum Latency`.
+Tasks must be pre-configured in the **`Tasks`** page before using this feature.
 
-## Trigger Tasks on Notification
+---
 
-If you need to execute tasks when service monitoring Notification are triggered, you can check "Enable Trigger Tasks" and select the pre-configured trigger tasks in "Task on Notification" and "Task on Recovery."
+## Network Latency Charts
 
-## Network Latency Chart
+For `TCP-Ping` and `ICMP-Ping` monitoring types, the Dashboard automatically generates network latency charts:
+- Open the details page of the target server and switch to the **`Network`** tab.
+- View historical network latency trends. Data is based on real-time latency statistics between the Agent and the target server.
 
-The TCP-Ping and ICMP-Ping monitoring types set in the Services page will automatically enable the monitoring chart feature. On the "Network" page of the homepage, you can view historical network latency charts. The data in the charts is based on the latency from the Agent to the target server. You can click the Agent's name to toggle the chart display. In the chart, you can uncheck the target server's name to hide or show the corresponding data.
+---
 
-## Managing Monitors
+## Manage Monitors
 
-To manage existing service monitors, go to the "Services" page in the Admin Panel. Select a monitor configuration and click the icons on the right to edit or delete it.
+To edit or delete an existing service monitor:
+1. Go to the **`Services`** page in the management panel.
+2. Locate the desired monitor configuration.
+3. Click the edit or delete icon on the right to modify or remove the monitor.

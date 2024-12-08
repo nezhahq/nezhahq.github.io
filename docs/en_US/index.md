@@ -6,7 +6,7 @@ title: Nezha Monitoring - Server monitoring tool
 titleTemplate: User Manual
 
 hero:
-  name: Nezha Monitoring
+  name: Nezha Monitoring V1
   text: Open-source, lightweight, and easy-to-use server monitoring and operation tool
   image: https://raw.githubusercontent.com/naiba/nezha/master/resource/static/brand.svg
   actions:
