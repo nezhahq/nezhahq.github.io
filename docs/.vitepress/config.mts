@@ -299,7 +299,7 @@ function getDeveloperSidebarEnUS() {
     {
       text: 'Development Manual',
       items: [
-        { text: 'API document', link: '/en_US/developer/api.html' },
+        { text: 'API documentation', link: '/en_US/developer/api.html' },
         { text: 'i18n', link: '/en_US/developer/i18n.html' }
       ]
     }
