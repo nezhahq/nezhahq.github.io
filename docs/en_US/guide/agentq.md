@@ -43,6 +43,18 @@ If the error `sudo: command not found` appears, it means the `sudo` tool is not 
 
 ---
 
+## Multiple Configuration Files Appearing in the Agent Installation Directory, and Multiple Agent Services Installed on the System
+
+This issue occurs because the Agent installation script was run multiple times. The Agent supports installing multiple system services based on different configuration files, so the script does not overwrite the existing installation but instead installs new configurations as separate system services.
+
+You can use the Agent script's uninstall function to remove all configuration files and their associated services:
+
+```bash
+./agent.sh uninstall
+```
+
+---
+
 ## Does the Agent Have a Docker Image?
 
 **The Agent currently does not offer a Docker image.**  
