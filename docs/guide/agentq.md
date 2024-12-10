@@ -40,6 +40,18 @@ outline: deep
 
 ---
 
+## Agent 安装目录出现多个配置文件，系统被安装了多个 Agent 服务
+
+为重复运行 Agent 安装脚本所致。Agent 支持根据不同的配置文件安装多个系统服务，故脚本不会覆盖安装而是会安装新的配置到系统服务。
+
+可以使用 Agent 脚本的卸载功能清除所有配置文件和对应的服务：
+
+```bash
+./agent.sh uninstall
+```
+
+---
+
 ## Agent 有 Docker 镜像吗？
 
 **Agent 目前没有推出 Docker 镜像。**  
