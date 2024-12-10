@@ -299,8 +299,8 @@ function getDeveloperSidebarEnUS() {
     {
       text: 'Development Manual',
       items: [
-        { text: 'Create a new theme', link: '/en_US/developer/theme.html' },
-        { text: 'l10n', link: '/en_US/developer/l10n.html' }
+        { text: 'API document', link: '/en_US/developer/api.html' },
+        { text: 'i18n', link: '/en_US/developer/i18n.html' }
       ]
     }
   ]
