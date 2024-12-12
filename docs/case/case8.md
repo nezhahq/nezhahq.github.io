@@ -1,5 +1,10 @@
 # Serverless 哪吒 Telegram 机器人
 
+贡献者:  
++ [uubulb](https://codeberg.org/uubulb)
+
+项目地址：<https://github.com/swkisdust/plain-nezha-bot>
+
 单用户单面板多语言私聊哪吒 Telegram 机器人，可以在 Cloudflare Workers 上部署。
 
 Inspired by https://github.com/nezhahq/Nezha-Telegram-Bot-V1

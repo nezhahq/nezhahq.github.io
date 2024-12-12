@@ -1,5 +1,10 @@
 # Serverless Telegram Bot for Nezha
 
+Contributor: 
++ [uubulb](https://codeberg.org/uubulb)
+
+Project URL: <https://github.com/swkisdust/plain-nezha-bot>
+
 A single-user, single-instance, multi-language private chat Nezha Telegram bot that can be deployed on Cloudflare Workers.
 
 Inspired by https://github.com/nezhahq/Nezha-Telegram-Bot-V1
