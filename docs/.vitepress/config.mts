@@ -190,7 +190,8 @@ function getGuideSidebarZhCN() {
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
         { text: '启用 GPU 监控', link: '/guide/q9.html' },
-        { text: '真实 IP 请求头', link: '/guide/q12.html' }
+        { text: '真实 IP 请求头', link: '/guide/q12.html' },
+        { text: '初始化用户密码', link: '/guide/q13.html' }
       ]
     },
     {
