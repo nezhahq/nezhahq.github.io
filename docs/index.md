@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 预览
-      link: https://ops.naibahq.com
+      link: https://qio.ng
     - theme: alt
       text: 开始使用 →
       link: /guide/dashboard

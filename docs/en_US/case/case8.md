@@ -16,7 +16,7 @@ Inspired by https://github.com/nezhahq/Nezha-Telegram-Bot-V1
 3. Modify `wrangler.toml` and update the `kv_namespaces` field with your KV information.
 4. Modify `wrangler.toml` under `vars`:
 
-  - `NZ_BASEURL`: Panel address, e.g., `https://ops.naibahq.com`.
+  - `NZ_BASEURL`: Panel address, e.g., `https://qio.ng`.
   - `LANG`: Language, options are `en` and `zh-CN`, default is `en`.
   - `ENDPOINT_PATH`: Route path for receiving Telegram Webhook, e.g., `/endpoint`.
 

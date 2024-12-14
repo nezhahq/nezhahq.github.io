@@ -12,7 +12,7 @@ hero:
   actions:
     - theme: brand
       text: Preview
-      link: https://ops.naibahq.com
+      link: https://qio.ng
     - theme: alt
       text: Get Started →
       link: en_US/guide/dashboard

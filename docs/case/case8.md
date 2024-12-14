@@ -16,7 +16,7 @@ Inspired by https://github.com/nezhahq/Nezha-Telegram-Bot-V1
 3. 修改 `wrangler.toml`，将 `kv_namespaces` 字段改为你创建的 KV 信息。
 4. 修改 `wrangler.toml` 中的 `vars`：
 
-  - `NZ_BASEURL`：面板地址，例如 `https://ops.naibahq.com`。
+  - `NZ_BASEURL`：面板地址，例如 `https://qio.ng`。
   - `LANG`：语言，可选 `en` `zh-CN`，默认为 `en`。
   - `ENDPOINT_PATH`：接收 Telegram Webhook 的路由路径，例如 `/endpoint`。
 
