@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Nezha Mobile - An iOS Client For Nezha Dashboard
 Contributor:
 + [hiDandelion](https://github.com/hiDandelion)

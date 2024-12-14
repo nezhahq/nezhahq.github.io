@@ -209,14 +209,13 @@ function getCaseSidebarZhCN() {
     {
       text: '社区项目',
       items: [
-        { text: '1. 搭建哪吒 Telegram 机器人', link: '/case/case1.html' },
-        { text: '2. 使用 Siri 语音运行快捷指令查询服务器状态', link: '/case/case2.html' },
-        { text: '3. 自建多用户多语言 Telegram 服务器状态查询机器人', link: '/case/case3.html' },
-        { text: '4. Fake-agent，监控数据作弊器', link: '/case/case4.html' },
-        { text: '5. 使用 Argo 隧道的哪吒服务端', link: '/case/case5.html' },
-        { text: '6. Nezha Mobile - Nezha Dashboard 的 iOS 客户端', link: '/case/case6.html' },
-        { text: '7. Broker for Nezha', link: '/case/case7.html' },
-        { text: '8. Serverless 哪吒 Telegram 机器人', link: '/case/case8.html' }
+        { text: 'Fake-agent，监控数据作弊器', link: '/case/case4.html' },
+        { text: '使用 Argo 隧道的哪吒服务端', link: '/case/case5.html' },
+        { text: 'Nezha Mobile - Nezha Dashboard 的 iOS 客户端', link: '/case/case6.html' },
+        { text: 'MDPings - Nezha Dashboard 的 Android 客户端', link: '/case/case9.html' },
+        { text: 'Broker for Nezha', link: '/case/case7.html' },
+        { text: '适用于哪吒 V1 版本的 Telegram API Bot', link: '/case/case10.html' },
+        { text: 'Serverless 哪吒 Telegram 机器人', link: '/case/case8.html' }
       ]
     }
   ]
@@ -285,14 +284,12 @@ function getCaseSidebarEnUS() {
     {
       text: 'Community Projects',
       items: [
-        { text: '1. Build your own Telegram bot to query server information', link: '/en_US/case/case1.html' },
-        { text: '2. Use Siri to run shortcut to check server status', link: '/en_US/case/case2.html' },
-        { text: '3. Self-hosted, multi-user, multi-lingual server status query Telegram bot', link: '/en_US/case/case3.html' },
-        { text: '4. Fake-agent, monitoring data cheater', link: '/en_US/case/case4.html' },
-        { text: '5. Nezha server over Argo tunnel', link: '/en_US/case/case5.html' },
-        { text: '6. Nezha Mobile - An iOS Client For Nezha Dashboard', link: '/en_US/case/case6.html' },
-        { text: '7. Broker for Nezha', link: '/en_US/case/case7.html' },
-        { text: '8. Serverless Telegram Bot for Nezha', link: '/en_US/case/case8.html' }
+        { text: 'Nezha server over Argo tunnel', link: '/en_US/case/case5.html' },
+        { text: 'Nezha Mobile - An iOS Client For Nezha Dashboard', link: '/en_US/case/case6.html' },
+        { text: 'MDPings - Android Client for Nezha Dashboard', link: '/en_US/case/case9.html' },
+        { text: 'Broker for Nezha', link: '/en_US/case/case7.html' },
+        { text: 'Telegram API Bot for Nezha V1 Version', link: '/en_US/case/case10.html' },
+        { text: 'Serverless Telegram Bot for Nezha', link: '/en_US/case/case8.html' }
       ]
     }
   ]

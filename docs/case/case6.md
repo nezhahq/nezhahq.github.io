@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 # Nezha Mobile - Nezha Dashboard 的 iOS 客户端
 贡献者：
 + [hiDandelion](https://github.com/hiDandelion)

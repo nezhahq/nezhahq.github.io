@@ -1,4 +1,13 @@
+---
+outline: deep
+---
+
 # Broker for Nezha - Advancing on more platforms
+::: info
+
+This project is not yet compatible with the V1 version.
+
+:::
 Contributor: 
 + [uubulb](https://codeberg.org/uubulb)
 

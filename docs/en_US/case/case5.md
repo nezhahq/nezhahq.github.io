@@ -1,5 +1,14 @@
+---
+outline: deep
+---
+
 # Nezha server over Argo tunnel 
 
+::: info
+
+This project is not yet compatible with the V1 version.
+
+:::
 Contributors:
 + [fscarmen](https://github.com/fscarmen2)
 
