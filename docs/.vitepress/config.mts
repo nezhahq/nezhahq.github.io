@@ -190,7 +190,8 @@ function getGuideSidebarZhCN() {
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
         { text: '启用 GPU 监控', link: '/guide/q9.html' },
-        { text: '真实 IP 请求头', link: '/guide/q12.html' }
+        { text: '真实 IP 请求头', link: '/guide/q12.html' },
+        { text: '初始化用户密码', link: '/guide/q13.html' }
       ]
     },
     {
@@ -265,7 +266,8 @@ function getGuideSidebarEnUS() {
         { text: 'Set Monthly Traffic Statistics ResetReset', link: '/en_US/guide/q6.html' },
         { text: 'Custom Agent Monitoring Items', link: '/en_US/guide/q7.html' },
         { text: 'Enable GPU monitoring', link: '/en_US/guide/q9.html' },
-        { text: 'Real IP Request Header', link: '/en_US/guide/q12.html' }
+        { text: 'Real IP Request Header', link: '/en_US/guide/q12.html' },
+        { text: 'Initialize User Password', link: '/en_US/guide/q13.html' }
       ]
     },
     {
