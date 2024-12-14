@@ -14,6 +14,8 @@ If you plan to use a CDN, prepare two domain names:
 - One configured with a CDN for public access. The CDN must support the WebSocket protocol.  
 - Another domain without CDN for communication between the Agent and Dashboard.  
 
+Although V1 no longer differentiates between access and communication ports, preparing two domains is recommended to avoid potential issues caused by specific CDN configurations (not mandatory).
+
 This guide uses "dashboard.example.com" and "data.example.com" as examples.
 :::
 

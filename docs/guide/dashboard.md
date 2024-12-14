@@ -12,7 +12,9 @@ outline: deep
 ::: tip  
 如果你想使用 CDN，请准备两个域名：  
 - 一个配置好 CDN，用作公开访问，CDN 需支持 WebSocket 协议；  
-- 另一个域名不使用 CDN，用作 Agent 与 Dashboard 的通信。  
+- 另一个域名不使用 CDN，用作 Agent 与 Dashboard 的通信。 
+
+尽管 V1 版本不再区分访问端口和通信端口，但由于不同厂商的 CDN 配置可能导致通信异常，仅建议按上述方式准备域名（非强制要求）。 
 
 本文档以 "dashboard.example.com" 和 "data.example.com" 为例。
 :::
