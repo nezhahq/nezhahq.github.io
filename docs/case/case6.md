@@ -19,10 +19,10 @@ App Store版本的Nezha Mobile由于**ICP备案**原因不在**中国大陆**提
 :::
 
 ## TestFlight 测试计划
-[加入 TestFlight 测试](https://testflight.apple.com/join/C6vTc2dN)
+[加入 TestFlight 测试](https://testflight.apple.com/join/6DP2JMXT)
 
 ## 使用说明
-+ 首次使用时你需要输入**Dashboard链接**和**API Token**。**Dashboard链接**形如`server.hidandelion.com`，不要添加协议头和末尾斜杠。**API Token**可通过Dashboard管理后台获取。
++ 首次使用时你需要输入**Dashboard链接**、**用户名**和**密码**。**Dashboard链接**形如`server.hidandelion.com`，不要添加协议头和末尾斜杠。
 <img src="/images/case6/1.png" alt="step1" width="200"/>
 
 ## 配置小组件（可选）
