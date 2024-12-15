@@ -19,10 +19,10 @@ Due to **ICP Filing Policy**, Nezha Mobile is not available in **China mainland*
 :::
 
 ## TestFlight Testing Program
-[Join TestFlight Testing](https://testflight.apple.com/join/C6vTc2dN)
+[Join TestFlight Testing](https://testflight.apple.com/join/6DP2JMXT)
 
 ## Instructions
-+ Enter your Dashboard link like `server.hidandelion.com` and API token on your first use. Do not add a protocol prefix or a trailing slash to the link. API Token can be retrieved from Admin Center of Dashboard.
++ Enter your **Dashboard Link**, **username** and **password** at your first use. **Dashboard Link** looks like `server.hidandelion.com`. Do not add a protocol prefix or a trailing slash to the link. API Token can be retrieved from Admin Center of Dashboard.
 <img src="/images/case6/1_en_US.png" alt="step1" width="200"/>
 
 ## Configure Widget(Optional)
