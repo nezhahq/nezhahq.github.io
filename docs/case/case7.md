@@ -3,11 +3,6 @@ outline: deep
 ---
 
 # Broker for Nezha - 拓展 Nezha 接入平台
-::: info
-
-此项目暂未适配 V1 版本
-
-:::
 贡献者:  
 + [uubulb](https://codeberg.org/uubulb)
 
