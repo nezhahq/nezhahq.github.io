@@ -176,7 +176,8 @@ function getGuideSidebarZhCN() {
         { text: 'DDNS', link: '/guide/ddns.html' },
         { text: '内网穿透', link: '/guide/nat.html' },
         { text: '设置', link: '/guide/settings.html' },
-        { text: '分组', link: '/guide/group.html' }
+        { text: '分组', link: '/guide/group.html' },
+        { text: '多用户', link: '/guide/user.html' }
       ],
     },
     {
