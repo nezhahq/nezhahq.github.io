@@ -32,10 +32,10 @@ outline: deep
 | `#SERVER.MEM#`      | 内存使用率       |
 | `#SERVER.SWAP#`     | 交换分区使用率   |
 | `#SERVER.DISK#`     | 磁盘使用率       |
-| `#SERVER.NETINSPEED#` | 实时上传速度    |
-| `#SERVER.NETOUTSPEED#` | 实时下载速度   |
-| `#SERVER.TRANSFERIN#` | 总上传流量     |
-| `#SERVER.TRANSFEROUT#` | 总下载流量    |
+| `#SERVER.NETINSPEED#` | 实时入站网速    |
+| `#SERVER.NETOUTSPEED#` | 实时出站网速   |
+| `#SERVER.TRANSFERIN#` | 总入站流量     |
+| `#SERVER.TRANSFEROUT#` | 总出站流量    |
 | `#SERVER.LOAD1#`    | 1分钟内负载      |
 | `#SERVER.LOAD5#`    | 5分钟内负载      |
 | `#SERVER.LOAD15#`   | 15分钟内负载     |

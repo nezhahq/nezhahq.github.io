@@ -46,7 +46,7 @@ The servers page in the Dashboard displays the following fields:
   - **Private Remarks**: Visible only to authenticated users.
   - **Public Remarks**: Visible to all users, suitable for displaying general information.
   - Users can customize remarks based on their needs. Refer to [Public Remarks Configuration](#public-remarks-configuration) for details.
-- **Command Line**: Provides access to WebShell and the File manager. Users can remotely execute commands, manage files, and upload/download files directly through the Dashboard.
+- **Command Line**: Provides access to WebShell and the Pseudo File Manager. Users can remotely execute commands, manage files, and upload/download files directly through the Dashboard.
 
 ---
 
@@ -59,13 +59,27 @@ The WebShell feature allows users to remotely access the server's command-line i
 
 ---
 
-## Public Remarks Configuration
+## Pseudo File Manager
 
-Nezha monitoring allows users to configure and display custom public information on the Dashboard, such as billing details or traffic information.
+::: info
+
+Only support *nix systems.
+
+:::
+
+Provides a file manager-like interface, allowing you to browse files and download or upload files to the current directory.
+
+Supports **Refresh**, **Go to**, and **Copy path** features to integrate seamlessly with the **WebShell**.
 
 ---
 
-### Configuration Example
+## Public Remarks Configuration
+
+Nezha supports configuring custom public information in the Dashboard for frontend customization.
+
+---
+
+### Configuration Example (default theme)
 
 Below is a JSON configuration example for public remarks:
 
