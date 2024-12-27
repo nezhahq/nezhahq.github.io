@@ -42,10 +42,10 @@ The servers page in the Dashboard displays the following fields:
 - **Version**: Displays the current Agent version.
 - **Enable DDNS**: `True` indicates that the Dashboard will automatically update DNS records if the server's IP changes.
 - **Hidden from Guests**: `True` hides the server from guest users in the Dashboard.
-- **Remarks**:
-  - **Private Remarks**: Visible only to authenticated users.
-  - **Public Remarks**: Visible to all users, suitable for displaying general information.
-  - Users can customize remarks based on their needs. Refer to [Public Remarks Configuration](#public-remarks-configuration) for details.
+- **Note**:
+  - **Private Note**: Visible only to authenticated users.
+  - **Public Note**: Visible to all users, suitable for displaying general information.
+  - Users can customize note based on their needs. Refer to [Public Note Configuration](#public-note-configuration) for details.
 - **Command Line**: Provides access to WebShell and the Pseudo File Manager. Users can remotely execute commands, manage files, and upload/download files directly through the Dashboard.
 
 ---
@@ -73,7 +73,7 @@ Supports **Refresh**, **Go to**, and **Copy path** features to integrate seamles
 
 ---
 
-## Public Remarks Configuration
+## Public Note Configuration
 
 Nezha supports configuring custom public information in the Dashboard for frontend customization.
 
@@ -81,7 +81,7 @@ Nezha supports configuring custom public information in the Dashboard for fronte
 
 ### Configuration Example (default theme)
 
-Below is a JSON configuration example for public remarks:
+Below is a JSON configuration example for public note:
 
 ```json
 {
@@ -125,8 +125,8 @@ Below is a JSON configuration example for public remarks:
 
 ::: tip
 **Use Tools for Easy Configuration**  
-If you're unfamiliar with JSON configuration, you can use a third-party generator to quickly create public remarks:  
-[Public Remarks Generator](https://nezhainfojson.pages.dev/)
+If you're unfamiliar with JSON configuration, you can use a third-party generator to quickly create public notes:  
+[Public Note Generator](https://nezhainfojson.pages.dev/)
 
-Copy the generated JSON into the corresponding public remarks section in the Dashboard and save the changes to display the information on the Dashboard front end.
+Copy the generated JSON into the corresponding public note section in the Dashboard and save the changes to display the information on the Dashboard front end.
 :::
