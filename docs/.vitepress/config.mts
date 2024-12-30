@@ -193,7 +193,8 @@ function getGuideSidebarZhCN() {
         { text: '启用 GPU 监控', link: '/guide/q9.html' },
         { text: '自定义 IP 地理位置数据库', link: '/guide/q11.html' },
         { text: '真实 IP 请求头', link: '/guide/q12.html' },
-        { text: '初始化用户密码', link: '/guide/q13.html' }
+        { text: '初始化用户密码', link: '/guide/q13.html' },
+        { text: '设置 OAuth 2.0 绑定', link: '/guide/q14.html' }
       ]
     },
     {
@@ -270,7 +271,8 @@ function getGuideSidebarEnUS() {
         { text: 'Enable GPU monitoring', link: '/en_US/guide/q9.html' },
         { text: 'Customize GeoIP database', link: '/en_US/guide/q11.html' },
         { text: 'Real IP Request Header', link: '/en_US/guide/q12.html' },
-        { text: 'Initialize User Password', link: '/en_US/guide/q13.html' }
+        { text: 'Initialize User Password', link: '/en_US/guide/q13.html' },
+        { text: 'Setting Up OAuth 2.0 Binding', link: '/en_US/guide/q14.html' }
       ]
     },
     {
