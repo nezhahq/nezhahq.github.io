@@ -176,6 +176,7 @@ function getGuideSidebarZhCN() {
         { text: 'DDNS', link: '/guide/ddns.html' },
         { text: '内网穿透', link: '/guide/nat.html' },
         { text: '设置', link: '/guide/settings.html' },
+        { text: '个人信息', link: '/guide/profile.html' },
         { text: '分组', link: '/guide/group.html' },
         { text: '多用户', link: '/guide/user.html' }
       ],
@@ -255,6 +256,7 @@ function getGuideSidebarEnUS() {
         { text: 'DDNS', link: '/en_US/guide/ddns.html' },
         { text: 'NAT traversal', link: '/en_US/guide/nat.html' },
         { text: 'Settings', link: '/en_US/guide/settings.html' },
+        { text: 'Profile', link: '/en_US/guide/profile.html' },
         { text: 'Grouping', link: '/en_US/guide/group.html' },
         { text: 'Multi-User', link: '/en_US/guide/user.html' },
       ]
