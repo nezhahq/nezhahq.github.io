@@ -176,7 +176,9 @@ function getGuideSidebarZhCN() {
         { text: 'DDNS', link: '/guide/ddns.html' },
         { text: '内网穿透', link: '/guide/nat.html' },
         { text: '设置', link: '/guide/settings.html' },
-        { text: '分组', link: '/guide/group.html' }
+        { text: '个人信息', link: '/guide/profile.html' },
+        { text: '分组', link: '/guide/group.html' },
+        { text: '多用户', link: '/guide/user.html' }
       ],
     },
     {
@@ -190,8 +192,10 @@ function getGuideSidebarZhCN() {
         { text: '设置每月重置流量统计', link: '/guide/q6.html' },
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
         { text: '启用 GPU 监控', link: '/guide/q9.html' },
+        { text: '自定义 IP 地理位置数据库', link: '/guide/q11.html' },
         { text: '真实 IP 请求头', link: '/guide/q12.html' },
-        { text: '初始化用户密码', link: '/guide/q13.html' }
+        { text: '初始化用户密码', link: '/guide/q13.html' },
+        { text: '设置 OAuth 2.0 绑定', link: '/guide/q14.html' }
       ]
     },
     {
@@ -252,7 +256,9 @@ function getGuideSidebarEnUS() {
         { text: 'DDNS', link: '/en_US/guide/ddns.html' },
         { text: 'NAT traversal', link: '/en_US/guide/nat.html' },
         { text: 'Settings', link: '/en_US/guide/settings.html' },
-        { text: 'Grouping', link: '/en_US/guide/group.html' }
+        { text: 'Profile', link: '/en_US/guide/profile.html' },
+        { text: 'Grouping', link: '/en_US/guide/group.html' },
+        { text: 'Multi-User', link: '/en_US/guide/user.html' },
       ]
     },
     {
@@ -265,8 +271,10 @@ function getGuideSidebarEnUS() {
         { text: 'Set Monthly Traffic Statistics ResetReset', link: '/en_US/guide/q6.html' },
         { text: 'Custom Agent Monitoring Items', link: '/en_US/guide/q7.html' },
         { text: 'Enable GPU monitoring', link: '/en_US/guide/q9.html' },
+        { text: 'Customize GeoIP database', link: '/en_US/guide/q11.html' },
         { text: 'Real IP Request Header', link: '/en_US/guide/q12.html' },
-        { text: 'Initialize User Password', link: '/en_US/guide/q13.html' }
+        { text: 'Initialize User Password', link: '/en_US/guide/q13.html' },
+        { text: 'Setting Up OAuth 2.0 Binding', link: '/en_US/guide/q14.html' }
       ]
     },
     {
@@ -284,6 +292,7 @@ function getCaseSidebarEnUS() {
     {
       text: 'Community Projects',
       items: [
+        { text: 'Fake-agent, monitoring data cheater', link: '/en_US/case/case4.html' },
         { text: 'Nezha server over Argo tunnel', link: '/en_US/case/case5.html' },
         { text: 'Nezha Mobile - An iOS Client For Nezha Dashboard', link: '/en_US/case/case6.html' },
         { text: 'MDPings - Android Client for Nezha Dashboard', link: '/en_US/case/case9.html' },

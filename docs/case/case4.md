@@ -4,11 +4,6 @@ outline: deep
 
 # 重磅推荐！一秒拥有宇宙级算力！让你在人前，不！再！自！卑  
 
-::: info
-
-此项目暂未适配 V1 版本 - 仅作纪念
-
-:::
 ---
 ![2](/images/case4/2.png)  
 <br/>
@@ -20,7 +15,7 @@ outline: deep
 <br/>  
 
 来自南京的名老中医 [dysf888](https://github.com/dysf888) 独家秘方！让你**找回男人本色，激情畅享！**  
-安装 [Fake Agent](https://github.com/dysf888/fake-nezha-agent)，可随意修改服务器监测数据的倍数上传到 Dashboard，让你的小鸡 **脱！胎！换！骨！** 让你在 MJJ 面前<span style="font-size: 5">硬</span>起来！  
+安装 [Fake Agent](https://github.com/dysf888/fake-nezha-agent-v1)，可随意修改服务器监测数据的倍数上传到 Dashboard，让你的小鸡 **脱！胎！换！骨！** 让你在 MJJ 面前<span style="font-size: 5">硬</span>起来！  
 
 <br/>  
 

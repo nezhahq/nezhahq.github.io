@@ -24,6 +24,29 @@ Nezha Monitoring supports monitoring server metrics such as load, CPU, memory, d
 
 ---
 
+### Supported Placeholders
+
+| Placeholder            | Description               |
+| ----------------------- | ------------------------- |
+| `#NEZHA#`              | Notification content      |
+| `#SERVER.NAME#`        | Server name               |
+| `#SERVER.IP#`          | Server IP address         |
+| `#SERVER.IPV4#`        | Server IPv4 address       |
+| `#SERVER.IPV6#`        | Server IPv6 address       |
+| `#SERVER.CPU#`         | CPU usage rate            |
+| `#SERVER.MEM#`         | Memory usage rate         |
+| `#SERVER.SWAP#`        | Swap usage rate           |
+| `#SERVER.DISK#`        | Disk usage rate           |
+| `#SERVER.NETINSPEED#`  | Real-time inbound speed    |
+| `#SERVER.NETOUTSPEED#` | Real-time outbound speed  |
+| `#SERVER.TRANSFERIN#`  | Total inbound traffic      |
+| `#SERVER.TRANSFEROUT#` | Total outbound traffic    |
+| `#SERVER.LOAD1#`       | 1-minute load average     |
+| `#SERVER.LOAD5#`       | 5-minute load average     |
+| `#SERVER.LOAD15#`      | 15-minute load average    |
+
+---
+
 ### Bark Example
 
 <details>

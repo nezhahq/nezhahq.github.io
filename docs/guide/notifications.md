@@ -19,6 +19,29 @@ outline: deep
 
 ---
 
+### 支持的占位符
+
+| 占位符              | 含义             |
+| ------------------- | ---------------- |
+| `#NEZHA#`           | 通知内容         |
+| `#SERVER.NAME#`     | 服务器名称       |
+| `#SERVER.IP#`       | 服务器 IP        |
+| `#SERVER.IPV4#`     | 服务器 IPv4 地址 |
+| `#SERVER.IPV6#`     | 服务器 IPv6 地址 |
+| `#SERVER.CPU#`      | CPU 使用率       |
+| `#SERVER.MEM#`      | 内存使用率       |
+| `#SERVER.SWAP#`     | 交换分区使用率   |
+| `#SERVER.DISK#`     | 磁盘使用率       |
+| `#SERVER.NETINSPEED#` | 实时入站网速    |
+| `#SERVER.NETOUTSPEED#` | 实时出站网速   |
+| `#SERVER.TRANSFERIN#` | 总入站流量     |
+| `#SERVER.TRANSFEROUT#` | 总出站流量    |
+| `#SERVER.LOAD1#`    | 1分钟内负载      |
+| `#SERVER.LOAD5#`    | 5分钟内负载      |
+| `#SERVER.LOAD15#`   | 15分钟内负载     |
+
+---
+
 ### Bark 示例
 
 <details>
@@ -237,27 +260,6 @@ outline: deep
 <details>
   <summary>点击展开/收起</summary>
 
-#### 支持的占位符
-
-| 占位符              | 含义             |
-| ------------------- | ---------------- |
-| `#NEZHA#`           | 通知内容         |
-| `#SERVER.NAME#`     | 服务器名称       |
-| `#SERVER.IP#`       | 服务器 IP        |
-| `#SERVER.IPV4#`     | 服务器 IPv4 地址 |
-| `#SERVER.IPV6#`     | 服务器 IPv6 地址 |
-| `#SERVER.CPU#`      | CPU 使用率       |
-| `#SERVER.MEM#`      | 内存使用率       |
-| `#SERVER.SWAP#`     | 交换分区使用率   |
-| `#SERVER.DISK#`     | 磁盘使用率       |
-| `#SERVER.NETINSPEED#` | 实时上传速度    |
-| `#SERVER.NETOUTSPEED#` | 实时下载速度   |
-| `#SERVER.TRANSFERIN#` | 总上传流量     |
-| `#SERVER.TRANSFEROUT#` | 总下载流量    |
-| `#SERVER.LOAD1#`    | 1分钟内负载      |
-| `#SERVER.LOAD5#`    | 5分钟内负载      |
-| `#SERVER.LOAD15#`   | 15分钟内负载     |
-
 #### 配置示例
 
 - **名称**：企业微信群机器人
@@ -456,13 +458,13 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
     ```json
     [
       {
-        "Type": "transfer_out_cycle",
-        "Max": 1099511627776,
-        "Cycle_start": "2022-01-01T00:00:00+08:00",
-        "Cycle_interval": 1,
-        "Cycle_unit": "month",
-        "Cover": 1,
-        "Ignore": {"3": true, "4": true}
+        "type": "transfer_out_cycle",
+        "max": 1099511627776,
+        "cycle_start": "2022-01-01T00:00:00+08:00",
+        "cycle_interval": 1,
+        "cycle_unit": "month",
+        "cover": 1,
+        "ignore": {"3": true, "4": true}
       }
     ]
     ```

@@ -24,8 +24,8 @@ outline: deep
      - `HTTP GET`：输入完整 URL（需包含 `http://` 或 `https://`），例如：`https://example.com`。  
        **注意**：如果目标 URL 使用 `https://`，哪吒监控将同时监控该 URL 的 SSL 证书（如证书到期或变更将触发通知）。
      - `ICMP Ping`：输入域名或 IP 地址（不含端口号），例如：`1.1.1.1` 或 `example.com`。
-     - `TCP Ping`：输入域名或 IP 地址并添加端口号，例如：`1.1.1.1:80` 或 `example.com:22`。
-   - **类型**：选择监控类型（`HTTP GET`、`ICMP Ping` 或 `TCP Ping`）。
+     - `TCPing`：输入域名或 IP 地址并添加端口号，例如：`1.1.1.1:80` 或 `example.com:22`。
+   - **类型**：选择监控类型（`HTTP GET`、`ICMP Ping` 或 `TCPing`）。
    - **服务中显示**：选择是否向游客显示此监控（隐私性选项）。
    - **间隔**：设置监控间隔时间（单位：秒）。
    - **覆盖范围**：选择一条规则来确定哪些 Agent 请求目标。
@@ -60,7 +60,7 @@ outline: deep
 
 ## 网络延迟图表
 
-对于 `TCP-Ping` 和 `ICMP-Ping` 类型的监控，Dashboard 会自动生成网络延迟统计图表：
+对于 `TCPing` 和 `ICMP-Ping` 类型的监控，Dashboard 会自动生成网络延迟统计图表：
 - 进入对应服务器的详情页，切换到 **`网络`** 标签。
 - 查看历史网络延迟变化趋势，数据基于 Agent 到目标服务器的实时延迟统计生成。
 

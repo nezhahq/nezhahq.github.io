@@ -4,7 +4,7 @@ outline: deep
 
 # Settings
 
-**Access the settings page by logging into the Admin panel and clicking on the avatar → `System Settings`.**
+**Access the settings page by logging into the admin dashboard and clicking on the avatar → `System Settings`.**
 
 ---
 
@@ -16,39 +16,47 @@ Customize the title of your site for easier identification and management.
 
 ## Language Settings
 
-Nezha Monitoring currently supports the following languages:
-- Simplified Chinese / 简体中文
-- Traditional Chinese / 繁體中文
-- English
-- Spanish / Español
+Set the software language, mainly affecting notifications and error messages.
 
-We welcome contributions to improve translations or add support for more languages.
+The language of the web interface will also be updated.
 
 ---
 
 ## Custom Code
 
-Add custom styles or scripts to the visitor page, such as changing the logo, adjusting colors, applying beautification code, or adding analytics scripts.
+This option allows you to add custom styles or script code to the web interface, such as modifying the logo, adjusting the color scheme, adding beautification scripts, or tracking scripts.
 
-::: warning  
-- Custom code is only effective on the visitor homepage and **does not apply to the Admin panel**.  
-- To modify the Admin panel, you must manually edit the theme files inside the Docker container.
-:::
+You can also modify the following global variables to use preset custom features directly:
+
+- User Frontend:
+    1. `window.CustomBackgroundImage`: Custom background image.
+    2. `window.CustomMobileBackgroundImage`: Custom mobile background image.
+    3. `window.CustomLogo`: Custom logo. Requires a URL.
+    4. `window.CustomDesc`: Custom description.
+    5. `window.ShowNetTransfer`: Boolean, whether to display network traffic on cards.
+    6. `window.DisableAnimatedMan`: Boolean, enable/disable animated character illustrations.
+    7. `window.CustomIllustration`: Custom illustration, conflicts with `window.DisableAnimatedMan`.
+    8. `window.FixedTopServerName`: Boolean, whether to fix the top server name.
+    9. `window.CustomLinks`: Custom external links, formatted as `[{\"link\":\"https://github.com/hamster1963/nezha-dash\",\"name\":\"GitHub\"}]`.
+    10. `window.ForceTheme`: Force a default color theme, values are "light" or "dark".
+    11. `window.ForceUseSvgFlag`: Boolean, whether to force the use of SVG flags.
+
+- Admin Frontend:
+    1. `window.DisableAnimatedMan`: Boolean, enable/disable animated character illustrations.
 
 ---
 
-## Dashboard Server Domain/IP (Non-CDN)
+## Agent connecting address
 
-- This setting is required for the installation of Agents via the one-click script.  
-- The input must be a domain or IP address **not behind a CDN**, such as `data.example.com:8008`.  
-- For more details, see [Agent Installation Preparation](/guide/agent.html).
+- This is required for installing **Agent** using the installation command.  
+- Set it to the desired Agent connection address, e.g., `data.example.com:8008`.  
+- For more details, refer to [Agent Installation Prerequisites](/en_US/guide/agent.html#prerequisites).
 
 ---
 
-## Frontend Access Password
+## Custom Public DNS Nameservers for DDNS
 
-Set a password to restrict visitors from directly accessing the Dashboard.  
-After setting, users must enter the password to access the homepage.
+Used to query domain SOA records for the DDNS feature. If left blank, the built-in list will be used.
 
 ---
 
@@ -100,5 +108,30 @@ This feature sends a notification when a server's IP address changes. Configure 
 
 ## User Management
 
-This section allows you to add multiple users to the Dashboard.  
-- Adding multiple users facilitates collaborative management.
+This tab allows you to add multiple users to the dashboard.  
+
+For details, refer to [Multi-User](/en_US/guide/user.html).
+
+---
+
+## Online Users
+
+View information about visitors/users currently connected to the frontend, including **IP** and **connection time**, with the ability to manually block users.
+
+---
+
+## Web Application Firewall
+
+View current blocked entries with useful information:
+
+- **IP**: The IP of the blocked user.
+- **Block Identifier**: The identifier for the resource attacked by the blocked user. Typically a user ID, but in special cases:
+  1. Attempting to crack a gRPC connection key;
+  2. Attempting to crack an API token;
+  3. Attempting to log into a nonexistent user;
+  4. Manual blocking (via the "Online Users" page).
+- **Count**: The number of times this block entry has been triggered. Higher counts result in longer block durations.
+- **Block Reason**: The reason for the last block on this entry.
+- **Ban Time**: The time of the last block on this entry.
+
+If the current user is an administrator, they can manually delete block entries.
