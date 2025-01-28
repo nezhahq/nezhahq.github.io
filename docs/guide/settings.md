@@ -22,6 +22,8 @@ outline: deep
 
 ### 自定义代码
 
+请先参考https://nezhadash-docs.vercel.app/custom-code
+
 此项用于在网页界面中添加自定义样式或脚本代码，例如修改 LOGO、调整色调、添加美化代码或统计代码。
 
 也可以修改以下全局变量来直接使用预设的自定义功能：
