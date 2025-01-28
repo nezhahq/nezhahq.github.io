@@ -20,12 +20,30 @@ outline: deep
 
 ---
 
-## 重新对接安装命令/指定Agent的UUID
+## 重新安装并指定 Agent 的 UUID
 
+添加参数 UUID 让新的 Agent 连接后会继承原有的服务器记录和配置。  
 
- 1复制生成的安装命令 对应的服务器的UUID
- 2复制生成的安装命令加上 NZ_UUID=服务器的UUID
- 3注意是否卸载了Agent 避免重复 
+### 操作步骤
+
+1. **复制服务器的 UUID**  
+   进入 Dashboard，找到目标服务器并获取其对应的 UUID。
+
+2. **生成安装命令并添加 UUID**  
+   在生成的安装命令中，添加 `NZ_UUID=服务器的UUID` 参数。这样可以确保 Agent 正确绑定到指定的服务器记录。
+
+3. **确认是否卸载旧 Agent**  
+   如果服务器上已有 Agent，请确保卸载旧的 Agent，避免重复注册或冲突。
+
+### 示例安装命令
+
+以下是一个带有 UUID 参数的完整安装命令示例：
+
+```bash
+curl -L https://raw.githubusercontent.com/nezhahq/scripts/main/agent/install.sh -o agent.sh && chmod +x agent.sh && env NZ_SERVER=dashboard.example.com:8008 NZ_TLS=false NZ_CLIENT_SECRET=EXAMPLE NZ_UUID=your_server_uuid ./agent.sh
+```
+
+将 `your_server_uuid` 替换为目标服务器的实际 UUID。
 
 ---
 
