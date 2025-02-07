@@ -14,6 +14,7 @@ The **Servers** section is responsible for managing Agents, serving as the core 
 
 Refer to the [Agent Installation Guide](/en_US/guide/agent.html).  
 The recommended approach is **one-click installation**:
+
 1. Configure the necessary parameters.
 2. Navigate to the servers page in the Dashboard and click the `Installation Command` icon.
 3. Copy the generated installation command and run it on the target server to complete the setup.
@@ -23,13 +24,16 @@ The recommended approach is **one-click installation**:
 ## Forced Updates
 
 Agent update behavior is controlled by the following parameters:
+
 - `disable-auto-update`: Disables automatic updates.
 - `disable-force-update`: Disables forced updates.
 
 ### Default Behavior
+
 By default, the Agent updates automatically without manual intervention.
 
 ### Manual Forced Updates
+
 If automatic updates are disabled, you can manually update the Agent by selecting the target server and executing a **forced update**.  
 **Note**: If the `disable-force-update` parameter is enabled, forced updates will not work.
 
@@ -53,9 +57,20 @@ The servers page in the Dashboard displays the following fields:
 ## WebShell
 
 The WebShell feature allows users to remotely access the server's command-line interface through the Dashboard. It supports both Linux and Windows systems.
+
 - **Quick Commands**: Use `Ctrl+Shift+V` to paste commands.
 - **Restrictions**: If the `disable-command-execute` parameter is enabled, the WebShell feature will be disabled.
 - **Connection Issues**: If you encounter connection problems, refer to the [WebSocket Connection Issues Guide](/en_US/guide/q4.html) for troubleshooting.
+
+---
+
+## Edit Configuration
+
+You can edit Agent configurations online by clicking the cog icon in the Action column.
+
+If you edit configurations in batch, no existing configuration will be fetched, and you must manually fill in every field.
+
+Agent will apply the new configuration and reload after 10 seconds.
 
 ---
 
@@ -63,7 +78,7 @@ The WebShell feature allows users to remotely access the server's command-line i
 
 ::: info
 
-Only support *nix systems.
+Only support \*nix systems.
 
 :::
 
@@ -85,28 +100,29 @@ Below is a JSON configuration example for public note:
 
 ```json
 {
-    "billingDataMod": {
-        "startDate": "2024-12-08T12:58:17.636Z", 
-        "endDate": "2024-12-08T12:58:17.636Z",   
-        "autoRenewal": "1",                     
-        "cycle": "Year",                        
-        "amount": "200EUR"                     
-    },
-    "planDataMod": {
-        "bandwidth": "30Mbps",                  
-        "trafficVol": "1TB/Month",              
-        "trafficType": "2",                    
-        "IPv4": "1",                            
-        "IPv6": "1",                            
-        "networkRoute": "4837",                 
-        "extra": "Einstein"                     
-    }
+  "billingDataMod": {
+    "startDate": "2024-12-08T12:58:17.636Z",
+    "endDate": "2024-12-08T12:58:17.636Z",
+    "autoRenewal": "1",
+    "cycle": "Year",
+    "amount": "200EUR"
+  },
+  "planDataMod": {
+    "bandwidth": "30Mbps",
+    "trafficVol": "1TB/Month",
+    "trafficType": "2",
+    "IPv4": "1",
+    "IPv6": "1",
+    "networkRoute": "4837",
+    "extra": "Einstein"
+  }
 }
 ```
 
 #### Field Descriptions
 
 1. **Billing Information (`billingDataMod`)**:
+
    - **`startDate`**: Start date of the billing period (ISO format).
    - **`endDate`**: End date of the billing period (ISO format).
    - **`autoRenewal`**: Automatic renewal status, `1` for enabled.
