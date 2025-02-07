@@ -14,6 +14,7 @@ outline: deep
 
 请参考前文 [安装 Agent](/guide/agent.html)。  
 推荐使用**一键安装方式**：
+
 1. 配置好必要的参数。
 2. 在 Dashboard 的服务器页面中点击`安装命令`图标。
 3. 复制生成的安装命令并在对应服务器上运行完成安装。
@@ -23,13 +24,16 @@ outline: deep
 ## 强制更新
 
 Agent 的更新行为由以下两个参数控制：
+
 - `disable-auto-update`：关闭自动更新。
 - `disable-force-update`：禁用强制更新。
 
 ### 默认行为
+
 在默认情况下，Agent 会自动更新，无需手动干预。
 
 ### 手动强制更新
+
 如果用户关闭了自动更新功能，可以通过选择指定服务器并执行**强制更新**操作来更新 Agent。  
 **注意**：当 `disable-force-update` 参数启用时，强制更新功能将失效。
 
@@ -50,9 +54,20 @@ Dashboard 中服务器页面的数据列字段说明：
 
 ---
 
+## 编辑配置
+
+可以点击操作列的齿轮图标编辑对应服务器的 Agent 配置。
+
+如果使用批量编辑，对应 Agent 配置将不会被获取，需要自己手动填写配置项。
+
+成功向服务器发送任务后，Agent 会在 10 秒后应用配置并重载服务。
+
+---
+
 ## 在线终端
 
-在线终端（WebShell）允许用户通过 Dashboard 远程访问服务器的命令行界面，支持 Linux 和 Windows 系统。  
+在线终端（WebShell）允许用户通过 Dashboard 远程访问服务器的命令行界面，支持 Linux 和 Windows 系统。
+
 - **快捷操作**：可使用 `Ctrl+Shift+V` 粘贴命令。
 - **限制说明**：当 `disable-command-execute` 参数启用时，在线终端功能将不可用。
 - **连接问题**：若连接失败，请参考 [Websocket 连接失败](/guide/q4.html) 文档解决。
@@ -65,7 +80,7 @@ Dashboard 中服务器页面的数据列字段说明：
 
 ::: info
 
-此功能仅支持 *nix 系统
+此功能仅支持 \*nix 系统
 
 :::
 
@@ -86,28 +101,29 @@ Dashboard 中服务器页面的数据列字段说明：
 
 ```json
 {
-    "billingDataMod": {
-        "startDate": "2024-12-08T12:58:17.636Z", 
-        "endDate": "2024-12-08T12:58:17.636Z",   
-        "autoRenewal": "1",                     
-        "cycle": "Year",                        
-        "amount": "200EUR"                     
-    },
-    "planDataMod": {
-        "bandwidth": "30Mbps",                  
-        "trafficVol": "1TB/Month",              
-        "trafficType": "2",                    
-        "IPv4": "1",                            
-        "IPv6": "1",                            
-        "networkRoute": "4837",                 
-        "extra": "Einstein"                     
-    }
+  "billingDataMod": {
+    "startDate": "2024-12-08T12:58:17.636Z",
+    "endDate": "2024-12-08T12:58:17.636Z",
+    "autoRenewal": "1",
+    "cycle": "Year",
+    "amount": "200EUR"
+  },
+  "planDataMod": {
+    "bandwidth": "30Mbps",
+    "trafficVol": "1TB/Month",
+    "trafficType": "2",
+    "IPv4": "1",
+    "IPv6": "1",
+    "networkRoute": "4837",
+    "extra": "Einstein"
+  }
 }
 ```
 
 #### 配置字段说明
 
 1. **账单信息 `billingDataMod`**：
+
    - **`startDate`**：账单起始日期（ISO 时间格式）。
    - **`endDate`**：账单结束日期（ISO 时间格式）。
    - **`autoRenewal`**：自动续费状态，`1` 表示启用。

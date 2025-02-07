@@ -222,7 +222,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
 - **Name**: Offline Alert
 - **Rule**:
   ```json
-  [{"Type": "offline", "Duration": 10}]
+  [{"type": "offline", "duration": 10}]
   ```
 - **Enabled**: √
 
@@ -232,8 +232,8 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
 - **Rule**:
   ```json
   [
-    {"Type": "cpu", "Min": 0, "Max": 50, "Duration": 10},
-    {"Type": "memory", "Min": 20, "Max": 0, "Duration": 20}
+    {"type": "cpu", "min": 0, "max": 50, "duration": 10},
+    {"type": "memory", "min": 20, "max": 0, "duration": 20}
   ]
   ```
 - **Enabled**: √
@@ -246,7 +246,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
   - **Name**: Alert for 1, 2
   - **Rule**:
     ```json
-    [{"Type": "offline", "Duration": 600, "Cover": 1, "Ignore": {"1": true, "2": true}}]
+    [{"type": "offline", "duration": 600, "cover": 1, "ignore": {"1": true, "2": true}}]
     ```
   - **Notification Group**: A
   - **Enabled**: √
@@ -255,7 +255,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
   - **Name**: Alert for 3, 4
   - **Rule**:
     ```json
-    [{"Type": "offline", "Duration": 600, "Cover": 1, "Ignore": {"3": true, "4": true}}]
+    [{"type": "offline", "duration": 600, "cover": 1, "ignore": {"3": true, "4": true}}]
     ```
   - **Notification Group**: B
   - **Enabled**: √
