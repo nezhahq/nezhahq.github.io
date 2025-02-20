@@ -90,7 +90,7 @@ Supports **Refresh**, **Go to**, and **Copy path** features to integrate seamles
 
 ## DDNS
 
-After checking the `DDNS` check box, you can fill in the following two fields
+After checking the `DDNS` check box, you can fill in the following two fields:
 
 ### DDNS configuration ID
 
@@ -100,11 +100,11 @@ Please refer to the [DDNS](/guide/ddns.html) document to add a basic configurati
 
 You can use this feature to reuse DDNS configuration files without having to copy the Token multiple times.
 
-This should be a simple json object, you should provide a set of key-value pairs, where the `key` part is the `DDNS configuration ID` wrapped in double quotes, the ID specified here must be specified in the `DDNS configuration ID` field, and the `value` should be an array of domain names. You can provide more than one domain name, and the Settings here will override the default domain name you set in the DDNS Configuration.
+This should be a simple JSON object, you should provide a set of key-value pairs, where the key is the `DDNS configuration ID` wrapped in double quotes, the ID specified here must be specified in the `DDNS configuration ID` field, and the value should be an array of domain names. You can provide more than one domain name, and the Settings here will override the default domain name you set in the DDNS Configuration.
 
 ```json
 {
-  "1":["sub.example.domain"]
+  "1": ["sub.example.domain"]
 }
 ```
 

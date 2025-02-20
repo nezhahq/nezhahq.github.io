@@ -83,7 +83,7 @@ Webhook 支持自定义 HTTP 请求，适用于第三方供应商或其他定制
 | `tencentcloud` | ✅          | ✅               |
 
 
-### cloudflare Token 权限
+### `cloudflare` Token 权限
 
 Token 需要为目标域名分配以下权限:
    `区域.区域:读取`, `区域.DNS:编辑`
