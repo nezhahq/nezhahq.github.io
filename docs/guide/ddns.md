@@ -4,7 +4,7 @@ outline: deep
 
 # DDNS
 
-DDNS 功能适用于使用动态 IP 的服务器。当 Agent 每 10 分钟上报一个新 IP 时，Dashboard 会根据配置自动更新 DNS 记录。
+DDNS 功能适用于使用动态 IP 的服务器。当 Agent 上报一个新 IP 时，Dashboard 会根据配置自动更新 DNS 记录。
 
 ## 为什么使用哪吒监控的 DDNS 功能？
 
