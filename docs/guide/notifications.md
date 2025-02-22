@@ -474,7 +474,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
 ::: tip
 如果对通知配置有疑问，可以使用以下第三方配置生成器简化操作（哪吒监控不对第三方生成器的功能性作任何保证）：
 
-- [Nezha Rule Generator](https://nz.sina.us.kg/)：适用于大多数场景。
+- [Nezha Rule Generator](https://nz-rule-generator.pages.dev/)：适用于大多数场景。
 - [Nezha-Traffic-Alarm-Generator](https://wiziscool.github.io/Nezha-Traffic-Alarm-Generator/)：专注于周期流量通知规则生成。
 
 :::
