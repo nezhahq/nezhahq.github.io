@@ -4,7 +4,7 @@ outline: deep
 
 # DDNS
 
-The DDNS feature is designed for servers using dynamic IP addresses. When an Agent reports a new IP every 10 minutes, the Dashboard automatically updates the DNS records based on your configuration.
+The DDNS feature is designed for servers using dynamic IP addresses. When an Agent server reports a new IP, the Dashboard automatically updates the DNS records based on your configuration.
 
 ## Why Use Nezha's DDNS Feature?
 
