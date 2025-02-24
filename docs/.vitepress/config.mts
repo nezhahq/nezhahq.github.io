@@ -230,6 +230,7 @@ function getDeveloperSidebarZhCN() {
     {
       text: '开发手册',
       items: [
+        { text: '快速开始', link: '/developer/getting-started.html' },
         { text: 'API 文档', link: '/developer/api.html' },
         { text: 'i18n', link: '/developer/i18n.html' }
       ]
