@@ -25,6 +25,8 @@ Nezha Dashboard 提供了丰富的 API 文档，开发者可以基于这些 API 
    ./script/bootstrap.sh
    ```
 
+   脚本执行完成后, 你可以在容器开发环境的 `cmd/dashboard/docs` 目录下找到对应的 API 文档进行开发.
+
 3. **编译代码**  
    如果在编译过程中提示 `admin-dist` 或 `user-dist` 文件夹不存在，可以通过创建空文件夹解决：  
    ```bash
