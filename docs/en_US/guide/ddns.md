@@ -64,11 +64,6 @@ Webhooks allow you to customize HTTP requests for third-party services or other 
 | `#access_id#`    | DDNS Credential 1               |
 | `#access_secret#`| DDNS Credential 2               |
 
-### `cloudflare` Token Permissions
-
-The Token needs to assign the following permissions to the target domain name:
-   `Zone.Zone:Read`, `Zone.DNS:Edit`
-
 ---
 
 ### Oray Webhook Example
@@ -98,6 +93,11 @@ The Token needs to assign the following permissions to the target domain name:
 | `webhook`        | Optional         | Optional              |
 | `cloudflare`     | ❌               | ✅                    |
 | `tencentcloud`   | ✅               | ✅                    |
+
+### `cloudflare` Token Permissions
+
+The Token needs to assign the following permissions to the target domain name:
+   `Zone.Zone:Read`, `Zone.DNS:Edit`
 
 ---
 
