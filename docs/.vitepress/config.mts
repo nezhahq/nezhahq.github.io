@@ -47,6 +47,11 @@ export default defineConfig({
             activeMatch: '^/$|^/guide/'
           },
           {
+            text: '配置指南',
+            link: '/configuration/dashboard.html',
+            activeMatch: '^/configuration/'
+          },
+          {
             text: '社区项目',
             link: '/case/index.html',
             activeMatch: '^/case/'
@@ -60,6 +65,7 @@ export default defineConfig({
         sidebar: {
           '/': getGuideSidebarZhCN(),
           '/guide/': getGuideSidebarZhCN(),
+          '/configuration/': getConfigurationSideBarZhCn(),
           '/case/': getCaseSidebarZhCN(),
           '/developer/': getDeveloperSidebarZhCN(),
         }
@@ -79,12 +85,14 @@ export default defineConfig({
         },
         nav: [
           { text: 'User Guide', link: '/en_US/', activeMatch: '^/en_US/guide/' },
+          { text: 'Configuration Guide', link: '/en_US/configuration/dashboard.html', activeMatch: '^/en_US/configuration/' },
           { text: 'Community Projects', link: '/en_US/case/index.html', activeMatch: '^/en_US/case/' },
           { text: 'Development Manual', link: '/en_US/developer/index.html', activeMatch: '^/en_US/developer/' }
         ],
         sidebar: {
           '/en_US/': getGuideSidebarEnUS(),
           '/en_US/guide/': getGuideSidebarEnUS(),
+          '/en_US/configuration/': getConfigurationSideBarEnUs(),
           '/en_US/case/': getCaseSidebarEnUS(),
           '/en_US/developer/': getDeveloperSidebarEnUS(),
         },
@@ -312,6 +320,31 @@ function getDeveloperSidebarEnUS() {
       items: [
         { text: 'API documentation', link: '/en_US/developer/api.html' },
         { text: 'i18n', link: '/en_US/developer/i18n.html' }
+      ]
+    }
+  ]
+}
+
+
+function getConfigurationSideBarZhCn() {
+  return [
+    {
+      text: '配置指南',
+      items: [
+        { text: '管理面板', link: '/configuration/dashboard.html' },
+        { text: 'Agent', link: '/configuration/agent.html' }
+      ]
+    }
+  ]
+}
+
+function getConfigurationSideBarEnUs() {
+  return [
+    {
+      text: 'Configuration',
+      items: [
+        { text: 'Dashboard', link: '/en_US/configuration/dashboard.html' },
+        { text: 'Agent', link: '/en_US/configuration/agent.html' }
       ]
     }
   ]
