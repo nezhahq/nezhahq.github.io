@@ -93,11 +93,16 @@ Webhooks allow you to customize HTTP requests for third-party services or other 
 | `webhook`        | Optional         | Optional              |
 | `cloudflare`     | ❌               | ✅                    |
 | `tencentcloud`   | ✅               | ✅                    |
+| `he`             | ❌               | ✅                    |
 
 ### `cloudflare` Token Permissions
 
 The Token needs to assign the following permissions to the target domain name:
    `Zone.Zone:Read`, `Zone.DNS:Edit`
+
+### Obtaining Secret for `he`
+
+Provider `he` uses a DDNS key unique to each record as a Secret. Therefore, you must first create the corresponding A/AAAA record, check `Enable entry for dynamic dns`, and then set the new DDNS key in the corresponding DDNS field.
 
 ---
 
