@@ -186,7 +186,7 @@ outline: deep
 
 ---
 
-### 邮件通知示例（使用 SendCloud，贡献者：[@白歌](https://github.com/cantoblanco)）
+### 邮件通知示例（使用 SendCloud，贡献者：[@白歌](https://github.com/cantoblanco)，[@erbanku](https://github.com/erbanku)）
 
 <details>
   <summary>点击展开/收起</summary>
@@ -195,16 +195,22 @@ outline: deep
 
 #### 获取 URL 参数
 
-1. **注册账号**：在 [SendCloud](https://www.sendcloud.net/) 注册并登录。
+1. **注册账号**：
+  - 国内版SendCloud:在 [SendCloud](https://www.sendcloud.net/) 注册并登录。
+  - 国际版SendCloud:在 [SendCloud](https://www.aurorasendcloud.com/) 注册并登录。
 2. **获取 APIUSER 和 APIKEY**：在账号设置中获取。
 3. **设置发件和收件邮箱**：自定义发件邮箱和收件邮箱。
 
 **通知配置：**
 
 - **名称**：邮件通知
-- **URL**：
+- **URL（国内版）**：
   ```
   https://api.sendcloud.net/apiv2/mail/send?apiUser=<APIUSER>&apiKey=<APIKEY>&from=<发件邮箱>&fromName=Nezha&to=<收件邮箱>&subject=Nezha-Notification&html=#NEZHA#
+  ```
+- **URL（国际版）**：
+  ```
+  https://api2.sendcloud.net/api/mail/send?apiUser=<APIUSER>&apiKey=<APIKEY>&from=<发件邮箱>&fromName=Nezha&to=<收件邮箱>&subject=Nezha-Notification&html=#NEZHA#
   ```
 - **请求方式**：`POST`
 - **请求类型**：`JSON`
