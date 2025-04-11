@@ -478,10 +478,10 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
   - **说明**：服务器 3、4 的出站月流量超过 1TB 时触发通知，统计周期从每月 1 号开始。
 
 ::: tip
-如果对通知配置有疑问，可以使用以下第三方配置生成器简化操作（哪吒监控不对第三方生成器的功能性作任何保证）：
+如果对告警规则有疑问，可以使用以下第三方配置生成器简化操作（哪吒监控不对第三方生成器的功能性作任何保证）：
 
 - [Nezha Rule Generator](https://nz-rule-generator.pages.dev/)：适用于大多数场景。
-- [Nezha-Traffic-Alarm-Generator](https://wiziscool.github.io/Nezha-Traffic-Alarm-Generator/)：专注于周期流量通知规则生成。
+- [NEZHA配置生成器](https://nzcfg.pages.dev/)：专注于周期流量通知规则生成（选择上方的“流量监控代码”进入）。
 
 :::
 
