@@ -39,11 +39,16 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
   - When enabled, additional database logs and error logs when some functions do not work properly will be displayed.
   - At the same time, WebSocket same-origin policy will allow connections from loopback addresses.
 
-- ##### **`real_ip_header`**
+- ##### **`web_real_ip_header`**
 
-  - Specifies the real IP request header for the Dashboard, such as `X-Real-Ip`.
+  - Specifies visitor's real IP request header for the Dashboard, such as `X-Real-Ip`.
   - After filling in, the built-in WAF will be automatically enabled, see [Web Application Firewall](/en_US/guide/settings.html#web-application-firewall).
   - If the option value is `NZ::Use-Peer-IP`, WAF will directly use the connection IP, and no longer need the upper-layer application to pass the request header.
+
+- ##### **`agent_real_ip_header`**
+
+  - Specifies Agent's real IP request header for the Dashboard, such as `X-Real-Ip`.
+  - If the option value is `NZ::Use-Peer-IP`, Dashboard will directly use the connection IP, and no longer need the upper-layer application to pass the request header.
 
 - ##### **`user_template / admin_template`**
 
