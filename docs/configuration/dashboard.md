@@ -39,11 +39,16 @@ outline: deep
   - 开启后，会额外显示数据库日志及部分功能未正常工作时的错误日志。
   - 同时 WebSocket 同源策略将允许来自回环地址的连接。
 
-- ##### **`real_ip_header`**
+- ##### **`web_real_ip_header`**
 
-  - 指定 Dashboard 的真实 IP 请求头，例如 `X-Real-Ip`。
+  - 指定访客访问 Dashboard 的真实 IP 请求头，例如 `X-Real-Ip`。
   - 填写之后将会自动启用内置 WAF，详见 [Web 应用防火墙](/guide/settings.html#web-%E5%BA%94%E7%94%A8%E9%98%B2%E7%81%AB%E5%A2%99)。
   - 如果选项值为 `NZ::Use-Peer-IP`，WAF 将会直接使用连接 IP，不再需要上层应用传递请求头。
+
+- ##### **`agent_real_ip_header`**
+
+  - 指定 Agent 连接 Dashboard 的真实 IP 请求头，例如 `X-Real-Ip`。
+  - 如果选项值为 `NZ::Use-Peer-IP`，Dashboard 将会直接使用连接 IP，不再需要上层应用传递请求头。
 
 - ##### **`user_template / admin_template`**
 

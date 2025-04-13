@@ -52,7 +52,7 @@ outline: deep
 
 用于 DDNS 功能查询域名 SOA 记录，如不填则采用内置列表。
 
-### 真实 IP 请求头
+### 前端真实 IP 请求头
 
 - `CF-Connecting-IP` 是一个用于获取访问者真实 IP 的请求头字段。  
 - 当通过 Cloudflare CDN 代理访问 Dashboard 时，启用此功能可以让源服务器正确识别访问者的真实 IP。  
@@ -61,7 +61,7 @@ outline: deep
 
 ::: danger   
 1. **慎重配置 Header**  
-   真实 IP 请求头的配置涉及内置 WAF（Web 应用防火墙）的正常运作。  
+   前端真实 IP 请求头的配置涉及内置 WAF（Web 应用防火墙）的正常运作。  
    如果您不了解 Header 的传递方式，请勿随意修改。错误配置可能导致 IP 被内置 WAF 封禁。  
 
 2. **防止账户爆破攻击**  
@@ -72,6 +72,11 @@ outline: deep
 3. **安全建议**  
    确保您了解 Header 的实际传递机制后再启用此功能，并仔细验证配置结果。
 :::
+
+### Agent 真实 IP 请求头
+
+- `CF-Connecting-IP` 是一个用于获取 Agent 真实 IP 的请求头字段。  
+- 当 Agent 通过 Cloudflare CDN 代理连接 Dashboard 时，启用此功能可以让源服务器正确识别 Agent 的真实 IP。  
 
 ### IP 变更提醒
 

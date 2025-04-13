@@ -201,7 +201,7 @@ function getGuideSidebarZhCN() {
         { text: '自定义 Agent 监控项目', link: '/guide/q7.html' },
         { text: '启用 GPU 监控', link: '/guide/q9.html' },
         { text: '自定义 IP 地理位置数据库', link: '/guide/q11.html' },
-        { text: '真实 IP 请求头', link: '/guide/q12.html' },
+        { text: '前端真实 IP 请求头', link: '/guide/q12.html' },
         { text: '初始化用户密码', link: '/guide/q13.html' },
         { text: '设置 OAuth 2.0 绑定', link: '/guide/q14.html' }
       ]

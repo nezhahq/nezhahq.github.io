@@ -60,7 +60,7 @@ Used to query domain SOA records for the DDNS feature. If left blank, the built-
 
 ---
 
-## Real IP Request Header
+## Frontend Real IP Request Header
 
 - `CF-Connecting-IP` is a header used to identify the visitor's real IP address.  
 - When accessing the Dashboard through a Cloudflare CDN proxy, enabling this feature allows the origin server to correctly recognize the visitor's real IP.  
@@ -68,7 +68,7 @@ Used to query domain SOA records for the DDNS feature. If left blank, the built-
 
 ::: danger   
 1. **Be Careful with Header Configuration**  
-   The Real IP Request Header impacts the proper functioning of the built-in Web Application Firewall (WAF).  
+   The Frontend Real IP Request Header impacts the proper functioning of the built-in Web Application Firewall (WAF).  
    If you are unfamiliar with header handling, avoid modifying this setting. Incorrect configuration may result in the IP being blocked by the WAF.
 
 2. **Prevent Account Brute Force Attacks**  
@@ -79,6 +79,13 @@ Used to query domain SOA records for the DDNS feature. If left blank, the built-
 3. **Security Recommendations**  
    Only enable this feature if you understand the header transmission mechanism. Thoroughly test your configuration after enabling.
 :::
+
+---
+
+## Agent Real IP Request Header
+
+- `CF-Connecting-IP` is a header used to identify the Agent's real IP address.  
+- When Agent connecting the Dashboard through a Cloudflare CDN proxy, enabling this feature allows the origin server to correctly recognize the Agent's real IP.  
 
 ---
 
