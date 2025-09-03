@@ -125,7 +125,7 @@ Alternatively, you can download and extract the Nezha Agent binaries in advance 
    uuid: your_uuid
    ```
    - **Field Descriptions**:
-     - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008`.
+     - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008` `1.1.1.1:8008` `"[2606:4700:4700::1111]:8008"`.
      - `client_secret`: Replace with the `agentsecretkey` from the Dashboard's configuration file, typically located at `/opt/nezha/dashboard/data/config.yaml`.
      - `uuid`: Generate a unique identifier for this Agent using the `uuidgen` command:
        ```bash
@@ -265,7 +265,7 @@ In addition to the one-click script, Windows systems can also install the Agent 
    uuid: your_uuid
    ```
    - **Field Descriptions**:
-     - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008`.
+     - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008` `1.1.1.1:8008` `"[2606:4700:4700::1111]:8008"`.
      - `client_secret`: Replace with the `agentsecretkey` from the Dashboard's configuration file, typically located at `/opt/nezha/dashboard/data/config.yaml`.
      - `uuid`: Generate a unique identifier for this Agent using an online tool.
 2. **Save the File**  
@@ -398,6 +398,11 @@ OpenWrt is a lightweight Linux distribution. Installing the Nezha Agent on OpenW
    use_ipv6_country_code: false
    uuid: your_uuid
    ```
+
+   - **Field Descriptions**:
+     - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008` `1.1.1.1:8008` `"[2606:4700:4700::1111]:8008"`.
+     - `client_secret`: Replace with the `agentsecretkey` from the Dashboard's configuration file, typically located at `/opt/nezha/dashboard/data/config.yaml`.
+     - `uuid`: Generate a unique identifier for this Agent using an online tool.
 
 2. **Save the Configuration File**  
    Ensure the configuration file is saved at `/etc/nezha/config.yml`.
