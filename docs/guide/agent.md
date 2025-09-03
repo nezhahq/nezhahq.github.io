@@ -127,7 +127,7 @@ Agent 二进制文件仓库地址为：<https://github.com/nezhahq/agent/release
    uuid: your_uuid
    ```
    - **字段说明**：
-     - `server`：替换为 Dashboard 地址和端口，如 `data.example.com:8008`。
+     - `server`：替换为 Dashboard 地址和端口，如 `data.example.com:8008` `1.1.1.1:8008` `"[2606:4700:4700::1111]:8008"`。
      - `client_secret`：替换为 Dashboard 配置文件中的 `agentsecretkey`，路径通常为 `/opt/nezha/dashboard/data/config.yaml`。
      - `uuid`：为该 Agent 生成一个唯一标识符，不要与同一个 Dashboard 中其他的 Agent 重复，可使用 `uuidgen` 命令生成：
        ```bash
@@ -269,7 +269,7 @@ Windows 系统除了一键脚本，也可以下载对应的二进制文件并手
    ```
 
    - **字段说明**：
-     - `server`：替换为您的 Dashboard 地址和端口，例如 `data.example.com:8008`。
+     - `server`：替换为您的 Dashboard 地址和端口，例如 `data.example.com:8008` `1.1.1.1:8008` `"[2606:4700:4700::1111]:8008"`。
      - `client_secret`：替换为 Dashboard 的 `agentsecretkey`，通常位于 `/opt/nezha/dashboard/data/config.yaml` 文件中。
      - `uuid`：可以通过在线工具生成。
 
@@ -400,6 +400,11 @@ OpenWrt 是轻量级 Linux 系统，需通过手动下载和配置安装 Nezha A
    use_ipv6_country_code: false
    uuid: your_uuid
    ```
+
+   - **字段说明**：
+     - `server`：替换为您的 Dashboard 地址和端口，例如 `data.example.com:8008` `1.1.1.1:8008` `"[2606:4700:4700::1111]:8008"`。
+     - `client_secret`：替换为 Dashboard 的 `agentsecretkey`，通常位于 `/opt/nezha/dashboard/data/config.yaml` 文件中。
+     - `uuid`：可以通过在线工具生成。
 
 2. **保存配置文件**  
    确保配置文件路径正确：`/etc/nezha/config.yml`。
