@@ -6,6 +6,14 @@ outline: deep
 
 ---
 
+## Wishing Agent connect to the Dashboard with IPv6?
+
+Solutions include:
+1. Replace your Dashboard address and port field, e.g., `"[2606:4700:4700::1111]:8008"`.
+2. Add DNS AAAA record for Dashboard.
+
+---
+
 ## Why is the IP displayed in the Dashboard different from the Agent's actual IP?
 
 If the IP displayed in the Dashboard is inconsistent with the Agent's actual IP, please refer to [Dashboard FAQ - Why is the IP shown in the management panel different from the Agent's actual IP?](/en_US/guide/dashboardq.html).  
