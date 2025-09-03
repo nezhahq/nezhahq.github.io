@@ -6,6 +6,14 @@ outline: deep
 
 ---
 
+## Dashboard 搭建在只有 IPv6 的服务器上 / 使用 IPv6 地址， Agent 该怎么使用 IPv6 连接面板？
+
+解决办法：
+1. 修改`server`字段，例如 `"[2606:4700:4700::1111]:8008"`
+2. 为 Dashboard 使用的域名添加 IPv6 解析（DNS AAAA 记录）
+
+---
+
 ## 后台显示的 IP 和 Agent 实际 IP 不一致？
 
 如果后台显示的 IP 和 Agent 的实际 IP 不一致，请参考 [Dashboard 相关 - 为什么管理面板中显示的 IP 和 Agent 实际 IP 不一致？](/guide/dashboardq.html#为什么管理面板中显示的ip和agent实际ip不一致？)。  
