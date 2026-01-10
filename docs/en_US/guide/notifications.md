@@ -37,8 +37,8 @@ Nezha Monitoring supports monitoring server metrics such as load, CPU, memory, d
 | `#SERVER.MEM#`         | Memory usage rate         |
 | `#SERVER.SWAP#`        | Swap usage rate           |
 | `#SERVER.DISK#`        | Disk usage rate           |
-| `#SERVER.NETINSPEED#`  | Real-time inbound speed    |
-| `#SERVER.NETOUTSPEED#` | Real-time outbound speed  |
+| `#SERVER.SPEEDIN#`     | Real-time inbound speed    |
+| `#SERVER.SPEEDOUT#`    | Real-time outbound speed  |
 | `#SERVER.TRANSFERIN#`  | Total inbound traffic      |
 | `#SERVER.TRANSFEROUT#` | Total outbound traffic    |
 | `#SERVER.LOAD1#`       | 1-minute load average     |
