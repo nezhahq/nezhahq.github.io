@@ -128,6 +128,29 @@ outline: deep
     - `tls_key_path`: TLS 证书私钥路径
     - `insecure_tls`：布尔值，是否关闭证书完整性检查
 
+- ##### **`tsdb`** \*
+  - TSDB (时序数据库) 配置，基于 VictoriaMetrics 存储引擎，用于替代默认的数据库存储服务监控历史和服务器指标数据。
+  - 启用后将自动删除旧的 `service_histories` 数据库表，历史数据不会被迁移。
+  - 如未配置 `data_path`，TSDB 不会启用，服务监控历史将继续使用数据库存储。
+  - 需填写以下字段：
+    - `data_path`：数据存储路径，例如 `data/tsdb`。此项为空则不启用 TSDB
+    - `retention_days`：数据保留天数，默认 `30`
+    - `min_free_disk_space_gb`：最小磁盘剩余空间（GB），低于此值时停止写入，默认 `1`
+    - `max_memory_mb`：最大内存使用量（MB），用于限制缓存，默认 `256`
+    - `write_buffer_size`：写入缓冲区大小，达到此数量后批量写入，默认 `512`
+    - `write_buffer_flush_interval`：写入缓冲区刷新间隔（秒），默认 `5`
+  - 配置示例：
+    ```yaml
+    tsdb:
+      data_path: "data/tsdb"
+      retention_days: 30
+      max_memory_mb: 256
+    ```
+
+- ##### **`memory`** \*
+  - 内存配置。
+  - 需填写以下字段：
+    - `go_mem_limit_mb`：Go 运行时内存限制（MB），`0` 表示不限制
 ---
 
 ## 应用

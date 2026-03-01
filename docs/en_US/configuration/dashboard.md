@@ -128,6 +128,29 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
     - `tls_key_path`: TLS certificate private key path
     - `insecure_tls`: Boolean value, whether to turn off certificate integrity check
 
+- ##### **`tsdb`** \*
+  - TSDB (Time Series Database) configuration, powered by VictoriaMetrics storage engine, used as an alternative to the default database for storing service monitoring history and server metrics.
+  - Once enabled, the legacy `service_histories` database table will be automatically dropped. Historical data will NOT be migrated.
+  - If `data_path` is not configured, TSDB will not be enabled and service monitoring history will continue to use database storage.
+  - The following fields need to be filled in:
+    - `data_path`: Data storage path, e.g. `data/tsdb`. Leave empty to disable TSDB
+    - `retention_days`: Data retention period in days, default `30`
+    - `min_free_disk_space_gb`: Minimum free disk space (GB), stops writing when below this value, default `1`
+    - `max_memory_mb`: Maximum memory usage (MB) for caching, default `256`
+    - `write_buffer_size`: Write buffer size, batch writes when reaching this count, default `512`
+    - `write_buffer_flush_interval`: Write buffer flush interval (seconds), default `5`
+  - Example configuration:
+    ```yaml
+    tsdb:
+      data_path: "data/tsdb"
+      retention_days: 30
+      max_memory_mb: 256
+    ```
+
+- ##### **`memory`** \*
+  - Memory configuration.
+  - The following fields need to be filled in:
+    - `go_mem_limit_mb`: Go runtime memory limit (MB), `0` means no limit
 ---
 
 ## Apply Config
