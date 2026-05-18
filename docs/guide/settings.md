@@ -22,22 +22,39 @@ outline: deep
 
 ### 自定义代码
 
-此项用于在网页界面中添加自定义样式或脚本代码，例如修改 LOGO、调整色调、添加美化代码或统计代码。
+此项用于在网页界面中添加自定义样式或脚本代码，例如修改 Logo、背景图、主题、外链或统计代码。
 
-也可以修改以下全局变量来直接使用预设的自定义功能：
+用户前端会读取以下全局变量。请在自定义代码中通过 `<script>...</script>` 设置；布尔值使用 `true` / `false`，不要写成字符串。
 
-- 用户前端
-    1. `window.CustomBackgroundImage`：自定义背景图
-    2. `window.CustomMobileBackgroundImage`：自定义手机端背景图
-    3. `window.CustomLogo`：自定义 Logo，需要填写 URL。
-    4. `window.CustomDesc`：自定义描述
-    5. `window.ShowNetTransfer`：布尔值，卡片是否显示上下行流量。
-    6. `window.DisableAnimatedMan`：布尔值，开/关动画人物插图
-    7. `window.CustomIllustration` 自定义插图，与 `window.DisableAnimatedMan` 冲突。
-    8. `window.FixedTopServerName`：布尔值，是否固定顶部服务器名称。
-    9. `window.CustomLinks`：自定义外链，需要遵循一定格式，例如`[{\"link\":\"https://github.com/hamster1963/nezha-dash\",\"name\":\"GitHub\"}]`。
-    10. `window.ForceTheme`：强制默认颜色主题，值为 "light" 或 "dark"。
-    11. `window.ForceUseSvgFlag`：布尔值，是否强制使用 SVG 旗帜。
+- `window.CustomBackgroundImage`：桌面端背景图 URL。
+- `window.CustomMobileBackgroundImage`：移动端背景图 URL，未设置时会沿用桌面端背景图。
+- `window.CustomLogo`：Logo 图片 URL。
+- `window.CustomDesc`：首页描述文本。
+- `window.CustomLinks`：自定义外链，值必须是可被 `JSON.parse` 解析的 JSON 字符串，格式为 `[{"name":"GitHub","link":"https://github.com/nezhahq/nezha"}]`。
+- `window.ForceTheme`：强制默认颜色主题，值为 `"light"` 或 `"dark"`。
+- `window.ShowNetTransfer`：是否在服务器卡片显示上下行流量。
+- `window.DisableAnimatedMan`：是否关闭默认动画人物插图。
+- `window.CustomIllustration`：自定义插图 URL。设置后会替换默认插图，通常不需要再启用 `window.DisableAnimatedMan`。
+- `window.FixedTopServerName`：是否固定顶部服务器名称。
+- `window.ForceUseSvgFlag`：是否强制使用 SVG 旗帜。
+- `window.ForceShowServices`：是否默认展开首页服务监控面板。
+- `window.ForceCardInline`：是否在非移动端强制使用服务器横向列表布局；移动端仍会使用卡片布局。
+- `window.ForceShowMap`：是否默认展开首页地图。
+- `window.ForcePeakCutEnabled`：是否默认开启网络图表的峰值裁剪，用于降低突发尖峰对图表可读性的影响。
+
+示例：
+
+```html
+<script>
+  window.CustomLogo = "https://example.com/logo.png";
+  window.CustomDesc = "My Monitor";
+  window.CustomLinks = JSON.stringify([
+    { name: "GitHub", link: "https://github.com/nezhahq/nezha" }
+  ]);
+  window.ForceTheme = "dark";
+  window.ForceShowServices = true;
+</script>
+```
 
 - 管理前端
     1. `window.DisableAnimatedMan`：布尔值，开/关动画人物插图

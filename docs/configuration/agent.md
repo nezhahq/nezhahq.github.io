@@ -15,7 +15,9 @@ Agent 配置文件格式为 YAML。
 - ##### **`client_secret`**
 
   - 用于与 Dashboard 进行安全通信的客户端密钥。
-  - 此参数必须与 Dashboard 中的配置相同，否则 Agent 无法正常与服务器通信。
+  - v1 之后连接密钥与用户绑定。当前前台没有单独的“复制连接密钥”入口，通常应直接使用服务器页面生成的安装命令，或从该命令中的 `NZ_CLIENT_SECRET` 提取。
+  - 管理员如需为其他用户手动配置 Agent，可通过管理接口读取对应用户的 `agent_secret`，不要继续使用配置文件中的全局 `agent_secret_key`。
+  - 此参数填写错误时，Agent 无法通过 Dashboard 鉴权。
 
 - ##### **`debug`**
 
@@ -94,6 +96,10 @@ Agent 配置文件格式为 YAML。
 - ##### **`use_gitee_to_upgrade`**
 
   - 当为 `true` 时使用 Gitee 仓库作为自动更新源，对中国大陆服务器更为友好。
+
+- ##### **`use_atomgit_to_upgrade`**
+
+  - 当为 `true` 时使用 AtomGit 仓库作为自动更新源。通常只需要在默认更新源访问不稳定时启用。
 
 - ##### **`use_ipv6_country_code`**
 

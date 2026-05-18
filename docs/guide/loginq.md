@@ -3,51 +3,26 @@ outline: deep
 ---
 
 # 登录常见问题
-*V0版本，不适用于V1版本*   
 
-## 登录后面板报错
+v1 之后 Dashboard 使用本地账户登录，并支持将本地账户绑定到 OAuth2 第三方账户。旧版 GitHub OAuth 登录问题不再适用于当前登录流程。
 
-### 1. `http: named cookie not present`
+## 忘记管理员密码
 
-可能原因及解决方法：
-1. 清理浏览器的 cookies 后重新登录，或者尝试更换浏览器。
-2. 检查回调地址配置，确保回调地址正确且 **端口与协议一致**。  
-   - 发起请求的地址和回调地址需同域，**协议、端口和域名（或 IP）** 都必须一致。
+请参考 [初始化用户密码](/guide/q13.html)。重置后建议立即登录后台修改为新的强密码。
 
----
+## OAuth2 登录失败
 
-### 2. `lookup xxx`
+请先确认以下配置：
 
-此问题通常由于容器的 DNS 解析失败，可能原因包括 iptables 配置被修改。解决方法：
-1. 重启 Docker 服务：
-   ```bash
-   sudo systemctl restart docker
-   ```
-2. 使用脚本重启面板后查看是否恢复正常。
-3. 如果问题依然存在：
-   - 检查是否有其他工具（如宝塔防火墙）控制了 iptables。
-   - 考虑切换到官方内核，因为某些问题可能与当前内核版本相关。
+1. Dashboard 配置文件中的 `oauth2` 字段使用新版结构，详见 [设置 OAuth 2.0 绑定](/guide/q14.html)。
+2. 第三方平台的 Callback URL 为 `https://你的面板域名/api/v1/oauth2/callback`。
+3. 已先使用本地账户登录，并在个人信息页完成 OAuth2 绑定。
 
----
+如果还没有绑定关系，不能直接使用 OAuth2 登录到本地账户。
 
-### 3. `dial tcp xxx:443 i/o timeout`
+## 登录接口被频繁尝试或误封
 
-此问题通常与网络问题有关。解决方法：
-1. 重启 Docker 服务：
-   ```bash
-   sudo systemctl restart docker
-   ```
-2. 使用脚本重启面板后查看是否恢复正常。
-3. 如果您使用国内服务器并配置了 GitHub 登录方式：
-   - 建议切换到 **Cloudflare Access** 以减少网络干扰。
+v1 引入了 Web 应用防火墙，用于限制登录爆破。若 Dashboard 部署在反向代理或 CDN 后面，请正确配置 [前端真实 IP 请求头](/guide/q12.html)，否则可能因为无法识别真实访问者 IP 而出现误判。
 
----
+如果已经误封，可以使用管理员账户在 **系统设置 → Web 应用防火墙** 中删除对应封禁记录。
 
-### 4. `net/http: TLS handshake timeout`
-
-此问题与网络问题类似，处理方式与上文相同：
-1. 重启 Docker 服务：
-   ```bash
-   sudo systemctl restart docker
-   ```
-2. 使用脚本重启面板后检查是否正常。

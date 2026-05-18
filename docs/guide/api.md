@@ -3,391 +3,392 @@ outline: deep
 ---
 
 # API 接口
-*V0版本，不适用于V1版本*
 
-**哪吒监控支持使用 API 接口查询面板中 Agent 的状态信息** 
+哪吒监控 Dashboard 从 v1 起主要使用 `/api/v1` 路径。接口返回 JSON，适合自定义前端、机器人、自动化脚本和内部运维工具使用。
 
-## 创建 Token
+如果需要完整、随源码同步的接口列表，建议优先使用 Dashboard 内置 Swagger 文档；本页保留常用接口和调用规则，方便快速上手。
 
-哪吒面板的 API 接口允许使用 Token 认证与 Cookies 认证。要新建一个 Token，在进入管理面板后，点击右上角的头像，选择 “API Token”，进入 Token 管理页面。点击 “API Token”，自定义备注后，点击 “添加”。
+---
 
-如需删除一个 Token，请选择相应的 Token，点击右侧的删除图标。
+## 获取完整 API 文档
+
+Dashboard 在调试模式下会挂载 Swagger UI：
+
+1. 编辑 Dashboard 配置文件，开启调试模式：
+
+   ```yaml
+   debug: true
+   ```
+
+2. 重启 Dashboard。
+
+3. 查看 Dashboard 日志中的提示，默认地址类似：
+
+   ```text
+   http://localhost:8008/swagger/index.html
+   ```
+
+如果你是从源码开发，也可以在仓库根目录生成 Swagger 文件：
+
+```shell
+./script/bootstrap.sh
+```
+
+生成结果位于 `cmd/dashboard/docs`。
 
 ::: warning
-Token 是 API 接口的鉴权凭据，它对你的面板的信息安全非常重要，请不要泄漏你的 Token 给他人。
+`debug: true` 会额外暴露调试信息和 Swagger UI，不建议在公网生产环境长期开启。需要线上排查时，建议临时开启，完成后关闭并重启 Dashboard。
 :::
+
+---
 
 ## 认证方式
 
-确保在请求头中包含 `Authorization: Token` 进行身份认证。
+### 登录获取 Token
 
-Token 认证方式：
-``` 
-Request Headers:
-Authorization: Token
+请求：
+
+```http
+POST /api/v1/login
+Content-Type: application/json
 ```
 
-## 使用说明
+请求体：
 
-::: warning
-下面示例中的负数时间戳为（0000-00-00），目前表示 Dashboard 上线后该 Agent 从未汇报过，但不建议用正负性判断状态。
-:::
+```json
+{
+  "username": "admin",
+  "password": "your-password"
+}
+```
 
-::: tip
-**请求方式为 `GET`，返回格式为 `JSON`**
-:::
+成功后返回：
+
+```json
+{
+  "success": true,
+  "data": {
+    "token": "JWT_TOKEN",
+    "expire": "2026-05-18T12:00:00+02:00"
+  }
+}
+```
+
+后续需要登录的接口，在请求头中携带：
+
+```http
+Authorization: Bearer JWT_TOKEN
+```
+
+### 游客可访问接口
+
+部分只读接口支持游客访问，但会受到站点配置和服务器隐藏设置限制：
+
+- 开启 `force_auth` 后，游客不能访问服务器和服务监控数据。
+- 如果服务器启用了“对游客隐藏”，游客不能访问该服务器的数据。
+- 服务历史和服务器指标接口中，游客只能查询 `1d` 周期数据。
+
+---
+
+## 返回格式
+
+普通接口返回：
+
+```json
+{
+  "success": true,
+  "data": {}
+}
+```
+
+失败时通常返回：
+
+```json
+{
+  "success": false,
+  "error": "error message"
+}
+```
+
+带分页的列表接口返回：
+
+```json
+{
+  "success": true,
+  "data": {
+    "value": [],
+    "pagination": {
+      "offset": 0,
+      "limit": 10,
+      "total": 100
+    }
+  }
+}
+```
+
+---
+
+## 常用接口
+
+### 获取系统设置
+
+请求：
+
+```http
+GET /api/v1/setting
+```
+
+说明：
+
+- 可用于读取站点名称、语言、前端模板、OAuth2 提供方、TSDB 是否启用等基础信息。
+- 未登录访问时只返回允许游客读取的配置。
 
 ### 获取服务器列表
 
 请求：
-``` 
-GET /api/v1/server/list?tag= 
-```
-
-参数：
-- `tag`（可选）：ServerTag 是服务器的分组，提供此参数则仅查询该分组中的服务器。
-
-返回示例：
-```json
-{
-    "code": 0,
-    "message": "success",
-    "result": [
-        {
-            "id": 1,
-            "name": "Server1",
-            "tag": "Tag1",
-            "last_active": 1653014667,
-            "ipv4": "1.1.1.1",
-            "ipv6": "",
-            "valid_ip": "1.1.1.1"
-        },
-        {
-            "id": 2,
-            "name": "Server2",
-            "tag": "Tag2",
-            "last_active": -62135596800,
-            "ipv4": "",
-            "ipv6": "",
-            "valid_ip": ""
-        }
-    ]
-}
-```
-
-### 获取服务器详情
-
-请求：
-``` 
-GET /api/v1/server/details?id=&tag= 
-```
-
-参数：
-- `id`（可选）：ServerID，多个 ID 以逗号分隔，提供此参数则查询该 ID 对应的服务器，同时无视 `tag` 参数。
-- `tag`（可选）：ServerTag，提供此参数则仅查询该分组下的服务器。
-
-返回示例：
-```json
-{
-    "code": 0,
-    "message": "success",
-    "result": [
-        {
-            "id": 1,
-            "name": "Server1",
-            "tag": "Tag1",
-            "last_active": 1653015042,
-            "ipv4": "1.1.1.1",
-            "ipv6": "",
-            "valid_ip": "1.1.1.1",
-            "host": {
-                "Platform": "darwin",
-                "PlatformVersion": "12.3.1",
-                "CPU": [
-                    "Apple M1 Pro 1 Physical Core"
-                ],
-                "MemTotal": 17179869184,
-                "DiskTotal": 2473496842240,
-                "SwapTotal": 0,
-                "Arch": "arm64",
-                "Virtualization": "",
-                "BootTime": 1652683962,
-                "CountryCode": "hk",
-                "Version": ""
-            },
-            "status": {
-                "CPU": 17.33,
-                "MemUsed": 14013841408,
-                "SwapUsed": 0,
-                "DiskUsed": 2335048912896,
-                "NetInTransfer": 2710273234,
-                "NetOutTransfer": 695454765,
-                "NetInSpeed": 10806,
-                "NetOutSpeed": 5303,
-                "Uptime": 331080,
-                "Load1": 5.23,
-                "Load5": 4.87,
-                "Load15": 3.99,
-                "TcpConnCount": 195,
-                "UdpConnCount": 70,
-                "ProcessCount": 437
-            }
-        },
-        {
-            "id": 2,
-            "name": "Server2",
-            "tag": "Tag2",
-            "last_active": -62135596800,
-            "ipv4": "",
-            "ipv6": "",
-            "valid_ip": "",
-            "host": {
-                "Platform": "",
-                "PlatformVersion": "",
-                "CPU": null,
-                "MemTotal": 0,
-                "DiskTotal": 0,
-                "SwapTotal": 0,
-                "Arch": "",
-                "Virtualization": "",
-                "BootTime": 0,
-                "CountryCode": "",
-                "Version": ""
-            },
-            "status": {
-                "CPU": 0,
-                "MemUsed": 0,
-                "SwapUsed": 0,
-                "DiskUsed": 0,
-                "NetInTransfer": 0,
-                "NetOutTransfer": 0,
-                "NetInSpeed": 0,
-                "NetOutSpeed": 0,
-                "Uptime": 0,
-                "Load1": 0,
-                "Load5": 0,
-                "Load15": 0,
-                "TcpConnCount": 0,
-                "UdpConnCount": 0,
-                "ProcessCount": 0
-            }
-        }
-    ]
-}
-```
-
-### 获取 ICMP Ping / TCPing 数据
-
-此 API 无需认证。（除限制游客访问的服务器）
-
-请求：
-```
-GET /api/v1/monitor/{id}
-```
-
-参数：
-- `id`（必填）：ServerID，只能是一个正整数。
-
-返回示例：
-```json
-{
-    "code": 0,
-    "message": "success",
-    "result": [
-        {
-            "monitor_id": 1,
-            "server_id": 1,
-            "monitor_name": "Monitor1",
-            "server_name": "Server1",
-            "created_at": [
-                1722142860000,
-                1722142920000
-            ],
-            "avg_delay": [
-                68.2275,
-                70.1129
-            ]
-        },
-        {
-            "monitor_id": 2,
-            "server_id": 1,
-            "monitor_name": "Monitor2",
-            "server_name": "Server1",
-            "created_at": [
-                1722142860000,
-                1722142920000
-            ],
-            "avg_delay": [
-                66.656,
-                68.2153
-            ]
-        },
-        {
-            "monitor_id": 3,
-            "server_id": 1,
-            "monitor_name": "Monitor3",
-            "server_name": "Server1",
-            "created_at": [
-                1722142860000,
-                1722142920000
-            ],
-            "avg_delay": [
-                61.4525,
-                62.342
-            ]
-        }
-    ]
-}
-```
-
-注： `created_at` 和 `avg_delay` 为对应关系。
-
-### 自动注册节点
-
-说明: 用于自动化注册节点的脚本，示例代码详见下文。
-
-参考: [https://github.com/naiba/nezha/pull/472](https://github.com/naiba/nezha/pull/472)
 
 ```http
-POST /api/v1/server/register?simple=1
+GET /api/v1/server
+Authorization: Bearer JWT_TOKEN
 ```
 
-参数:
+说明：
 
-- `simple`:(可选) 指定返回数据的格式。
-    - 当设置为 `simple=1`或者`simple=true` 时，返回的数据仅包含 Token 字符串（如 `8GYwaxYuLfU7zl7ndC`）。
-    - 其他则返回完整的 JSON 对象：`{"code": 200, "message": "Server created successfully","secret": "8GYwaxYuLfU7zl7ndC"}`
+- 返回当前用户有权限管理的服务器列表。
+- 管理员可见所有服务器，普通用户只能看到自己名下的服务器。
+- 如需实时状态流，请使用 `GET /api/v1/ws/server` WebSocket 接口。
 
-请求体 (Payload):
+### 获取服务器实时状态流
 
-你可以设置为空内容(`{}`), 然后nezha面板会使用默认值进行填充
-- `Name`: 默认是节点的IP
-- `Tag`: 默认是 "AutoRegister".
-- `Note`:默认是 "".
-- `HideForGuest`: 默认是 "on".
+请求：
 
-你也可以设置自己的请求参数:
+```http
+GET /api/v1/ws/server
+Authorization: Bearer JWT_TOKEN
+```
+
+说明：
+
+- 返回 WebSocket 数据流，用于实时刷新服务器在线状态和资源占用。
+- 如果站点未开启 `force_auth`，游客也可以连接，但隐藏服务器不会出现在游客数据中。
+
+### 获取服务监控概览
+
+请求：
+
+```http
+GET /api/v1/service
+```
+
+说明：
+
+- 返回服务监控当前状态和周期流量统计。
+- 登录用户可以看到自己有权限查看的数据；游客访问会受到 `force_auth` 和隐藏配置限制。
+
+### 获取服务监控历史
+
+请求：
+
+```http
+GET /api/v1/service/{id}/history?period=1d
+```
+
+参数：
+
+- `id`：服务监控 ID。
+- `period`：查询周期，可选 `1d`、`7d`、`30d`，默认 `1d`。
+
+`1d` 周期使用 30 秒粒度，适合展示最近 24 小时的细粒度曲线；`7d` 和 `30d` 周期会使用更粗的聚合粒度，以减少查询和传输开销。
+
+返回示例：
+
 ```json
 {
-  "Name": "abcd",        // 节点名称
-  "Tag": "",             // 标签，可选
-  "Note": "",            // 备注信息，可选
-  "HideForGuest": "on"   // 是否对访客隐藏
+  "success": true,
+  "data": {
+    "service_id": 1,
+    "service_name": "HTTPS",
+    "servers": [
+      {
+        "server_id": 1,
+        "server_name": "Server 1",
+        "stats": {
+          "avg_delay": 68.2,
+          "up_percent": 99.9,
+          "total_up": 1440,
+          "total_down": 1,
+          "data_points": [
+            {
+              "ts": 1760000000000,
+              "delay": 68.2,
+              "status": 1
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
 ```
+
+::: tip
+如果 Dashboard 未启用 TSDB，服务监控历史会从数据库读取；启用 TSDB 后会从 TSDB 查询。
+:::
+
+### 获取服务器指标历史
+
+请求：
+
+```http
+GET /api/v1/server/{id}/metrics?metric=cpu&period=1d
+```
+
+参数：
+
+- `id`：服务器 ID。
+- `metric`：指标名称，必填。
+- `period`：查询周期，可选 `1d`、`7d`、`30d`，默认 `1d`。
+
+`1d` 周期使用 30 秒粒度，适合展示最近 24 小时的细粒度曲线；`7d` 和 `30d` 周期会使用更粗的聚合粒度，以减少查询和传输开销。
+
+支持的 `metric`：
+
+- `cpu`
+- `memory`
+- `swap`
+- `disk`
+- `net_in_speed`
+- `net_out_speed`
+- `net_in_transfer`
+- `net_out_transfer`
+- `load1`
+- `load5`
+- `load15`
+- `tcp_conn`
+- `udp_conn`
+- `process_count`
+- `temperature`
+- `uptime`
+- `gpu`
+
+返回示例：
+
+```json
+{
+  "success": true,
+  "data": {
+    "server_id": 1,
+    "server_name": "Server 1",
+    "metric": "cpu",
+    "data_points": [
+      {
+        "ts": 1760000000000,
+        "value": 12.34
+      }
+    ]
+  }
+}
+```
+
+::: warning
+该接口依赖 TSDB。未启用 TSDB 时，接口仍会返回成功，但 `data_points` 为空。TSDB 配置详见 [管理面板配置](/configuration/dashboard.html#tsdb)。
+:::
+
+### 获取服务下的服务器
+
+请求：
+
+```http
+GET /api/v1/service/{id}/server
+```
+
+说明：
+
+- 返回某个服务监控关联的服务器列表。
+- 常用于自定义前端展示某个监控项的节点维度状态。
+
+### 获取服务器下的服务监控
+
+请求：
+
+```http
+GET /api/v1/server/{id}/service
+```
+
+说明：
+
+- 返回某台服务器关联的服务监控列表。
+- 常用于服务器详情页展示该服务器参与的 HTTP、TCP、Ping 等监控项。
+
+---
+
+## 管理类接口
+
+管理类接口均需要登录，部分接口还需要管理员权限。常见路径如下：
+
+- 用户和个人资料：`/api/v1/profile`、`/api/v1/user`
+- 服务器：`/api/v1/server`、`/api/v1/server/config`、`/api/v1/batch-move/server`
+- 服务器分组：`/api/v1/server-group`
+- 通知方式：`/api/v1/notification`
+- 通知组：`/api/v1/notification-group`
+- 警报规则：`/api/v1/alert-rule`
+- 服务监控：`/api/v1/service`
+- 定时任务：`/api/v1/cron`
+- DDNS：`/api/v1/ddns`
+- NAT：`/api/v1/nat`
+- 在线终端：`/api/v1/terminal`、`/api/v1/ws/terminal/{id}`
+- 文件管理：`/api/v1/file`、`/api/v1/ws/file/{id}`
+- WAF 和在线用户：`/api/v1/waf`、`/api/v1/online-user`
+- 系统设置和维护：`/api/v1/setting`、`/api/v1/maintenance`
+
+字段、请求体和权限要求请以 Swagger 文档为准。直接写管理类自动化脚本前，建议先在测试环境验证，避免批量修改服务器、通知、任务或用户配置。
+
+---
 
 ## 使用案例
 
-### 获取所有服务器信息
+### 获取服务器列表
 
 ```python
 import requests
 
-url = "http://your-dashboard/api/v1/server/list"
-headers = {
-    "Authorization": "your_token"
-}
+base_url = "https://nezha.example.com"
+token = "JWT_TOKEN"
 
-response = requests.get(url, headers=headers)
-data = response.json()
+response = requests.get(
+    f"{base_url}/api/v1/server",
+    headers={"Authorization": f"Bearer {token}"},
+    timeout=10,
+)
+response.raise_for_status()
 
-for server in data['result']:
-    print(f"Server Name: {server['name']}, Last Active: {server['last_active']}, IP: {server['valid_ip']}")
+payload = response.json()
+if not payload.get("success"):
+    raise RuntimeError(payload.get("error", "unknown error"))
+
+for server in payload["data"]:
+    print(server["id"], server["name"])
 ```
 
-### 获取特定服务器详情
+### 查询 24 小时 CPU 历史
 
 ```python
 import requests
 
-server_id = 1  # 替换为你的服务器ID
-url = f"http://your-dashboard/api/v1/server/details?id={server_id}"
-headers = {
-    "Authorization": "your_token"
-}
+base_url = "https://nezha.example.com"
+server_id = 1
 
-response = requests.get(url, headers=headers)
-data = response.json()
+response = requests.get(
+    f"{base_url}/api/v1/server/{server_id}/metrics",
+    params={"metric": "cpu", "period": "1d"},
+    timeout=10,
+)
+response.raise_for_status()
 
-server = data['result'][0]
-print(f"Server Name: {server['name']}")
-print(f"CPU Usage: {server['status']['CPU']}%")
-print(f"Memory Used: {server['status']['MemUsed']} bytes")
-print(f"Disk Used: {server['status']['DiskUsed']} bytes")
-print(f"Network In Speed: {server['status']['NetInSpeed']} bytes/s")
-print(f"Network Out Speed: {server['status']['NetOutSpeed']} bytes/s")
-```
+payload = response.json()
+if not payload.get("success"):
+    raise RuntimeError(payload.get("error", "unknown error"))
 
-通过以上示例代码，可以轻松获取和处理服务器的状态信息，从而实现自动化监控和管理。
-
-### 自动注册节点
-1. 创建文件 `nezha_register.sh`，将以下内容复制到文件中：
-```bash
-#!/bin/bash
-
-# Exit if NEZHA_TOKEN is not set
-if [ -z "${NEZHA_TOKEN}" ]; then
-    echo "NEZHA_TOKEN is not set. Exiting."
-    exit 0
-fi
-
-# Set default values if variables are not set
-NEZHA_PROBE_ADDRESS="${NEZHA_PROBE_ADDRESS:-probe.example.com}"
-NEZHA_PROBE_PORT="${NEZHA_PROBE_PORT:-5555}"
-NEZHA_DASHBOARD_URL="${NEZHA_DASHBOARD_URL:-https://nezha.example.com}"
-
-NODE_NAME=${NODE_NAME:-$(hostname)}
-
-# Send POST request and capture response and HTTP status code
-response=$(curl -s -o response_body.json -w "%{http_code}" -X POST "${NEZHA_DASHBOARD_URL}/api/v1/server/register?simple=true" \
-  -H "Content-Type: application/json" \
-  -H "Authorization: ${NEZHA_TOKEN}" \
-  -d "{\"Name\": \"${NODE_NAME}\"}")
-
-# Extract HTTP status code and Nezha secret
-HTTP_CODE="$response"
-NEZHA_SECRET=$(cat response_body.json)
-rm -f response_body.json
-
-if [ "$HTTP_CODE" != "200" ]; then
-    echo "Failed to get Nezha Secret. HTTP status code: $HTTP_CODE"
-    exit 1
-fi
-
-# Additional check for NEZHA_SECRET to ensure it's not JSON-formatted (indicating failure)
-if [[ "${NEZHA_SECRET:0:1}" == "{" ]]; then
-    echo "Failed to get Nezha Secret. Received response: ${NEZHA_SECRET}"
-    exit 1
-fi
-
-# Download and execute the install script with cleanup
-curl -fsSL https://raw.githubusercontent.com/nezhahq/scripts/main/install.sh -o nezha.sh && \
-chmod +x nezha.sh || { echo "Failed to download or make the script executable"; exit 1; }
-
-# Clean up nezha.sh on exit
-trap 'rm -f nezha.sh' EXIT
-
-# Run the Nezha agent installation script
-CMD="./nezha.sh install_agent "${NEZHA_PROBE_ADDRESS}" "${NEZHA_PROBE_PORT}" "${NEZHA_SECRET}" --tls"
-
-echo "Run commnad : ${CMD}"
-
-eval $CMD
-```
-2. 为脚本赋予可执行权限： `chmod +x nezha_register.sh`
-3. 从dashboard获取token, 比如为 `POXbxorKJBM8wPMKX8r2PdMblyXvpggB`
-4. 配置环境变量
-```bash
-export NEZHA_TOKEN="POXbxorKJBM8wPMKX8r2PdMblyXvpggB" # 从面板获取
-export NEZHA_PROBE_ADDRESS="your_probe_address"        # 填写探针地址
-export NEZHA_DASHBOARD_URL="https://nezha.example.com" # 修改为你的面板地址
-export NEZHA_PROBE_PORT="5555"                         # 修改为你的探针端口（如有不同）
-```
-5. 运行注册脚本
-```bash
-./nezha_register.sh
-```
-6. 如果脚本成功运行，你会看到类似以下的日志：
-```bash
-Run command: ./nezha.sh install_agent probe.example.com 5555 YOUR_SECRET --tls
+for point in payload["data"]["data_points"]:
+    print(point["ts"], point["value"])
 ```

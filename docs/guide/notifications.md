@@ -14,6 +14,10 @@ outline: deep
   - 当请求类型为 **FORM** 时，使用 `key:value` 的形式，`value` 中可包含占位符，通知时会自动替换。
   - 当请求类型为 **JSON** 时，会进行简单的字符串替换后直接提交到 `URL`。
 - **URL** 中也可包含占位符，请求时会进行字符串替换。
+- **验证 TLS**：开启后，请求 HTTPS 通知地址时会校验证书链和域名；如果通知服务使用自签名证书或内网测试证书，可能需要关闭此项。
+- **跳过检查**：新增或修改通知方式时，Dashboard 默认会先发送一条测试消息。勾选“跳过检查”后会直接保存配置，适合通知服务暂时不可达、但你确认参数正确的场景。
+- **指标单位格式化：** 如果开启“格式化指标单位”，`#SERVER.CPU#`、`#SERVER.MEM#`、`#SERVER.SWAP#`、`#SERVER.DISK#`、`#SERVER.SPEEDIN#`、`#SERVER.SPEEDOUT#`、`#SERVER.TRANSFERIN#`、`#SERVER.TRANSFEROUT#` 会输出带单位的易读值，例如 `12.34 %`、`1.23 GB`、`10.50 MB/s`。如果关闭该选项，这些占位符会保持原始数值，适合对接需要纯数字的 Webhook。
+- **Webhook 目标限制**：通知 URL 仅支持 `http` 和 `https`。出于安全考虑，Dashboard 会拒绝指向本机地址、私有网段、链路本地地址、保留地址、多播地址等非公网目标的通知请求，并且不会自动跟随重定向。需要推送到内网服务时，请先通过公网可访问的中转服务接收通知。
 
 **请参考以下通知方式示例，您也可以根据需求自定义推送方式。**
 
@@ -24,21 +28,35 @@ outline: deep
 | 占位符              | 含义             |
 | ------------------- | ---------------- |
 | `#NEZHA#`           | 通知内容         |
+| `#SERVER.ID#`       | 服务器 ID        |
 | `#SERVER.NAME#`     | 服务器名称       |
 | `#SERVER.IP#`       | 服务器 IP        |
 | `#SERVER.IPV4#`     | 服务器 IPv4 地址 |
 | `#SERVER.IPV6#`     | 服务器 IPv6 地址 |
-| `#SERVER.CPU#`      | CPU 使用率       |
-| `#SERVER.MEM#`      | 内存使用率       |
-| `#SERVER.SWAP#`     | 交换分区使用率   |
-| `#SERVER.DISK#`     | 磁盘使用率       |
-| `#SERVER.SPEEDIN#`  | 实时入站网速    |
-| `#SERVER.SPEEDOUT#` | 实时出站网速   |
-| `#SERVER.TRANSFERIN#` | 总入站流量     |
-| `#SERVER.TRANSFEROUT#` | 总出站流量    |
-| `#SERVER.LOAD1#`    | 1分钟内负载      |
-| `#SERVER.LOAD5#`    | 5分钟内负载      |
-| `#SERVER.LOAD15#`   | 15分钟内负载     |
+| `#SERVER.CPU#`      | CPU 使用率，开启“格式化指标单位”后输出百分比 |
+| `#SERVER.MEM#`      | 内存使用率，开启“格式化指标单位”后输出百分比 |
+| `#SERVER.SWAP#`     | 交换分区使用率，开启“格式化指标单位”后输出百分比 |
+| `#SERVER.DISK#`     | 磁盘使用率，开启“格式化指标单位”后输出百分比 |
+| `#SERVER.SPEEDIN#`  | 实时入站网速，开启“格式化指标单位”后输出 `KB/s`、`MB/s` 等 |
+| `#SERVER.SPEEDOUT#` | 实时出站网速，开启“格式化指标单位”后输出 `KB/s`、`MB/s` 等 |
+| `#SERVER.TRANSFERIN#` | 总入站流量，开启“格式化指标单位”后输出 `KB`、`MB`、`GB` 等 |
+| `#SERVER.TRANSFEROUT#` | 总出站流量，开启“格式化指标单位”后输出 `KB`、`MB`、`GB` 等 |
+| `#SERVER.CPUUSED#`  | CPU 原始数值 |
+| `#SERVER.MEMUSED#`  | 已用内存，单位字节 |
+| `#SERVER.MEMTOTAL#` | 总内存，单位字节 |
+| `#SERVER.SWAPUSED#` | 已用交换分区，单位字节 |
+| `#SERVER.SWAPTOTAL#` | 总交换分区，单位字节 |
+| `#SERVER.DISKUSED#` | 已用磁盘，单位字节 |
+| `#SERVER.DISKTOTAL#` | 总磁盘，单位字节 |
+| `#SERVER.NETINSPEED#` | 入站网速原始值，单位字节/秒 |
+| `#SERVER.NETOUTSPEED#` | 出站网速原始值，单位字节/秒 |
+| `#SERVER.NETINTRANSFER#` | 入站流量原始值，单位字节 |
+| `#SERVER.NETOUTTRANSFER#` | 出站流量原始值，单位字节 |
+| `#SERVER.LOAD1#`    | 1 分钟负载      |
+| `#SERVER.LOAD5#`    | 5 分钟负载      |
+| `#SERVER.LOAD15#`   | 15 分钟负载     |
+| `#SERVER.TCPCONNCOUNT#` | TCP 连接数 |
+| `#SERVER.UDPCONNCOUNT#` | UDP 连接数 |
 
 ---
 
