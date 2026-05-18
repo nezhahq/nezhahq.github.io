@@ -4,141 +4,146 @@ outline: deep
 
 # Settings
 
-**Access the settings page by logging into the admin dashboard and clicking on the avatar → `System Settings`.**
+**After logging in to the admin page, click the avatar → System Settings to open the settings page.**
 
 ---
 
-## Site Name
+## System Configuration
 
-Customize the title of your site for easier identification and management.
+### Site Name
 
----
+Customize the site title here for easier identification and management.
 
-## Language Settings
+### Language Settings
 
 Set the software language, mainly affecting notifications and error messages.
 
-The language of the web interface will also be updated.
+The web interface can also change language in real time.
 
----
+### Custom Code
 
-## Custom Code
+This item is used to add custom styles or scripts to the web interface, such as changing the logo, background image, theme, external links, or analytics code.
 
-This option allows you to add custom styles or script code to the web interface, such as modifying the logo, adjusting the color scheme, adding beautification scripts, or tracking scripts.
+The user frontend reads the following global variables. Set them in custom code with `<script>...</script>`; use `true` / `false` for booleans, not strings.
 
-You can also modify the following global variables to use preset custom features directly:
+- `window.CustomBackgroundImage`: Desktop background image URL.
+- `window.CustomMobileBackgroundImage`: Mobile background image URL. If unset, the desktop background image is used.
+- `window.CustomLogo`: Logo image URL.
+- `window.CustomDesc`: Homepage description text.
+- `window.CustomLinks`: Custom external links. The value must be a JSON string parseable by `JSON.parse`, in the format `[{"name":"GitHub","link":"https://github.com/nezhahq/nezha"}]`.
+- `window.ForceTheme`: Force the default color theme. Value is `"light"` or `"dark"`.
+- `window.ShowNetTransfer`: Whether to show inbound/outbound traffic on server cards.
+- `window.DisableAnimatedMan`: Whether to disable the default animated character illustration.
+- `window.CustomIllustration`: Custom illustration URL. After setting it, it replaces the default illustration, and `window.DisableAnimatedMan` is usually unnecessary.
+- `window.FixedTopServerName`: Whether to pin the top server name.
+- `window.ForceUseSvgFlag`: Whether to force SVG flags.
+- `window.ForceShowServices`: Whether to expand the homepage service monitoring panel by default.
+- `window.ForceCardInline`: Whether to force the horizontal server list layout on non-mobile devices. Mobile devices still use the card layout.
+- `window.ForceShowMap`: Whether to expand the homepage map by default.
+- `window.ForcePeakCutEnabled`: Whether to enable network chart peak clipping by default, reducing the impact of sudden spikes on chart readability.
 
-- User Frontend:
-    1. `window.CustomBackgroundImage`: Custom background image.
-    2. `window.CustomMobileBackgroundImage`: Custom mobile background image.
-    3. `window.CustomLogo`: Custom logo. Requires a URL.
-    4. `window.CustomDesc`: Custom description.
-    5. `window.ShowNetTransfer`: Boolean, whether to display network traffic on cards.
-    6. `window.DisableAnimatedMan`: Boolean, enable/disable animated character illustrations.
-    7. `window.CustomIllustration`: Custom illustration, conflicts with `window.DisableAnimatedMan`.
-    8. `window.FixedTopServerName`: Boolean, whether to fix the top server name.
-    9. `window.CustomLinks`: Custom external links, formatted as `[{\"link\":\"https://github.com/hamster1963/nezha-dash\",\"name\":\"GitHub\"}]`.
-    10. `window.ForceTheme`: Force a default color theme, values are "light" or "dark".
-    11. `window.ForceUseSvgFlag`: Boolean, whether to force the use of SVG flags.
+Example:
 
-- Admin Frontend:
-    1. `window.DisableAnimatedMan`: Boolean, enable/disable animated character illustrations.
+```html
+<script>
+  window.CustomLogo = "https://example.com/logo.png";
+  window.CustomDesc = "My Monitor";
+  window.CustomLinks = JSON.stringify([
+    { name: "GitHub", link: "https://github.com/nezhahq/nezha" }
+  ]);
+  window.ForceTheme = "dark";
+  window.ForceShowServices = true;
+</script>
+```
 
----
+- Admin frontend
+    1. `window.DisableAnimatedMan`: Boolean, turns the animated character illustration on/off.
 
-## Agent connecting address
+### Agent Connecting Address
 
-- This is required for installing **Agent** using the installation command.  
-- Set it to the desired Agent connection address, e.g., `data.example.com:8008`.  
-- For more details, refer to [Agent Installation Prerequisites](/en_US/guide/agent.html#prerequisites).
+- This is required when installing Agents with the one-click script.
+- Set it to the Agent connection address you want to use, for example: `data.example.com:8008`.
+- See [Agent Installation Prerequisites](/en_US/guide/agent.html#prerequisites) for details.
 
----
+### Custom Public DNS Nameservers for DDNS
 
-## Custom Public DNS Nameservers for DDNS
+Used by DDNS to query domain SOA records. If empty, the built-in list is used.
 
-Used to query domain SOA records for the DDNS feature. If left blank, the built-in list will be used.
+### Frontend Real IP Request Header
 
----
+- `CF-Connecting-IP` is a request header used to get the visitor's real IP.
+- When accessing the Dashboard through Cloudflare CDN proxy, enabling this feature lets the origin server identify the visitor's real IP correctly.
+  - **Use**: Security auditing, firewall rules, and logging.
 
-## Frontend Real IP Request Header
+::: danger
+1. **Configure Headers Carefully**
+   Frontend real IP request header configuration affects the built-in WAF (Web Application Firewall).
+   If you do not understand how headers are passed, do not modify this casually. Incorrect configuration may cause IPs to be blocked by the built-in WAF.
 
-- `CF-Connecting-IP` is a header used to identify the visitor's real IP address.  
-- When accessing the Dashboard through a Cloudflare CDN proxy, enabling this feature allows the origin server to correctly recognize the visitor's real IP.  
-  - **Purpose**: Facilitates security audits, firewall rule configuration, and accurate logging.
+2. **Prevent Account Brute Force Attacks**
+   The built-in WAF is designed to prevent local account brute force.
+   - If local accounts have no protection, high-frequency password enumeration attacks may occur, such as 100 password attempts per second.
+   - WAF IP identification depends on correctly configured request headers to block such attacks effectively.
 
-::: danger   
-1. **Be Careful with Header Configuration**  
-   The Frontend Real IP Request Header impacts the proper functioning of the built-in Web Application Firewall (WAF).  
-   If you are unfamiliar with header handling, avoid modifying this setting. Incorrect configuration may result in the IP being blocked by the WAF.
-
-2. **Prevent Account Brute Force Attacks**  
-   The built-in WAF is designed to prevent brute force attacks on local accounts.  
-   - Without protective measures, attackers could attempt high-frequency password enumeration (e.g., 100 attempts per second).  
-   - The WAF relies on accurate IP identification via properly configured headers to block such attacks.
-
-3. **Security Recommendations**  
-   Only enable this feature if you understand the header transmission mechanism. Thoroughly test your configuration after enabling.
+3. **Security Advice**
+   Enable this only after you understand how headers are actually passed, and carefully verify the result.
 :::
 
----
+### Agent Real IP Request Header
 
-## Agent Real IP Request Header
+- `CF-Connecting-IP` is a request header used to get the Agent's real IP.
+- When Agents connect to the Dashboard through Cloudflare CDN proxy, enabling this feature lets the origin server identify the Agent's real IP correctly.
 
-- `CF-Connecting-IP` is a header used to identify the Agent's real IP address.  
-- When Agent connecting the Dashboard through a Cloudflare CDN proxy, enabling this feature allows the origin server to correctly recognize the Agent's real IP.  
+### IP Change Notification
 
----
+This feature sends notifications when a server IP address changes. Configure it as follows:
 
-## IP Change Notification
+#### Configuration Options
 
-This feature sends a notification when a server's IP address changes. Configure it as follows:
+1. **Cover**
+   Select a rule to determine which servers need monitoring.
 
-### Configuration Options
+2. **Specific Servers**
+   Used together with Cover to add exclusions for the selected rule.
 
-1. **Coverage Scope**  
-   Select a rule to determine which servers to monitor for IP changes.
+3. **Send notification to notification group**
+   Select notification methods. Notification methods must be configured in advance on the Notifications page.
 
-2. **Specific Servers**  
-   Use this setting to exclude specific servers from the selected rule.
+4. **Enable**
+   After configuration, check **Enable** to make notifications take effect.
 
-3. **Send Notifications to a Group**  
-   Choose a notification group. (Notification methods must be pre-configured in the `Notifications` page.)
-
-4. **Enable the Feature**  
-   Check the **Enable** option to activate notifications.
-
-5. **Show Full IP Address in Notifications**  
-   By default, IP change notifications mask full IP addresses.  
-   To display full IPs, enable this option.
+5. **Show full IP address in notification**
+   By default, IP change notifications hide the full IP address.
+   Check this option if you need to show the complete IP address.
 
 ---
 
 ## User Management
 
-This tab allows you to add multiple users to the dashboard.  
+This tab allows adding multiple users to the Dashboard.
 
-For details, refer to [Multi-User](/en_US/guide/user.html).
+See [Multi-User](/en_US/guide/user.html) for details.
 
 ---
 
 ## Online Users
 
-View information about visitors/users currently connected to the frontend, including **IP** and **connection time**, with the ability to manually block users.
+View current guests / users connected to the frontend, including **IP** and **connection time**, and manually block users.
 
 ---
 
 ## Web Application Firewall
 
-View current blocked entries with useful information:
+You can view current block entries and related useful information:
 
-- **IP**: The IP of the blocked user.
-- **Block Identifier**: The identifier for the resource attacked by the blocked user. Typically a user ID, but in special cases:
-  1. Attempting to crack a gRPC connection key;
-  2. Attempting to crack an API token;
-  3. Attempting to log into a nonexistent user;
-  4. Manual blocking (via the "Online Users" page).
-- **Count**: The number of times this block entry has been triggered. Higher counts result in longer block durations.
-- **Block Reason**: The reason for the last block on this entry.
-- **Ban Time**: The time of the last block on this entry.
+- **IP**: The blocked user's IP.
+- **Block ID**: The resource identifier the blocked user attempted to attack. Together with IP, it identifies a block entry. Usually this is a user ID, but there are these special cases:
+  1. Attempting to brute force a gRPC connection secret;
+  2. Attempting to brute force an API Token;
+  3. Attempting to log in to a nonexistent user;
+  4. Manual block through the Online Users page.
+- **Count**: Number of times this entry has been blocked. Higher counts result in longer block times.
+- **Reason**: The reason for the latest block on this entry.
+- **Time**: The latest block time for this entry.
 
-If the current user is an administrator, they can manually delete block entries.
+If the current user is an administrator, block entries can be deleted manually.

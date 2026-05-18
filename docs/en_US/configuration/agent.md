@@ -97,6 +97,10 @@ In the admin frontend, you can modify the Agent's configuration and apply it dir
 
   - When set to `true`, uses the Gitee repository as the automatic update source, better suited for servers in mainland China.
 
+- ##### **`use_atomgit_to_upgrade`**
+
+  - When set to `true`, uses the AtomGit repository as the automatic update source. Usually only needed when the default update source is unstable.
+
 - ##### **`use_ipv6_country_code`**
 
   - When set to `true`, forces the use of IPv6 addresses for country code queries (default uses IPv4).

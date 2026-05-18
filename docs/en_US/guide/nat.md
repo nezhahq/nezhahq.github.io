@@ -35,6 +35,7 @@ If using control panels like AApanel or other management tools, ensure the domai
 2. **Add a Tunnel Configuration**  
    Click the **Add** button and provide the following details:
    - **Name**: A custom name for the tunnel, such as `OpenWrt Login Page`.
+   - **Enable**: Controls whether this tunnel configuration takes effect. After disabling it, the Dashboard rejects tunnel requests to the bound domain. This is suitable for temporarily disabling an internal service without deleting the configuration.
    - **Server ID**: The target Agent's ID.
    - **Local Service**: The internal service address to expose, in the format `IP:port` (e.g., `127.0.0.1:80`).
    - **Bound Domain**: The public domain name (e.g., `service-1.example.com`). If the Dashboard uses a non-standard port (e.g., `8008`), include the port in the configuration.

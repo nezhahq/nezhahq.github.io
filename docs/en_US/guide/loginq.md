@@ -2,64 +2,26 @@
 outline: deep
 ---
 
-# FAQ about logging into the Dashboard
+# Login FAQ
 
-## Stuck Page/Connection Refused/Long Response Time After Login Callback
+Since v1, the Dashboard uses local account login and supports binding local accounts to OAuth2 third-party accounts. Legacy GitHub OAuth login issues no longer apply to the current login flow.
 
-These issues can manifest in various ways, but ultimately the browser cannot display correctly after login.
+## Forgot Administrator Password
 
-1. Your server cannot connect to Github/Gitee, which is most common when configuring Github on servers in mainland China. You may try several times or switch to Cloudflare Access.
-2. You have configured the callback address incorrectly. Ensure that your callback address is correct and that both the **port and protocol** are accurate!
-3. An unknown error occurred on the Dashboard. You can use a script to check the logs.
+See [Initialize User Password](/en_US/guide/q13.html). After resetting it, log in to the admin frontend and change it to a new strong password as soon as possible.
 
-::: tip
-What is a protocol?
-In the browser, the string that ends your domain with `://` is the protocol, usually `http` or `https`. Since there may be multiple protocol+domain+port combinations available for accessing the Dashboard in a normal deployment, make sure to choose the most appropriate one as the callback.
-:::   
+## OAuth2 Login Failed
 
-### How to Check if My Callback Address is Wrong?
+Check the following first:
 
-Ensure that the protocol+domain+port displayed in the browser before login and after the callback are consistent.  
-Ensure that your path is `/oauth2/callback`, **all in lowercase**.
+1. The `oauth2` field in the Dashboard configuration uses the new structure. See [Setting Up OAuth 2.0 Binding](/en_US/guide/q14.html).
+2. The Callback URL on the third-party platform is `https://your-dashboard-domain/api/v1/oauth2/callback`.
+3. You have already logged in with a local account and completed OAuth2 binding on the profile page.
 
-## Errors After Logging into the Admin Panel
+If no binding relationship exists yet, OAuth2 cannot directly log in to a local account.
 
-### http: named cookie not present
+## Login Endpoint Is Frequently Tried or Incorrectly Blocked
 
-1. Clear cookies and log in again, or try a different browser.
-2. Check the callback address to ensure it is correct and that both the **port and protocol** are accurate! The address initiating the request must be in the same domain as the callback address, with the port, protocol, and domain (or IP) all matching.
+v1 introduces a Web Application Firewall to limit login brute force attempts. If the Dashboard is deployed behind a reverse proxy or CDN, configure the [Frontend Real IP Request Header](/en_US/guide/q12.html) correctly; otherwise, the Dashboard may misidentify visitor IPs and block incorrectly.
 
-### lookup xxx
-
-The container DNS resolution failed, usually due to modified iptables configurations.  
-It is recommended to restart Docker first, `sudo systemctl restart docker`, then restart the Dashboard using the script.  
-If the lookup error persists, check if there are other tools controlling iptables, such as firewall.  
-This issue might also be related to the kernel, so try switching to the official kernel.
-
-### Invalid authorization method, or the login callback address is invalid, expired, or has been revoked
-
-This issue appears only when using Gitee login, and the reason is unclear. Switching to GitHub is recommended.
-
-### oauth2: server response missing access_token
-
-This could be caused by various factors, most likely a network issue. Check your network and try again.  
-If unresolved, switching to Github or another method is recommended.
-
-### The user is not an admin of this site and cannot log in
-
-You logged in with the wrong account or configured the wrong username. Note that **the username is not an email**, and you can use a script to modify it.  
-For Cloudflare Access users, note that your username is not an email but a User ID.
-
-### dial tcp xxx:443 i/o timeout
-
-This is a network issue. Try restarting Docker first, `sudo systemctl restart docker`, then restart the Dashboard using the script.  
-If you are configuring Github login on a server in mainland China, switching to Cloudflare Access is recommended to avoid network interference.
-
-### net/http: TLS handshake timeout
-
-Same as above.
-
-### Unable to receive email verification codes using Cloudflare Access as an OAuth2 Provider
-
-- Ensure that the email verification policy has been correctly configured in `Policies`.
-- Verify that the email address you provided is correct. Note that email addresses not on the policy whitelist will not receive verification codes.
+If an IP has already been blocked by mistake, use an administrator account to remove the corresponding block record under **System Settings → Web Application Firewall**.

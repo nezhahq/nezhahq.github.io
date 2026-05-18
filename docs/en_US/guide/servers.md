@@ -6,101 +6,147 @@ outline: deep
 
 ## Overview
 
-The **Servers** section is responsible for managing Agents, serving as the core foundation for Nezha monitoring and enabling additional functionalities.
+The servers area manages Agents. It is the most basic functional module of Nezha Monitor and the core foundation for other features.
 
 ---
 
 ## Installation Commands
 
-Refer to the [Agent Installation Guide](/en_US/guide/agent.html).  
-The recommended approach is **one-click installation**:
+See [Install Agent](/en_US/guide/agent.html).
+The **one-click installation method** is recommended:
 
-1. Configure the necessary parameters.
-2. Navigate to the servers page in the Dashboard and click the `Installation Command` icon.
-3. Copy the generated installation command and run it on the target server to complete the setup.
+1. Configure the required parameters.
+2. Click the `Installation Command` icon on the Dashboard server page.
+3. Copy the generated installation command and run it on the corresponding server to complete installation.
 
 ---
 
 ## Forced Updates
 
-Agent update behavior is controlled by the following parameters:
+Agent update behavior is controlled by these two parameters:
 
-- `disable-auto-update`: Disables automatic updates.
-- `disable-force-update`: Disables forced updates.
+- `disable-auto-update`: disables automatic updates.
+- `disable-force-update`: disables forced updates.
 
 ### Default Behavior
 
-By default, the Agent updates automatically without manual intervention.
+By default, Agents update automatically without manual intervention.
 
 ### Manual Forced Updates
 
-If automatic updates are disabled, you can manually update the Agent by selecting the target server and executing a **forced update**.  
-**Note**: If the `disable-force-update` parameter is enabled, forced updates will not work.
+If automatic updates have been disabled, select the target servers and execute **Force Update** to update Agents.
+**Note**: When `disable-force-update` is enabled, the force update function is unavailable.
 
 ---
 
 ## Data Column Descriptions
 
-The servers page in the Dashboard displays the following fields:
+Server page columns in the Dashboard:
 
-- **Version**: Displays the current Agent version.
-- **Enable DDNS**: `True` indicates that the Dashboard will automatically update DNS records if the server's IP changes.
-- **Hidden from Guests**: `True` hides the server from guest users in the Dashboard.
+- **Version**: Shows the current Agent version.
+- **Enable DDNS**: When `True`, the Dashboard automatically updates DNS records when the server IP changes.
+- **Hide for Guests**: When `True`, this server is hidden from guests in the panel.
 - **Note**:
   - **Private Note**: Visible only to authenticated users.
-  - **Public Note**: Visible to all users, suitable for displaying general information.
-  - Users can customize note based on their needs. Refer to [Public Note Configuration](#public-note-configuration) for details.
-- **Command Line**: Provides access to WebShell and the Pseudo File Manager. Users can remotely execute commands, manage files, and upload/download files directly through the Dashboard.
-
----
-
-## WebShell
-
-The WebShell feature allows users to remotely access the server's command-line interface through the Dashboard. It supports both Linux and Windows systems.
-
-- **Quick Commands**: Use `Ctrl+Shift+V` to paste commands.
-- **Restrictions**: If the `disable-command-execute` parameter is enabled, the WebShell feature will be disabled.
-- **Connection Issues**: If you encounter connection problems, refer to the [WebSocket Connection Issues Guide](/en_US/guide/q4.html) for troubleshooting.
+  - **Public Note**: Visible to all users and suitable for general information.
+  - Users can customize note content as needed. See [Public Note Configuration](#public-note-configuration).
+- **Command Line**: Provides WebShell and file list features. Users can remotely run commands, manage files, and upload or download files directly through the Dashboard.
 
 ---
 
 ## Edit Configuration
 
-You can edit Agent configurations online by clicking the cog icon in the Action column.
+Click the gear icon in the action column to edit the Agent configuration for a server.
 
-If you edit configurations in batch, no existing configuration will be fetched, and you must manually fill in every field.
+If you use batch edit, the corresponding Agent configuration is not fetched automatically; you need to fill in the configuration items manually.
 
-Agent will apply the new configuration and reload after 10 seconds.
+After a task is sent to the server successfully, the Agent applies the configuration and reloads the service after 10 seconds.
 
 ---
 
-## Pseudo File Manager
+## Batch Move Servers
+
+Administrators can select multiple servers on the server page and transfer them to another user.
+
+Use cases:
+
+- Assign existing servers in a multi-user panel to a new maintainer.
+- Migrate accounts or organize resource ownership.
+- Transfer servers that were automatically registered under the administrator account to a normal user for maintenance.
+
+After transfer, the target user becomes the owner of these servers. Normal users can only see and manage resources under their own account. Before running a batch move, confirm that the target user has been created and can log in normally.
+
+---
+
+## User Frontend Display
+
+The user frontend homepage displays servers by server group. Server groups come from the Dashboard server group configuration, and the group selected by the user on the homepage is saved in the browser session.
+
+The top of the homepage shows total servers, online count, offline count, total traffic, and real-time inbound/outbound rates. Click the total, online, or offline cards to quickly filter the corresponding status.
+
+The server list supports these sorting modes:
+
+- Default order
+- Name
+- Uptime
+- System type
+- CPU
+- Memory
+- Disk
+- Upload rate
+- Download rate
+- Total upload traffic
+- Total download traffic
+
+Except for name sorting, online servers are shown first during sorting. Sort direction can be ascending or descending.
+
+The homepage also provides map, service monitoring panel, and horizontal list layout switches. User choices are saved in browser local storage. You can also force default display through `window.ForceShowMap`, `window.ForceShowServices`, and `window.ForceCardInline` in [Custom Code](/en_US/guide/settings.html#custom-code).
+
+Click a server card to enter the `/server/{id}` detail page. The detail page includes:
+
+- **Details**: Shows CPU, memory, disk, process count, TCP/UDP connection count, inbound/outbound rates, and other metrics, with realtime, 1-day, 7-day, and 30-day charts.
+- **Network**: Shows service-monitoring latency charts that this server participates in, with 1-day, 7-day, and 30-day periods and multi-monitor selection.
+
+Historical charts depend on TSDB. When TSDB is not enabled, non-realtime historical periods are locked in the frontend. Guests can only view realtime and 1-day data; 7-day and 30-day data require login.
+
+---
+
+## Online Terminal
+
+The online terminal (WebShell) allows users to remotely access a server command-line interface through the Dashboard. It supports Linux and Windows systems.
+
+- **Shortcut**: Use `Ctrl+Shift+V` to paste commands.
+- **Limit**: When `disable-command-execute` is enabled, the online terminal is unavailable.
+- **Connection Issues**: If the connection fails, see [WebSocket Connection Failure](/en_US/guide/q4.html).
+
+---
+
+## File List
 
 ::: info
 
-Only support \*nix systems.
+This feature only supports \*nix systems.
 
 :::
 
-Provides a file manager-like interface, allowing you to browse files and download or upload files to the current directory.
-
-Supports **Refresh**, **Go to**, and **Copy path** features to integrate seamlessly with the **WebShell**.
+The file list provides a file-manager-like interface for browsing files and uploading or downloading files in the current directory.
+It supports directory navigation, refresh, and copying the current path, making it convenient to use together with the online terminal.
 
 ---
 
 ## DDNS
 
-After checking the `DDNS` check box, you can fill in the following two fields:
+After checking the `DDNS` checkbox, you can fill in these two fields:
 
-### DDNS configuration ID
+### DDNS Configuration ID
 
-Please refer to the [DDNS](/guide/ddns.html) document to add a basic configuration first, after adding you can see the corresponding `DDNS configuration ID` in the panel.
+Add a basic configuration first according to the [DDNS](/en_US/guide/ddns.html) document. After adding it, you can see the corresponding `DDNS Configuration ID` in the panel.
 
-### Override DDNS domain
+### Override DDNS Domain
 
-You can use this feature to reuse DDNS configuration files without having to copy the Token multiple times.
+This feature lets you reuse a DDNS configuration without copying the token multiple times.
 
-This should be a simple JSON object, you should provide a set of key-value pairs, where the key is the `DDNS configuration ID` wrapped in double quotes, the ID specified here must be specified in the `DDNS configuration ID` field, and the value should be an array of domain names. You can provide more than one domain name, and the Settings here will override the default domain name you set in the DDNS Configuration.
+It should be a simple JSON object. Provide key-value pairs where the key is a `DDNS Configuration ID` wrapped in double quotes. The ID specified here must already be specified in the `DDNS Configuration ID` field. The value should be an array of domains. You can provide multiple domains, and this setting overrides the default domains configured in `DDNS Configuration`.
 
 ```json
 {
@@ -112,13 +158,15 @@ This should be a simple JSON object, you should provide a set of key-value pairs
 
 ## Public Note Configuration
 
-Nezha supports configuring custom public information in the Dashboard for frontend customization.
+Nezha Monitor supports setting public notes for servers in the Dashboard. The default user frontend tries to parse public notes as JSON and display supplemental information such as billing, plan, and route data.
+
+`billingDataMod` and `planDataMod` can be filled in together or separately. Public note content is visible to guests; do not put passwords, tokens, real customer data, or other sensitive information in it.
 
 ---
 
-### Configuration Example (default theme)
+### Configuration Example (Default Theme)
 
-Below is a JSON configuration example for public note:
+Example JSON configuration for public notes:
 
 ```json
 {
@@ -143,28 +191,30 @@ Below is a JSON configuration example for public note:
 
 #### Field Descriptions
 
-1. **Billing Information (`billingDataMod`)**:
+1. **Billing information `billingDataMod`**:
 
-   - **`startDate`**: Start date of the billing period (ISO format).
-   - **`endDate`**: End date of the billing period (ISO format).
-   - **`autoRenewal`**: Automatic renewal status, `1` for enabled.
-   - **`cycle`**: Billing cycle (e.g., `Month`, `Year`).
-   - **`amount`**: Billing amount and currency.
+   - **`startDate`**: Billing start date in ISO time format.
+   - **`endDate`**: Billing end date in ISO time format. If it starts with `0000-00-00`, the frontend displays it as long-term or permanent service.
+   - **`autoRenewal`**: Auto-renewal status. `1` means enabled, and the frontend calculates remaining time together with the cycle.
+   - **`cycle`**: Billing cycle, such as `Month`, `Year`, or localized month/year labels.
+   - **`amount`**: Billing amount and currency. `0` displays as free, `-1` displays as pay-as-you-go, and other values are displayed as written.
 
-2. **Traffic and Network Configuration (`planDataMod`)**:
+2. **Traffic and network configuration `planDataMod`**:
    - **`bandwidth`**: Server bandwidth information.
    - **`trafficVol`**: Traffic quota and cycle.
-   - **`trafficType`**: Traffic type, `1` for inbound only, `2` for both inbound and outbound.
-   - **`IPv4` / `IPv6`**: Number of supported IPv4 or IPv6 addresses.
-   - **`networkRoute`**: Network route information (e.g., AS4837).
-   - **`extra`**: Additional remarks for custom information.
+   - **`trafficType`**: Traffic type field. The current default user frontend parses it but does not directly display it; it can be reserved for custom themes or secondary development.
+   - **`IPv4` / `IPv6`**: When the value is `1`, the frontend displays the corresponding IPv4 / IPv6 label.
+   - **`networkRoute`**: Network route information, such as `AS4837`. Multiple values can be separated by English commas, and the frontend displays them separately.
+   - **`extra`**: Extra note field. Multiple values can be separated by English commas, and the frontend displays them separately.
+
+The current user frontend caches the server's last non-empty public note in browser `sessionStorage`. After modifying or clearing a public note, if the old content is still visible in the current browser session, refresh the page, close and reopen the tab, or clear this site's session storage before checking again.
 
 ---
 
 ::: tip
-**Use Tools for Easy Configuration**  
-If you're unfamiliar with JSON configuration, you can use a third-party generator to quickly create public notes:  
+**Use a tool for easier configuration**
+If you are not familiar with JSON configuration rules, you can use this third-party public note generator to quickly generate a configuration:
 [Public Note Generator](https://nezhainfojson.pages.dev/)
 
-Copy the generated JSON into the corresponding public note section in the Dashboard and save the changes to display the information on the Dashboard front end.
+Copy the generated JSON into the corresponding public note setting in the Dashboard and save it to display the information on the frontend.
 :::
