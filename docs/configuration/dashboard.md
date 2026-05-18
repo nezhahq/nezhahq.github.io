@@ -130,6 +130,7 @@ outline: deep
 
 - ##### **`tsdb`** \*
   - TSDB (时序数据库) 配置，基于 VictoriaMetrics 存储引擎，用于替代默认的数据库存储服务监控历史和服务器指标数据。
+  - 默认关闭。只有配置了 `tsdb.data_path` 并重启 Dashboard 后才会启用；留空时不会打开 TSDB。
   - 启用后将自动删除旧的 `service_histories` 数据库表，历史数据不会被迁移。
   - 如未配置 `data_path`，TSDB 不会启用，服务监控历史将继续使用数据库存储。
   - 需填写以下字段：
@@ -146,6 +147,8 @@ outline: deep
       retention_days: 30
       max_memory_mb: 256
     ```
+  - 也可以使用环境变量 `NZ_TSDB_DATA_PATH` 等价设置 `tsdb.data_path`。启动日志出现 `TSDB initialized successfully` 表示已启用；若日志显示 `TSDB is disabled (tsdb.data_path not configured)`，说明仍处于关闭状态。
+  - 详细说明见 [如何启用 TSDB](/guide/q15.html)。
 
 - ##### **`memory`** \*
   - 内存配置。

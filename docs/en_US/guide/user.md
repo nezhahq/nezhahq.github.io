@@ -30,6 +30,8 @@ Standard user privileges. Can only access/modify their own resources and cannot 
 
 Each user has a unique **Agent** connection secret, used to identify the owner when creating servers.
 
-You can copy the installation command to view the connection secret for the current user.
+The current frontend does not show the connection secret separately on the user management page. When adding a server, copy the installation command generated on the server page, or extract the current user's connection secret from `NZ_CLIENT_SECRET` in that command.
+
+If an administrator needs to configure an Agent for another user manually, read that user's `agent_secret` through the management API.
 
 When a user is deleted, their connection secret becomes invalid immediately, and all associated servers will also be removed.

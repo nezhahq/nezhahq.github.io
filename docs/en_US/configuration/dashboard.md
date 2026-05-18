@@ -130,6 +130,7 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
 
 - ##### **`tsdb`** \*
   - TSDB (Time Series Database) configuration, powered by VictoriaMetrics storage engine, used as an alternative to the default database for storing service monitoring history and server metrics.
+  - Disabled by default. TSDB is enabled only after `tsdb.data_path` is configured and the Dashboard is restarted; leaving it empty keeps TSDB disabled.
   - Once enabled, the legacy `service_histories` database table will be automatically dropped. Historical data will NOT be migrated.
   - If `data_path` is not configured, TSDB will not be enabled and service monitoring history will continue to use database storage.
   - The following fields need to be filled in:
@@ -146,6 +147,8 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
       retention_days: 30
       max_memory_mb: 256
     ```
+  - You can also set `tsdb.data_path` with the `NZ_TSDB_DATA_PATH` environment variable. `TSDB initialized successfully` in the startup log means TSDB is enabled; `TSDB is disabled (tsdb.data_path not configured)` means it is still disabled.
+  - For details, see [How to Enable TSDB](/en_US/guide/q15.html).
 
 - ##### **`memory`** \*
   - Memory configuration.

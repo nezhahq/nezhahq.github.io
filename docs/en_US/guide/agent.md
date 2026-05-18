@@ -126,7 +126,7 @@ Alternatively, you can download and extract the Nezha Agent binaries in advance 
    ```
    - **Field Descriptions**:
      - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008` `1.1.1.1:8008` `"[2606:4700:4700::1111]:8008"`.
-     - `client_secret`: Replace with the `agentsecretkey` from the Dashboard's configuration file, typically located at `/opt/nezha/dashboard/data/config.yaml`.
+     - `client_secret`: Replace with the connection secret for the corresponding Dashboard user. The current frontend does not provide a separate connection-secret copy button; use the installation command generated on the server page, or extract `NZ_CLIENT_SECRET` from that command.
      - `uuid`: Generate a unique identifier for this Agent using the `uuidgen` command:
        ```bash
        uuidgen
@@ -266,7 +266,7 @@ In addition to the one-click script, Windows systems can also install the Agent 
    ```
    - **Field Descriptions**:
      - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008` `1.1.1.1:8008` `"[2606:4700:4700::1111]:8008"`.
-     - `client_secret`: Replace with the `agentsecretkey` from the Dashboard's configuration file, typically located at `/opt/nezha/dashboard/data/config.yaml`.
+     - `client_secret`: Replace with the connection secret for the corresponding Dashboard user. The current frontend does not provide a separate connection-secret copy button; use the installation command generated on the server page, or extract `NZ_CLIENT_SECRET` from that command.
      - `uuid`: Generate a unique identifier for this Agent using an online tool.
 2. **Save the File**  
    Save the file as `config.yml` in the Agent's directory.
@@ -401,7 +401,7 @@ OpenWrt is a lightweight Linux distribution. Installing the Nezha Agent on OpenW
 
    - **Field Descriptions**:
      - `server`: Replace with your Dashboard address and port, e.g., `data.example.com:8008` `1.1.1.1:8008` `"[2606:4700:4700::1111]:8008"`.
-     - `client_secret`: Replace with the `agentsecretkey` from the Dashboard's configuration file, typically located at `/opt/nezha/dashboard/data/config.yaml`.
+     - `client_secret`: Replace with the connection secret for the corresponding Dashboard user. The current frontend does not provide a separate connection-secret copy button; use the installation command generated on the server page, or extract `NZ_CLIENT_SECRET` from that command.
      - `uuid`: Generate a unique identifier for this Agent using an online tool.
 
 2. **Save the Configuration File**  
@@ -550,3 +550,5 @@ curl -L https://raw.githubusercontent.com/nezhahq/scripts/main/agent/install.sh 
 ```
 
 Replace `your_server_uuid` with the actual UUID of the target server.
+
+`NZ_CLIENT_SECRET` must be the target user's connection secret, not the global `agent_secret_key` from the Dashboard configuration file. The current frontend does not provide a separate connection-secret copy button; prefer the installation command generated on the server page. Administrators can use the management API to read a user's `agent_secret` for batch operations.

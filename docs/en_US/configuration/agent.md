@@ -15,7 +15,9 @@ In the admin frontend, you can modify the Agent's configuration and apply it dir
 - ##### **`client_secret`**
 
   - The client secret used for secure communication with the Dashboard.
-  - This parameter must match the configuration in the Dashboard to enable proper communication.
+  - Since v1, connection secrets are bound to users. The current frontend does not provide a separate “copy connection secret” button; normally, use the installation command generated on the server page, or extract `NZ_CLIENT_SECRET` from that command.
+  - If an administrator needs to configure an Agent for another user manually, read that user's `agent_secret` through the management API. Do not use the global `agent_secret_key` from the Dashboard configuration file for user-owned servers.
+  - If this value is wrong, the Agent cannot authenticate with the Dashboard.
 
 - ##### **`debug`**
 
