@@ -114,12 +114,13 @@ Alternatively, you can download and extract the Nezha Agent binaries in advance 
    gpu: false
    insecure_tls: false
    ip_report_period: 1800
-   report_delay: 1
+   report_delay: 3
    server: data.example.com:8008
    skip_connection_count: false
    skip_procs_count: false
    temperature: false
    tls: false
+   use_atomgit_to_upgrade: false
    use_gitee_to_upgrade: false
    use_ipv6_country_code: false
    uuid: your_uuid
@@ -254,12 +255,13 @@ In addition to the one-click script, Windows systems can also install the Agent 
    gpu: false
    insecure_tls: false
    ip_report_period: 1800
-   report_delay: 1
+   report_delay: 3
    server: data.example.com:8008
    skip_connection_count: false
    skip_procs_count: false
    temperature: false
    tls: false
+   use_atomgit_to_upgrade: false
    use_gitee_to_upgrade: false
    use_ipv6_country_code: false
    uuid: your_uuid
@@ -388,12 +390,13 @@ OpenWrt is a lightweight Linux distribution. Installing the Nezha Agent on OpenW
    gpu: false
    insecure_tls: false
    ip_report_period: 1800
-   report_delay: 1
+   report_delay: 3
    server: data.example.com:8008
    skip_connection_count: false
    skip_procs_count: false
    temperature: false
    tls: false
+   use_atomgit_to_upgrade: false
    use_gitee_to_upgrade: false
    use_ipv6_country_code: false
    uuid: your_uuid
