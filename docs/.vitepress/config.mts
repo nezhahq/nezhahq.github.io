@@ -185,6 +185,7 @@ function getGuideSidebarZhCN() {
         { text: '内网穿透', link: '/guide/nat.html' },
         { text: '设置', link: '/guide/settings.html' },
         { text: '个人信息', link: '/guide/profile.html' },
+        { text: 'API 接口', link: '/guide/api.html' },
         { text: '分组', link: '/guide/group.html' },
         { text: '多用户', link: '/guide/user.html' }
       ],
@@ -211,7 +212,8 @@ function getGuideSidebarZhCN() {
       text: '排障指南',
       items: [
         { text: 'Dashboard 相关', link: '/guide/dashboardq.html' },
-        { text: 'Agent 相关', link: '/guide/agentq.html' }
+        { text: 'Agent 相关', link: '/guide/agentq.html' },
+        { text: '登录常见问题', link: '/guide/loginq.html' }
       ]
     }
   ]
@@ -267,6 +269,7 @@ function getGuideSidebarEnUS() {
         { text: 'NAT traversal', link: '/en_US/guide/nat.html' },
         { text: 'Settings', link: '/en_US/guide/settings.html' },
         { text: 'Profile', link: '/en_US/guide/profile.html' },
+        { text: 'API Interface', link: '/en_US/guide/api.html' },
         { text: 'Grouping', link: '/en_US/guide/group.html' },
         { text: 'Multi-User', link: '/en_US/guide/user.html' },
       ]
@@ -274,6 +277,7 @@ function getGuideSidebarEnUS() {
     {
       text: 'FAQ',
       items: [
+        { text: 'Reverse Proxy Telegram Bot API', link: '/en_US/guide/q1.html' },
         { text: 'Agent Startup/Online Troubleshooting Process', link: '/en_US/guide/q2.html' },
         { text: 'Dashboard Reverse Proxy Configuration', link: '/en_US/guide/q3.html' },
         { text: 'Websocket Connection Failure', link: '/en_US/guide/q4.html' },
@@ -292,7 +296,8 @@ function getGuideSidebarEnUS() {
       text: 'Troubleshooting Guide',
       items: [
         { text: 'Dashboard', link: '/en_US/guide/dashboardq.html' },
-        { text: 'Agent', link: '/en_US/guide/agentq.html' }
+        { text: 'Agent', link: '/en_US/guide/agentq.html' },
+        { text: 'Login FAQ', link: '/en_US/guide/loginq.html' }
       ]
     }
   ]
@@ -320,6 +325,7 @@ function getDeveloperSidebarEnUS() {
     {
       text: 'Development Manual',
       items: [
+        { text: 'Getting Started', link: '/en_US/developer/getting-started.html' },
         { text: 'API documentation', link: '/en_US/developer/api.html' },
         { text: 'i18n', link: '/en_US/developer/i18n.html' }
       ]
