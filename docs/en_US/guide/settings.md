@@ -65,6 +65,10 @@ Example:
 - Set it to the Agent connection address you want to use, for example: `data.example.com:8008`.
 - See [Agent Installation Prerequisites](/en_US/guide/agent.html#prerequisites) for details.
 
+### Reserved Dashboard Hosts
+
+Declares the public hostnames used to access Dashboard, preventing normal members from creating NAT domains that collide with Dashboard entry hosts. Separate multiple hostnames with commas. The configuration field is [`reserved_hosts`](/en_US/configuration/dashboard.html#reserved_hosts).
+
 ### Custom Public DNS Nameservers for DDNS
 
 Used by DDNS to query domain SOA records. If empty, the built-in list is used.
@@ -94,6 +98,10 @@ Used by DDNS to query domain SOA records. If empty, the built-in list is used.
 - `CF-Connecting-IP` is a request header used to get the Agent's real IP.
 - When Agents connect to the Dashboard through Cloudflare CDN proxy, enabling this feature lets the origin server identify the Agent's real IP correctly.
 
+### MCP Toggle
+
+Enables or disables the Dashboard MCP endpoint. After enabling it, clients can call `POST /mcp` with a PAT. When disabled, Dashboard rejects new MCP requests and interrupts related transfers. The configuration field is [`enable_mcp`](/en_US/configuration/dashboard.html#enable_mcp). For authentication and permission details, see [API Interface - MCP Access](/en_US/guide/api.html#mcp-access).
+
 ### IP Change Notification
 
 This feature sends notifications when a server IP address changes. Configure it as follows:
@@ -118,6 +126,14 @@ This feature sends notifications when a server IP address changes. Configure it 
 
 ---
 
+## API Tokens
+
+This tab creates and revokes Personal Access Tokens (PATs). PATs are suitable for automation scripts, CI, LLM tools, and MCP clients.
+
+When creating a token, select scopes, optional server ID whitelist, and expiration. The plaintext token is shown only once after creation. Later lists only show metadata such as scopes, server whitelist, expiration time, last used time, and last used IP. For authentication format and scopes, see [API Interface - Personal Access Token](/en_US/guide/api.html#personal-access-token-pat).
+
+---
+
 ## User Management
 
 This tab allows adding multiple users to the Dashboard.
@@ -128,7 +144,7 @@ See [Multi-User](/en_US/guide/user.html) for details.
 
 ## Online Users
 
-View current guests / users connected to the frontend, including **IP** and **connection time**, and manually block users.
+View current guests / users connected to the frontend, including **IP** and **connection time**, and manually block users. Administrators can also batch block selected online users.
 
 ---
 
@@ -146,4 +162,4 @@ You can view current block entries and related useful information:
 - **Reason**: The reason for the latest block on this entry.
 - **Time**: The latest block time for this entry.
 
-If the current user is an administrator, block entries can be deleted manually.
+If the current user is an administrator, block entries can be deleted manually or in batches.

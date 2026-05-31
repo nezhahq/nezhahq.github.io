@@ -65,6 +65,10 @@ outline: deep
 - 设置内容为你希望使用的 Agent 连接地址，例如：`data.example.com:8008`。  
 - 详情请参考 [Agent 安装准备工作](/guide/agent.html#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C)。
 
+### Dashboard 保留域名
+
+用于声明 Dashboard 对外访问使用的域名，防止普通成员在 NAT 中创建与 Dashboard 入口冲突的域名。多个域名使用英文逗号分隔。配置字段为 [`reserved_hosts`](/configuration/dashboard.html#reserved_hosts)。
+
 ### DDNS 的自定义公共 DNS 名称服务器
 
 用于 DDNS 功能查询域名 SOA 记录，如不填则采用内置列表。
@@ -95,6 +99,10 @@ outline: deep
 - `CF-Connecting-IP` 是一个用于获取 Agent 真实 IP 的请求头字段。  
 - 当 Agent 通过 Cloudflare CDN 代理连接 Dashboard 时，启用此功能可以让源服务器正确识别 Agent 的真实 IP。  
 
+### MCP 开关
+
+用于启用或关闭 Dashboard 的 MCP 入口。启用后可使用 PAT 调用 `POST /mcp`；关闭时会拒绝新的 MCP 请求并中断相关传输。配置字段为 [`enable_mcp`](/configuration/dashboard.html#enable_mcp)，认证和权限说明见 [API 接口 - MCP 接入](/guide/api.html#mcp-%E6%8E%A5%E5%85%A5)。
+
 ### IP 变更提醒
 
 此功能允许在服务器 IP 地址变更时发送通知，设置步骤如下：
@@ -119,6 +127,14 @@ outline: deep
 
 ---
 
+## API Tokens
+
+此标签页用于创建和吊销 Personal Access Token（PAT）。PAT 适合自动化脚本、CI、LLM 工具和 MCP 客户端使用。
+
+创建 Token 时可以选择 scope、可访问的服务器 ID 白名单和过期时间。Token 明文只会在创建成功后显示一次；后续列表只会展示权限、服务器白名单、过期时间、最后使用时间和最后使用 IP 等元信息。认证格式和 scope 说明见 [API 接口 - Personal Access Token](/guide/api.html#personal-access-token-pat)。
+
+---
+
 ## 用户管理
 
 此标签页允许为 Dashboard 添加多个用户。  
@@ -129,7 +145,7 @@ outline: deep
 
 ## 在线用户
 
-查看当前连接到前台的游客 / 用户信息，包含 **IP** 及 **连接时间**，并可以手动封禁用户。
+查看当前连接到前台的游客 / 用户信息，包含 **IP** 及 **连接时间**，并可以手动封禁用户；管理员也可以批量封禁选中的在线用户。
 
 ---
 
@@ -147,4 +163,4 @@ outline: deep
 - **封禁原因** 此封禁条目最后一次的封禁原因。
 - **封禁时间** 此封禁条目最后一次的封禁时间。
 
-如果当前用户为管理员，便可以手动删除封禁条目。
+如果当前用户为管理员，便可以手动删除封禁条目，也可以批量删除选中的封禁条目。
