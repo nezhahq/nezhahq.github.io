@@ -6,6 +6,8 @@ The profile page displays the current user's information, such as IP address, nu
 
 You can also update the current user's information.
 
+OAuth 2.0 bindings are managed on this page as well. Unbinding is a personal-account self-management action, so it must be performed with the current login session and cannot be called with a PAT.
+
 ---
 
 ## Update Profile
