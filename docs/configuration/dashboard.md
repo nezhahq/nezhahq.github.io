@@ -28,6 +28,12 @@ outline: deep
   - 指定安装命令的服务器地址，格式为 `host:port`。
   - 这个选项的实际效果由前端实现，Dashboard 本体不会使用。
 
+- ##### **`reserved_hosts`**
+
+  - 用逗号分隔声明 Dashboard 对外访问使用的域名或主机名，例如 `nezha.example.com,status.example.com`。
+  - 该配置用于阻止普通成员创建与 Dashboard 入口冲突的 NAT 域名，避免在反向代理部署中抢占面板访问路由。
+  - 当 Dashboard 运行在反向代理后面，进程本身无法可靠推断公网域名时，建议显式填写所有公网入口域名。
+
 - ##### **`tls`**
 
   - 布尔值，指定安装命令是否启用 TLS。
@@ -75,10 +81,29 @@ outline: deep
   - 整数，指定 JWT 的过期时间（小时）。
   - 默认值为 `1`。
 
+- ##### **`jwt_secret_key`** \*
+
+  - JWT 签名密钥。生产环境推荐通过环境变量 `NZ_JWTSECRETKEY` 注入，而不是写入配置文件。
+  - 如果配置文件和环境变量都没有提供密钥，Dashboard 首次启动会自动生成密钥并写回 `config.yaml`。
+  - 当设置了 `NZ_JWTSECRETKEY` 时，Dashboard 会使用环境变量中的值，不会把它写入 YAML，并且版本驱动的自动轮转会跳过，由运维自行通过更新环境变量和重启 Dashboard 完成轮转。
+
+- ##### **`jwt_secret_key_last_rotated_version`** \*
+
+  - 记录 Dashboard 上次完成 JWT 密钥版本轮转的版本号。
+  - 从 `v2.0.13` 版本基线开始，如果没有使用 `NZ_JWTSECRETKEY` 且该字段为空或低于基线版本，Dashboard 会生成新的 `jwt_secret_key` 并更新此字段。
+  - 手动修改该字段可能导致不必要的登录态失效；一般只需要在排查升级轮转问题时查看。
+
 - ##### **`enable_plain_ip_in_notification`**
 
   - 布尔值，通知是否发送原始 IP。
   - 默认为 `false`，即发送脱敏后的 IP（例如 1.\*\*.1）。
+
+- ##### **`enable_mcp`**
+
+  - 布尔值，是否启用 MCP 入口，默认为关闭。
+  - 启用后 Dashboard 会接受 `POST /mcp` 请求；该入口只接受 PAT，不接受 JWT。认证和权限说明见 [API 接口 - MCP 接入](/guide/api.html#mcp-%E6%8E%A5%E5%85%A5)。
+  - 启用前应先检查 API Token 的 scope 和服务器白名单，只给 MCP 客户端授予最小权限。
+  - 关闭该选项会触发 MCP kill switch：新的 MCP 请求会被拒绝，正在进行的 MCP 调用和临时上传 / 下载地址也会被中断或清理。
 
 - ##### **`enable_ip_change_notification`**
 

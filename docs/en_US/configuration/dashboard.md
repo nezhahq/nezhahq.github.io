@@ -28,6 +28,12 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
   - Specifies the server address for the installation command, in the format `host:port`.
   - The actual effect of this option is implemented by the frontend, and Dashboard itself does not use it.
 
+- ##### **`reserved_hosts`**
+
+  - Comma-separated public Dashboard hostnames, for example `nezha.example.com,status.example.com`.
+  - This prevents normal members from creating NAT domains that collide with Dashboard entry hosts and hijack the panel route in reverse-proxy deployments.
+  - When Dashboard runs behind a reverse proxy and cannot reliably infer its public hostnames, explicitly list every public entry hostname here.
+
 - ##### **`tls`**
 
   - Boolean value, specifies whether the installation command enables TLS.
@@ -75,10 +81,29 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
   - Integer, specifies the expiration time of JWT (hours).
   - The default value is `1`.
 
+- ##### **`jwt_secret_key`** \*
+
+  - JWT signing key. In production, inject it with the `NZ_JWTSECRETKEY` environment variable instead of writing it to the configuration file.
+  - If neither the configuration file nor the environment variable provides a key, Dashboard generates one on first startup and writes it back to `config.yaml`.
+  - When `NZ_JWTSECRETKEY` is set, Dashboard uses the environment value, does not write it to YAML, and skips version-driven automatic rotation. Operators should rotate it by updating the environment variable and restarting Dashboard.
+
+- ##### **`jwt_secret_key_last_rotated_version`** \*
+
+  - Records the Dashboard version that last completed JWT key rotation.
+  - Starting from the `v2.0.13` baseline, if `NZ_JWTSECRETKEY` is not used and this field is empty or lower than the baseline, Dashboard generates a new `jwt_secret_key` and updates this field.
+  - Editing this field manually may invalidate sessions unnecessarily. Normally you only need to inspect it while troubleshooting upgrade rotation.
+
 - ##### **`enable_plain_ip_in_notification`**
 
   - Boolean value, whether the notification sends the original IP.
   - The default is `false`, that is, send the desensitized IP (such as 1.\*\*.1).
+
+- ##### **`enable_mcp`**
+
+  - Boolean value, whether to enable the MCP endpoint. It is disabled by default.
+  - After enabling it, Dashboard accepts `POST /mcp` requests. This endpoint accepts PAT only, not JWT. See [API Interface - MCP Access](/en_US/guide/api.html#mcp-access) for authentication and permission details.
+  - Before enabling it, review API token scopes and server whitelists, and grant only the minimum permissions required by each MCP client.
+  - Disabling this option triggers the MCP kill switch: new MCP requests are rejected, and in-flight MCP calls plus temporary upload / download URLs are interrupted or cleaned up.
 
 - ##### **`enable_ip_change_notification`**
 
