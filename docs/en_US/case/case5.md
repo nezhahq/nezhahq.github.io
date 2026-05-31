@@ -6,7 +6,7 @@ outline: deep
 
 ::: info
 
-This project is not yet compatible with the V1 version.
+This community project is not yet compatible with the V1 version. This page is kept for historical reference; check the upstream repository status before deploying it, and do not apply it directly to the current Nezha version.
 
 :::
 Contributors:

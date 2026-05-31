@@ -1,4 +1,9 @@
 # Fake-agent, monitoring data cheater  
+
+::: warning
+This is a community fun project. It modifies monitoring data reported by the Agent and is not an official operations solution. Do not use it for real monitoring, alerting, or audit scenarios.
+:::
+
 Contributor: 
 + [dysf888](https://github.com/dysf888)
 
