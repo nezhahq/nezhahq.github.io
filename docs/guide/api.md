@@ -127,7 +127,9 @@ PAT 使用 `nezha:{resource}:{verb}` 命名权限范围。JWT 登录请求不走
 
 常见示例：
 
-- `nezha:server:read`：读取服务器列表、服务器指标和服务器相关服务监控。
+- `nezha:inventory:read`：列出服务器与服务器分组（`server.list`、`GET /api/v1/server`、`GET /api/v1/server-group`）。
+- `nezha:inventory:delete`：删除服务器与服务器分组（`batch-delete/server`、`batch-delete/server-group`）。
+- `nezha:server:read`：查看单台服务器、读取其指标与文件，以及服务器相关服务监控。
 - `nezha:server:exec`：创建在线终端或调用 MCP 的远程执行工具。
 - `nezha:cron:exec`：手动触发计划任务。
 - `nezha:transfer:write`：取消或重试服务器转移任务。
@@ -181,7 +183,8 @@ MCP 入口带有 Origin 防护，用于降低浏览器跨站调用和 DNS rebind
 | 工具 | 所需 scope |
 | --- | --- |
 | `meta.whoami` | 任意有效 PAT |
-| `server.list` / `server.get` | `nezha:server:read` |
+| `server.list` | `nezha:inventory:read` |
+| `server.get` | `nezha:server:read` |
 | `server.exec` | `nezha:server:exec` |
 | `fs.list` / `fs.read` / `fs.download_url` | `nezha:server:read` |
 | `fs.write` / `fs.upload_url` | `nezha:server:write` |
@@ -426,8 +429,9 @@ GET /api/v1/server/{id}/service
 | 功能 | 常见路径 | PAT scope |
 | --- | --- | --- |
 | 用户和个人资料 | `/api/v1/profile`、`/api/v1/user`、`/api/v1/batch-delete/user` | 个人资料接口禁止 PAT；用户管理需要 `nezha:admin:*` |
-| 服务器 | `/api/v1/server`、`/api/v1/server/config`、`/api/v1/batch-delete/server`、`/api/v1/batch-move/server`、`/api/v1/force-update/server` | `nezha:server:read` / `write` / `delete` |
-| 服务器分组 | `/api/v1/server-group`、`/api/v1/batch-delete/server-group` | `nezha:server:read` / `write` / `delete` |
+| 服务器台账 | `GET /api/v1/server`、`/api/v1/batch-delete/server`、`GET /api/v1/server-group`、`/api/v1/batch-delete/server-group` | `nezha:inventory:read` / `delete` |
+| 服务器 | `/api/v1/server/config`、`/api/v1/batch-move/server`、`/api/v1/force-update/server`、`PATCH /api/v1/server/{id}` | `nezha:server:read` / `write` |
+| 服务器分组 | `POST /api/v1/server-group`、`PATCH /api/v1/server-group/{id}` | `nezha:server:write` |
 | 服务器转移 | `/api/v1/transfer`、`/api/v1/transfer/{id}/cancel`、`/api/v1/transfer/{id}/retry`、`/api/v1/ws/transfer` | `nezha:transfer:read` / `write` |
 | 通知方式 | `/api/v1/notification`、`/api/v1/batch-delete/notification` | `nezha:notification:read` / `write` / `delete` |
 | 通知组 | `/api/v1/notification-group`、`/api/v1/batch-delete/notification-group` | `nezha:notification-group:read` / `write` / `delete` |

@@ -127,7 +127,9 @@ Verbs include:
 
 Common examples:
 
-- `nezha:server:read`: Read server lists, server metrics, and server-related service monitors.
+- `nezha:inventory:read`: List servers and server groups (`server.list`, `GET /api/v1/server`, `GET /api/v1/server-group`).
+- `nezha:inventory:delete`: Delete servers and server groups (`batch-delete/server`, `batch-delete/server-group`).
+- `nezha:server:read`: Inspect a single server, read its metrics and files, and read server-related service monitors.
 - `nezha:server:exec`: Create online terminals or call MCP remote-execution tools.
 - `nezha:cron:exec`: Manually trigger scheduled tasks.
 - `nezha:transfer:write`: Cancel or retry server transfer tasks.
@@ -181,7 +183,8 @@ The MCP endpoint has an Origin guard to reduce browser cross-site call and DNS r
 | Tool | Required scope |
 | --- | --- |
 | `meta.whoami` | Any valid PAT |
-| `server.list` / `server.get` | `nezha:server:read` |
+| `server.list` | `nezha:inventory:read` |
+| `server.get` | `nezha:server:read` |
 | `server.exec` | `nezha:server:exec` |
 | `fs.list` / `fs.read` / `fs.download_url` | `nezha:server:read` |
 | `fs.write` / `fs.upload_url` | `nezha:server:write` |
@@ -426,8 +429,9 @@ Management APIs require login. JWT requests are authorized by user role and reso
 | Feature | Common paths | PAT scope |
 | --- | --- | --- |
 | Users and profiles | `/api/v1/profile`, `/api/v1/user`, `/api/v1/batch-delete/user` | Profile APIs forbid PAT; user management requires `nezha:admin:*` |
-| Servers | `/api/v1/server`, `/api/v1/server/config`, `/api/v1/batch-delete/server`, `/api/v1/batch-move/server`, `/api/v1/force-update/server` | `nezha:server:read` / `write` / `delete` |
-| Server groups | `/api/v1/server-group`, `/api/v1/batch-delete/server-group` | `nezha:server:read` / `write` / `delete` |
+| Server inventory | `GET /api/v1/server`, `/api/v1/batch-delete/server`, `GET /api/v1/server-group`, `/api/v1/batch-delete/server-group` | `nezha:inventory:read` / `delete` |
+| Servers | `/api/v1/server/config`, `/api/v1/batch-move/server`, `/api/v1/force-update/server`, `PATCH /api/v1/server/{id}` | `nezha:server:read` / `write` |
+| Server groups | `POST /api/v1/server-group`, `PATCH /api/v1/server-group/{id}` | `nezha:server:write` |
 | Server transfers | `/api/v1/transfer`, `/api/v1/transfer/{id}/cancel`, `/api/v1/transfer/{id}/retry`, `/api/v1/ws/transfer` | `nezha:transfer:read` / `write` |
 | Notification methods | `/api/v1/notification`, `/api/v1/batch-delete/notification` | `nezha:notification:read` / `write` / `delete` |
 | Notification groups | `/api/v1/notification-group`, `/api/v1/batch-delete/notification-group` | `nezha:notification-group:read` / `write` / `delete` |
