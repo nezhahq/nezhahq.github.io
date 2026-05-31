@@ -1,4 +1,9 @@
 # Use Siri to run shortcut to check server status in iOS/MacOS   
+
+::: info
+This is an archived community project page. Compatibility with the current Nezha version is not verified. Before using it, confirm that the API Token and endpoint configured in the shortcut still match your Nezha version.
+:::
+
 Current Version：V1.0  (Chinese)  
 Contributor:   
 + 白歌 [hhhkkk520](https://github.com/hhhkkk520)   
