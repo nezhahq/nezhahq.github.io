@@ -161,6 +161,98 @@ PAT 使用 `nezha:{resource}:{verb}` 命名权限范围。JWT 登录请求不走
 - 如果服务器启用了“对游客隐藏”，游客不能访问该服务器的数据。
 - 服务历史和服务器指标接口中，游客只能查询 `1d` 周期数据。
 
+### API Token (PAT)
+
+API Token 是同一套 `/api/v1` REST API 的另一种认证方式，也可以称为 PAT（Personal Access Token）。它和登录接口返回的 JWT 共用 `Authorization: Bearer ...` 请求头，也共用下方的接口返回格式和路由；区别是 JWT 面向浏览器登录会话，API Token 面向脚本、自动化工具和 MCP 客户端。
+
+明文 Token 统一以 `nzp_` 开头。Dashboard 只保存哈希，明文只会在创建成功后显示一次；关闭弹窗后无法再次查看，需要重新创建。
+
+登录管理前端，进入 **设置 > API Tokens**，点击 **Create API Token** 创建。创建时需要填写：
+
+| 字段 | 说明 |
+| --- | --- |
+| 名称 | 便于识别用途，例如 `homepage-readonly`、`mcp-maintenance`。最长 128 个字符。 |
+| Scopes | Token 可以调用哪些资源和动作。至少选择一个。 |
+| Server IDs | 可选的服务器 ID 白名单，使用英文逗号分隔，例如 `1,2,3`。留空表示不额外限制服务器，但仍受用户自身权限限制。 |
+| Expires in days | 可选过期天数。默认前端填入 `90`；留空或填 `0` 表示永不过期。最大 3650 天。 |
+
+普通用户可以创建、查看和吊销自己的 Token。管理员同样通过该页面管理自己的 Token，并且只有管理员可以签发 `nezha:admin:*` 或 `nezha:*` 这类管理员 scope。
+
+REST API 调用方式与 JWT 相同：
+
+```http
+Authorization: Bearer nzp_xxxxxxxxxxxxxxxxxxxx
+```
+
+API Token 使用 `nezha:{resource}:{verb}` scope 控制权限，且只会收窄当前用户原本拥有的权限；即使 Token 带有某个 scope，仍然不能越过用户本身的服务器、管理员或资源归属限制。创建 Token 时还可以填写服务器 ID 白名单，空白表示不额外限制服务器。
+
+常见错误：
+
+| 状态码 | 含义 |
+| --- | --- |
+| `401 Unauthorized` | Token 无效、已过期、所属用户不存在，或 `Authorization` 头格式错误。 |
+| `403 Forbidden` | Token 有效，但缺少当前接口需要的 scope，服务器不在白名单内，用户没有该服务器权限，或接口明确禁止 API Token 调用。 |
+
+常用 scope：
+
+| Scope | 说明 |
+| --- | --- |
+| `nezha:inventory:read` | 读取服务器清单、服务器分组和实时服务器状态流 |
+| `nezha:inventory:delete` | 删除服务器和服务器分组 |
+| `nezha:server:read` | 读取已知服务器详情、指标、服务状态和文件列表/文件内容 |
+| `nezha:server:write` | 修改服务器、下发配置、强制更新、迁移服务器和写入文件 |
+| `nezha:server:delete` | 删除服务器上的文件 |
+| `nezha:server:exec` | 打开在线终端、执行命令 |
+| `nezha:service:read/write/delete` | 读取、创建/修改、删除服务监控 |
+| `nezha:alertrule:read/write/delete` | 读取、创建/修改、删除警报规则 |
+| `nezha:cron:read/write/delete/exec` | 读取、创建/修改、删除、手动触发计划任务 |
+| `nezha:ddns:read/write/delete` | 读取、创建/修改、删除 DDNS 配置 |
+| `nezha:nat:read/write/delete` | 读取、创建/修改、删除 NAT 规则 |
+| `nezha:notification:read/write/delete` | 读取、创建/修改、删除通知方式 |
+| `nezha:notification-group:read/write/delete` | 读取、创建/修改、删除通知组 |
+| `nezha:transfer:read/write/delete` | 读取、取消/重试、删除服务器迁移记录 |
+| `nezha:<resource>:*` | 某个资源的全部动作，例如 `nezha:server:*` |
+| `nezha:admin:*` | 用户、WAF、设置、在线用户等管理员接口，仅管理员可用 |
+| `nezha:*` | 全部权限，仅管理员可用 |
+
+`inventory` 与 `server` 是两个不同的资源域：前者管“能看到和删除哪些机器清单”，后者管“对已知服务器执行运行态操作”。因此只给 `nezha:server:exec` 的 Token 可以执行指定服务器命令，但不能枚举服务器列表；需要列表时还要授予 `nezha:inventory:read`。
+
+REST 路由常见 scope 对照：
+
+| 路由 | API Token 所需 scope |
+| --- | --- |
+| `GET /api/v1/server`、`GET /api/v1/ws/server`、`GET /api/v1/server-group` | `nezha:inventory:read` |
+| `POST /api/v1/batch-delete/server`、`POST /api/v1/batch-delete/server-group` | `nezha:inventory:delete` |
+| `PATCH /api/v1/server/{id}`、`GET /api/v1/server/config/{id}`、`POST /api/v1/server/config`、`POST /api/v1/batch-move/server`、`POST /api/v1/force-update/server` | `nezha:server:write` |
+| `POST /api/v1/file`、`GET /api/v1/ws/file/{id}` | 同时需要 `nezha:server:read`、`nezha:server:write`、`nezha:server:delete` |
+| `GET /api/v1/transfer`、`GET /api/v1/ws/transfer` | `nezha:transfer:read` |
+| `POST /api/v1/transfer/{id}/cancel`、`POST /api/v1/transfer/{id}/retry` | `nezha:transfer:write` |
+| `GET/POST/PATCH/DELETE` 各资源管理接口 | 对应资源的 `read`、`write`、`delete` scope |
+| `/api/v1/user`、`/api/v1/waf`、`/api/v1/online-user`、`PATCH /api/v1/setting`、`POST /api/v1/maintenance` | `nezha:admin:*` 或 `nezha:*`，且调用用户必须是管理员 |
+
+常见授权组合：
+
+| 场景 | 建议 scope |
+| --- | --- |
+| 外部看板只读展示服务器清单 | `nezha:inventory:read` |
+| 外部看板读取服务器详情和指标 | `nezha:inventory:read`、`nezha:server:read` |
+| MCP 客户端查询服务器和读取小文件 | `nezha:inventory:read`、`nezha:server:read` |
+| MCP 客户端执行维护命令 | `nezha:inventory:read`、`nezha:server:read`、`nezha:server:exec`，并设置服务器 ID 白名单 |
+| MCP 客户端写入或上传文件 | `nezha:server:read`、`nezha:server:write`，并设置服务器 ID 白名单 |
+| CI/CD 只触发指定计划任务 | `nezha:cron:read`、`nezha:cron:exec` |
+| 运维脚本管理服务监控 | `nezha:service:read`、`nezha:service:write`，需要删除时再加 `nezha:service:delete` |
+| 管理员自动化维护设置 | `nezha:admin:*`，仅管理员 Token 可用 |
+
+如果 Token 用于单台或少量服务器，建议始终填写 `Server IDs` 白名单。这样即使 scope 较宽，也只能作用于指定服务器。
+
+旧版 `mcp:*` scope 不再作为运行时权限使用。创建 Token 时，`mcp:server:read`、`mcp:server:exec`、`mcp:fs:read` 会被兼容重写为对应的 `nezha:*` scope；`mcp:fs:write`、`mcp:fs:delete`、`mcp:*` 会被拒绝。启动迁移会清理数据库中残留的危险旧 scope，清理后没有任何 scope 的 Token 会被删除。
+
+::: warning
+API Token 不能调用账号自管理接口，例如 `/api/v1/profile`、`/api/v1/refresh-token`、`/api/v1/oauth2/{provider}/unbind` 和 `/api/v1/api-tokens`。这些接口只能使用网页登录产生的 JWT。
+:::
+
+在 **设置 > API Tokens** 列表中点击 **Revoke** 可以吊销 Token。吊销后，新请求会立即失败；使用该 Token 的长连接会被取消，包括服务器实时状态流、迁移流、在线终端、文件管理连接，以及正在执行的 MCP `tools/call`、文件上传/下载传输和临时传输 URL。
+
 ---
 
 ## MCP 接入
@@ -449,6 +541,53 @@ GET /api/v1/server/{id}/service
 
 ---
 
+## MCP 入口
+
+Dashboard 内置一个面向自动化客户端和 LLM 工具调用的 MCP (Model Context Protocol) HTTP 入口：
+
+完整的客户端配置、工具参数示例和文件传输说明，见 [MCP 使用指南](/guide/mcp.html)。
+
+```http
+POST /mcp
+Authorization: Bearer nzp_xxxxxxxxxxxxxxxxxxxx
+Content-Type: application/json
+```
+
+使用前需要在 Dashboard 配置或管理前端中启用 `enable_mcp`。该入口只接受 API Token，不接受 JWT；`GET /mcp` 和 `DELETE /mcp` 会返回 405。
+
+当前实现支持 Streamable HTTP 的 POST 请求/响应，不提供 SSE 会话。JSON-RPC 请求体最大为 8 MiB，每个 Token 默认限制约为每秒 10 次、每分钟 120 次请求。常用 JSON-RPC 方法：
+
+- `initialize`
+- `tools/list`
+- `tools/call`
+- `notifications/initialized`
+- `ping`
+
+`tools/list` 会返回每个工具的 `inputSchema` 和 `outputSchema`。`tools/call` 成功时，结构化结果放在 `structuredContent`，并在 `content[0].text` 中提供同一结果的 JSON 文本；工具报错时只返回 `isError: true` 和文本错误信息，避免严格 MCP 客户端用成功输出 schema 校验错误对象。
+
+已注册的 MCP 工具和所需 scope：
+
+| 工具 | 所需 scope |
+| --- | --- |
+| `meta.whoami` | 任意有效 API Token |
+| `server.list` | `nezha:inventory:read` |
+| `server.get` | `nezha:server:read` |
+| `server.exec` | `nezha:server:exec` |
+| `fs.list`、`fs.read`、`fs.download_url` | `nezha:server:read` |
+| `fs.write`、`fs.upload_url` | `nezha:server:write` |
+| `fs.delete` | `nezha:server:delete` |
+
+需要调用 Agent 的 MCP 工具要求目标 Agent 版本不低于 `v2.1.0`。`server.exec` 是非交互一次性命令，不分配 PTY，默认超时 30 秒，`timeout_seconds` 硬上限 300 秒；需要管道、重定向等 shell 语法时，请显式使用 `cmd: "sh"` 和 `args: ["-c", "..."]`。
+
+文件工具分为两类：
+
+- `fs.read` / `fs.write` 适合小文件或分段读取写入。`fs.read` 默认最多返回约 1 MiB，可使用 `offset`、`length` 和 `encoding: "utf8" | "base64"`。
+- `fs.download_url` / `fs.upload_url` 会签发一次性临时 URL，通过 `GET /mcp/download/{token}` 或 `POST /mcp/upload/{token}` 走 Dashboard 到 Agent 的 IOStream 传输，单文件硬上限 100 MiB，`ttl_seconds` 范围为 30 到 600 秒。上传时必须发送 `Content-Length`，可在 URL 查询参数追加 `sha256=<64位十六进制>` 做端到端校验；`fs.upload_url` 还支持 `mode`、`create_dirs`、`if_match_sha256`。
+
+MCP 调用同时受 API Token 的服务器 ID 白名单和用户原本权限限制。临时上传/下载 URL 在使用时还会重新校验 Token、scope、服务器白名单和服务器归属；Token 被撤销或关闭 `enable_mcp` 时，Dashboard 会撤销 MCP 传输流、清理临时 URL 并取消正在执行的 MCP RPC。
+
+---
+
 ## 使用案例
 
 ### 获取服务器列表
@@ -457,7 +596,7 @@ GET /api/v1/server/{id}/service
 import requests
 
 base_url = "https://nezha.example.com"
-token = "JWT_TOKEN"
+token = "JWT_TOKEN_OR_NZP_API_TOKEN"
 
 response = requests.get(
     f"{base_url}/api/v1/server",

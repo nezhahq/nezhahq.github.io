@@ -56,6 +56,13 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
   - Specifies Agent's real IP request header for the Dashboard, such as `X-Real-Ip`.
   - If the option value is `NZ::Use-Peer-IP`, Dashboard will directly use the connection IP, and no longer need the upper-layer application to pass the request header.
 
+- ##### **`enable_mcp`**
+
+  - Boolean value, whether to enable the Dashboard's built-in MCP (Model Context Protocol) HTTP endpoint.
+  - Disabled by default. When enabled, clients can call MCP tools through `POST /mcp` with an API Token; this endpoint does not accept JWT.
+  - When switching from enabled to disabled, the Dashboard fires a kill switch that removes MCP file-transfer temporary URLs, revokes MCP transfer streams, and cancels in-flight MCP RPC calls.
+  - For API Token scopes and usage, see [API Interface](/en_US/guide/api.html#api-token-pat).
+
 - ##### **`user_template / admin_template`**
 
   - Default frontend theme used.
@@ -98,13 +105,6 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
   - Boolean value, whether the notification sends the original IP.
   - The default is `false`, that is, send the desensitized IP (such as 1.\*\*.1).
 
-- ##### **`enable_mcp`**
-
-  - Boolean value, whether to enable the MCP endpoint. It is disabled by default.
-  - After enabling it, Dashboard accepts `POST /mcp` requests. This endpoint accepts PAT only, not JWT. See [API Interface - MCP Access](/en_US/guide/api.html#mcp-access) for authentication and permission details.
-  - Before enabling it, review API token scopes and server whitelists, and grant only the minimum permissions required by each MCP client.
-  - Disabling this option triggers the MCP kill switch: new MCP requests are rejected, and in-flight MCP calls plus temporary upload / download URLs are interrupted or cleaned up.
-
 - ##### **`enable_ip_change_notification`**
 
   - Boolean value, whether to enable IP change notification.
@@ -116,7 +116,8 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
 - ##### **`cover`**
 
   - Integer, specifies the coverage of IP change notification.
-  - `0` is full coverage, `1` is ignore all.
+  - `1` means full coverage, excluding the servers listed in `ignored_ip_notification`.
+  - `2` means ignore all, monitoring only the servers listed in `ignored_ip_notification`.
 
 - ##### **`ignored_ip_notification`**
 

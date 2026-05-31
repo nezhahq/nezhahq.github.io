@@ -56,6 +56,13 @@ outline: deep
   - 指定 Agent 连接 Dashboard 的真实 IP 请求头，例如 `X-Real-Ip`。
   - 如果选项值为 `NZ::Use-Peer-IP`，Dashboard 将会直接使用连接 IP，不再需要上层应用传递请求头。
 
+- ##### **`enable_mcp`**
+
+  - 布尔值，是否启用 Dashboard 内置的 MCP (Model Context Protocol) HTTP 入口。
+  - 默认关闭。启用后，客户端可通过 `POST /mcp` 使用 API Token 调用 MCP 工具；该入口不接受 JWT。
+  - 从开启切换为关闭时，Dashboard 会触发 kill switch，清理 MCP 文件传输临时 URL、撤销 MCP 传输流并取消正在执行的 MCP RPC。
+  - API Token 的 scope 与使用方法详见 [API 接口](/guide/api.html#api-token-pat)。
+
 - ##### **`user_template / admin_template`**
 
   - 默认使用的前端主题。
@@ -98,13 +105,6 @@ outline: deep
   - 布尔值，通知是否发送原始 IP。
   - 默认为 `false`，即发送脱敏后的 IP（例如 1.\*\*.1）。
 
-- ##### **`enable_mcp`**
-
-  - 布尔值，是否启用 MCP 入口，默认为关闭。
-  - 启用后 Dashboard 会接受 `POST /mcp` 请求；该入口只接受 PAT，不接受 JWT。认证和权限说明见 [API 接口 - MCP 接入](/guide/api.html#mcp-%E6%8E%A5%E5%85%A5)。
-  - 启用前应先检查 API Token 的 scope 和服务器白名单，只给 MCP 客户端授予最小权限。
-  - 关闭该选项会触发 MCP kill switch：新的 MCP 请求会被拒绝，正在进行的 MCP 调用和临时上传 / 下载地址也会被中断或清理。
-
 - ##### **`enable_ip_change_notification`**
 
   - 布尔值，是否启用 IP 变更通知。
@@ -116,7 +116,8 @@ outline: deep
 - ##### **`cover`**
 
   - 整数，指定 IP 变更通知的覆盖范围。
-  - `0` 为覆盖全部，`1` 为忽略全部。
+  - `1` 为覆盖全部，`ignored_ip_notification` 中的服务器会被排除。
+  - `2` 为忽略全部，只监控 `ignored_ip_notification` 中的服务器。
 
 - ##### **`ignored_ip_notification`**
 

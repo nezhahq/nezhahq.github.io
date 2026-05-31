@@ -186,6 +186,7 @@ function getGuideSidebarZhCN() {
         { text: '设置', link: '/guide/settings.html' },
         { text: '个人信息', link: '/guide/profile.html' },
         { text: 'API 接口', link: '/guide/api.html' },
+        { text: 'MCP', link: '/guide/mcp.html' },
         { text: '分组', link: '/guide/group.html' },
         { text: '多用户', link: '/guide/user.html' }
       ],
@@ -270,6 +271,7 @@ function getGuideSidebarEnUS() {
         { text: 'Settings', link: '/en_US/guide/settings.html' },
         { text: 'Profile', link: '/en_US/guide/profile.html' },
         { text: 'API Interface', link: '/en_US/guide/api.html' },
+        { text: 'MCP', link: '/en_US/guide/mcp.html' },
         { text: 'Grouping', link: '/en_US/guide/group.html' },
         { text: 'Multi-User', link: '/en_US/guide/user.html' },
       ]
