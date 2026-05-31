@@ -11,5 +11,5 @@ hero:
   actions:
     - theme: brand
       text: Start Now →
-      link: /en_US/developer/api
+      link: /en_US/developer/getting-started
 ---
