@@ -80,6 +80,77 @@ For later APIs that require login, include this request header:
 Authorization: Bearer JWT_TOKEN
 ```
 
+### Personal Access Token (PAT)
+
+JWT is mainly used for browser and admin-frontend sessions. For automation scripts, CI, LLM tools, and MCP clients, use a Personal Access Token (PAT). The PAT request header format is:
+
+```http
+Authorization: Bearer nzp_<secret>
+```
+
+Create and revoke PATs from **System Settings → API Tokens** in the admin frontend. When creating a PAT, fill in:
+
+- `name`: Token name, up to 128 characters.
+- `scopes`: Permission list, at least 1 item and at most 32 items.
+- `server_ids`: Optional server ID whitelist, up to 1000 items. Leave it empty to add no extra whitelist beyond the owner's existing server permissions.
+- `expires_in_days`: Optional expiration in days. Empty or `0` means never expires; the maximum is `3650`.
+
+After creation, the plaintext token is returned only once. Copy and store it immediately. Later list APIs only return masked token metadata, such as scopes, server whitelist, expiration time, last used time, and last used IP.
+
+::: warning
+The `/api/v1/api-tokens` token-management APIs are JWT-only. A PAT cannot create, modify, or delete PATs by itself.
+:::
+
+### PAT Scopes
+
+PAT scopes use the `nezha:{resource}:{verb}` naming scheme. JWT-authenticated requests do not go through PAT scope enforcement; PAT-authenticated requests must carry the scope required by each endpoint.
+
+Resources include:
+
+- `server`
+- `service`
+- `alertrule`
+- `cron`
+- `ddns`
+- `nat`
+- `notification`
+- `notification-group`
+- `transfer`
+- `admin`
+
+Verbs include:
+
+- `read`
+- `write`
+- `delete`
+- `exec`
+
+Common examples:
+
+- `nezha:server:read`: Read server lists, server metrics, and server-related service monitors.
+- `nezha:server:exec`: Create online terminals or call MCP remote-execution tools.
+- `nezha:cron:exec`: Manually trigger scheduled tasks.
+- `nezha:transfer:write`: Cancel or retry server transfer tasks.
+- `nezha:admin:*`: Admin resources such as users, WAF, online users, system settings, and maintenance.
+
+Wildcard scopes:
+
+- `nezha:<resource>:*`: Allows all actions under one resource, such as `nezha:server:*`.
+- `nezha:admin:*`: Allows admin resources and can only be issued by administrators.
+- `nezha:*`: Full access and can only be issued by administrators.
+
+### PAT-Forbidden APIs
+
+The following APIs are personal-account self-management flows. They explicitly reject PATs and must be called with a login JWT:
+
+- `POST /api/v1/refresh-token`
+- `GET /api/v1/profile`
+- `POST /api/v1/profile`
+- `POST /api/v1/oauth2/{provider}/unbind`
+- `GET /api/v1/api-tokens`
+- `POST /api/v1/api-tokens`
+- `DELETE /api/v1/api-tokens/{id}`
+
 ### Guest-Accessible APIs
 
 Some read-only APIs support guest access, but they are limited by site configuration and server hidden settings:
@@ -89,6 +160,32 @@ Some read-only APIs support guest access, but they are limited by site configura
 - In service history and server metrics APIs, guests can only query `1d` period data.
 
 ---
+
+## MCP Access
+
+Dashboard provides a standalone MCP endpoint:
+
+```http
+POST /mcp
+Authorization: Bearer nzp_<secret>
+```
+
+MCP is outside `/api/v1` and accepts PAT only, not JWT. Before using it, enable [`enable_mcp`](/en_US/configuration/dashboard.html#enable_mcp) in Dashboard configuration or the admin frontend. When disabled, Dashboard rejects new MCP calls and interrupts related MCP transfer tasks.
+
+For Streamable HTTP client compatibility, `GET /mcp` and `DELETE /mcp` explicitly return method-not-allowed. Actual calls should use `POST /mcp`. File transfer tools use `GET /mcp/download/:token` and `POST /mcp/upload/:token` as temporary transfer URLs.
+
+The MCP endpoint has an Origin guard to reduce browser cross-site call and DNS rebinding risks. Still, issue least-privilege PATs for MCP clients, and keep `enable_mcp` disabled when MCP is not in use.
+
+### MCP Tool Scopes
+
+| Tool | Required scope |
+| --- | --- |
+| `meta.whoami` | Any valid PAT |
+| `server.list` / `server.get` | `nezha:server:read` |
+| `server.exec` | `nezha:server:exec` |
+| `fs.list` / `fs.read` / `fs.download_url` | `nezha:server:read` |
+| `fs.write` / `fs.upload_url` | `nezha:server:write` |
+| `fs.delete` | `nezha:server:delete` |
 
 ## Response Format
 
@@ -324,24 +421,27 @@ Notes:
 
 ## Management APIs
 
-Management APIs require login, and some also require administrator privileges. Common paths:
+Management APIs require login. JWT requests are authorized by user role and resource ownership; PAT requests additionally require the matching scope. Common paths and PAT scopes are listed below. Use Swagger as the source of truth for fields and request bodies.
 
-- Users and profiles: `/api/v1/profile`, `/api/v1/user`
-- Servers: `/api/v1/server`, `/api/v1/server/config`, `/api/v1/batch-move/server`
-- Server groups: `/api/v1/server-group`
-- Notification methods: `/api/v1/notification`
-- Notification groups: `/api/v1/notification-group`
-- Alert rules: `/api/v1/alert-rule`
-- Service monitoring: `/api/v1/service`
-- Scheduled tasks: `/api/v1/cron`
-- DDNS: `/api/v1/ddns`
-- NAT: `/api/v1/nat`
-- Online terminal: `/api/v1/terminal`, `/api/v1/ws/terminal/{id}`
-- File management: `/api/v1/file`, `/api/v1/ws/file/{id}`
-- WAF and online users: `/api/v1/waf`, `/api/v1/online-user`
-- System settings and maintenance: `/api/v1/setting`, `/api/v1/maintenance`
+| Feature | Common paths | PAT scope |
+| --- | --- | --- |
+| Users and profiles | `/api/v1/profile`, `/api/v1/user`, `/api/v1/batch-delete/user` | Profile APIs forbid PAT; user management requires `nezha:admin:*` |
+| Servers | `/api/v1/server`, `/api/v1/server/config`, `/api/v1/batch-delete/server`, `/api/v1/batch-move/server`, `/api/v1/force-update/server` | `nezha:server:read` / `write` / `delete` |
+| Server groups | `/api/v1/server-group`, `/api/v1/batch-delete/server-group` | `nezha:server:read` / `write` / `delete` |
+| Server transfers | `/api/v1/transfer`, `/api/v1/transfer/{id}/cancel`, `/api/v1/transfer/{id}/retry`, `/api/v1/ws/transfer` | `nezha:transfer:read` / `write` |
+| Notification methods | `/api/v1/notification`, `/api/v1/batch-delete/notification` | `nezha:notification:read` / `write` / `delete` |
+| Notification groups | `/api/v1/notification-group`, `/api/v1/batch-delete/notification-group` | `nezha:notification-group:read` / `write` / `delete` |
+| Alert rules | `/api/v1/alert-rule`, `/api/v1/batch-delete/alert-rule` | `nezha:alertrule:read` / `write` / `delete` |
+| Service monitoring | `/api/v1/service/list`, `/api/v1/service`, `/api/v1/batch-delete/service` | `nezha:service:read` / `write` / `delete` |
+| Scheduled tasks | `/api/v1/cron`, `/api/v1/cron/{id}/manual`, `/api/v1/batch-delete/cron` | `nezha:cron:read` / `write` / `exec` / `delete` |
+| DDNS | `/api/v1/ddns`, `/api/v1/ddns/providers`, `/api/v1/batch-delete/ddns` | `nezha:ddns:read` / `write` / `delete` |
+| NAT | `/api/v1/nat`, `/api/v1/batch-delete/nat` | `nezha:nat:read` / `write` / `delete` |
+| Online terminal | `/api/v1/terminal`, `/api/v1/ws/terminal/{id}` | `nezha:server:exec` |
+| File management | `/api/v1/file`, `/api/v1/ws/file/{id}` | Requires all of `nezha:server:read`, `nezha:server:write`, and `nezha:server:delete` |
+| WAF and online users | `/api/v1/waf`, `/api/v1/batch-delete/waf`, `/api/v1/online-user`, `/api/v1/online-user/batch-block` | `nezha:admin:*` |
+| System settings and maintenance | `PATCH /api/v1/setting`, `POST /api/v1/maintenance` | `nezha:admin:*` |
 
-Use the Swagger documentation as the source of truth for fields, request bodies, and permission requirements. Before writing management automation scripts, test them in a staging environment to avoid bulk changes to servers, notifications, tasks, or user configuration.
+Before writing management automation scripts, test them in a staging environment to avoid bulk changes to servers, notifications, tasks, or user configuration.
 
 ---
 
