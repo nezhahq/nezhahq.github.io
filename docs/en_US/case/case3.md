@@ -1,4 +1,9 @@
 # Build your own server status query Telegram bot
+
+::: info
+This is an archived community project page. Compatibility with the current Nezha version is not verified. Check the upstream repository status and confirm that its API Token usage and API calls match your Nezha version before using it.
+:::
+
 Contributor: 
 + [tech-fever](https://github.com/tech-fever)
 
@@ -29,4 +34,3 @@ delete | Delete saved Nezha monitoring url link and token | ✔️
 id | Add an integer id after the command to query the information of a single server (refresh button only available in private chat) | ❌
 all | Query statistics for all servers | ❌
 search | Search for keywords in server names (multiple keywords supported, split by spaces) | ❌
-

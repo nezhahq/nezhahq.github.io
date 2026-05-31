@@ -1,4 +1,9 @@
 # 自建一个TG机器人来查询服务器信息  
+
+::: info
+这是社区项目归档页，当前版本兼容性未验证。使用前请先查看上游仓库状态，并确认其 API 调用方式适用于当前哪吒版本。
+:::
+
 贡献者:  
 + [spiritLHLS](https://github.com/spiritLHLS)   
 + [Erope](https://github.com/Erope/)  

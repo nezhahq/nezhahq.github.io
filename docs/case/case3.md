@@ -1,4 +1,9 @@
 # 自建使用 API 来进行查询,且支持多语言的 Telegram 查询机器人
+
+::: info
+这是社区项目归档页，当前版本兼容性未验证。使用前请先查看上游仓库状态，并确认其 API Token 和接口调用方式适用于当前哪吒版本。
+:::
+
 贡献者:  
 + [tech-fever](https://github.com/tech-fever)
 
