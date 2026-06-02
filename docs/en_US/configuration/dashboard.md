@@ -14,14 +14,20 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
 
   - Language setting for Dashboard.
   - Requires filling in POSIX-style locale codes, such as `en_US`. For a list of supported languages, see <https://hosted.weblate.org/projects/nezha/nezha-dashboard>.
+  - YAML uses underscore locale codes, such as `zh_CN` and `en_US`. The frontend may display hyphenated tags such as `zh-CN` and `en-US`, which are converted back to the YAML format when saved.
 
 - ##### **`site_name`**
 
   - Site name, such as `Nezha`.
 
-- ##### **`custom_code / custom_code_dashboard`**
+- ##### **`custom_code`**
 
-  - Custom code for the user frontend / management frontend.
+  - Custom code for the user frontend, injected into the public user frontend.
+  - User frontend variables such as `window.ForceShowServices`, `window.ForceShowMap`, and `window.ForceCardInline` only take effect here.
+
+- ##### **`custom_code_dashboard`**
+
+  - Custom code for the admin frontend, injected only into the logged-in admin frontend.
 
 - ##### **`install_host`**
 
@@ -37,6 +43,7 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
 - ##### **`tls`**
 
   - Boolean value, specifies whether the installation command enables TLS.
+  - Set this to `true` only when Agents connect through HTTPS, Dashboard built-in HTTPS, or a reverse proxy/CDN that terminates TLS. Do not enable it when `install_host` is a plaintext direct `host:port`.
   - The actual effect of this option is implemented by the frontend, and Dashboard itself does not use it.
 
 - ##### **`debug`** \*
@@ -50,6 +57,7 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
   - Specifies visitor's real IP request header for the Dashboard, such as `X-Real-Ip`.
   - After filling in, the built-in WAF will be automatically enabled, see [Web Application Firewall](/en_US/guide/settings.html#web-application-firewall).
   - If the option value is `NZ::Use-Peer-IP`, WAF will directly use the connection IP, and no longer need the upper-layer application to pass the request header.
+  - For complete usage instructions, reverse proxy examples, and recovery steps, see [Frontend Real IP Header Configuration](/en_US/guide/q12.html).
 
 - ##### **`agent_real_ip_header`**
 
@@ -63,9 +71,14 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
   - When switching from enabled to disabled, the Dashboard fires a kill switch that removes MCP file-transfer temporary URLs, revokes MCP transfer streams, and cancels in-flight MCP RPC calls.
   - For API Token scopes and usage, see [API Interface](/en_US/guide/api.html#api-token-pat).
 
-- ##### **`user_template / admin_template`**
+- ##### **`user_template`**
 
-  - Default frontend theme used.
+  - Default theme used by the user frontend.
+  - Only filling in the built-in theme path is supported, see [service/singleton/frontend-templates.yaml](https://github.com/nezhahq/nezha/blob/master/service/singleton/frontend-templates.yaml).
+
+- ##### **`admin_template`**
+
+  - Default theme used by the admin frontend.
   - Only filling in the built-in theme path is supported, see [service/singleton/frontend-templates.yaml](https://github.com/nezhahq/nezha/blob/master/service/singleton/frontend-templates.yaml).
 
 - ##### **`location`** \*

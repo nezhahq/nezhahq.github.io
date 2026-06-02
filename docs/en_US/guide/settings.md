@@ -24,7 +24,12 @@ The web interface can also change language in real time.
 
 This item is used to add custom styles or scripts to the web interface, such as changing the logo, background image, theme, external links, or analytics code.
 
-The user frontend reads the following global variables. Set them in custom code with `<script>...</script>`; use `true` / `false` for booleans, not strings.
+This item is split into two fields:
+
+- **User frontend custom code**: corresponds to `custom_code` in the configuration file and is injected into the public user frontend.
+- **Admin frontend custom code**: corresponds to `custom_code_dashboard` in the configuration file and is injected only into the logged-in admin frontend.
+
+The following global variables are read only by the user frontend. They do not take effect if placed in admin frontend custom code. Set them in user frontend custom code with `<script>...</script>`; use `true` / `false` for booleans, not strings.
 
 - `window.CustomBackgroundImage`: Desktop background image URL.
 - `window.CustomMobileBackgroundImage`: Mobile background image URL. If unset, the desktop background image is used.
@@ -42,7 +47,7 @@ The user frontend reads the following global variables. Set them in custom code 
 - `window.ForceShowMap`: Whether to expand the homepage map by default.
 - `window.ForcePeakCutEnabled`: Whether to enable network chart peak clipping by default, reducing the impact of sudden spikes on chart readability.
 
-Example:
+User frontend example:
 
 ```html
 <script>
@@ -59,10 +64,18 @@ Example:
 - Admin frontend
     1. `window.DisableAnimatedMan`: Boolean, turns the animated character illustration on/off.
 
+### Theme
+
+The theme setting selects the user frontend template and corresponds to [`user_template`](/en_US/configuration/dashboard.html#user_template). The admin frontend template corresponds to [`admin_template`](/en_US/configuration/dashboard.html#admin_template) and usually should stay at the default value.
+
+Built-in themes are maintained by the official project. Community themes are contributed by the community and may not be updated together with Dashboard releases. Before using a community theme, make sure the source is trusted, it is compatible with your Dashboard version, and you understand the risks from custom code, external assets, or style changes.
+
 ### Agent Connecting Address
 
 - This is required when installing Agents with the one-click script.
 - Set it to the Agent connection address you want to use, for example: `data.example.com:8008`.
+- If Agents connect through HTTPS, Dashboard built-in HTTPS, or a reverse proxy/CDN that terminates TLS, enable **Agent uses TLS connection**. The generated installation command will include the TLS option.
+- If Agents connect directly to a plaintext `host:port`, do not enable TLS. Otherwise the installation command will make Agents connect with TLS and they may fail to come online.
 - See [Agent Installation Prerequisites](/en_US/guide/agent.html#prerequisites) for details.
 
 ### Reserved Dashboard Hosts
@@ -75,23 +88,9 @@ Used by DDNS to query domain SOA records. If empty, the built-in list is used.
 
 ### Frontend Real IP Request Header
 
-- `CF-Connecting-IP` is a request header used to get the visitor's real IP.
-- When accessing the Dashboard through Cloudflare CDN proxy, enabling this feature lets the origin server identify the visitor's real IP correctly.
-  - **Use**: Security auditing, firewall rules, and logging.
+Used to identify the real client IP of visitors accessing the admin frontend and user frontend. Online users, audit records, login brute-force protection, and the Web Application Firewall all depend on it.
 
-::: danger
-1. **Configure Headers Carefully**
-   Frontend real IP request header configuration affects the built-in WAF (Web Application Firewall).
-   If you do not understand how headers are passed, do not modify this casually. Incorrect configuration may cause IPs to be blocked by the built-in WAF.
-
-2. **Prevent Account Brute Force Attacks**
-   The built-in WAF is designed to prevent local account brute force.
-   - If local accounts have no protection, high-frequency password enumeration attacks may occur, such as 100 password attempts per second.
-   - WAF IP identification depends on correctly configured request headers to block such attacks effectively.
-
-3. **Security Advice**
-   Enable this only after you understand how headers are actually passed, and carefully verify the result.
-:::
+For direct public access, select **Use Direct IP**. For Cloudflare, usually use `CF-Connecting-IP`. For Nginx, Caddy, Apache, or another reverse proxy, the proxy must pass `X-Real-IP`, `nz-realip`, or another matching header. For complete scenarios, reverse proxy examples, verification, and recovery, see [Frontend Real IP Header Configuration](/en_US/guide/q12.html).
 
 ### Agent Real IP Request Header
 
@@ -112,7 +111,7 @@ This feature sends notifications when a server IP address changes. Configure it 
    Select a rule to determine which servers need monitoring.
 
 2. **Specific Servers**
-   Used together with Cover to add exclusions for the selected rule.
+   Used together with Cover. When Cover is **Cover all**, this means **exclude specific servers**. When Cover is **Ignore all**, this means **only specific servers**.
 
 3. **Send notification to notification group**
    Select notification methods. Notification methods must be configured in advance on the Notifications page.
@@ -129,6 +128,8 @@ This feature sends notifications when a server IP address changes. Configure it 
 ## API Tokens
 
 This tab creates and revokes Personal Access Tokens (PATs). PATs are suitable for automation scripts, CI, LLM tools, and MCP clients.
+
+Normal members only see the **API Tokens** tab on the settings page. Other tabs such as system configuration, user management, online users, and Web Application Firewall are visible only to administrators.
 
 When creating a token, select scopes, optional server ID whitelist, and expiration. The plaintext token is shown only once after creation. Later lists only show metadata such as scopes, server whitelist, expiration time, last used time, and last used IP. For authentication format and scopes, see [API Interface - Personal Access Token](/en_US/guide/api.html#personal-access-token-pat).
 
@@ -149,6 +150,8 @@ View current guests / users connected to the frontend, including **IP** and **co
 ---
 
 ## Web Application Firewall
+
+The Web Application Firewall depends on **Frontend Real IP Request Header** to identify source IPs. Before configuring a real-IP header, read [Frontend Real IP Header Configuration](/en_US/guide/q12.html) and confirm Dashboard reads the real client IP.
 
 You can view current block entries and related useful information:
 
