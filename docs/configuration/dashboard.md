@@ -14,14 +14,20 @@ outline: deep
 
   - Dashboard 本体程序的语言设置。
   - 需要填写 POSIX 风格的区域代码，例如 `en_US`。支持的语言列表详见 <https://hosted.weblate.org/projects/nezha/nezha-dashboard>。
+  - YAML 配置使用下划线格式，例如 `zh_CN`、`en_US`；前端界面可能显示为连字符格式，例如 `zh-CN`、`en-US`，保存时会转换为 YAML 使用的格式。
 
 - ##### **`site_name`**
 
   - 站点名称，例如 `Nezha`。
 
-- ##### **`custom_code / custom_code_dashboard`**
+- ##### **`custom_code`**
 
-  - 用户前端 / 管理前端的自定义代码。
+  - 用户前端的自定义代码，会注入公开访问的用户前端。
+  - `window.ForceShowServices`、`window.ForceShowMap`、`window.ForceCardInline` 等用户前端变量只在这里生效。
+
+- ##### **`custom_code_dashboard`**
+
+  - 管理前端的自定义代码，只会注入登录后的管理前端。
 
 - ##### **`install_host`**
 
@@ -37,6 +43,7 @@ outline: deep
 - ##### **`tls`**
 
   - 布尔值，指定安装命令是否启用 TLS。
+  - 只有 Agent 通过 HTTPS、Dashboard 内置 HTTPS 或反向代理/CDN TLS 终结连接时才应设置为 `true`；如果 `install_host` 是明文直连的 `host:port`，不要启用。
   - 这个选项的实际效果由前端实现，Dashboard 本体不会使用。
 
 - ##### **`debug`** \*
@@ -63,9 +70,14 @@ outline: deep
   - 从开启切换为关闭时，Dashboard 会触发 kill switch，清理 MCP 文件传输临时 URL、撤销 MCP 传输流并取消正在执行的 MCP RPC。
   - API Token 的 scope 与使用方法详见 [API 接口](/guide/api.html#api-token-pat)。
 
-- ##### **`user_template / admin_template`**
+- ##### **`user_template`**
 
-  - 默认使用的前端主题。
+  - 用户前端默认使用的主题。
+  - 只支持填写已经内置的主题路径，详见 [service/singleton/frontend-templates.yaml](https://github.com/nezhahq/nezha/blob/master/service/singleton/frontend-templates.yaml)。
+
+- ##### **`admin_template`**
+
+  - 管理前端默认使用的主题。
   - 只支持填写已经内置的主题路径，详见 [service/singleton/frontend-templates.yaml](https://github.com/nezhahq/nezha/blob/master/service/singleton/frontend-templates.yaml)。
 
 - ##### **`location`** \*

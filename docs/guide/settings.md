@@ -24,7 +24,12 @@ outline: deep
 
 此项用于在网页界面中添加自定义样式或脚本代码，例如修改 Logo、背景图、主题、外链或统计代码。
 
-用户前端会读取以下全局变量。请在自定义代码中通过 `<script>...</script>` 设置；布尔值使用 `true` / `false`，不要写成字符串。
+此项分为两类：
+
+- **用户前端自定义代码**：对应配置文件中的 `custom_code`，会注入公开访问的用户前端。
+- **管理前端自定义代码**：对应配置文件中的 `custom_code_dashboard`，只会注入登录后的管理前端。
+
+下面这些全局变量仅由用户前端读取，放入管理前端自定义代码不会生效。请在用户前端自定义代码中通过 `<script>...</script>` 设置；布尔值使用 `true` / `false`，不要写成字符串。
 
 - `window.CustomBackgroundImage`：桌面端背景图 URL。
 - `window.CustomMobileBackgroundImage`：移动端背景图 URL，未设置时会沿用桌面端背景图。
@@ -42,7 +47,7 @@ outline: deep
 - `window.ForceShowMap`：是否默认展开首页地图。
 - `window.ForcePeakCutEnabled`：是否默认开启网络图表的峰值裁剪，用于降低突发尖峰对图表可读性的影响。
 
-示例：
+用户前端示例：
 
 ```html
 <script>
@@ -59,10 +64,18 @@ outline: deep
 - 管理前端
     1. `window.DisableAnimatedMan`：布尔值，开/关动画人物插图
 
+### 主题
+
+主题设置用于选择用户前端展示模板，对应配置文件中的 [`user_template`](/configuration/dashboard.html#user_template)。管理前端模板对应 [`admin_template`](/configuration/dashboard.html#admin_template)，通常保持默认即可。
+
+内置主题由官方维护；社区主题来自社区贡献，可能不会随 Dashboard 版本同步更新。使用社区主题前请确认来源可信、兼容当前版本，并了解其自定义代码、外链资源或样式变更带来的风险。
+
 ### Agent 对接地址
 
 - 此项为使用一键脚本安装 Agent 的必要设置。  
 - 设置内容为你希望使用的 Agent 连接地址，例如：`data.example.com:8008`。  
+- 如果 Agent 通过 HTTPS、Dashboard 内置 HTTPS 或已在反向代理/CDN 上完成 TLS 终结连接，请启用 **Agent 使用 TLS 连接**，生成的安装命令会带上 TLS 参数。
+- 如果 Agent 直连明文 `host:port`，请不要启用 TLS，否则安装命令会让 Agent 按 TLS 方式连接，可能导致无法上线。
 - 详情请参考 [Agent 安装准备工作](/guide/agent.html#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C)。
 
 ### Dashboard 保留域名
@@ -78,6 +91,7 @@ outline: deep
 - `CF-Connecting-IP` 是一个用于获取访问者真实 IP 的请求头字段。  
 - 当通过 Cloudflare CDN 代理访问 Dashboard 时，启用此功能可以让源服务器正确识别访问者的真实 IP。  
   - **用途**：便于进行安全审计、防火墙规则配置和日志记录。
+- 如果 Dashboard 直接面向公网，没有上层反向代理或 CDN 传递真实 IP Header，可选择 **使用直连 IP**，对应配置值为 `NZ::Use-Peer-IP`。
 
 
 ::: danger   
@@ -113,7 +127,7 @@ outline: deep
    选择一条规则以确定需要监控哪些服务器。
 
 2. **特定服务器**  
-   配合覆盖范围设置，可以为选定规则添加排除项。
+   配合覆盖范围设置。覆盖范围为 **覆盖全部** 时，这里表示 **排除特定服务器**；覆盖范围为 **忽略全部** 时，这里表示 **仅特定服务器**。
 
 3. **提醒发送至通知分组**  
    选择通知方式（通知方式需提前在“通知”页中设置）。
@@ -130,6 +144,8 @@ outline: deep
 ## API Tokens
 
 此标签页用于创建和吊销 Personal Access Token（PAT）。PAT 适合自动化脚本、CI、LLM 工具和 MCP 客户端使用。
+
+普通成员进入设置页时只会看到 **API Tokens** 标签页；其它系统配置、用户管理、在线用户和 Web 应用防火墙等标签页仅管理员可见。
 
 创建 Token 时可以选择 scope、可访问的服务器 ID 白名单和过期时间。Token 明文只会在创建成功后显示一次；后续列表只会展示权限、服务器白名单、过期时间、最后使用时间和最后使用 IP 等元信息。认证格式和 scope 说明见 [API 接口 - Personal Access Token](/guide/api.html#personal-access-token-pat)。
 
