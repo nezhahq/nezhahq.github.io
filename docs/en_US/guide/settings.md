@@ -88,24 +88,9 @@ Used by DDNS to query domain SOA records. If empty, the built-in list is used.
 
 ### Frontend Real IP Request Header
 
-- `CF-Connecting-IP` is a request header used to get the visitor's real IP.
-- When accessing the Dashboard through Cloudflare CDN proxy, enabling this feature lets the origin server identify the visitor's real IP correctly.
-  - **Use**: Security auditing, firewall rules, and logging.
-- If Dashboard is directly exposed to the public network and no reverse proxy or CDN passes a real-IP header, select **Use Direct IP**. The corresponding configuration value is `NZ::Use-Peer-IP`.
+Used to identify the real client IP of visitors accessing the admin frontend and user frontend. Online users, audit records, login brute-force protection, and the Web Application Firewall all depend on it.
 
-::: danger
-1. **Configure Headers Carefully**
-   Frontend real IP request header configuration affects the built-in WAF (Web Application Firewall).
-   If you do not understand how headers are passed, do not modify this casually. Incorrect configuration may cause IPs to be blocked by the built-in WAF.
-
-2. **Prevent Account Brute Force Attacks**
-   The built-in WAF is designed to prevent local account brute force.
-   - If local accounts have no protection, high-frequency password enumeration attacks may occur, such as 100 password attempts per second.
-   - WAF IP identification depends on correctly configured request headers to block such attacks effectively.
-
-3. **Security Advice**
-   Enable this only after you understand how headers are actually passed, and carefully verify the result.
-:::
+For direct public access, select **Use Direct IP**. For Cloudflare, usually use `CF-Connecting-IP`. For Nginx, Caddy, Apache, or another reverse proxy, the proxy must pass `X-Real-IP`, `nz-realip`, or another matching header. For complete scenarios, reverse proxy examples, verification, and recovery, see [Frontend Real IP Header Configuration](/en_US/guide/q12.html).
 
 ### Agent Real IP Request Header
 
@@ -165,6 +150,8 @@ View current guests / users connected to the frontend, including **IP** and **co
 ---
 
 ## Web Application Firewall
+
+The Web Application Firewall depends on **Frontend Real IP Request Header** to identify source IPs. Before configuring a real-IP header, read [Frontend Real IP Header Configuration](/en_US/guide/q12.html) and confirm Dashboard reads the real client IP.
 
 You can view current block entries and related useful information:
 

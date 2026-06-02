@@ -57,6 +57,7 @@ outline: deep
   - 指定访客访问 Dashboard 的真实 IP 请求头，例如 `X-Real-Ip`。
   - 填写之后将会自动启用内置 WAF，详见 [Web 应用防火墙](/guide/settings.html#web-%E5%BA%94%E7%94%A8%E9%98%B2%E7%81%AB%E5%A2%99)。
   - 如果选项值为 `NZ::Use-Peer-IP`，WAF 将会直接使用连接 IP，不再需要上层应用传递请求头。
+  - 完整使用说明、反向代理示例和恢复方法见 [前端真实 IP 请求头](/guide/q12.html)。
 
 - ##### **`agent_real_ip_header`**
 

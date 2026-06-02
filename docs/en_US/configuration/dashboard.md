@@ -57,6 +57,7 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
   - Specifies visitor's real IP request header for the Dashboard, such as `X-Real-Ip`.
   - After filling in, the built-in WAF will be automatically enabled, see [Web Application Firewall](/en_US/guide/settings.html#web-application-firewall).
   - If the option value is `NZ::Use-Peer-IP`, WAF will directly use the connection IP, and no longer need the upper-layer application to pass the request header.
+  - For complete usage instructions, reverse proxy examples, and recovery steps, see [Frontend Real IP Header Configuration](/en_US/guide/q12.html).
 
 - ##### **`agent_real_ip_header`**
 
