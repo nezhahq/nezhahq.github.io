@@ -26,7 +26,7 @@ To add a new service monitor, follow these steps:
      - `ICMP Ping`: Enter a domain name or IP address without a port, for example: `1.1.1.1` or `example.com`.
      - `TCPing`: Enter a domain name or IP address with a port, for example: `1.1.1.1:80` or `example.com:22`.
    - **Type**: Select the monitor type: `HTTP GET`, `ICMP Ping`, or `TCPing`.
-   - **Show in Services**: Whether to show this monitor to guests. This is a privacy option.
+   - **Hidden from Visitors**: Whether to hide this monitor from guests. This is a privacy option. Visible by default; when checked, guests cannot see this service monitor, matching the server's "Hidden from Visitors" behavior.
    - **Interval**: Monitoring interval in seconds.
    - **Sort**: Display order for service monitors. Higher values are shown first.
    - **Cover**: Select a rule to decide which Agents request the target.

@@ -220,6 +220,7 @@ MCP 工具同时受三层限制：
 - 默认超时 30 秒。
 - `timeout_seconds` 最大 300 秒。
 - stdout/stderr 默认各最多约 64 KiB，可通过 `max_output_bytes` 调整，但 Agent 有硬上限。
+- 命令返回或超时时，Agent 会回收整个进程组 / JobObject。`cmd &`、`nohup`、`disown` 这类普通后台进程都会被一并杀掉；要让进程在调用结束后继续存活，必须让它脱离会话（如 `setsid`、`screen -dmS`、`tmux new -d`、`systemd-run`；Windows 需从 Job Object breakaway）。
 - 如果需要管道、重定向、变量展开等 shell 语法，请显式调用 shell：
 
 ```json

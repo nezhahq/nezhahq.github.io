@@ -220,6 +220,7 @@ Requires `nezha:server:exec`:
 - The default timeout is 30 seconds.
 - `timeout_seconds` is capped at 300 seconds.
 - stdout/stderr default to about 64 KiB each, and can be adjusted with `max_output_bytes`, subject to the Agent hard limit.
+- When the command returns or times out, the Agent reaps the entire process group / Job Object. Plain background jobs (`cmd &`, `nohup`, `disown`) are killed along with it; to keep a process running after the call, fully detach it from the session (e.g. `setsid`, `screen -dmS`, `tmux new -d`, `systemd-run`; on Windows it must break away from the Job Object).
 - For shell features such as pipes, redirection, or variable expansion, explicitly call a shell:
 
 ```json
