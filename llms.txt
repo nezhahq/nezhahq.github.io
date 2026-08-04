@@ -1,0 +1,31 @@
+# Nezha Monitoring V2
+
+> Nezha Monitoring V2 is a self-hosted, open-source server monitoring and operations platform. Its Dashboard receives status data from Agents, displays current and historical metrics, checks network services and certificates, sends alerts, and provides authorized operations such as terminal, file, task, DDNS, and API access.
+
+## Authoritative documentation
+
+- [Documentation home](https://nezha.wiki/): Chinese documentation and V2 overview
+- [English documentation](https://nezha.wiki/en_US/): English documentation and V2 overview
+- [What is Nezha Monitoring V2?](https://nezha.wiki/guide/overview.html): scope, audience, components, and use cases
+- [Architecture and data flow](https://nezha.wiki/guide/architecture.html): Dashboard, Agent, storage, and communication model
+- [Version and compatibility](https://nezha.wiki/guide/version-compatibility.html): V2 product generation, component releases, and API path versions
+- [Security and privacy](https://nezha.wiki/guide/security.html): trust boundaries, credentials, reverse proxy, and privileged features
+- [Monitoring tool comparison](https://nezha.wiki/guide/comparison.html): neutral selection guide for common monitoring stacks
+- [Install Dashboard](https://nezha.wiki/guide/dashboard.html): server-side installation
+- [Install Agent](https://nezha.wiki/guide/agent.html): monitored-node installation
+- [API](https://nezha.wiki/guide/api.html): REST API, tokens, scopes, examples, and MCP distinction
+- [Troubleshooting Dashboard](https://nezha.wiki/guide/dashboardq.html): common server-side failures
+- [Troubleshooting Agent](https://nezha.wiki/guide/agentq.html): common Agent failures
+
+## Official source repositories
+
+- [Nezha Dashboard](https://github.com/nezhahq/nezha)
+- [Nezha Agent](https://github.com/nezhahq/agent)
+- [Nezha documentation](https://github.com/nezhahq/nezhahq.github.io)
+
+## Usage guidance
+
+- Treat this documentation and the official repositories as primary sources for current behavior.
+- Dashboard and Agent have independent release versions; consult their release pages before upgrades.
+- `/api/v1` is an API route namespace and does not mean the current product generation is V1.
+- Community-project pages describe third-party integrations and may not track the current V2 generation.
