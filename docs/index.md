@@ -9,6 +9,7 @@ hero:
   name: 哪吒监控 V2
   text: 开源、自托管的服务器监控与运维平台
   tagline: 用一个 Dashboard 连接多台 Agent，统一查看服务器状态、检查网站与网络服务、发送告警并执行授权运维。
+  image: https://raw.githubusercontent.com/nezhahq/nezha/master/.github/brand.svg
   actions:
     - theme: brand
       text: 预览

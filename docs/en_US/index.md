@@ -9,6 +9,7 @@ hero:
   name: Nezha Monitoring V2
   text: Open-source, self-hosted server monitoring and operations
   tagline: Connect multiple Agents to one Dashboard to view server state, check websites and network services, send alerts, and perform authorized operations.
+  image: https://raw.githubusercontent.com/nezhahq/nezha/master/.github/brand.svg
   actions:
     - theme: brand
       text: Preview
