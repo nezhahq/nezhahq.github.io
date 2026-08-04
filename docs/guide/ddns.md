@@ -1,4 +1,5 @@
 ---
+description: 配置哪吒监控 V2 DDNS，在 Agent IP 变化时更新 DNS 记录，覆盖提供商凭据、域名、IP 选择、触发逻辑和敏感字段编辑。
 outline: deep
 ---
 

@@ -1,10 +1,11 @@
 ---
+description: Nezha Monitoring V2 Dashboard REST API guide for /api/v1, JWT, API Tokens, scopes, server and service queries, live WebSocket, file transfer, MCP, and request examples.
 outline: deep
 ---
 
 # API Interface
 
-Since v1, the Nezha Monitor Dashboard primarily uses the `/api/v1` path. APIs return JSON and are suitable for custom frontends, bots, automation scripts, and internal operations tools.
+The current Nezha Monitoring V2 Dashboard primarily uses `/api/v1`; here, `v1` is the API route version and does not mean that the product is still V1. APIs return JSON and are suitable for custom frontends, bots, automation scripts, and internal operations tools.
 
 If you need a complete API list synchronized with the source code, use the Dashboard's built-in Swagger documentation first. This page keeps common APIs and calling rules for quick reference.
 
@@ -264,7 +265,7 @@ POST /mcp
 Authorization: Bearer nzp_<secret>
 ```
 
-MCP is outside `/api/v1` and accepts PAT only, not JWT. Before using it, enable [`enable_mcp`](/en_US/configuration/dashboard.html#enable_mcp) in Dashboard configuration or the admin frontend. When disabled, Dashboard rejects new MCP calls and interrupts related MCP transfer tasks.
+MCP is outside `/api/v1` and accepts PAT only, not JWT. Before using it, enable [`enable_mcp`](/en_US/configuration/dashboard.html#enable-mcp) in Dashboard configuration or the admin frontend. When disabled, Dashboard rejects new MCP calls and interrupts related MCP transfer tasks.
 
 For Streamable HTTP client compatibility, `GET /mcp` and `DELETE /mcp` explicitly return method-not-allowed. Actual calls should use `POST /mcp`. File transfer tools use `GET /mcp/download/:token` and `POST /mcp/upload/:token` as temporary transfer URLs.
 
@@ -638,3 +639,9 @@ if not payload.get("success"):
 for point in payload["data"]["data_points"]:
     print(point["ts"], point["value"])
 ```
+
+## Related documentation
+
+- [Version and compatibility](/en_US/guide/version-compatibility.html): separate product V2, component releases, and `/api/v1`.
+- [Security and privacy](/en_US/guide/security.html): least-privilege PAT scopes, expiration, storage, and MCP risk.
+- [Architecture and data flow](/en_US/guide/architecture.html): relationships among API, WebSocket, gRPC, tasks, and IOStream.

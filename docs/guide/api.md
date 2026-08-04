@@ -1,10 +1,11 @@
 ---
+description: 哪吒监控 V2 Dashboard REST API 指南，覆盖 /api/v1、JWT、API Token、scope、服务器与服务查询、实时 WebSocket、文件传输、MCP 和调用示例。
 outline: deep
 ---
 
 # API 接口
 
-哪吒监控 Dashboard 从 v1 起主要使用 `/api/v1` 路径。接口返回 JSON，适合自定义前端、机器人、自动化脚本和内部运维工具使用。
+哪吒监控 V2 Dashboard 当前主要使用 `/api/v1` 路径；这里的 `v1` 是 API 路由版本，并不表示产品仍是 V1。接口返回 JSON，适合自定义前端、机器人、自动化脚本和内部运维工具使用。
 
 如果需要完整、随源码同步的接口列表，建议优先使用 Dashboard 内置 Swagger 文档；本页保留常用接口和调用规则，方便快速上手。
 
@@ -264,7 +265,7 @@ POST /mcp
 Authorization: Bearer nzp_<secret>
 ```
 
-MCP 不在 `/api/v1` 下，并且只接受 PAT，不接受 JWT。启用前需要在 Dashboard 配置或管理前端中打开 [`enable_mcp`](/configuration/dashboard.html#enable_mcp)。关闭后，Dashboard 会拒绝新的 MCP 调用，并中断相关的 MCP 传输任务。
+MCP 不在 `/api/v1` 下，并且只接受 PAT，不接受 JWT。启用前需要在 Dashboard 配置或管理前端中打开 [`enable_mcp`](/configuration/dashboard.html#enable-mcp)。关闭后，Dashboard 会拒绝新的 MCP 调用，并中断相关的 MCP 传输任务。
 
 为兼容 Streamable HTTP 客户端，`GET /mcp` 和 `DELETE /mcp` 会明确返回 method-not-allowed；实际调用应使用 `POST /mcp`。文件传输类工具会使用 `GET /mcp/download/:token` 和 `POST /mcp/upload/:token` 作为临时传输地址。
 
@@ -638,3 +639,9 @@ if not payload.get("success"):
 for point in payload["data"]["data_points"]:
     print(point["ts"], point["value"])
 ```
+
+## 相关文档
+
+- [版本与兼容性](/guide/version-compatibility.html)：区分产品 V2、组件 Release 与 `/api/v1`。
+- [安全与隐私](/guide/security.html)：PAT 最小 scope、到期、存储与 MCP 风险。
+- [架构与数据流](/guide/architecture.html)：API、WebSocket、gRPC、任务与 IOStream 的关系。

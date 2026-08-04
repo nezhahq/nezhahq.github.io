@@ -1,4 +1,5 @@
 ---
+description: Troubleshoot common Nezha Monitoring V2 Dashboard issues involving IPs, reverse proxies, database locks, service history, IOStream quotas, configuration, login, and runtime logs.
 outline: deep
 ---
 

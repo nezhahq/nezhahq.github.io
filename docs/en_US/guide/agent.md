@@ -1,4 +1,5 @@
 ---
+description: Install Nezha Monitoring V2 Agent and connect it to Dashboard, with one-command or manual setup, configuration, service management, and online verification for documented platforms.
 outline: deep
 ---
 
@@ -555,3 +556,10 @@ curl -L https://raw.githubusercontent.com/nezhahq/scripts/main/agent/install.sh 
 Replace `your_server_uuid` with the actual UUID of the target server.
 
 `NZ_CLIENT_SECRET` must be the target user's connection secret, not the global `agent_secret_key` from the Dashboard configuration file. The current frontend does not provide a separate connection-secret copy button; prefer the installation command generated on the server page. Administrators can use the management API to read a user's `agent_secret` for batch operations.
+
+## Next steps
+
+- Use [Agent configuration](/en_US/configuration/agent.html) to change collection, update, or execution capabilities.
+- Configure [service monitoring](/en_US/guide/services.html) and [notifications](/en_US/guide/notifications.html).
+- Read [Security and privacy](/en_US/guide/security.html) before enabling terminal or task operations.
+- If Agent does not come online, follow the [startup and connectivity checklist](/en_US/guide/q2.html).

@@ -1,4 +1,5 @@
 ---
+description: Configure Nezha Monitoring V2 alert rules, notification methods and groups, templates, offline and resource thresholds, duration sampling, and credential-redaction edit behavior.
 outline: deep
 ---
 

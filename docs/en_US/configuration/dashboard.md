@@ -1,4 +1,5 @@
 ---
+description: Complete Nezha Monitoring V2 Dashboard YAML configuration reference for domains, TLS, real IP, OAuth2, JWT, frontends, MCP, TSDB, memory, and notification privacy.
 outline: deep
 ---
 
@@ -230,3 +231,10 @@ Taking `systemd` as an example:
 ```shell
 systemctl restart nezha-dashboard.service
 ```
+
+## Related documentation
+
+- [Architecture and data flow](/en_US/guide/architecture.html)
+- [Security and privacy](/en_US/guide/security.html)
+- [Version and compatibility](/en_US/guide/version-compatibility.html)
+- [Dashboard troubleshooting](/en_US/guide/dashboardq.html)

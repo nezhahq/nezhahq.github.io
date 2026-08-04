@@ -34,10 +34,13 @@ jobs:
             ${{ runner.os }}-node-
             
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
         
       - name: Build
         run: npm run build
+
+      - name: Audit generated SEO output
+        run: npm run test:seo
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4

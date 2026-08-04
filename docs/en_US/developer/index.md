@@ -1,8 +1,9 @@
 ---
 layout: home
 
-title: Nezha Monitoring - Server monitoring tool  
+title: Nezha Monitoring V2 development manual
 titleTemplate: Development Manual
+description: Official Nezha Monitoring V2 development manual entry point for Dashboard setup, API documentation, internationalization, source repositories, and contribution workflow.
 
 hero:
   name: Development Manual
@@ -11,5 +12,5 @@ hero:
   actions:
     - theme: brand
       text: Start Now →
-      link: /en_US/developer/getting-started
+      link: /en_US/developer/getting-started.html
 ---

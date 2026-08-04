@@ -1,4 +1,5 @@
 ---
+description: Nezha Monitoring V2 Agent YAML reference for Dashboard endpoint, connection secret, TLS, reporting, system metrics, custom IP API, updates, and command or NAT disable settings.
 outline: deep
 ---
 
@@ -15,7 +16,7 @@ In the admin frontend, you can modify the Agent's configuration and apply it dir
 - ##### **`client_secret`**
 
   - The client secret used for secure communication with the Dashboard.
-  - Since v1, connection secrets are bound to users. The current frontend does not provide a separate “copy connection secret” button; normally, use the installation command generated on the server page, or extract `NZ_CLIENT_SECRET` from that command.
+  - In the current V2 generation, connection secrets are bound to users (a mechanism introduced in V1). The current frontend does not provide a separate “copy connection secret” button; normally, use the installation command generated on the server page, or extract `NZ_CLIENT_SECRET` from that command.
   - If an administrator needs to configure an Agent for another user manually, read that user's `agent_secret` through the management API. Do not use the global `agent_secret_key` from the Dashboard configuration file for user-owned servers.
   - If this value is wrong, the Agent cannot authenticate with the Dashboard.
 
@@ -164,3 +165,10 @@ For multiple Agent service scenarios, you can specify the corresponding configur
    sudo systemctl restart <service-name>
    ```
    Replace `<service-name>` with the actual service name, such as `nezha-agent@2.service`.
+
+## Related documentation
+
+- [Agent installation](/en_US/guide/agent.html)
+- [Architecture and data flow](/en_US/guide/architecture.html)
+- [Security and privacy](/en_US/guide/security.html)
+- [Agent troubleshooting](/en_US/guide/agentq.html)

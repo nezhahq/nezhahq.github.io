@@ -1,8 +1,9 @@
 ---
 layout: home
 
-title: 哪吒监控 - 服务器监控与运维工具  
+title: 哪吒监控 V2 开发手册
 titleTemplate: 开发手册
+description: 哪吒监控 V2 官方开发手册入口，提供 Dashboard 开发环境、API 文档、国际化流程、源码仓库和贡献指引。
 
 hero:
   name: 开发手册
@@ -12,5 +13,5 @@ hero:
   actions:
     - theme: brand
       text: 开始使用 →  
-      link: /developer/api
+      link: /developer/api.html
 ---

@@ -1,4 +1,5 @@
 ---
+description: 在 Linux 服务器安装哪吒监控 V2 Dashboard，配置 8008 端口、访问域名、Agent 通信、反向代理、初始管理员密码和更新流程。
 outline: deep
 ---
 
@@ -14,7 +15,7 @@ outline: deep
 - 一个配置好 CDN，用作公开访问，CDN 需支持 WebSocket 协议；  
 - 另一个域名不使用 CDN，用作 Agent 与 Dashboard 的通信。 
 
-尽管 V1 版本不再区分访问端口和通信端口，但由于不同厂商的 CDN 配置可能导致通信异常，仅建议按上述方式准备域名（非强制要求）。 
+当前 V2 的访问和 Agent 通信可以共用同一端口；但不同 CDN 对 gRPC 和长连接的支持可能导致通信异常，因此仍建议按上述方式准备两个域名（非强制要求）。
 
 本文档以 "dashboard.example.com" 和 "data.example.com" 为例。
 :::
@@ -69,3 +70,10 @@ curl -L https://gitee.com/naibahq/scripts/raw/main/install.sh -o nezha.sh && chm
 ./nezha.sh
 ```
 选择重启面板并更新。
+
+## 下一步
+
+- [安装 Agent](/guide/agent.html)并确认第一台服务器上线。
+- 阅读[架构与数据流](/guide/architecture.html)，核对反向代理和存储设计。
+- 按[安全与隐私](/guide/security.html)完成生产环境加固。
+- 升级前查看[版本与兼容性](/guide/version-compatibility.html)。

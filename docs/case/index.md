@@ -1,8 +1,9 @@
 ---
 layout: home
 
-title: 哪吒监控 - 服务器监控与运维工具  
+title: 哪吒监控 V2 社区项目
 titleTemplate: 社区项目
+description: 哪吒监控 V2 社区项目索引，收录第三方移动客户端、机器人、代理与扩展；部署前请独立核对兼容版本、维护状态、安全性和上游说明。
 
 hero:
   name: 哪吒监控社区项目
@@ -12,7 +13,7 @@ hero:
   actions:
     - theme: brand
       text: 查看项目 →
-      link: /case/case1
+      link: /case/case1.html
 
 features:
   - title: 提交项目

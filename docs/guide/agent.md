@@ -1,4 +1,5 @@
 ---
+description: 安装哪吒监控 V2 Agent 并连接 Dashboard，覆盖 Linux、Windows、macOS、群晖等环境的一键或手动安装、配置文件、服务管理和上线验证。
 outline: deep
 ---
 
@@ -563,3 +564,10 @@ curl -L https://raw.githubusercontent.com/nezhahq/scripts/main/agent/install.sh 
 将 `your_server_uuid` 替换为目标服务器的实际 UUID。
 
 `NZ_CLIENT_SECRET` 需要使用目标用户的连接密钥，不是 Dashboard 配置文件中的全局 `agent_secret_key`。当前前台没有单独的连接密钥复制入口，优先以服务器页面生成的安装命令为准；管理员需要批量处理时，可通过管理接口读取对应用户的 `agent_secret`。
+
+## 下一步
+
+- 需要调整采集、更新或执行能力时查看 [Agent 配置](/configuration/agent.html)。
+- 配置[服务监控](/guide/services.html)和[通知](/guide/notifications.html)。
+- 上线授权终端或任务前阅读[安全与隐私](/guide/security.html)。
+- Agent 无法上线时按[启动/上线自检流程](/guide/q2.html)排查。

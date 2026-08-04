@@ -1,4 +1,5 @@
 ---
+description: 哪吒监控 V2 Agent YAML 配置参考，覆盖 Dashboard 地址、连接密钥、TLS、上报周期、系统指标、自定义 IP API、更新和命令/NAT 禁用选项。
 outline: deep
 ---
 
@@ -15,7 +16,7 @@ Agent 配置文件格式为 YAML。
 - ##### **`client_secret`**
 
   - 用于与 Dashboard 进行安全通信的客户端密钥。
-  - v1 之后连接密钥与用户绑定。当前前台没有单独的“复制连接密钥”入口，通常应直接使用服务器页面生成的安装命令，或从该命令中的 `NZ_CLIENT_SECRET` 提取。
+  - 当前 V2 中连接密钥与用户绑定（此机制自 V1 引入）。当前前台没有单独的“复制连接密钥”入口，通常应直接使用服务器页面生成的安装命令，或从该命令中的 `NZ_CLIENT_SECRET` 提取。
   - 管理员如需为其他用户手动配置 Agent，可通过管理接口读取对应用户的 `agent_secret`，不要继续使用配置文件中的全局 `agent_secret_key`。
   - 此参数填写错误时，Agent 无法通过 Dashboard 鉴权。
 
@@ -164,3 +165,10 @@ Agent 配置文件格式为 YAML。
    sudo systemctl restart <service-name>
    ```
    将 `<service-name>` 替换为实际的服务名称，例如 `nezha-agent@2.service`。
+
+## 相关文档
+
+- [Agent 安装](/guide/agent.html)
+- [架构与数据流](/guide/architecture.html)
+- [安全与隐私](/guide/security.html)
+- [Agent 常见问题](/guide/agentq.html)

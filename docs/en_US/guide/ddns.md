@@ -1,4 +1,5 @@
 ---
+description: Configure Nezha Monitoring V2 DDNS to update DNS records after Agent IP changes, including provider credentials, domains, IP selection, triggers, and sensitive-field editing.
 outline: deep
 ---
 

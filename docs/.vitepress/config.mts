@@ -1,8 +1,17 @@
 import { defineConfig } from 'vitepress'
+import { descriptionForPage, seoHead, sitemapItems, SITE_URL } from './seo'
 
 export default defineConfig({
   lastUpdated: true,
   lang: 'zh-CN',
+  sitemap: {
+    hostname: SITE_URL,
+    transformItems: sitemapItems
+  },
+  transformPageData(pageData) {
+    return { description: descriptionForPage(pageData) }
+  },
+  transformHead: seoHead,
   head: [
     ['script', { src: 'https://cdn.wwads.cn/js/makemoney.js', async: 'true' }],
     [
@@ -31,8 +40,8 @@ export default defineConfig({
     root: {
       lang: 'zh-CN',
       label: '简体中文',
-      title: '哪吒服务器监控',
-      description: '哪吒监控是一款轻量化的服务器监控和运维工具，提供实时性能监控与告警通知。作为开源项目，它支持企业自托管，保护数据隐私，并支持多语言。哪吒服务器监控安装简便，支持自定义监控项目，可满足不同服务器运维需求。',
+      title: '哪吒监控 V2 文档',
+      description: '哪吒监控 V2 官方文档，提供 Dashboard 与 Agent 的安装、服务器监控、服务探测、告警通知、运维工具、API、安全配置和故障排查指南。',
       link: '/',
       themeConfig: {
         lastUpdatedText: '上次更新',
@@ -74,8 +83,8 @@ export default defineConfig({
     en_US: {
       lang: 'en-US',
       label: 'English',
-      title: 'Nezha Server Monitoring',
-      description: 'Nezha Monitoring is a lightweight server monitoring and maintenance tool that offers real-time performance monitoring and alert notifications. As an open-source project, it supports enterprise self-hosting to protect data privacy and supports multiple languages. Nezha server monitoring is easy to deploy, supports customizable monitoring projects, and meets various server maintenance needs.',
+      title: 'Nezha Monitoring V2 Docs',
+      description: 'Official Nezha Monitoring V2 documentation for Dashboard and Agent installation, server metrics, service checks, alerts, operations, APIs, security configuration, and troubleshooting.',
       link: '/en_US/',
       themeConfig: {
         lastUpdatedText: 'Last Updated',
@@ -168,6 +177,16 @@ export default defineConfig({
 function getGuideSidebarZhCN() {
   return [
     {
+      text: '了解哪吒 V2',
+      items: [
+        { text: '产品概览', link: '/guide/overview.html' },
+        { text: '架构与数据流', link: '/guide/architecture.html' },
+        { text: '版本与兼容性', link: '/guide/version-compatibility.html' },
+        { text: '安全与隐私', link: '/guide/security.html' },
+        { text: '监控工具选型对比', link: '/guide/comparison.html' }
+      ]
+    },
+    {
       text: '安装手册',
       items: [
         { text: '安装 Dashboard', link: '/guide/dashboard.html' },
@@ -252,6 +271,16 @@ function getDeveloperSidebarZhCN() {
 
 function getGuideSidebarEnUS() {
   return [
+    {
+      text: 'About Nezha V2',
+      items: [
+        { text: 'Product overview', link: '/en_US/guide/overview.html' },
+        { text: 'Architecture and data flow', link: '/en_US/guide/architecture.html' },
+        { text: 'Version and compatibility', link: '/en_US/guide/version-compatibility.html' },
+        { text: 'Security and privacy', link: '/en_US/guide/security.html' },
+        { text: 'Monitoring tool comparison', link: '/en_US/guide/comparison.html' }
+      ]
+    },
     {
       text: 'Installation Manual',
       items: [

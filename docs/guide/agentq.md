@@ -1,4 +1,5 @@
 ---
+description: 哪吒监控 V2 Agent 常见问题与排障，覆盖 IPv6、TLS、网络连接、系统服务、资源采集、自动更新、权限和日志定位。
 outline: deep
 ---
 
@@ -16,7 +17,7 @@ outline: deep
 
 ## 后台显示的 IP 和 Agent 实际 IP 不一致？
 
-如果后台显示的 IP 和 Agent 的实际 IP 不一致，请参考 [Dashboard 相关 - 为什么管理面板中显示的 IP 和 Agent 实际 IP 不一致？](/guide/dashboardq.html#为什么管理面板中显示的ip和agent实际ip不一致？)。  
+如果后台显示的 IP 和 Agent 的实际 IP 不一致，请参考 [Dashboard 相关 - 为什么管理面板中显示的 IP 和 Agent 实际 IP 不一致？](/guide/dashboardq.html#为什么管理面板中显示的-ip-和-agent-实际-ip-不一致)。
 该问题的详细解决方法已在相关文档中说明，此处不再赘述。
 
 ---
@@ -27,7 +28,7 @@ outline: deep
 
 此问题多发生在中国大陆的服务器上，原因是 Github 的连接不稳定。解决方法：
 1. **多次尝试**：直接多尝试几次运行一键脚本。
-2. **手动安装**：按照 [手动安装 Agent](/guide/agent.html#其他方式安装agent) 的指南完成安装。
+2. **手动安装**：按照 [手动安装 Agent](/guide/agent.html#其他方式安装-agent) 的指南完成安装。
 3. **使用加速服务**：可使用第三方 Github 加速服务或镜像。找到加速地址后，在一键安装脚本中进行替换。
 
 ---

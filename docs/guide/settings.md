@@ -66,7 +66,7 @@ outline: deep
 
 ### 主题
 
-主题设置用于选择用户前端展示模板，对应配置文件中的 [`user_template`](/configuration/dashboard.html#user_template)。管理前端模板对应 [`admin_template`](/configuration/dashboard.html#admin_template)，通常保持默认即可。
+主题设置用于选择用户前端展示模板，对应配置文件中的 [`user_template`](/configuration/dashboard.html#user-template)。管理前端模板对应 [`admin_template`](/configuration/dashboard.html#admin-template)，通常保持默认即可。
 
 内置主题由官方维护；社区主题来自社区贡献，可能不会随 Dashboard 版本同步更新。使用社区主题前请确认来源可信、兼容当前版本，并了解其自定义代码、外链资源或样式变更带来的风险。
 
@@ -82,11 +82,11 @@ outline: deep
 
 用于指定 Dashboard 对外访问并接收 OAuth2 回调的地址，格式为 `域名/IP[:端口]`，不要填写协议或路径；使用 HTTP/HTTPS 默认端口时可省略端口。它与 **Agent 对接地址** 相互独立：前者服务于浏览器登录回调，后者服务于 Agent 连接和安装命令。
 
-启用 OAuth2 时建议显式填写，尤其是 Dashboard 位于反向代理后方，或公网访问域名与 Agent 对接地址不同时。留空时 Dashboard 会信任请求中的 Host；反向代理还应正确传递原始 Host，并通过 `X-Forwarded-Proto: https` 告知外部协议。配置字段为 [`dashboard_host`](/configuration/dashboard.html#dashboard_host)。
+启用 OAuth2 时建议显式填写，尤其是 Dashboard 位于反向代理后方，或公网访问域名与 Agent 对接地址不同时。留空时 Dashboard 会信任请求中的 Host；反向代理还应正确传递原始 Host，并通过 `X-Forwarded-Proto: https` 告知外部协议。配置字段为 [`dashboard_host`](/configuration/dashboard.html#dashboard-host)。
 
 ### Dashboard 保留域名
 
-用于声明 Dashboard 对外访问使用的其它域名，防止普通成员在 NAT 中创建与 Dashboard 入口冲突的域名。这些域名也会被视为可信的 OAuth2 回调 Host。多个域名使用英文逗号分隔，并在 OAuth2 提供方登记相应回调地址。配置字段为 [`reserved_hosts`](/configuration/dashboard.html#reserved_hosts)。
+用于声明 Dashboard 对外访问使用的其它域名，防止普通成员在 NAT 中创建与 Dashboard 入口冲突的域名。这些域名也会被视为可信的 OAuth2 回调 Host。多个域名使用英文逗号分隔，并在 OAuth2 提供方登记相应回调地址。配置字段为 [`reserved_hosts`](/configuration/dashboard.html#reserved-hosts)。
 
 ### DDNS 的自定义公共 DNS 名称服务器
 
@@ -105,7 +105,7 @@ outline: deep
 
 ### MCP 开关
 
-用于启用或关闭 Dashboard 的 MCP 入口。启用后可使用 PAT 调用 `POST /mcp`；关闭时会拒绝新的 MCP 请求并中断相关传输。配置字段为 [`enable_mcp`](/configuration/dashboard.html#enable_mcp)，认证和权限说明见 [API 接口 - MCP 接入](/guide/api.html#mcp-%E6%8E%A5%E5%85%A5)。
+用于启用或关闭 Dashboard 的 MCP 入口。启用后可使用 PAT 调用 `POST /mcp`；关闭时会拒绝新的 MCP 请求并中断相关传输。配置字段为 [`enable_mcp`](/configuration/dashboard.html#enable-mcp)，认证和权限说明见 [API 接口 - MCP 接入](/guide/api.html#mcp-%E6%8E%A5%E5%85%A5)。
 
 ### IP 变更提醒
 

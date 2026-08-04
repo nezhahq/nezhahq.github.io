@@ -1,4 +1,5 @@
 ---
+description: 哪吒监控 V2 Dashboard 完整 YAML 配置参考，覆盖域名、TLS、真实 IP、OAuth2、JWT、用户前端、MCP、TSDB、内存和通知隐私选项。
 outline: deep
 ---
 
@@ -230,3 +231,10 @@ docker compose up -d
 ```shell
 systemctl restart nezha-dashboard.service
 ```
+
+## 相关文档
+
+- [架构与数据流](/guide/architecture.html)
+- [安全与隐私](/guide/security.html)
+- [版本与兼容性](/guide/version-compatibility.html)
+- [Dashboard 常见问题](/guide/dashboardq.html)

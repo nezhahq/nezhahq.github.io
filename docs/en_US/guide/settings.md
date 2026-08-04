@@ -66,7 +66,7 @@ User frontend example:
 
 ### Theme
 
-The theme setting selects the user frontend template and corresponds to [`user_template`](/en_US/configuration/dashboard.html#user_template). The admin frontend template corresponds to [`admin_template`](/en_US/configuration/dashboard.html#admin_template) and usually should stay at the default value.
+The theme setting selects the user frontend template and corresponds to [`user_template`](/en_US/configuration/dashboard.html#user-template). The admin frontend template corresponds to [`admin_template`](/en_US/configuration/dashboard.html#admin-template) and usually should stay at the default value.
 
 Built-in themes are maintained by the official project. Community themes are contributed by the community and may not be updated together with Dashboard releases. Before using a community theme, make sure the source is trusted, it is compatible with your Dashboard version, and you understand the risks from custom code, external assets, or style changes.
 
@@ -82,11 +82,11 @@ Built-in themes are maintained by the official project. Community themes are con
 
 Specifies the public Dashboard address that receives OAuth2 callbacks, in the format `domain/IP[:port]`. Do not include a scheme or path; omit the port when using the default HTTP/HTTPS port. It is independent of **Agent Connecting Address**: the former is used for browser login callbacks, while the latter is used for Agent connections and installation commands.
 
-Set it explicitly when using OAuth2, especially when Dashboard is behind a reverse proxy or its public hostname differs from the Agent connection address. When empty, Dashboard trusts the request Host. The reverse proxy should also preserve the original Host and pass `X-Forwarded-Proto: https` for an HTTPS public endpoint. The configuration field is [`dashboard_host`](/en_US/configuration/dashboard.html#dashboard_host).
+Set it explicitly when using OAuth2, especially when Dashboard is behind a reverse proxy or its public hostname differs from the Agent connection address. When empty, Dashboard trusts the request Host. The reverse proxy should also preserve the original Host and pass `X-Forwarded-Proto: https` for an HTTPS public endpoint. The configuration field is [`dashboard_host`](/en_US/configuration/dashboard.html#dashboard-host).
 
 ### Reserved Dashboard Hosts
 
-Declares other public hostnames used to access Dashboard, preventing normal members from creating NAT domains that collide with Dashboard entry hosts. These hostnames are also trusted as OAuth2 callback Hosts. Separate multiple hostnames with commas and register the corresponding callback URLs with the OAuth2 provider. The configuration field is [`reserved_hosts`](/en_US/configuration/dashboard.html#reserved_hosts).
+Declares other public hostnames used to access Dashboard, preventing normal members from creating NAT domains that collide with Dashboard entry hosts. These hostnames are also trusted as OAuth2 callback Hosts. Separate multiple hostnames with commas and register the corresponding callback URLs with the OAuth2 provider. The configuration field is [`reserved_hosts`](/en_US/configuration/dashboard.html#reserved-hosts).
 
 ### Custom Public DNS Nameservers for DDNS
 
@@ -105,7 +105,7 @@ For direct public access, select **Use Direct IP**. For Cloudflare, usually use 
 
 ### MCP Toggle
 
-Enables or disables the Dashboard MCP endpoint. After enabling it, clients can call `POST /mcp` with a PAT. When disabled, Dashboard rejects new MCP requests and interrupts related transfers. The configuration field is [`enable_mcp`](/en_US/configuration/dashboard.html#enable_mcp). For authentication and permission details, see [API Interface - MCP Access](/en_US/guide/api.html#mcp-access).
+Enables or disables the Dashboard MCP endpoint. After enabling it, clients can call `POST /mcp` with a PAT. When disabled, Dashboard rejects new MCP requests and interrupts related transfers. The configuration field is [`enable_mcp`](/en_US/configuration/dashboard.html#enable-mcp). For authentication and permission details, see [API Interface - MCP Access](/en_US/guide/api.html#mcp-access).
 
 ### IP Change Notification
 

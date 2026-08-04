@@ -4,7 +4,7 @@ outline: deep
 
 # Login FAQ
 
-Since v1, the Dashboard uses local account login and supports binding local accounts to OAuth2 third-party accounts. Legacy GitHub OAuth login issues no longer apply to the current login flow.
+The current V2 Dashboard uses local account login and supports binding local accounts to third-party OAuth2 accounts. Legacy GitHub OAuth login issues no longer apply to the current login flow.
 
 ## Forgot Administrator Password
 
@@ -22,6 +22,6 @@ If no binding relationship exists yet, OAuth2 cannot directly log in to a local 
 
 ## Login Endpoint Is Frequently Tried or Incorrectly Blocked
 
-v1 introduces a Web Application Firewall to limit login brute force attempts. If the Dashboard is deployed behind a reverse proxy or CDN, configure the [Frontend Real IP Request Header](/en_US/guide/q12.html) correctly; otherwise, the Dashboard may misidentify visitor IPs and block incorrectly.
+V2 includes a Web Application Firewall to limit login brute-force attempts. If Dashboard is deployed behind a reverse proxy or CDN, configure the [Frontend Real IP Request Header](/en_US/guide/q12.html) correctly; otherwise, Dashboard may misidentify visitor IPs and block incorrectly.
 
 If an IP has already been blocked by mistake, use an administrator account to remove the corresponding block record under **System Settings → Web Application Firewall**.

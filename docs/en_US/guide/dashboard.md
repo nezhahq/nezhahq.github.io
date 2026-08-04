@@ -1,4 +1,5 @@
 ---
+description: Install Nezha Monitoring V2 Dashboard on Linux and configure port 8008, web and Agent domains, reverse proxy, initial administrator password, and update workflow.
 outline: deep
 ---
 
@@ -14,7 +15,7 @@ If you plan to use a CDN, prepare two domain names:
 - One configured with a CDN for public access. The CDN must support the WebSocket protocol.  
 - Another domain without CDN for communication between the Agent and Dashboard.  
 
-Although V1 no longer differentiates between access and communication ports, preparing two domains is recommended to avoid potential issues caused by specific CDN configurations (not mandatory).
+Current V2 releases can use one port for web access and Agent communication. However, CDN support for gRPC and long-lived connections varies, so preparing two domains is still recommended (not mandatory).
 
 This guide uses "dashboard.example.com" and "data.example.com" as examples.
 :::
@@ -73,4 +74,10 @@ To update the Dashboard, run the following script:
 ./nezha.sh
 ```
 Then, select the option to restart and update the Dashboard.
-```
+
+## Next steps
+
+- [Install Agent](/en_US/guide/agent.html) and confirm that the first server is online.
+- Read [Architecture and data flow](/en_US/guide/architecture.html) to verify reverse-proxy and storage design.
+- Complete production hardening with [Security and privacy](/en_US/guide/security.html).
+- Review [Version and compatibility](/en_US/guide/version-compatibility.html) before upgrades.

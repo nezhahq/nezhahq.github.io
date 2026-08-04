@@ -1,14 +1,16 @@
 {
   "name": "nezhahq.github.io",
   "version": "1.0.0",
-  "description": "",
+  "description": "Official Chinese and English documentation for Nezha Monitoring V2 server monitoring and operations",
   "main": "index.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
     "dev": "vitepress dev docs",
-    "build": "vitepress build docs"
+    "build": "vitepress build docs",
+    "test": "npm run build && npm run test:seo",
+    "test:seo": "node scripts/seo-audit.mjs"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/nezhahq/nezhahq.github.io/issues"
   },
-  "homepage": "https://github.com/nezhahq/nezhahq.github.io#readme",
+  "homepage": "https://nezha.wiki/",
   "devDependencies": {
     "vitepress": "^1.6.4"
   },

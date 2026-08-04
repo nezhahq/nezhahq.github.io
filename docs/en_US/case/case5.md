@@ -6,7 +6,7 @@ outline: deep
 
 ::: info
 
-This community project is not yet compatible with the V1 version. This page is kept for historical reference; check the upstream repository status before deploying it, and do not apply it directly to the current Nezha version.
+This community project has not been confirmed compatible with the current Nezha Monitoring V2 generation. This page is kept for historical reference; check the upstream repository before deployment and do not apply it directly to a current installation.
 
 :::
 Contributors:

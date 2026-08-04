@@ -1,4 +1,5 @@
 ---
+description: 配置哪吒监控 V2 告警规则、通知方式、通知组、模板、离线与资源阈值，理解 duration 采样语义和凭据脱敏编辑行为。
 outline: deep
 ---
 

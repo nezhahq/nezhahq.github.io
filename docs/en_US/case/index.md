@@ -1,8 +1,9 @@
 ---
 layout: home
 
-title: Nezha Monitoring - Server monitoring tool  
+title: Nezha Monitoring V2 community projects
 titleTemplate: Community Project
+description: Index of Nezha Monitoring V2 community clients, bots, proxies, and extensions. Verify compatibility, maintenance, security, and upstream instructions before deployment.
 
 hero:
   name: Nezha Monitoring
@@ -12,7 +13,7 @@ hero:
   actions:
     - theme: brand
       text: Learn More →
-      link: /en_US/case/case1
+      link: /en_US/case/case1.html
 
 features:
   - title: Submit a project
