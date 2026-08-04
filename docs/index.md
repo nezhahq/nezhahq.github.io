@@ -11,8 +11,8 @@ hero:
   tagline: 用一个 Dashboard 连接多台 Agent，统一查看服务器状态、检查网站与网络服务、发送告警并执行授权运维。
   actions:
     - theme: brand
-      text: 了解哪吒 V2
-      link: /guide/overview.html
+      text: 预览
+      link: https://qio.ng
     - theme: alt
       text: 安装 Dashboard →
       link: /guide/dashboard.html

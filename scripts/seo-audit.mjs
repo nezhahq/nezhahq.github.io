@@ -160,12 +160,14 @@ for (const file of pages) {
 
 const zhHome = read('index.html')
 assert.match(zhHome, /哪吒监控 V2/)
+assert.match(zhHome, /href="https:\/\/qio\.ng"/, 'Chinese homepage must retain the Dashboard preview link')
 assert.match(zhHome, /href="\/guide\/overview\.html"/)
 assert.match(zhHome, /href="\/guide\/architecture\.html"/)
 assert.match(zhHome, /href="\/guide\/version-compatibility\.html"/)
 
 const enHome = read('en_US/index.html')
 assert.match(enHome, /Nezha Monitoring V2/)
+assert.match(enHome, /href="https:\/\/qio\.ng"/, 'English homepage must retain the Dashboard preview link')
 assert.match(enHome, /href="\/en_US\/guide\/overview\.html"/)
 assert.match(enHome, /href="\/en_US\/guide\/architecture\.html"/)
 assert.match(enHome, /href="\/en_US\/guide\/version-compatibility\.html"/)

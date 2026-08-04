@@ -11,8 +11,8 @@ hero:
   tagline: Connect multiple Agents to one Dashboard to view server state, check websites and network services, send alerts, and perform authorized operations.
   actions:
     - theme: brand
-      text: Explore Nezha V2
-      link: /en_US/guide/overview.html
+      text: Preview
+      link: https://qio.ng
     - theme: alt
       text: Install Dashboard →
       link: /en_US/guide/dashboard.html
