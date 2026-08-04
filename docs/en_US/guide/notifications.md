@@ -18,6 +18,7 @@ Nezha Monitor can monitor server load, CPU, memory, disk, traffic, monthly traff
 - **Skip Check**: When adding or modifying a notification method, the Dashboard sends a test message by default. After checking “Skip Check”, the configuration is saved directly. This is useful when the notification service is temporarily unreachable but you are sure the parameters are correct.
 - **Format Metric Units:** If “Format Metric Units” is enabled, `#SERVER.CPU#`, `#SERVER.MEM#`, `#SERVER.SWAP#`, `#SERVER.DISK#`, `#SERVER.SPEEDIN#`, `#SERVER.SPEEDOUT#`, `#SERVER.TRANSFERIN#`, and `#SERVER.TRANSFEROUT#` output human-readable values with units, such as `12.34 %`, `1.23 GB`, and `10.50 MB/s`. If disabled, these placeholders keep their raw numeric values, which is suitable for webhooks that need pure numbers.
 - **Webhook Target Restrictions**: Notification URLs only support `http` and `https`. For security reasons, the Dashboard rejects notification requests pointing to localhost, private networks, link-local addresses, reserved addresses, multicast addresses, and other non-public targets, and it does not automatically follow redirects. If you need to push to an internal service, receive the notification through a publicly accessible relay first.
+- **Editing Sensitive Fields**: The API and admin frontend do not display the URL, request headers, or request body when reading a notification method. Re-enter the URL when editing. Leaving headers or body empty preserves their stored values. To clear stored headers or body, delete and recreate the notification method.
 
 **Refer to the following notification examples. You can also customize push methods as needed.**
 
@@ -406,7 +407,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
   - **System**: `offline` (offline monitoring), `load1`, `load5`, `load15` (load), `process_count` (process count)
   - **Connections**: `tcp_conn_count`, `udp_conn_count`
   - **Temperature**: `temperature_max` (maximum temperature value)
-- **`duration`**: Duration in seconds. A notification is sent only when samples exceed the threshold more than 30% of the time within this duration, preventing false positives from fluctuation.
+- **`duration`**: Number of samples and must be an integer of at least 3. Dashboard checks approximately every 3 seconds, so the effective observation window is about `duration × 3` seconds. A normal threshold rule triggers only when **more than 70%** of samples are outside the allowed range; an offline rule requires every sample in the window to be offline. This reduces false positives from brief fluctuations.
 - **`min` / `max`**:
   - Traffic and speed units are bytes (1KB=1024B, 1MB=1024\*1024B).
   - Memory, disk, and CPU use percentages (0-100).
@@ -421,6 +422,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
 - **Offline notification**:
 
   - **Name**: Offline notification
+  - **Description**: Notify after approximately 30 seconds of continuous downtime.
   - **Rule**:
     ```json
     [{"type": "offline", "duration": 10}]
@@ -447,7 +449,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
     - **Name**: Servers 1 and 2 offline notification
     - **Rule**:
       ```json
-      [{"type": "offline", "duration": 600, "cover": 1, "ignore": {"1": true, "2": true}}]
+      [{"type": "offline", "duration": 200, "cover": 1, "ignore": {"1": true, "2": true}}]
       ```
     - **Notification group**: A
     - **Enabled**: checked
@@ -456,7 +458,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
     - **Name**: Servers 3 and 4 offline notification
     - **Rule**:
       ```json
-      [{"type": "offline", "duration": 600, "cover": 1, "ignore": {"3": true, "4": true}}]
+      [{"type": "offline", "duration": 200, "cover": 1, "ignore": {"3": true, "4": true}}]
       ```
     - **Notification group**: B
     - **Enabled**: checked

@@ -78,9 +78,15 @@ Built-in themes are maintained by the official project. Community themes are con
 - If Agents connect directly to a plaintext `host:port`, do not enable TLS. Otherwise the installation command will make Agents connect with TLS and they may fail to come online.
 - See [Agent Installation Prerequisites](/en_US/guide/agent.html#prerequisites) for details.
 
+### Dashboard OAuth2 Callback Host
+
+Specifies the public Dashboard address that receives OAuth2 callbacks, in the format `domain/IP[:port]`. Do not include a scheme or path; omit the port when using the default HTTP/HTTPS port. It is independent of **Agent Connecting Address**: the former is used for browser login callbacks, while the latter is used for Agent connections and installation commands.
+
+Set it explicitly when using OAuth2, especially when Dashboard is behind a reverse proxy or its public hostname differs from the Agent connection address. When empty, Dashboard trusts the request Host. The reverse proxy should also preserve the original Host and pass `X-Forwarded-Proto: https` for an HTTPS public endpoint. The configuration field is [`dashboard_host`](/en_US/configuration/dashboard.html#dashboard_host).
+
 ### Reserved Dashboard Hosts
 
-Declares the public hostnames used to access Dashboard, preventing normal members from creating NAT domains that collide with Dashboard entry hosts. Separate multiple hostnames with commas. The configuration field is [`reserved_hosts`](/en_US/configuration/dashboard.html#reserved_hosts).
+Declares other public hostnames used to access Dashboard, preventing normal members from creating NAT domains that collide with Dashboard entry hosts. These hostnames are also trusted as OAuth2 callback Hosts. Separate multiple hostnames with commas and register the corresponding callback URLs with the OAuth2 provider. The configuration field is [`reserved_hosts`](/en_US/configuration/dashboard.html#reserved_hosts).
 
 ### Custom Public DNS Nameservers for DDNS
 

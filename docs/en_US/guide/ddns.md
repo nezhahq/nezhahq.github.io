@@ -51,6 +51,8 @@ Webhooks allow you to customize HTTP requests for third-party services or other 
 - **Webhook Request Headers**: Input headers in JSON format (nested headers are not supported).
 - **Webhook Request Body**: Not used for `GET` and `DELETE`. For nested formats, use `JSON`.
 
+When a DDNS configuration is read, the API and admin frontend hide Credential 2 (`access_secret`) and Webhook request headers. Leaving these sensitive fields empty while editing preserves their stored values. To clear a stored value, delete and recreate the DDNS configuration.
+
 ---
 
 ### Placeholders

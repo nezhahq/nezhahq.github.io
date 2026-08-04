@@ -204,21 +204,23 @@ Bypass the CDN and connect directly to the origin server for file transfers. Ens
 
 ## Unable to Connect Agent with Nginx Reverse Proxy for gRPC
 
-### Cause
+Current Agents send both the hyphenated `client-secret` and `client-uuid` authentication headers and the legacy underscore variants. Dashboard accepts both forms as well. Therefore, with Dashboard `v2.2.1` or later and Agent `v2.2.2` or later, you normally no longer need `underscores_in_headers` or `ignore_invalid_headers` for Agent authentication.
 
-By default, Nginx does not allow underscores in headers. The Agent uses `client_secret` and `client_uuid` headers for authentication.
+If the connection still fails, check the following first:
 
-### Solution
+1. Upgrade both Dashboard and Agent, then regenerate or verify the connection address, UUID, and secret in the installation command.
+2. Make sure the Nginx gRPC location uses `grpc_pass` and does not clear `client-secret` or `client-uuid`.
+3. Make sure the TLS option matches the proxy entry protocol, and inspect the Dashboard, Agent, and Nginx error logs.
 
-1. **Enable Underscores**  
-   Add the following directive in the server block:
-   ```nginx
-   underscores_in_headers on;
-   ```
+Keep the legacy configuration only when an older Agent or Dashboard must remain compatible: enable `underscores_in_headers on;` and `ignore_invalid_headers off;` in the `server` block, then forward `client_secret` and `client_uuid` as needed. Remove this compatibility configuration after upgrading.
 
-2. **Manually Forward Headers**  
-   Include the following configuration in the gRPC reverse proxy setup:
-   ```nginx
-   grpc_set_header client_secret $http_client_secret;
-   grpc_set_header client_uuid $http_client_uuid;
-   ```
+---
+
+## Terminal, File Manager, or NAT Reports Too Many Concurrent Streams
+
+Dashboard limits active IOStreams so that terminal sessions, file transfers, or NAT connections cannot exhaust resources:
+
+- `too many concurrent streams for this user`: one user already occupies 20 online-terminal or file-manager streams.
+- `too many concurrent streams for this server`: one target server already occupies 40 streams in total. This count includes terminal, file manager, NAT, and MCP file transfers.
+
+Close unused terminals, file-manager windows, NAT connections, or file transfers and retry. If the count appears incorrect, first confirm that the clients have actually disconnected, then inspect Dashboard logs for connections that have not ended.

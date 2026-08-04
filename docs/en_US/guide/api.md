@@ -539,6 +539,8 @@ Management APIs require login. JWT requests are authorized by user role and reso
 
 Before writing management automation scripts, test them in a staging environment to avoid bulk changes to servers, notifications, tasks, or user configuration.
 
+Read APIs redact sensitive notification and DDNS fields. Notification responses do not return the stored `url`, `request_header`, or `request_body`; DDNS responses do not return the stored `access_secret` or `webhook_headers`. When updating these objects, omitting a sensitive field or sending an empty value preserves the stored value instead of clearing it. Automation must not treat a redacted empty value as the real configuration and write it back. To clear these sensitive fields, delete and recreate the object.
+
 ---
 
 ## MCP Endpoint
@@ -583,6 +585,7 @@ File tools are split into two groups:
 
 - `fs.read` / `fs.write` are suitable for small files or ranged reads and writes. `fs.read` returns up to about 1 MiB by default and supports `offset`, `length`, and `encoding: "utf8" | "base64"`.
 - `fs.download_url` / `fs.upload_url` issue one-time temporary URLs through `GET /mcp/download/{token}` or `POST /mcp/upload/{token}` for Dashboard-to-Agent IOStream transfers. The hard per-file limit is 100 MiB, and `ttl_seconds` ranges from 30 to 600 seconds. Uploads must send `Content-Length`; you can append `sha256=<64 hex chars>` to the URL for end-to-end verification. `fs.upload_url` also supports `mode`, `create_dirs`, and `if_match_sha256`.
+- One target server can carry at most 40 active IOStreams at a time. MCP file transfers share this limit with online terminal, file manager, and NAT. End unused streams before retrying after the limit is reached.
 
 MCP calls are also limited by the API Token's server ID allowlist and the user's original permissions. Temporary upload/download URLs re-check the token, scope, server allowlist, and server ownership when used. When the token is revoked or `enable_mcp` is disabled, the Dashboard revokes MCP transfer streams, removes temporary URLs, and cancels in-flight MCP RPC calls.
 

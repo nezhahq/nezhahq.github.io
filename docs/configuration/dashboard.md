@@ -32,13 +32,21 @@ outline: deep
 - ##### **`install_host`**
 
   - 指定安装命令的服务器地址，格式为 `host:port`。
-  - 这个选项的实际效果由前端实现，Dashboard 本体不会使用。
+  - 前端使用此项生成 Agent 安装命令；Dashboard 还会将其中的 Host 视为可信的 OAuth2 回调 Host 和 NAT 保留域名。
+
+- ##### **`dashboard_host`**
+
+  - 指定 Dashboard 对外访问并用于 OAuth2 回调的地址，格式为 `域名/IP[:端口]`，不要包含协议或路径；使用 HTTP/HTTPS 默认端口时可省略端口。
+  - 有固定公网入口时建议显式设置此项；当 Dashboard 的公网访问地址与 `install_host` 不同时尤其需要设置。
+  - 收到 OAuth2 回调时，如果请求中的 Host 不属于 `dashboard_host`、`install_host`、`listen_host` 或 `reserved_hosts`，Dashboard 会将回调地址的 Host 替换为此值；留空则信任请求中的 Host。
+  - 此地址也会自动作为 NAT 保留域名，防止普通成员创建冲突的 NAT 规则。
 
 - ##### **`reserved_hosts`**
 
   - 用逗号分隔声明 Dashboard 对外访问使用的域名或主机名，例如 `nezha.example.com,status.example.com`。
   - 该配置用于阻止普通成员创建与 Dashboard 入口冲突的 NAT 域名，避免在反向代理部署中抢占面板访问路由。
   - 当 Dashboard 运行在反向代理后面，进程本身无法可靠推断公网域名时，建议显式填写所有公网入口域名。
+  - 这些域名也会被视为可信的 OAuth2 回调 Host；使用多个入口时，请同时在 OAuth2 提供方登记对应的回调地址。
 
 - ##### **`tls`**
 

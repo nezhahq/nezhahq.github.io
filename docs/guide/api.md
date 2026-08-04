@@ -539,6 +539,8 @@ GET /api/v1/server/{id}/service
 
 直接写管理类自动化脚本前，建议先在测试环境验证，避免批量修改服务器、通知、任务或用户配置。
 
+通知方式和 DDNS 的读取接口会对敏感字段脱敏：通知方式不会返回已保存的 `url`、`request_header`、`request_body`，DDNS 不会返回已保存的 `access_secret`、`webhook_headers`。更新这些对象时，省略相应字段或传入空值会保留数据库中的原值，不会将其清空。自动化脚本不应把读取到的空值当作真实配置再覆盖回去；如需清空这些敏感字段，请删除并重新创建对象。
+
 ---
 
 ## MCP 入口
@@ -583,6 +585,7 @@ Content-Type: application/json
 
 - `fs.read` / `fs.write` 适合小文件或分段读取写入。`fs.read` 默认最多返回约 1 MiB，可使用 `offset`、`length` 和 `encoding: "utf8" | "base64"`。
 - `fs.download_url` / `fs.upload_url` 会签发一次性临时 URL，通过 `GET /mcp/download/{token}` 或 `POST /mcp/upload/{token}` 走 Dashboard 到 Agent 的 IOStream 传输，单文件硬上限 100 MiB，`ttl_seconds` 范围为 30 到 600 秒。上传时必须发送 `Content-Length`，可在 URL 查询参数追加 `sha256=<64位十六进制>` 做端到端校验；`fs.upload_url` 还支持 `mode`、`create_dirs`、`if_match_sha256`。
+- 同一目标服务器最多同时承载 40 条活跃 IOStream。MCP 文件传输会与在线终端、文件管理和内网穿透共同计入该上限；达到上限时应结束不用的流后重试。
 
 MCP 调用同时受 API Token 的服务器 ID 白名单和用户原本权限限制。临时上传/下载 URL 在使用时还会重新校验 Token、scope、服务器白名单和服务器归属；Token 被撤销或关闭 `enable_mcp` 时，Dashboard 会撤销 MCP 传输流、清理临时 URL 并取消正在执行的 MCP RPC。
 

@@ -32,13 +32,21 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
 - ##### **`install_host`**
 
   - Specifies the server address for the installation command, in the format `host:port`.
-  - The actual effect of this option is implemented by the frontend, and Dashboard itself does not use it.
+  - The frontend uses this value to generate Agent installation commands. Dashboard also treats its Host as a trusted OAuth2 callback Host and a reserved NAT hostname.
+
+- ##### **`dashboard_host`**
+
+  - Specifies the public Dashboard address used for OAuth2 callbacks, in the format `domain/IP[:port]`. Do not include a scheme or path; omit the port when using the default HTTP/HTTPS port.
+  - Set this explicitly when Dashboard has a fixed public entry point, especially when its public address differs from `install_host`.
+  - During an OAuth2 callback, if the request Host does not match `dashboard_host`, `install_host`, `listen_host`, or `reserved_hosts`, Dashboard replaces the callback Host with this value. When empty, Dashboard trusts the request Host.
+  - This address is also reserved automatically for NAT, preventing normal members from creating a conflicting NAT rule.
 
 - ##### **`reserved_hosts`**
 
   - Comma-separated public Dashboard hostnames, for example `nezha.example.com,status.example.com`.
   - This prevents normal members from creating NAT domains that collide with Dashboard entry hosts and hijack the panel route in reverse-proxy deployments.
   - When Dashboard runs behind a reverse proxy and cannot reliably infer its public hostnames, explicitly list every public entry hostname here.
+  - These hostnames are also trusted as OAuth2 callback Hosts. If you use multiple public entry points, register the corresponding callback URLs with the OAuth2 provider as well.
 
 - ##### **`tls`**
 

@@ -18,6 +18,7 @@ outline: deep
 - **跳过检查**：新增或修改通知方式时，Dashboard 默认会先发送一条测试消息。勾选“跳过检查”后会直接保存配置，适合通知服务暂时不可达、但你确认参数正确的场景。
 - **指标单位格式化：** 如果开启“格式化指标单位”，`#SERVER.CPU#`、`#SERVER.MEM#`、`#SERVER.SWAP#`、`#SERVER.DISK#`、`#SERVER.SPEEDIN#`、`#SERVER.SPEEDOUT#`、`#SERVER.TRANSFERIN#`、`#SERVER.TRANSFEROUT#` 会输出带单位的易读值，例如 `12.34 %`、`1.23 GB`、`10.50 MB/s`。如果关闭该选项，这些占位符会保持原始数值，适合对接需要纯数字的 Webhook。
 - **Webhook 目标限制**：通知 URL 仅支持 `http` 和 `https`。出于安全考虑，Dashboard 会拒绝指向本机地址、私有网段、链路本地地址、保留地址、多播地址等非公网目标的通知请求，并且不会自动跟随重定向。需要推送到内网服务时，请先通过公网可访问的中转服务接收通知。
+- **敏感字段编辑**：读取通知方式时，API 和管理前端不会回显 URL、请求头与请求体。编辑时 URL 需要重新填写；请求头或请求体留空会保留原值。如需清空已保存的请求头或请求体，请删除并重新创建该通知方式。
 
 **请参考以下通知方式示例，您也可以根据需求自定义推送方式。**
 
@@ -406,7 +407,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
   - **系统类**：`offline`（离线监控）、`load1`、`load5`、`load15`（负载）、`process_count`（进程数）
   - **连接数**：`tcp_conn_count`、`udp_conn_count`
   - **温度**：`temperature_max`（最高温度值）
-- **`duration`**：持续时间（秒），在此时间内采样记录 30% 以上触发阈值才会通知（防止数据波动引起误报）。
+- **`duration`**：采样记录数，必须为不小于 3 的整数。Dashboard 约每 3 秒检查一次，因此实际观察窗口约为 `duration × 3` 秒。普通阈值规则只有在窗口内 **超过 70%** 的样本超出允许范围时才触发；离线规则要求窗口内所有样本均为离线。该机制用于减少瞬时波动造成的误报。
 - **`min` / `max`**：
   - 流量、网速类单位为字节（1KB=1024B，1MB=1024\*1024B）。
   - 内存、硬盘、CPU 使用百分比（0-100）。
@@ -421,6 +422,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
 - **离线通知**：
 
   - **名称**：离线通知
+  - **说明**：连续约 30 秒离线后通知。
   - **规则**：
     ```json
     [{"type": "offline", "duration": 10}]
@@ -447,7 +449,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
     - **名称**：1、2 离线通知
     - **规则**：
       ```json
-      [{"type": "offline", "duration": 600, "cover": 1, "ignore": {"1": true, "2": true}}]
+      [{"type": "offline", "duration": 200, "cover": 1, "ignore": {"1": true, "2": true}}]
       ```
     - **通知组**：A
     - **启用**：√
@@ -456,7 +458,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
     - **名称**：3、4 离线通知
     - **规则**：
       ```json
-      [{"type": "offline", "duration": 600, "cover": 1, "ignore": {"3": true, "4": true}}]
+      [{"type": "offline", "duration": 200, "cover": 1, "ignore": {"3": true, "4": true}}]
       ```
     - **通知组**：B
     - **启用**：√

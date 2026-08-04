@@ -118,6 +118,7 @@ The online terminal (WebShell) allows users to remotely access a server command-
 - **Shortcut**: Use `Ctrl+Shift+V` to paste commands.
 - **Limit**: When `disable-command-execute` is enabled, the online terminal is unavailable.
 - **Connection Issues**: If the connection fails, see [WebSocket Connection Failure](/en_US/guide/q4.html).
+- **Concurrency Limits**: One user can occupy at most 20 active online-terminal and file-manager IOStreams. One target server can carry at most 40 active IOStreams in total, including terminal, file manager, NAT, and MCP file transfers. Close unused sessions before retrying after a limit is reached.
 
 ---
 
@@ -131,6 +132,8 @@ This feature only supports \*nix systems.
 
 The file list provides a file-manager-like interface for browsing files and uploading or downloading files in the current directory.
 It supports directory navigation, refresh, and copying the current path, making it convenient to use together with the online terminal.
+
+Online terminal and file manager share the per-user concurrency quota: one user can occupy at most 20 related IOStreams. The target server also has a 40-stream total limit that includes NAT and MCP file transfers.
 
 ---
 

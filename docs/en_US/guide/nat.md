@@ -53,7 +53,12 @@ If using control panels like AApanel or other management tools, ensure the domai
 1. **Maintain Connection**  
    The Agent's connection to the Dashboard is essential for the NAT traversal feature. If the connection is interrupted, the tunnel will become temporarily unavailable.
 
-2. **Security Considerations**  
+2. **Concurrency Limit**
+
+   Each active NAT connection occupies one IOStream on the target server. A server can carry at most 40 active IOStreams in total, including online terminal, file manager, and MCP file transfers. New connections are rejected at the limit; close unused sessions before retrying.
+
+3. **Security Considerations**
+
    - The tunnel transmits data over plaintext HTTP without encryption.  
    - It is strongly recommended to enable TLS/SSL for:
      - **Communication between the Agent and Dashboard**.

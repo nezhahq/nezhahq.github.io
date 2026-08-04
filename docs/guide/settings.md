@@ -78,9 +78,15 @@ outline: deep
 - 如果 Agent 直连明文 `host:port`，请不要启用 TLS，否则安装命令会让 Agent 按 TLS 方式连接，可能导致无法上线。
 - 详情请参考 [Agent 安装准备工作](/guide/agent.html#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C)。
 
+### 面板 OAuth2 回调域名
+
+用于指定 Dashboard 对外访问并接收 OAuth2 回调的地址，格式为 `域名/IP[:端口]`，不要填写协议或路径；使用 HTTP/HTTPS 默认端口时可省略端口。它与 **Agent 对接地址** 相互独立：前者服务于浏览器登录回调，后者服务于 Agent 连接和安装命令。
+
+启用 OAuth2 时建议显式填写，尤其是 Dashboard 位于反向代理后方，或公网访问域名与 Agent 对接地址不同时。留空时 Dashboard 会信任请求中的 Host；反向代理还应正确传递原始 Host，并通过 `X-Forwarded-Proto: https` 告知外部协议。配置字段为 [`dashboard_host`](/configuration/dashboard.html#dashboard_host)。
+
 ### Dashboard 保留域名
 
-用于声明 Dashboard 对外访问使用的域名，防止普通成员在 NAT 中创建与 Dashboard 入口冲突的域名。多个域名使用英文逗号分隔。配置字段为 [`reserved_hosts`](/configuration/dashboard.html#reserved_hosts)。
+用于声明 Dashboard 对外访问使用的其它域名，防止普通成员在 NAT 中创建与 Dashboard 入口冲突的域名。这些域名也会被视为可信的 OAuth2 回调 Host。多个域名使用英文逗号分隔，并在 OAuth2 提供方登记相应回调地址。配置字段为 [`reserved_hosts`](/configuration/dashboard.html#reserved_hosts)。
 
 ### DDNS 的自定义公共 DNS 名称服务器
 

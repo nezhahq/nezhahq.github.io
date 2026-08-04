@@ -119,6 +119,7 @@ In the admin frontend, you can modify the Agent's configuration and apply it dir
 
   - A string array specifying custom IP query API endpoints.
   - The Agent will use these APIs to retrieve the server's public IP information.
+  - Every entry must parse as a URL and use the `http` or `https` scheme. An entry that fails this validation prevents Agent startup or causes a remote configuration update to be rejected.
 
 - ##### **`self_update_period`**
   - Set the update interval manually (in minutes).

@@ -206,21 +206,23 @@ reverse_proxy {
 
 ## 使用 Nginx 反代 gRPC 无法连接 Agent
 
-### 问题原因
+当前版本的 Agent 会同时发送连字符形式的 `client-secret`、`client-uuid` 和旧版下划线形式的认证 Header，Dashboard 也同时兼容两种形式。因此，当 Dashboard 为 `v2.2.1` 或更高版本、Agent 为 `v2.2.2` 或更高版本时，通常不再需要为下划线 Header 设置 `underscores_in_headers` 或 `ignore_invalid_headers`。
 
-Nginx 默认不允许 Header 中含有下划线，而 Agent 使用 `client_secret` 与 `client_uuid` 进行认证。
+如果仍无法连接，请优先确认：
 
-### 解决方法
+1. Dashboard 与 Agent 均已升级，并重新生成或核对安装命令中的连接地址、UUID 和密钥。
+2. Nginx 的 gRPC location 使用 `grpc_pass`，且没有清除 `client-secret` 或 `client-uuid`。
+3. TLS 开关与代理入口协议一致，并查看 Dashboard、Agent 和 Nginx 错误日志。
 
-1. **允许下划线**
+只有在必须兼容旧版 Agent 或 Dashboard 时，才需要保留旧配置：在 `server` 块启用 `underscores_in_headers on;` 和 `ignore_invalid_headers off;`，并按需转发 `client_secret`、`client_uuid`。升级完成后可移除这组兼容设置。
 
-在 server 块中添加 `underscores_in_headers on;`。
+---
 
-2. **手动发送 Header**
+## 在线终端、文件管理或内网穿透提示并发流过多
 
-在 server 块中添加 `ignore_invalid_headers off;`，之后在 gRPC 反代选项中加入：
+Dashboard 会限制活跃 IOStream 数量，避免大量终端、文件传输或穿透连接占满资源：
 
-```nginx
-grpc_set_header client_secret $http_client_secret;
-grpc_set_header client_uuid $http_client_uuid;
-```
+- `too many concurrent streams for this user`：同一用户已占用 20 条在线终端或文件管理流。
+- `too many concurrent streams for this server`：同一目标服务器已占用 40 条流；此统计包括在线终端、文件管理、内网穿透和 MCP 文件传输。
+
+关闭已经不用的终端、文件管理窗口、穿透连接或文件传输后再重试。若数量看起来不符，请先确认相关客户端确实已断开，再检查 Dashboard 日志定位未结束的连接。
