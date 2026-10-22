@@ -9,8 +9,9 @@
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
-    "test": "npm run build && npm run test:seo",
-    "test:seo": "node scripts/seo-audit.mjs"
+    "test": "npm run build && npm run test:seo && npm run test:mcp",
+    "test:seo": "node scripts/seo-audit.mjs",
+    "test:mcp": "node scripts/mcp-feature-audit.mjs"
   },
   "repository": {
     "type": "git",

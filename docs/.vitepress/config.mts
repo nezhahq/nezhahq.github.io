@@ -41,7 +41,7 @@ export default defineConfig({
       lang: 'zh-CN',
       label: '简体中文',
       title: '哪吒监控 V2 文档',
-      description: '哪吒监控 V2 官方文档，提供 Dashboard 与 Agent 的安装、服务器监控、服务探测、告警通知、运维工具、API、安全配置和故障排查指南。',
+      description: '哪吒监控 V2 官方文档，提供服务器监控、服务探测、告警通知、MCP 智能运维、AI Agent 协同服务器管理、Dashboard 与 Agent 安装、API 和故障排查指南。',
       link: '/',
       themeConfig: {
         lastUpdatedText: '上次更新',
@@ -84,7 +84,7 @@ export default defineConfig({
       lang: 'en-US',
       label: 'English',
       title: 'Nezha Monitoring V2 Docs',
-      description: 'Official Nezha Monitoring V2 documentation for Dashboard and Agent installation, server metrics, service checks, alerts, operations, APIs, security configuration, and troubleshooting.',
+      description: 'Official Nezha Monitoring V2 documentation for server monitoring, alerts, MCP-powered AI operations, AI-agent server management, Dashboard and Agent installation, APIs, and troubleshooting.',
       link: '/en_US/',
       themeConfig: {
         lastUpdatedText: 'Last Updated',
@@ -180,6 +180,7 @@ function getGuideSidebarZhCN() {
       text: '了解哪吒 V2',
       items: [
         { text: '产品概览', link: '/guide/overview.html' },
+        { text: 'MCP 智能运维与 AI Agent', link: '/guide/ai-operations.html' },
         { text: '架构与数据流', link: '/guide/architecture.html' },
         { text: '版本与兼容性', link: '/guide/version-compatibility.html' },
         { text: '安全与隐私', link: '/guide/security.html' },
@@ -275,6 +276,7 @@ function getGuideSidebarEnUS() {
       text: 'About Nezha V2',
       items: [
         { text: 'Product overview', link: '/en_US/guide/overview.html' },
+        { text: 'MCP & AI-powered operations', link: '/en_US/guide/ai-operations.html' },
         { text: 'Architecture and data flow', link: '/en_US/guide/architecture.html' },
         { text: 'Version and compatibility', link: '/en_US/guide/version-compatibility.html' },
         { text: 'Security and privacy', link: '/en_US/guide/security.html' },

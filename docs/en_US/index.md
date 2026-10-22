@@ -1,14 +1,14 @@
 ---
 layout: home
 
-title: Nezha Monitoring V2 - Open-source server monitoring and operations
+title: Nezha Monitoring V2 - Server Monitoring and MCP-Powered AI Operations
 titleTemplate: Official Documentation
-description: Official Nezha Monitoring V2 documentation for self-hosted multi-server metrics, website and port checks, alerts, web terminal, files, tasks, DDNS, APIs, installation, configuration, and troubleshooting.
+description: Self-hosted server monitoring, alerts, and MCP-powered AI operations with Nezha Monitoring V2. Connect Codex, OpenClaw, and Claude Code for fleet inspections, diagnosis, files, and verified changes.
 
 hero:
   name: Nezha Monitoring V2
-  text: Open-source, self-hosted server monitoring and operations
-  tagline: Connect multiple Agents to one Dashboard to view server state, check websites and network services, send alerts, and perform authorized operations.
+  text: From server monitoring to AI-assisted operations
+  tagline: One Dashboard for your servers. Monitor state and alerts, then use MCP to bring AI agents into inspections, diagnosis, and authorized operations.
   image: https://raw.githubusercontent.com/nezhahq/nezha/master/.github/brand.svg
   actions:
     - theme: brand
@@ -17,14 +17,25 @@ hero:
     - theme: alt
       text: Install Dashboard →
       link: /en_US/guide/dashboard.html
+    - theme: alt
+      text: Explore MCP & AI Operations →
+      link: /en_US/guide/ai-operations.html
 
 features:
-  - title: Multi-server state
+  - title: Multi-server monitoring
     details: View online state, CPU, memory, disk, network traffic, and available system metrics from Linux, Windows, macOS, OpenWRT, Synology, and other documented environments.
   - title: Service checks and alerts
     details: Run HTTP GET, ICMP Ping, and TCPing from selected Agents, track availability, latency, and certificate state, and send alerts through notification groups.
   - title: Routine remote operations
     details: Use web terminal, file management, scheduled and triggered tasks, DDNS, NAT, REST API, and optional MCP according to granted permissions.
+  - title: Connect AI agents through MCP
+    details: Use Codex, OpenClaw, and Claude Code to inspect servers, read logs, investigate issues, and carry out operations you authorize.
+    link: /en_US/guide/ai-operations.html
+    linkText: Explore AI operations
+  - title: Automation you can verify
+    details: Have AI check current state, make authorized changes, and verify the service afterward. Get findings and results, not just suggestions.
+    link: /en_US/guide/ai-operations.html#scenarios
+    linkText: Explore practical scenarios
   - title: Self-hosted and open source
     details: Dashboard and Agent are published by NezhaHQ; the operator controls data, endpoints, users, storage, and integrations.
 ---
@@ -34,6 +45,7 @@ features:
 Nezha Monitoring V2 combines a central **Dashboard** with an **Agent** installed on every monitored device. Agents report host state and perform assigned network checks or authorized tasks. Dashboard manages identity and access, visualization, service monitoring, alert notifications, APIs, and configuration.
 
 - [Product overview: capabilities, audience, and FAQs](/en_US/guide/overview.html)
+- [MCP-powered AI operations: put AI agents to work on server management](/en_US/guide/ai-operations.html)
 - [Architecture and data flow: Dashboard, Agent, storage, and connections](/en_US/guide/architecture.html)
 - [Version and compatibility: V2, component releases, and `/api/v1`](/en_US/guide/version-compatibility.html)
 - [Security and privacy: production checklist](/en_US/guide/security.html)
@@ -45,7 +57,7 @@ Nezha Monitoring V2 combines a central **Dashboard** with an **Agent** installed
 | Multi-region VPS and cloud servers | Central online state, resources, traffic, groups, alerts, and authorized remote operations |
 | Website and port availability | HTTP, Ping, TCP, latency, packet loss, HTTPS certificate state, and failure notifications |
 | Home labs, NAS devices, and small teams | Self-hosted Dashboard, users, public or authenticated status views, tasks, and file operations |
-| Internal automation and AI tools | Scoped API Tokens, REST API, and an MCP endpoint that is disabled by default |
+| AI operations and agents | Use MCP with Codex, OpenClaw, or Claude Code for inspections, diagnosis, and verified changes; combine REST API access for management configuration |
 
 If your primary goal is a public status page, second-by-second deep observability, the PromQL ecosystem, or enterprise network-device management, read the [comparison with Uptime Kuma, Netdata, Prometheus/Grafana, and Zabbix](/en_US/guide/comparison.html).
 
@@ -81,7 +93,7 @@ Yes. HTTP GET service monitoring checks URL availability, and HTTPS targets are 
 
 ### Must data be uploaded to a third-party cloud?
 
-No. Dashboard and Agent can be self-hosted. Requests go to an external service only when you enable an integration such as OAuth2, notifications, DDNS, or a CDN.
+No. Dashboard and Agent can be self-hosted. Integrations such as OAuth2, notifications, DDNS, a CDN, or an AI client may send relevant data to external services. When using an external model, check how the client handles tool results, logs, and file contents.
 
 ### Why do current API routes still use `/api/v1`?
 

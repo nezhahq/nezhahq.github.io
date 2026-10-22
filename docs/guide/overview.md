@@ -38,6 +38,12 @@ Agent 会报告服务器的在线状态，以及 CPU、内存、交换空间、�
 
 哪吒提供 Web 终端、文件管理、定时与触发任务、DDNS、NAT、API 和 MCP 等能力。这些功能会扩大 Dashboard 与 Agent 的权限边界，应结合用户角色、API Token scope、Agent 禁用选项和网络访问控制按需启用。
 
+## 用 MCP 连接 AI 运维
+
+通过哪吒 MCP，Codex、OpenClaw、Claude Code 等 AI Agent 可以获取授权服务器的台账与当前状态，读取文件、执行非交互命令，并将工具结果组织成巡检报告、故障诊断和变更验证流程。它把哪吒从监控入口延伸为 AI 协同服务器管理的控制面。
+
+哪吒负责监控与工具执行，AI 客户端负责模型、规划、对话和编排；告警、任务配置与历史指标等需求可结合 REST API。功能、实际场景和接入方式见 [MCP 智能运维与 AI Agent](/guide/ai-operations.html)。
+
 ## 一次数据流如何完成？
 
 1. Agent 使用服务器页面生成的连接信息接入 Dashboard。
@@ -74,7 +80,7 @@ Dashboard 与 Agent 的源代码在 NezhaHQ 的 GitHub 仓库公开。实际部�
 
 ### 哪吒监控必须使用云服务吗？
 
-不必须。Dashboard 和 Agent 可以自托管。你仍需要确保 Agent 能访问 Dashboard；OAuth2、外部通知、CDN 或 DNS 提供商等集成只有在你选择使用时才会连接相应服务。
+不必须。Dashboard 和 Agent 可以自托管。你仍需要确保 Agent 能访问 Dashboard；OAuth2、外部通知、CDN、DNS 提供商或 AI 客户端等集成按你的配置连接相应服务；外部模型如何接收工具结果、日志与文件内容，取决于客户端和模型的数据策略。
 
 ### 一个 Dashboard 可以监控多台服务器吗？
 

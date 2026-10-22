@@ -103,12 +103,18 @@ outline: deep
 - ##### **`agent_secret_key`** \*
 
   - Agent 的连接密钥。
-  - 较新的版本中已不再使用，而是改为将连接密钥与用户进行绑定，详见 [连接密钥 ](/guide/user.html#%E8%BF%9E%E6%8E%A5%E5%AF%86%E9%92%A5)。
+  - 此字段用于兼容历史 Agent；当前部署应使用与用户绑定的连接密钥，详见 [连接密钥 ](/guide/user.html#%E8%BF%9E%E6%8E%A5%E5%AF%86%E9%92%A5)。
 
 - ##### **`jwt_timeout`** \*
 
   - 整数，指定 JWT 的过期时间（小时）。
   - 默认值为 `1`。
+
+- ##### **`allow_jwt_ip_change`**
+
+  - 布尔值，默认 `false`。
+  - 默认情况下，浏览器登录会话绑定登录时的客户端 IP；IP 改变后需要重新登录。设为 `true` 可允许同一 JWT 会话在 IP 变化后继续使用，适合频繁切换网络的场景，但会放宽会话保护。
+  - 当前管理前端没有此项开关。可修改 YAML 后重启，或通过管理员设置 API 的 `allow_jwt_ip_change` 字段更新；它不改变 PAT 的 scope、服务器白名单、过期或吊销规则。
 
 - ##### **`jwt_secret_key`** \*
 
@@ -119,7 +125,7 @@ outline: deep
 - ##### **`jwt_secret_key_last_rotated_version`** \*
 
   - 记录 Dashboard 上次完成 JWT 密钥版本轮转的版本号。
-  - 从 `v2.0.13` 版本基线开始，如果没有使用 `NZ_JWTSECRETKEY` 且该字段为空或低于基线版本，Dashboard 会生成新的 `jwt_secret_key` 并更新此字段。
+  - 如果没有使用 `NZ_JWTSECRETKEY`，且记录的轮转版本为空或低于当前轮转基线 `v2.0.13`，Dashboard 会生成新的 `jwt_secret_key` 并更新此字段。
   - 手动修改该字段可能导致不必要的登录态失效；一般只需要在排查升级轮转问题时查看。
 
 - ##### **`enable_plain_ip_in_notification`**
@@ -150,6 +156,13 @@ outline: deep
 
   - 整数，当内存中 TCPing / ICMP Ping 服务数据条目达到此值时将会取平均值并写入数据库。
   - 默认为 `2`，调高此值可以减少数据库的存储量。
+
+- ##### **`online_stats_days`**
+
+  - 整数，默认 `7`，有效范围 `7`–`3650`（天）。
+  - 同时控制服务器在线会话的历史保留范围和在线历史 API 的最大查询窗口；不控制 CPU、网络等 TSDB 指标的保留期。
+  - 可在管理前端的系统设置中修改。设置 API 会拒绝范围外的值；启动时 YAML 中缺省、为 `0` 或越界的值会回退为 `7`。
+  - 缩短范围后，超出窗口的已结束会话会被定期清理；再次延长范围不会恢复已清理的历史。详情见[服务器在线历史](/guide/servers.html#在线历史)。
 
 - ##### **`dns_servers`**
 

@@ -109,6 +109,11 @@ function structuredData(context: TransformContext, canonical: string, descriptio
     pageEntity.author = { '@id': ORGANIZATION_ID }
   }
 
+  const keywords = context.pageData.frontmatter.keywords
+  if (Array.isArray(keywords) && keywords.every((keyword) => typeof keyword === 'string')) {
+    pageEntity.keywords = keywords.join(', ')
+  }
+
   if (context.pageData.lastUpdated) {
     pageEntity.dateModified = new Date(context.pageData.lastUpdated).toISOString()
   }
@@ -137,6 +142,12 @@ function structuredData(context: TransformContext, canonical: string, descriptio
       alternateName: '哪吒监控 V2',
       applicationCategory: 'DeveloperApplication',
       applicationSubCategory: 'Server monitoring and operations',
+      featureList: [
+        'Self-hosted server monitoring',
+        'Network service checks and alerts',
+        'Authorized server operations',
+        'AI-agent integration through Model Context Protocol (MCP)'
+      ],
       softwareVersion: 'V2',
       isAccessibleForFree: true,
       codeRepository: 'https://github.com/nezhahq/nezha',
@@ -145,6 +156,25 @@ function structuredData(context: TransformContext, canonical: string, descriptio
     pageEntity,
     breadcrumbSchema(context.pageData.relativePath, headline, canonical, language)
   ]
+
+  const faq = context.pageData.frontmatter.faq
+  if (Array.isArray(faq) && faq.length && faq.every((item) =>
+    typeof item?.question === 'string' && item.question.trim() &&
+    typeof item?.answer === 'string' && item.answer.trim()
+  )) {
+    pageEntity.hasPart = { '@id': `${canonical}#faq` }
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      inLanguage: language,
+      isPartOf: { '@id': `${canonical}#page` },
+      mainEntity: faq.map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer }
+      }))
+    })
+  }
 
   return { '@context': 'https://schema.org', '@graph': graph }
 }

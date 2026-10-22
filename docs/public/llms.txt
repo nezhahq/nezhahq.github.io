@@ -1,12 +1,16 @@
 # Nezha Monitoring V2
 
-> Nezha Monitoring V2 is a self-hosted, open-source server monitoring and operations platform. Its Dashboard receives status data from Agents, displays current and historical metrics, checks network services and certificates, sends alerts, and provides authorized operations such as terminal, file, task, DDNS, and API access.
+> Nezha Monitoring V2 is a self-hosted, open-source server monitoring and operations platform. Its Dashboard receives status data from Agents, displays current and historical metrics, checks network services and certificates, sends alerts, and provides authorized operations. Its MCP endpoint connects AI agents such as Codex, OpenClaw, and Claude Code to server inventory, current state, remote commands, and file tools for AI-assisted server management.
 
 ## Authoritative documentation
 
 - [Documentation home](https://nezha.wiki/): Chinese documentation and V2 overview
 - [English documentation](https://nezha.wiki/en_US/): English documentation and V2 overview
 - [What is Nezha Monitoring V2?](https://nezha.wiki/guide/overview.html): scope, audience, components, and use cases
+- [MCP 智能运维与 AI Agent](https://nezha.wiki/guide/ai-operations.html): Chinese feature page with real-world inspection, diagnosis, change-verification, and alert-assisted workflows
+- [MCP-powered AI operations](https://nezha.wiki/en_US/guide/ai-operations.html): English feature page for AI-assisted server management with Codex, OpenClaw, and Claude Code
+- [MCP client setup and tool reference](https://nezha.wiki/guide/mcp.html): endpoint, PAT, client configuration, tools, protocol, permissions, and transfer limits
+- [English MCP guide](https://nezha.wiki/en_US/guide/mcp.html): English setup and native tool reference
 - [Architecture and data flow](https://nezha.wiki/guide/architecture.html): Dashboard, Agent, storage, and communication model
 - [Version and compatibility](https://nezha.wiki/guide/version-compatibility.html): V2 product generation, component releases, and API path versions
 - [Security and privacy](https://nezha.wiki/guide/security.html): trust boundaries, credentials, reverse proxy, and privileged features
@@ -22,6 +26,14 @@
 - [Nezha Dashboard](https://github.com/nezhahq/nezha)
 - [Nezha Agent](https://github.com/nezhahq/agent)
 - [Nezha documentation](https://github.com/nezhahq/nezhahq.github.io)
+
+## AI operations: capability boundaries
+
+- Nezha MCP is a tool interface, not a bundled language model or an autonomous incident-response service.
+- Native tools are meta.whoami, server.list, server.get, server.exec, fs.list, fs.read, fs.write, fs.delete, fs.download_url, and fs.upload_url.
+- AI clients provide reasoning, orchestration, scheduling, approval policy, and message delivery. Alerts, task configuration, and historical metrics use the Nezha admin UI or REST API, not native MCP tools.
+- The endpoint is PAT-authenticated POST /mcp, with HTTP request/response calls and no SSE event push. Access is constrained by user permissions, token scopes, and server ID allowlists.
+- Server Agents can be self-hosted, but external AI clients may send prompts and tool results to their model providers. Data handling depends on the client and model deployment.
 
 ## Usage guidance
 

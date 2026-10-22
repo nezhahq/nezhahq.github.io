@@ -1,5 +1,6 @@
 import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
+import './custom.css'
 import HorizontalAd from './components/HorizontalAd.vue'
 import VerticalAd from './components/VerticalAd.vue'
 import DocAsideannouncement from './components/DocAsideannouncement.vue'
