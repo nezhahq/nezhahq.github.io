@@ -20,6 +20,14 @@ Check the following first:
 
 If no binding relationship exists yet, OAuth2 cannot directly log in to a local account.
 
+## Session Lost After Switching Networks
+
+Dashboard binds browser JWT sessions to the client IP identified at login by default. Switching Wi-Fi, mobile networks, VPNs, or proxy exits may require signing in again. This does not necessarily mean an incorrect password or a blocked account.
+
+First verify the [Frontend Real IP Request Header](/en_US/guide/q12.html), so the proxy does not misidentify visitors as a shared or unstable address. If sessions must survive IP changes, set [`allow_jwt_ip_change: true`](/en_US/configuration/dashboard.html#allow-jwt-ip-change). This relaxes session protection; the default remains `false`, and the current admin frontend has no switch for it.
+
+The default user frontend homepage shows a login prompt with a `/dashboard` link when a guest API returns `ApiErrorUnauthorized`, rather than reporting backend unavailability. Sign in first when `force_auth` is enabled; this prompt alone does not indicate offline Agents.
+
 ## Login Endpoint Is Frequently Tried or Incorrectly Blocked
 
 V2 includes a Web Application Firewall to limit login brute-force attempts. If Dashboard is deployed behind a reverse proxy or CDN, configure the [Frontend Real IP Request Header](/en_US/guide/q12.html) correctly; otherwise, Dashboard may misidentify visitor IPs and block incorrectly.

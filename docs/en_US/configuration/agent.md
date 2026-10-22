@@ -16,7 +16,7 @@ In the admin frontend, you can modify the Agent's configuration and apply it dir
 - ##### **`client_secret`**
 
   - The client secret used for secure communication with the Dashboard.
-  - In the current V2 generation, connection secrets are bound to users (a mechanism introduced in V1). The current frontend does not provide a separate “copy connection secret” button; normally, use the installation command generated on the server page, or extract `NZ_CLIENT_SECRET` from that command.
+  - Connection secrets are bound to users. The current frontend does not provide a separate “copy connection secret” button; normally, use the installation command generated on the server page, or extract `NZ_CLIENT_SECRET` from that command.
   - If an administrator needs to configure an Agent for another user manually, read that user's `agent_secret` through the management API. Do not use the global `agent_secret_key` from the Dashboard configuration file for user-owned servers.
   - If this value is wrong, the Agent cannot authenticate with the Dashboard.
 
@@ -46,7 +46,7 @@ In the admin frontend, you can modify the Agent's configuration and apply it dir
 
 - ##### **`gpu`**
 
-  - When set to `true`, enables GPU monitoring.
+  - When set to `true`, enables GPU monitoring. Per-card memory is also reported for Linux NVIDIA GPUs; other platforms/vendors may still provide utilization only.
   - Note: Additional dependencies may be required for GPU monitoring. See the [GPU Monitoring Guide](/en_US/guide/q9.html) for details.
 
 - ##### **`insecure_tls`**

@@ -65,3 +65,13 @@ If using control panels like AApanel or other management tools, ensure the domai
      - **Connections between the Dashboard and external clients**.
 
 ---
+
+## Backend Authentication and Dashboard Credentials
+
+NAT ingress selectively removes credentials issued by this Dashboard so they do not reach services behind the Agent:
+
+- It checks `Authorization: Bearer ...`, the `token` query parameter, and the `nz-jwt` cookie.
+- JWTs signed by this Dashboard, including expired JWTs, and values identified as this Dashboard's PATs are removed.
+- The backend's own Basic/Bearer authentication, foreign tokens, and ordinary cookies/query parameters are preserved. If credential classification cannot complete, affected values are conservatively removed.
+
+Use separate backend credentials, not Dashboard JWTs/PATs. Do not bypass isolation by forwarding Dashboard credentials.

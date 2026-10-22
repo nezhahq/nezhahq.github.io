@@ -58,3 +58,13 @@ outline: deep
      - **Dashboard 与外部访问客户端之间的通信**。
 
 ---
+
+## 后端鉴权与面板凭据隔离
+
+NAT 入口会选择性移除由本面板签发的凭据，避免其被发送到 Agent 后方的服务：
+
+- 检查 `Authorization: Bearer ...`、查询参数 `token` 和 `nz-jwt` Cookie。
+- 本面板签名的 JWT（包括已过期 JWT）和可识别为本面板 PAT 的值会被移除。
+- 后端自己的 Basic/Bearer 鉴权、外部 Token 和普通 Cookie/查询参数会保留；凭据分类无法完成时会保守移除相关值。
+
+后端应使用自己的凭据，不能复用 Dashboard JWT/PAT，也不要通过转发面板凭据绕过隔离。

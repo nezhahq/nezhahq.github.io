@@ -107,6 +107,12 @@ outline: deep
 
 用于启用或关闭 Dashboard 的 MCP 入口。启用后可使用 PAT 调用 `POST /mcp`；关闭时会拒绝新的 MCP 请求并中断相关传输。配置字段为 [`enable_mcp`](/configuration/dashboard.html#enable-mcp)，认证和权限说明见 [API 接口 - MCP 接入](/guide/api.html#mcp-%E6%8E%A5%E5%85%A5)。
 
+### 在线统计范围（天）
+
+此项对应 [`online_stats_days`](/configuration/dashboard.html#online-stats-days)。默认 7 天，可填写 7–3650 之间的整数，同时控制服务器在线历史的保留与最大查询范围。它不改变 TSDB 指标保留期，也不会把默认用户前端的 1/7/30 天选项扩展为任意天数。
+
+缩短范围后，超出窗口的已结束会话会被定期删除；之后再延长不能恢复已删除的历史。展示方式见[在线历史](/guide/servers.html#在线历史)。
+
 ### IP 变更提醒
 
 此功能允许在服务器 IP 地址变更时发送通知，设置步骤如下：

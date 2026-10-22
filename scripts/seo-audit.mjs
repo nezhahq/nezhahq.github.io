@@ -174,4 +174,41 @@ assert.match(enHome, /href="\/en_US\/guide\/overview\.html"/)
 assert.match(enHome, /href="\/en_US\/guide\/architecture\.html"/)
 assert.match(enHome, /href="\/en_US\/guide\/version-compatibility\.html"/)
 
+// AI operations must be discoverable to people, search crawlers, and AI readers.
+for (const [locale, home, guide] of [
+  ['zh-CN', zhHome, 'guide/'],
+  ['en', enHome, 'en_US/guide/']
+]) {
+  const featurePath = `${guide}ai-operations.html`
+  const feature = read(featurePath)
+  const heroStart = home.indexOf('class="actions"')
+  assert.ok(heroStart >= 0, `${locale}: missing homepage hero actions`)
+  const hero = home.slice(heroStart, heroStart + 5000)
+  const installAt = hero.indexOf(`href="/${guide}dashboard.html"`)
+  const featureAt = hero.indexOf(`href="/${featurePath}"`)
+  assert.ok(installAt >= 0 && featureAt > installAt, `${locale}: AI operations button must follow Install Dashboard`)
+  assert.match(feature, /role="tablist"/, `${locale}: workflow explorer is missing`)
+  assert.match(feature, /Codex/)
+  assert.match(feature, /OpenClaw/)
+  assert.match(feature, /Claude Code/)
+  assert.ok(feature.includes(`href="/${guide}mcp.html#connect-clients"`), `${locale}: missing setup CTA`)
+  const jsonLdText = feature.match(/<script\b[^>]*type="application\/ld\+json"[^>]*>(.*?)<\/script>/s)?.[1]
+  const graph = JSON.parse(jsonLdText)['@graph']
+  const faq = graph.find((entry) => entry['@type'] === 'FAQPage')
+  assert.equal(faq?.mainEntity.length, 6, `${locale}: expected six FAQ entries`)
+  assert.ok(feature.includes('id="faq"'), `${locale}: structured FAQ must have a matching visible section anchor`)
+  const article = graph.find((entry) => entry['@type'] === 'TechArticle')
+  assert.match(article.keywords, /MCP/)
+  // Structured answers must also be visible, not hidden SEO-only copy.
+  for (const question of faq.mainEntity) {
+    assert.ok(feature.includes(question.name), `${locale}: FAQ question is not visible`)
+    assert.ok(feature.includes(question.acceptedAnswer.text), `${locale}: FAQ answer is not visible`)
+  }
+  const config = readSource('docs/.vitepress/config.mts')
+  const sidebarStart = config.indexOf(locale === 'en' ? "text: 'About Nezha V2'" : "text: '了解哪吒 V2'")
+  const sidebarEnd = config.indexOf(']', sidebarStart)
+  assert.ok(config.slice(sidebarStart, sidebarEnd).includes(`/${featurePath}`), `${locale}: missing About Nezha V2 navigation entry`)
+  assert.ok(llms.includes(`${siteUrl}/${featurePath}`), `${locale}: missing llms.txt discovery link`)
+}
+
 console.log(`SEO audit passed for ${pages.length} generated content pages.`)

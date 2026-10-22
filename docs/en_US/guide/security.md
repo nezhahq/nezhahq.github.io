@@ -48,6 +48,7 @@ Trust `web_real_ip_header` or `agent_real_ip_header` only when a reverse proxy a
 ## Accounts, OAuth2, and sessions
 
 - Give every operator an individual account; do not share an administrator password.
+- Browser JWTs are bound to the login IP by default. `allow_jwt_ip_change: true` relaxes this protection; it does not fix a misconfigured real-IP header. See [Login troubleshooting](/en_US/guide/loginq.html#session-lost-after-switching-networks).
 - Grant administrator access only to users who manage system settings, users, or WAF controls.
 - OAuth2 is a binding method for local accounts. It does not remove the security responsibility for local accounts or callbacks.
 - In production, prefer injecting the JWT signing secret through `NZ_JWTSECRETKEY` instead of storing it in YAML. Rotating the secret can invalidate active sessions.
@@ -73,6 +74,8 @@ API Tokens (PATs) are intended for scripts and automation and use `Authorization
 - Separate automation accounts from daily administrator accounts so access can be revoked and impact traced independently.
 
 MCP is disabled by default and accepts PATs only. Once enabled, the tools available to a model or automation client are controlled by Token scope; file transfer also creates temporary streams. Read [API Tokens and MCP](/en_US/guide/api.html#mcp-access) before setting `enable_mcp`.
+
+With an AI client, prompts, tool results, logs, and file contents may reach the model service it uses. Self-hosting Dashboard does not make model processing local; choose readable data according to the client, model deployment, and organizational policy. See [MCP-powered AI operations](/en_US/guide/ai-operations.html) for workflows and capability boundaries.
 
 ## Remote terminal, files, tasks, and NAT
 
@@ -120,3 +123,7 @@ If you need monitoring but no remote operations, begin with a reduced capability
 6. Maintain an encrypted offline or off-site backup and run restoration drills.
 
 For connection-specific diagnosis, continue with [Architecture and data flow](/en_US/guide/architecture.html), [Dashboard troubleshooting](/en_US/guide/dashboardq.html), and [Agent troubleshooting](/en_US/guide/agentq.html).
+
+## Reporting Vulnerabilities
+
+Report vulnerabilities privately through [Dashboard security](https://github.com/nezhahq/nezha/security), [Agent security](https://github.com/nezhahq/agent/security), or [hi@nai.ba](mailto:hi@nai.ba). Follow each repository's `SECURITY.md`; do not attach exploit details, connection secrets, or tokens to a public issue.

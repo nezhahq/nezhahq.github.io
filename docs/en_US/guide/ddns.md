@@ -40,6 +40,12 @@ DDNS can be configured directly in the Dashboard's admin panel.
 
 ---
 
+## Missing IP Addresses
+
+IPv4 and IPv6 updates and retries are handled independently. If an enabled address family is empty in the Agent's report, Dashboard attempts to delete the corresponding A or AAAA record rather than writing an empty address or always keeping the old record.
+
+Deletion requires the DNS provider to implement `RecordDeleter`. Unsupported providers skip deletion and log it; this does not mean the record was deleted. The Webhook provider currently does not implement this interface. Before upgrading, ensure enabled address families match the node's actual networking so a temporarily missing address does not remove a record you need to keep.
+
 ## Webhook Configuration Instructions
 
 Webhooks allow you to customize HTTP requests for third-party services or other specialized needs.
@@ -52,7 +58,7 @@ Webhooks allow you to customize HTTP requests for third-party services or other 
 - **Webhook Request Headers**: Input headers in JSON format (nested headers are not supported).
 - **Webhook Request Body**: Not used for `GET` and `DELETE`. For nested formats, use `JSON`.
 
-When a DDNS configuration is read, the API and admin frontend hide Credential 2 (`access_secret`) and Webhook request headers. Leaving these sensitive fields empty while editing preserves their stored values. To clear a stored value, delete and recreate the DDNS configuration.
+When a DDNS configuration is read, the API and admin frontend hide Credential 2 (`access_secret`) as well as the Webhook URL, request headers, and request body. Leaving these sensitive fields empty while editing preserves their stored values. To clear a stored value, delete and recreate the DDNS configuration.
 
 ---
 

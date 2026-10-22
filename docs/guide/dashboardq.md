@@ -207,7 +207,7 @@ reverse_proxy {
 
 ## 使用 Nginx 反代 gRPC 无法连接 Agent
 
-当前版本的 Agent 会同时发送连字符形式的 `client-secret`、`client-uuid` 和旧版下划线形式的认证 Header，Dashboard 也同时兼容两种形式。因此，当 Dashboard 为 `v2.2.1` 或更高版本、Agent 为 `v2.2.2` 或更高版本时，通常不再需要为下划线 Header 设置 `underscores_in_headers` 或 `ignore_invalid_headers`。
+当前版本的 Agent 会同时发送连字符形式的 `client-secret`、`client-uuid` 和旧版下划线形式的认证 Header，Dashboard 也同时兼容两种形式。通常不需要为下划线 Header 设置 `underscores_in_headers` 或 `ignore_invalid_headers`。
 
 如果仍无法连接，请优先确认：
 

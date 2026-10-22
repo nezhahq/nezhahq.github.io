@@ -351,6 +351,35 @@ Authorization: Bearer JWT_TOKEN
 - 管理员可见所有服务器，普通用户只能看到自己名下的服务器。
 - 如需实时状态流，请使用 `GET /api/v1/ws/server` WebSocket 接口。
 
+### 获取服务器在线历史
+
+请求：
+
+```http
+GET /api/v1/server/{id}/online-history?days=1
+```
+
+- 不依赖 TSDB，查询 Dashboard 数据库中的在线会话。
+- `days` 必须为不小于 1 的整数；省略时使用后台的 `online_stats_days`，超过该配置时会被截断到配置值。响应中的 `days` 是实际查询天数，`max_days` 是后台上限（默认 7，范围 7–3650）。
+- 游客仅可查询 1 天，仍受 `force_auth` 和服务器“对游客隐藏”的限制。**游客应显式传入 `days=1`**：省略参数会使用后台范围，因超过 1 天而返回权限错误，不会自动降为 1 天。
+- 登录用户按服务器可见权限访问：管理员或所有者可查看对应服务器，其他成员只能查看未对游客隐藏的服务器。PAT 还需要 `nezha:server:read`，并受服务器 ID 白名单限制；管理员签发的受限 PAT 也不能越过白名单。
+- 数据从功能启用后积累，不回填升级前历史。窗口按面板 `location` 时区回溯指定天数至当前时刻，而不是从首日零点起算。
+
+成功响应的 `data` 主要字段：
+
+| 字段 | 含义 |
+| --- | --- |
+| `server_id`、`server_name` | 服务器标识与名称 |
+| `days`、`max_days` | 实际查询天数与后台最大范围 |
+| `timezone`、`tz_offset` | 面板时区名称、窗口末端的 UTC 偏移秒数；跨夏令时按时区名称解释日期 |
+| `window_start`、`window_end` | 查询窗口起止时间，以 UTC 序列化 |
+| `total_online_seconds` | 每日在线秒数之和；每日先累加原始时长再向下取整 |
+| `online_rate` | 在线秒数占整个查询窗口秒数的百分比（0–100） |
+| `currently_online` | 最近 30 秒内是否收到状态上报 |
+| `last_active` | 最后活跃时间（UTC）；从未上报时可能省略 |
+| `periods` | 裁剪到窗口内的在线时段，含 UTC `start`、`end` 和 `ongoing`；进行中时段以窗口末端作为 `end` |
+| `daily` | 按面板时区日期升序排列的 `{date, online_seconds}`，包含在线为 0 的日期 |
+
 ### 获取服务器实时状态流
 
 请求：
@@ -540,7 +569,11 @@ GET /api/v1/server/{id}/service
 
 直接写管理类自动化脚本前，建议先在测试环境验证，避免批量修改服务器、通知、任务或用户配置。
 
-通知方式和 DDNS 的读取接口会对敏感字段脱敏：通知方式不会返回已保存的 `url`、`request_header`、`request_body`，DDNS 不会返回已保存的 `access_secret`、`webhook_headers`。更新这些对象时，省略相应字段或传入空值会保留数据库中的原值，不会将其清空。自动化脚本不应把读取到的空值当作真实配置再覆盖回去；如需清空这些敏感字段，请删除并重新创建对象。
+`/api/v1/ws/transfer` 事件流每用户最多同时订阅 8 条，整个 Dashboard 进程最多 1024 条；达到上限时请关闭不用的转移页面或 WebSocket 客户端后重试。这是订阅数限制，不是可转移服务器数量。
+
+自定义 WebSocket 客户端还需遵守输入消息上限：终端为 `512 * 1024 + 64` 字节，文件管理为 1 MiB。文件上传需按协议分块，1 MiB 并非整个文件的大小上限。
+
+通知方式和 DDNS 的读取接口会对敏感字段脱敏：通知方式不会返回已保存的 `url`、`request_header`、`request_body`，DDNS 不会返回已保存的 `access_secret`、`webhook_url`、`webhook_headers`、`webhook_request_body`。更新这些对象时，省略相应字段或传入空值会保留数据库中的原值，不会将其清空。自动化脚本不应把读取到的空值当作真实配置再覆盖回去；如需清空这些敏感字段，请删除并重新创建对象。
 
 ---
 
@@ -580,7 +613,7 @@ Content-Type: application/json
 | `fs.write`、`fs.upload_url` | `nezha:server:write` |
 | `fs.delete` | `nezha:server:delete` |
 
-需要调用 Agent 的 MCP 工具要求目标 Agent 版本不低于 `v2.1.0`。`server.exec` 是非交互一次性命令，不分配 PTY，默认超时 30 秒，`timeout_seconds` 硬上限 300 秒；需要管道、重定向等 shell 语法时，请显式使用 `cmd: "sh"` 和 `args: ["-c", "..."]`。
+需要调用 Agent 的 MCP 工具依赖目标 Agent 支持对应能力。`server.exec` 是非交互一次性命令，不分配 PTY，默认超时 30 秒，`timeout_seconds` 硬上限 300 秒；需要管道、重定向等 shell 语法时，请显式使用 `cmd: "sh"` 和 `args: ["-c", "..."]`。
 
 文件工具分为两类：
 

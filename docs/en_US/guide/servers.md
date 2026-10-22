@@ -106,8 +106,19 @@ Click a server card to enter the `/server/{id}` detail page. The detail page inc
 
 - **Details**: Shows CPU, memory, disk, process count, TCP/UDP connection count, inbound/outbound rates, and other metrics, with realtime, 1-day, 7-day, and 30-day charts.
 - **Network**: Shows service-monitoring latency charts that this server participates in, with 1-day, 7-day, and 30-day periods and multi-monitor selection.
+- **Online**: Shows uptime percentage, total online/offline time, last activity, daily totals, and date-grouped online/offline periods.
 
-Historical charts depend on TSDB. When TSDB is not enabled, non-realtime historical periods are locked in the frontend. Guests can only view realtime and 1-day data; 7-day and 30-day data require login.
+Historical charts in Details and Network depend on TSDB. When TSDB is not enabled, non-realtime historical periods are locked in the frontend. Guests can only view realtime and 1-day data; 7-day and 30-day data require login. **Online history is stored separately and does not require TSDB**, as described below.
+
+### Online History
+
+The default user frontend provides an Online tab on the server detail page, with a one-day query selected by default. If using another user theme, check whether it supports online-history display.
+
+- The page offers 1-, 7-, and 30-day options and defaults to 1 day. Options above the configured retention range are locked. Anonymous guests can query only 1 day, subject to `force_auth` and the server's Hide for Guest setting.
+- Administrators can set [`online_stats_days`](/en_US/configuration/dashboard.html#online-stats-days) under **System Settings → Online Stats Range (days)**. The default is 7 days and the range is 7–3650 days. Longer windows can be queried through the [API](/en_US/guide/api.html#get-server-online-history); this does not add matching options to the frontend.
+- Sessions are stored in the Dashboard database and accumulate from Agent state reports received after this feature is enabled. System uptime and TSDB metrics do not backfill pre-upgrade history. Total online time and uptime percentage may therefore be low immediately after upgrading.
+- The query window runs from the corresponding time the requested number of days ago to now, using Dashboard's `location` timezone. Daily totals use the same timezone; the window does not start at midnight. Uptime percentage uses the entire query window, not just the recorded portion.
+- Current online status means a state report was received within the last 30 seconds. A periodic sweep closes stale sessions; normal stream disconnection also ends a session. Alert rules use a different offline-detection window, so the page status cannot directly predict alert timing.
 
 ---
 
@@ -116,6 +127,7 @@ Historical charts depend on TSDB. When TSDB is not enabled, non-realtime histori
 The online terminal (WebShell) allows users to remotely access a server command-line interface through the Dashboard. It supports Linux and Windows systems.
 
 - **Shortcut**: Use `Ctrl+Shift+V` to paste commands.
+- **Mobile controls**: The admin frontend provides `Paste`, `Ctrl`, `Esc`, `Tab`, arrow keys, `Home`/`End`, and page keys. `Ctrl` applies to the next keypress. The `Paste` button requires HTTPS or a browser-recognized secure context and clipboard permission, and accepts at most 512 KiB of text per action. Use file-manager upload for large files.
 - **Limit**: When `disable-command-execute` is enabled, the online terminal is unavailable.
 - **Connection Issues**: If the connection fails, see [WebSocket Connection Failure](/en_US/guide/q4.html).
 - **Concurrency Limits**: One user can occupy at most 20 active online-terminal and file-manager IOStreams. One target server can carry at most 40 active IOStreams in total, including terminal, file manager, NAT, and MCP file transfers. Close unused sessions before retrying after a limit is reached.

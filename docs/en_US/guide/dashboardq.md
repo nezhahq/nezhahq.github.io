@@ -205,7 +205,7 @@ Bypass the CDN and connect directly to the origin server for file transfers. Ens
 
 ## Unable to Connect Agent with Nginx Reverse Proxy for gRPC
 
-Current Agents send both the hyphenated `client-secret` and `client-uuid` authentication headers and the legacy underscore variants. Dashboard accepts both forms as well. Therefore, with Dashboard `v2.2.1` or later and Agent `v2.2.2` or later, you normally no longer need `underscores_in_headers` or `ignore_invalid_headers` for Agent authentication.
+Current Agents send both the hyphenated `client-secret` and `client-uuid` authentication headers and the legacy underscore variants. Dashboard accepts both forms as well. You normally do not need `underscores_in_headers` or `ignore_invalid_headers` for Agent authentication.
 
 If the connection still fails, check the following first:
 

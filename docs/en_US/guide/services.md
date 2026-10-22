@@ -40,6 +40,14 @@ To add a new service monitor, follow these steps:
 
 ---
 
+## Type Restrictions and Current-Status Window
+
+Service monitors accept only `1` (HTTP GET), `2` (ICMP Ping), and `3` (TCP Ping). Other types are rejected. Invalid existing database entries are quarantined, not scheduled, and logged as `quarantining service`. Service monitors cannot be used as a command-execution entry point; use scheduled/triggered tasks or authorized MCP tools instead.
+
+Current status aggregates roughly the last 15 minutes of probe results, using 30-second buckets with per-reporter deduplication rather than the last 30 results. Changing probe intervals or adding reporting nodes therefore does not simply reduce the window to 30 probes. This differs from 30-day historical availability and server online-session statistics.
+
+---
+
 ## Delay Change Notifications
 
 Nezha Monitor collects and monitors latency between Agents and target servers. When latency changes significantly, it can send notifications to help monitor route status.

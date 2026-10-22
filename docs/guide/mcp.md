@@ -24,6 +24,58 @@ Content-Type: application/json
 
 ---
 
+## 连接 Codex、Claude Code 与 OpenClaw {#connect-clients}
+
+想先了解产品特色和可解决的问题，请阅读 [MCP 智能运维与 AI Agent](/guide/ai-operations.html)。本节提供客户端接入配置；以下配置只是文档示例，不会自动连接或修改你的环境。
+
+先在 Dashboard 启用 `enable_mcp`，创建专用 PAT，并将其通过秘密管理器注入客户端进程的 `NEZHA_PAT` 环境变量。不要把真实 Token 放入项目文件、提交记录或命令参数。服务地址示例为 `https://nezha.example.com/mcp`，请替换成客户端实际可访问的入口。
+
+### Codex
+
+在 Codex 的 `config.toml` 中使用 HTTP MCP 与运行时 Bearer Token：
+
+```toml
+[mcp_servers.nezha]
+url = "https://nezha.example.com/mcp"
+bearer_token_env_var = "NEZHA_PAT"
+```
+
+配置后，在客户端重新加载并确认工具可以列出和调用。配置字段见 [Codex 官方 MCP 文档](https://learn.chatgpt.com/docs/extend/mcp#streamable-http-servers)。哪吒 MCP 使用 PAT，不使用 Codex 的 OAuth 登录流程。
+
+### Claude Code
+
+在 Claude Code 的 `.mcp.json` 中使用 HTTP 类型与环境变量引用：
+
+```json
+{
+  "mcpServers": {
+    "nezha": {
+      "type": "http",
+      "url": "https://nezha.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${NEZHA_PAT}"
+      }
+    }
+  }
+}
+```
+
+确认进程已取得 `NEZHA_PAT`，按客户端要求批准配置并检查连接。参考 [Claude Code 官方 MCP 文档](https://code.claude.com/docs/en/mcp#environment-variable-expansion-in-mcpjson)。不要把模型提供商的 API Key 当成哪吒 PAT。
+
+### OpenClaw
+
+将哪吒 HTTP 入口和 PAT 接入当前运行时可用的 MCP 客户端；已有 mcporter 的环境也可以通过其注册表与调用工具接入。OpenClaw 管理的 MCP 注册表与 mcporter 注册表不同，不能只因某处出现配置就假定当前会话已经获得工具。
+
+具体注册方式与运行时支持见 [OpenClaw 官方 MCP 文档](https://docs.openclaw.ai/cli/mcp)。在你的部署中验证工具发现和一次只读调用后，再加入聊天、定时巡检或其他已授权工作流。
+
+### 先验证调用，再安排工作
+
+建议先调用 `meta.whoami` 核对身份、scope 和服务器白名单，再用 `server.list` 确认可见节点；这些检查不要求执行远程命令。需要读取节点详情时调用 `server.get`，执行命令则另需 `nezha:server:exec`。
+
+客户端支持 HTTP MCP，不代表所有运行时、安全代理或网关组合都已验证。哪吒的入口是带 PAT 的 POST 请求/响应，不依赖 SSE；若普通调用成功但文件 URL 失败，还需核对 [临时 URL 的面板域名](#临时-url-的面板域名)。
+
+---
+
 ## 协议行为
 
 当前实现面向 MCP Streamable HTTP 的 POST 请求/响应，不提供独立 SSE 会话：
@@ -118,7 +170,7 @@ MCP 工具同时受三层限制：
 | `fs.download_url` | `nezha:server:read` | 签发一次性 HTTP 下载 URL，适合最多 100 MiB 的文件。 |
 | `fs.upload_url` | `nezha:server:write` | 签发一次性 HTTP 上传 URL，适合最多 100 MiB 的文件。 |
 
-需要调用 Agent 的工具要求目标 Agent 版本不低于 `v2.1.0`。Agent 上报 `2.1.0` 或 `v2.1.0` 都会被接受；低于该版本会返回不支持 MCP 的工具错误。
+需要调用 Agent 的工具依赖目标 Agent 支持对应能力。请使用当前稳定版 Agent；能力检查未通过时，工具会返回不支持 MCP 的错误。
 
 ---
 
@@ -338,6 +390,12 @@ MCP 工具同时受三层限制：
 - 传输最长 10 分钟。
 - 使用临时 URL 时会重新校验 `enable_mcp`、Token、scope、服务器白名单和用户服务器权限。
 - Token 被吊销或管理员关闭 `enable_mcp` 时，未使用 URL 和进行中的传输会被撤销。
+
+### 临时 URL 的面板域名
+
+签发临时 URL 时优先使用 [`dashboard_host`](/configuration/dashboard.html#dashboard-host)；未设置时，请求 Host 必须匹配 `install_host`、`listen_host` 或 `reserved_hosts` 中的保留主机名，否则签发失败，并提示 `MCP transfer URL host is not an operator-declared dashboard host`。
+
+建议显式配置 MCP 客户端实际可访问的 `dashboard_host`（`域名/IP[:端口]`，不含协议或路径），不要填写 NAT 服务域名。反向代理终止 HTTPS 时需传递 `X-Forwarded-Proto: https`，否则临时 URL 可能使用 HTTP。`server.list` 等调用成功，并不代表文件 URL 的域名配置已正确。
 
 ### 下载 URL
 

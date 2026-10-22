@@ -107,6 +107,12 @@ For direct public access, select **Use Direct IP**. For Cloudflare, usually use 
 
 Enables or disables the Dashboard MCP endpoint. After enabling it, clients can call `POST /mcp` with a PAT. When disabled, Dashboard rejects new MCP requests and interrupts related transfers. The configuration field is [`enable_mcp`](/en_US/configuration/dashboard.html#enable-mcp). For authentication and permission details, see [API Interface - MCP Access](/en_US/guide/api.html#mcp-access).
 
+### Online Stats Range (days)
+
+This field maps to [`online_stats_days`](/en_US/configuration/dashboard.html#online-stats-days). It defaults to 7 days and accepts integers from 7 to 3650, controlling online-history retention and the maximum query window. It does not change TSDB metric retention or expand the default user frontend's 1/7/30-day options to arbitrary durations.
+
+Reducing the range causes closed sessions outside the window to be periodically deleted. Increasing it later cannot restore deleted history. See [Online history](/en_US/guide/servers.html#online-history) for display behavior.
+
 ### IP Change Notification
 
 This feature sends notifications when a server IP address changes. Configure it as follows:

@@ -20,6 +20,14 @@ outline: deep
 
 如果还没有绑定关系，不能直接使用 OAuth2 登录到本地账户。
 
+## 切换网络后登录失效
+
+Dashboard 默认把浏览器 JWT 会话绑定到登录时识别的客户端 IP。切换 Wi-Fi、移动网络、VPN 或代理出口后，可能需要重新登录；这不等同于密码错误或账号被封。
+
+先检查[前端真实 IP 请求头](/guide/q12.html)，确保代理没有把访客 IP 错误识别为共享或不稳定的地址。确需允许会话跨 IP 使用时，可设置 [`allow_jwt_ip_change: true`](/configuration/dashboard.html#allow-jwt-ip-change)，但这会放宽会话保护；默认仍为 `false`，当前管理前端无此开关。
+
+默认用户前端首页遇到游客 API 的 `ApiErrorUnauthorized` 会提示登录并提供 `/dashboard` 入口，不再把此情形显示成后端不可用。启用了 `force_auth` 时应先登录；不要仅凭这个提示判断 Agent 离线。
+
 ## 登录接口被频繁尝试或误封
 
 V2 继续提供 Web 应用防火墙，用于限制登录爆破。若 Dashboard 部署在反向代理或 CDN 后面，请正确配置 [前端真实 IP 请求头](/guide/q12.html)，否则可能因为无法识别真实访问者 IP 而出现误判。

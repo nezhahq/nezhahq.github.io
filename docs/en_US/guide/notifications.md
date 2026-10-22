@@ -408,7 +408,7 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
   - **System**: `offline` (offline monitoring), `load1`, `load5`, `load15` (load), `process_count` (process count)
   - **Connections**: `tcp_conn_count`, `udp_conn_count`
   - **Temperature**: `temperature_max` (maximum temperature value)
-- **`duration`**: Number of samples and must be an integer of at least 3. Dashboard checks approximately every 3 seconds, so the effective observation window is about `duration × 3` seconds. A normal threshold rule triggers only when **more than 70%** of samples are outside the allowed range; an offline rule requires every sample in the window to be offline. This reduces false positives from brief fluctuations.
+- **`duration`**: An integer of at least 3, specifying an observation window of `duration × 3` seconds. Evaluation uses time covered by reports. A normal threshold rule triggers when values are outside the allowed range for **more than 70% of the window**, with sufficient data coverage. Offline rules use a continuous offline window; actual trigger timing varies with the check cadence.
 - **`min` / `max`**:
   - Traffic and speed units are bytes (1KB=1024B, 1MB=1024\*1024B).
   - Memory, disk, and CPU use percentages (0-100).
@@ -417,6 +417,10 @@ curl -XPOST -d '{"type": "m.login.password", "identifier": {"user": "$YOUR_MATRI
   - `0`: Monitor all servers. Use `ignore` to ignore specific servers.
   - `1`: Ignore all servers. Use `ignore` to select specific servers for monitoring.
 - **`ignore`**: Used with `cover` to specify server monitoring strategy, in the format `{server ID: true/false}`.
+
+Metric rules use distinct fresh reports; the same report is not counted repeatedly. Reports older than 6 seconds, missing GPU data, or zero denominators such as unavailable total memory make the relevant condition unknown. Unknown data neither starts an incident nor sends a recovery; a new window must accumulate once data becomes available again. A compound rule cannot decide an incident or recovery while any applicable condition is unknown. Configure offline alerts separately from CPU, GPU, and other resource alerts.
+
+An `offline`-only rule still advances with the check clock: it observes offline status when reports are older than 6 seconds or a disconnected state stream has cleared the active state, then accumulates the configured window. `duration: 10` means an approximately 30-second offline observation window, not guaranteed delivery exactly 30 seconds after the last report. Notification network latency adds further delay.
 
 **Examples**:
 
@@ -510,8 +514,10 @@ If you are unsure about alert rules, use these third-party configuration generat
 
 ## Notification Trigger Modes
 
-- **Always**: Each time the status reported by the Agent matches the notification rule, a notification is triggered.
-- **Once**: Only triggers on state changes, such as from normal to abnormal or from abnormal back to normal.
+- **Always**: Continues attempting delivery during an incident. Successful sends are subject to notification mute intervals; not every report produces an actual delivery.
+- **Once**: Sends one successful notification for each incident/recovery transition. Failed sends are still retried rather than suppressing the notification merely because it was attempted.
+
+Incident and recovery delivery for the same rule/server pair is serialized. A new state cancels retries for the old state that have not started, and recovery cannot overtake an in-flight incident request. Success is tracked per notification method in the group, so failed recipients remain retryable; an empty group is not a successful send. This does not guarantee exactly-once delivery at a third-party receiver.
 
 ---
 
@@ -519,5 +525,7 @@ If you are unsure about alert rules, use these third-party configuration generat
 
 If you need to execute a specific task while sending notifications, configure:
 
-- **Always execute task**: When notification status changes from “normal” to “abnormal”, execute the specified task. The task must be configured in advance on the Tasks page.
-- **Execute task once**: When notification status changes from “abnormal” back to “normal”, execute the specified task. The task must be configured in advance on the Tasks page.
+- **Incident tasks** (`fail_trigger_tasks`): In Always mode, each evaluable failed check may trigger them; in Once mode, only a new incident triggers them.
+- **Recovery tasks** (`recover_trigger_tasks`): Trigger when a known incident returns to normal.
+
+Configure tasks on the Tasks page first. Task execution is not conditional on successful notification delivery. Do not use Always mode for tasks that are unsafe to repeat.

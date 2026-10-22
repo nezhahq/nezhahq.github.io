@@ -103,12 +103,18 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
 - ##### **`agent_secret_key`** \*
 
   - Connection secret key for the Agent.
-  - No longer used in newer versions, instead, the connection secret key is bound to the user, see [Connection Secret](/en_US/guide/user.html#connection-secret).
+  - This field is retained for legacy Agent compatibility. Current deployments should use user-bound connection secrets; see [Connection Secret](/en_US/guide/user.html#connection-secret).
 
 - ##### **`jwt_timeout`** \*
 
   - Integer, specifies the expiration time of JWT (hours).
   - The default value is `1`.
+
+- ##### **`allow_jwt_ip_change`**
+
+  - Boolean, default `false`.
+  - By default, browser login sessions are bound to the client's IP at login; an IP change requires signing in again. Set this to `true` to keep a JWT session usable after an IP change, for example when frequently switching networks. This relaxes session protection.
+  - The current admin frontend has no switch for this option. Edit YAML and restart, or update `allow_jwt_ip_change` through the administrator settings API. PAT scopes, server allowlists, expiration, and revocation are unchanged.
 
 - ##### **`jwt_secret_key`** \*
 
@@ -119,7 +125,7 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
 - ##### **`jwt_secret_key_last_rotated_version`** \*
 
   - Records the Dashboard version that last completed JWT key rotation.
-  - Starting from the `v2.0.13` baseline, if `NZ_JWTSECRETKEY` is not used and this field is empty or lower than the baseline, Dashboard generates a new `jwt_secret_key` and updates this field.
+  - If `NZ_JWTSECRETKEY` is not used and the recorded rotation version is empty or below the current rotation baseline `v2.0.13`, Dashboard generates a new `jwt_secret_key` and updates this field.
   - Editing this field manually may invalidate sessions unnecessarily. Normally you only need to inspect it while troubleshooting upgrade rotation.
 
 - ##### **`enable_plain_ip_in_notification`**
@@ -150,6 +156,13 @@ Dashboard configuration is in YAML format, where items marked with \* can only b
 
   - Integer, when the number of TCPing / ICMP Ping service data entries in memory reaches this value, the average value will be taken and written to the database.
   - The default is `2`, increasing this value can reduce the storage of the database.
+
+- ##### **`online_stats_days`**
+
+  - Integer, default `7`, valid range `7`–`3650` days.
+  - Controls both online-session history retention and the online-history API's maximum query window. It does not control retention of CPU, network, or other TSDB metrics.
+  - This field can be changed in the admin frontend system settings. The settings API rejects out-of-range values; at startup, a missing, `0`, or out-of-range YAML value falls back to `7`.
+  - After reducing the range, closed sessions outside the window are periodically pruned. Increasing the range later cannot recover deleted history. See [Server online history](/en_US/guide/servers.html#online-history).
 
 - ##### **`dns_servers`**
 

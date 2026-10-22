@@ -31,10 +31,24 @@ They are released independently, so their patch versions do not have to match. T
 
 If Dashboard requests a forced Agent update or logs show protocol, authentication, or field errors, follow the current release notes and issues instead of comparing version strings alone.
 
+## Component Responsibilities and Feature Boundaries
+
+Admin and user frontends are released independently. Official Dashboard releases bundle frontends selected by the build-time template manifest; third-party themes may not implement the same features. This guide describes current stable behavior directly.
+
+| Feature | Current behavior and boundaries |
+| --- | --- |
+| Mobile terminal | The admin frontend provides key controls and a clipboard button; the Agent handles terminal input, sizing, and colors |
+| GPU memory | The Agent reports per-card memory, Dashboard relays it, and the default user frontend displays it; memory collection currently supports Linux NVIDIA only |
+| JWT sessions across IP changes | `allow_jwt_ip_change` is disabled by default; there is no admin-frontend switch, so use the configuration file or settings API |
+| Online history | Dashboard stores online sessions in its database without TSDB; the default user frontend provides an Online tab with a one-day query selected by default |
+| Online stats range | `online_stats_days` defaults to 7 days and accepts 7–3650 days, controlling both retention and the maximum query window |
+
+Online history accumulates from received state reports and does not backfill previously unrecorded periods. The default user frontend offers 1/7/30-day options; the API maximum follows configured retention. Independently released components do not need identical version numbers.
+
 ## How should V0, V1, and V2 documentation be read?
 
 - **V2:** the default target for current installation, configuration, API, and troubleshooting pages.
-- **V1:** some behavior was introduced in V1 and remains in V2. Documentation may say that V2 continues behavior introduced in V1 when history matters.
+- **V1:** a historical product generation. Follow the current V2 installation and usage documentation rather than copying old configuration or commands.
 - **V0:** old configuration formats, databases, and login flows may be incompatible with current releases. Pages retained at old URLs are historical references, not instructions for new deployments.
 - **V1 in a community project name:** when an upstream repository or project name explicitly says V1, the documentation preserves the real name and labels it third-party or historical. It does not invent V2 compatibility.
 
@@ -44,9 +58,9 @@ If Dashboard requests a forced Agent update or logs show protocol, authenticatio
 
 API version and product generation are independent. The current [API documentation](/en_US/guide/api.html) follows routes implemented by Dashboard.
 
-### Why does a configuration page mention “since V1”?
+### Which behavior does this documentation describe?
 
-It means the behavior was established in V1 and continues in V2—for example, the unified web and Agent communication port or local accounts with OAuth2 binding. Current documentation should state the V2 behavior first and include history only when useful.
+Installation, configuration, API, and troubleshooting pages directly describe the current stable behavior. For example, web and Agent communication share a port, and local accounts support OAuth2 binding. Release history is for auditing and provenance, not a prerequisite for current usage steps.
 
 ### Why does a community project page still say V1?
 

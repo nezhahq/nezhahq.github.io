@@ -48,6 +48,7 @@ outline: deep
 ## 账号、OAuth2 与会话
 
 - 每位操作者使用独立账号，不共享管理员密码。
+- 浏览器 JWT 默认绑定登录 IP；`allow_jwt_ip_change: true` 会放宽此保护，并非修复真实 IP Header 误配的方法。见[登录排障](/guide/loginq.html#切换网络后登录失效)。
 - 只向需要系统设置、用户或 WAF 管理的人授予管理员权限。
 - OAuth2 是本地账号的绑定登录方式，不会消除本地账号和回调配置的安全责任。
 - 生产环境优先通过 `NZ_JWTSECRETKEY` 注入 JWT 签名密钥，避免将密钥明文保存到 YAML；轮换后现有登录态可能失效。
@@ -73,6 +74,8 @@ API Token（PAT）面向脚本和自动化，使用 `Authorization: Bearer ...`�
 - 将自动化专用账号与日常管理员账号分开，便于撤销和追踪影响范围。
 
 MCP 默认关闭，并且只接受 PAT。启用后，模型或自动化客户端能够调用哪些工具取决于 Token scope；文件传输还会创建临时流。先阅读 [API Token 与 MCP](/guide/api.html#mcp-接入)，再设置 `enable_mcp`。
+
+使用 AI 客户端时，提示词、工具结果、日志和文件内容可能进入该客户端使用的模型服务。自托管 Dashboard 不等于模型处理也留在本地；按客户端、模型部署方式和组织数据策略决定可读取的范围。实际工作流与能力边界见 [MCP 智能运维](/guide/ai-operations.html)。
 
 ## 远程终端、文件、任务与 NAT
 
@@ -120,3 +123,7 @@ MCP 默认关闭，并且只接受 PAT。启用后，模型或自动化客户端
 6. 建立离线或异地加密备份与恢复演练。
 
 需要定位具体连接问题时，继续阅读[架构与数据流](/guide/architecture.html)、[Dashboard 排障](/guide/dashboardq.html)和 [Agent 排障](/guide/agentq.html)。
+
+## 报告安全漏洞
+
+请通过 [Dashboard 安全入口](https://github.com/nezhahq/nezha/security)、[Agent 安全入口](https://github.com/nezhahq/agent/security)或邮件 [hi@nai.ba](mailto:hi@nai.ba) 私下报告漏洞。以各仓库的 `SECURITY.md` 为准，不要在公开 Issue 中附上可利用细节、连接密钥或 Token。

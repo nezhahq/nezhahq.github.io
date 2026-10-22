@@ -351,6 +351,35 @@ Notes:
 - Administrators can see all servers. Normal users can only see servers under their own account.
 - For real-time status streams, use the `GET /api/v1/ws/server` WebSocket API.
 
+### Get Server Online History
+
+Request:
+
+```http
+GET /api/v1/server/{id}/online-history?days=1
+```
+
+- Queries online sessions in the Dashboard database; TSDB is not required.
+- `days` must be an integer of at least 1. Omitting it uses `online_stats_days`; larger values are clamped to that setting. Response `days` is the effective window and `max_days` is the configured maximum (default 7, range 7–3650).
+- Guests can query only 1 day, subject to `force_auth` and Hide for Guest. **Guests should explicitly send `days=1`**: omitting the parameter uses the configured range and returns a permission error for exceeding 1 day, rather than automatically reducing the window.
+- Signed-in users are subject to server visibility checks: administrators and owners can view the corresponding server, while other members can view only servers not hidden from guests. PATs additionally require `nezha:server:read` and their server ID allowlist is enforced, including for administrator-issued restricted PATs.
+- History accumulates after the feature is enabled; pre-upgrade history is not backfilled. The window runs from the corresponding time the requested number of days ago to now in Dashboard's `location` timezone, not from midnight on the first date.
+
+Main fields in a successful response's `data`:
+
+| Field | Meaning |
+| --- | --- |
+| `server_id`, `server_name` | Server identity and name |
+| `days`, `max_days` | Effective query days and configured maximum |
+| `timezone`, `tz_offset` | Dashboard timezone name and UTC offset in seconds at the window end; use the timezone name across DST transitions |
+| `window_start`, `window_end` | Query boundaries serialized in UTC |
+| `total_online_seconds` | Sum of daily online seconds; raw durations are accumulated per day before rounding down |
+| `online_rate` | Online seconds as a percentage of the entire query window (0–100) |
+| `currently_online` | Whether a state report was received within the last 30 seconds |
+| `last_active` | Last activity in UTC; may be omitted if no report has ever arrived |
+| `periods` | Online periods clipped to the window, with UTC `start`, `end`, and `ongoing`; ongoing periods use the window boundary for `end` |
+| `daily` | `{date, online_seconds}` in ascending Dashboard-timezone date order, including dates with zero online seconds |
+
 ### Get Server Real-Time Status Stream
 
 Request:
@@ -540,7 +569,11 @@ Management APIs require login. JWT requests are authorized by user role and reso
 
 Before writing management automation scripts, test them in a staging environment to avoid bulk changes to servers, notifications, tasks, or user configuration.
 
-Read APIs redact sensitive notification and DDNS fields. Notification responses do not return the stored `url`, `request_header`, or `request_body`; DDNS responses do not return the stored `access_secret` or `webhook_headers`. When updating these objects, omitting a sensitive field or sending an empty value preserves the stored value instead of clearing it. Automation must not treat a redacted empty value as the real configuration and write it back. To clear these sensitive fields, delete and recreate the object.
+The `/api/v1/ws/transfer` event stream allows at most 8 concurrent subscriptions per user and 1024 per Dashboard process. Close unused transfer tabs or WebSocket clients before retrying. These are subscription limits, not counts of transferred servers.
+
+For custom WebSocket clients, terminal input messages are limited to `512 * 1024 + 64` bytes and file-manager input messages to 1 MiB. Split file uploads into protocol-sized messages; 1 MiB is not the maximum file size.
+
+Read APIs redact sensitive notification and DDNS fields. Notification responses do not return the stored `url`, `request_header`, or `request_body`; DDNS responses do not return the stored `access_secret`, `webhook_url`, `webhook_headers`, or `webhook_request_body`. When updating these objects, omitting a sensitive field or sending an empty value preserves the stored value instead of clearing it. Automation must not treat a redacted empty value as the real configuration and write it back. To clear these sensitive fields, delete and recreate the object.
 
 ---
 
@@ -580,7 +613,7 @@ Registered MCP tools and required scopes:
 | `fs.write`, `fs.upload_url` | `nezha:server:write` |
 | `fs.delete` | `nezha:server:delete` |
 
-MCP tools that call the Agent require the target Agent version to be at least `v2.1.0`. `server.exec` is a non-interactive one-shot command, does not allocate a PTY, defaults to a 30-second timeout, and has a hard `timeout_seconds` limit of 300 seconds. If you need shell syntax such as pipes or redirection, explicitly use `cmd: "sh"` and `args: ["-c", "..."]`.
+MCP tools that call the Agent require the corresponding capabilities on the target Agent. `server.exec` is a non-interactive one-shot command, does not allocate a PTY, defaults to a 30-second timeout, and has a hard `timeout_seconds` limit of 300 seconds. If you need shell syntax such as pipes or redirection, explicitly use `cmd: "sh"` and `args: ["-c", "..."]`.
 
 File tools are split into two groups:
 

@@ -24,6 +24,58 @@ Content-Type: application/json
 
 ---
 
+## Connect Codex, Claude Code, and OpenClaw {#connect-clients}
+
+For product capabilities and practical outcomes, start with [MCP-powered AI operations](/en_US/guide/ai-operations.html). This section provides client configuration. These are documentation examples; they do not connect to or change your environment automatically.
+
+Enable `enable_mcp` in Dashboard, issue a dedicated PAT, and inject it into the client process as `NEZHA_PAT` through your secret manager. Do not put the actual token in project files, commits, or command arguments. Replace the example endpoint `https://nezha.example.com/mcp` with one reachable by your client.
+
+### Codex
+
+Use HTTP MCP with a runtime Bearer token in Codex's `config.toml`:
+
+```toml
+[mcp_servers.nezha]
+url = "https://nezha.example.com/mcp"
+bearer_token_env_var = "NEZHA_PAT"
+```
+
+Reload the client and verify tool discovery and invocation. See the [official Codex MCP documentation](https://learn.chatgpt.com/docs/extend/mcp#streamable-http-servers) for these fields. Nezha MCP uses a PAT, not Codex's OAuth login flow.
+
+### Claude Code
+
+Use an HTTP server and an environment-variable reference in Claude Code's `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "nezha": {
+      "type": "http",
+      "url": "https://nezha.example.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${NEZHA_PAT}"
+      }
+    }
+  }
+}
+```
+
+Ensure the process receives `NEZHA_PAT`, approve the configuration as required by the client, and inspect connection status. See the [official Claude Code MCP documentation](https://code.claude.com/docs/en/mcp#environment-variable-expansion-in-mcpjson). A model provider's API key is not a Nezha PAT.
+
+### OpenClaw
+
+Connect the Nezha HTTP endpoint and PAT through an MCP client available to the current runtime. Environments already using mcporter can connect through its registry and calling tools. OpenClaw-managed and mcporter registries are separate: the presence of a configuration in one registry does not prove the current session has callable tools.
+
+Consult the [official OpenClaw MCP documentation](https://docs.openclaw.ai/cli/mcp) for registration and runtime support. Verify tool discovery and a read-only call in your deployment before adding conversations, scheduled inspections, or other authorized workflows.
+
+### Verify calls before assigning work
+
+Start with `meta.whoami` to check identity, scopes, and the server allowlist, then `server.list` to confirm visible inventory; these checks do not require remote command execution. Use `server.get` for node details. Commands require the separate `nezha:server:exec` scope.
+
+HTTP MCP support does not mean every runtime, proxy, or gateway combination is verified. Nezha uses PAT-authenticated POST request/response calls and does not depend on SSE. If ordinary calls succeed but file URLs fail, check [Dashboard Host for Temporary URLs](#dashboard-host-for-temporary-urls).
+
+---
+
 ## Protocol Behavior
 
 The current implementation supports MCP Streamable HTTP request/response over POST. It does not provide a standalone SSE session:
@@ -118,7 +170,7 @@ Registered tools:
 | `fs.download_url` | `nezha:server:read` | Mints a one-time HTTP download URL for files up to 100 MiB. |
 | `fs.upload_url` | `nezha:server:write` | Mints a one-time HTTP upload URL for files up to 100 MiB. |
 
-Tools that call the Agent require the target Agent version to be at least `v2.1.0`. Agents reporting either `2.1.0` or `v2.1.0` are accepted; older versions return an unsupported-MCP tool error.
+Tools that call the Agent require the corresponding capabilities on the target Agent. Use the current stable Agent; a failed capability check returns an unsupported-MCP tool error.
 
 ---
 
@@ -338,6 +390,12 @@ Limits and behavior:
 - Each transfer is capped at 10 minutes.
 - Temporary URL usage revalidates `enable_mcp`, token, scope, server allowlist, and user server permission.
 - If the token is revoked or an administrator disables `enable_mcp`, unused URLs and in-flight transfers are revoked.
+
+### Dashboard Host for Temporary URLs
+
+Temporary URLs prefer [`dashboard_host`](/en_US/configuration/dashboard.html#dashboard-host). If it is empty, the request Host must match a reserved hostname from `install_host`, `listen_host`, or `reserved_hosts`. Otherwise minting fails with `MCP transfer URL host is not an operator-declared dashboard host`.
+
+Explicitly configure a `dashboard_host` reachable by the MCP client (`domain/IP[:port]`, without a scheme or path), not a NAT service hostname. If HTTPS terminates at a reverse proxy, forward `X-Forwarded-Proto: https`; otherwise temporary URLs may use HTTP. A successful `server.list` call does not establish that file-transfer URL hosts are configured correctly.
 
 ### Download URL
 

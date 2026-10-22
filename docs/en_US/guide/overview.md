@@ -38,6 +38,12 @@ Administrators can notify on conditions such as offline state, resource usage, t
 
 Nezha also provides web terminal, file management, scheduled and triggered tasks, DDNS, NAT, REST API, and MCP features. These features expand the Dashboard and Agent trust boundary. Enable only what you need and combine user roles, API Token scopes, Agent disable options, and network access controls.
 
+## Connect AI operations through MCP
+
+Nezha MCP lets AI agents such as Codex, OpenClaw, and Claude Code inspect authorized server inventory and current state, read files, run non-interactive commands, and organize the results into inspections, incident analysis, and change verification. Nezha becomes a control plane for AI-assisted server management as well as a monitoring entry point.
+
+Nezha handles monitoring and tool execution; the AI client supplies the model, conversation, planning, and orchestration. Combine REST API access for alerts, task configuration, and historical metrics. See [MCP-powered AI operations](/en_US/guide/ai-operations.html) for capabilities, practical scenarios, and setup.
+
 ## How does one data flow work?
 
 1. An Agent connects with credentials generated from the Dashboard server page.
@@ -74,7 +80,7 @@ The Dashboard and Agent source code is published in the NezhaHQ GitHub repositor
 
 ### Does Nezha Monitoring require a cloud service?
 
-No. Dashboard and Agent can be self-hosted. Agents must still be able to reach Dashboard. OAuth2, external notifications, CDNs, and DNS providers are contacted only when you choose those integrations.
+No. Dashboard and Agent can be self-hosted. Agents must still be able to reach Dashboard. OAuth2, external notifications, CDNs, DNS providers, or AI clients connect to services according to your configuration. With external models, handling of tool results, logs, and file contents depends on the client and model provider policies.
 
 ### Can one Dashboard monitor multiple servers?
 
