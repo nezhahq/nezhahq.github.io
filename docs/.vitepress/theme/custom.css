@@ -1,0 +1,33 @@
+/* Account for non-overlay scrollbars at the smallest supported viewport. */
+body {
+  min-width: min(320px, 100%);
+}
+
+@media (max-width: 639px) {
+  .VPHomeHero .image-container {
+    width: min(320px, 100%);
+  }
+}
+
+/* Keep long localized site titles inside the header without hiding controls. */
+.VPNavBarTitle .title > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.VPNavBarTitle .logo {
+  flex-shrink: 0;
+}
+
+@media (max-width: 959px) {
+  .VPNavBar .container > .title {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .VPNavBar .container > .content {
+    flex-shrink: 0;
+  }
+}
