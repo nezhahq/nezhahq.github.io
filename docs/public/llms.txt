@@ -21,6 +21,35 @@
 - [Troubleshooting Dashboard](https://nezha.wiki/guide/dashboardq.html): common server-side failures
 - [Troubleshooting Agent](https://nezha.wiki/guide/agentq.html): common Agent failures
 
+## Configuration and development
+
+- [Configuration: index (Chinese)](https://nezha.wiki/configuration/index.html)
+- [Configuration: index (English)](https://nezha.wiki/en_US/configuration/index.html)
+- [Configuration: environment (Chinese)](https://nezha.wiki/configuration/environment.html)
+- [Configuration: environment (English)](https://nezha.wiki/en_US/configuration/environment.html)
+- [Configuration: dashboard (Chinese)](https://nezha.wiki/configuration/dashboard.html)
+- [Configuration: dashboard (English)](https://nezha.wiki/en_US/configuration/dashboard.html)
+- [Configuration: agent (Chinese)](https://nezha.wiki/configuration/agent.html)
+- [Configuration: agent (English)](https://nezha.wiki/en_US/configuration/agent.html)
+- [Configuration: examples (Chinese)](https://nezha.wiki/configuration/examples.html)
+- [Configuration: examples (English)](https://nezha.wiki/en_US/configuration/examples.html)
+- [Developer: index (Chinese)](https://nezha.wiki/developer/index.html)
+- [Developer: index (English)](https://nezha.wiki/en_US/developer/index.html)
+- [Developer: getting started (Chinese)](https://nezha.wiki/developer/getting-started.html)
+- [Developer: getting started (English)](https://nezha.wiki/en_US/developer/getting-started.html)
+- [Developer: api (Chinese)](https://nezha.wiki/developer/api.html)
+- [Developer: api (English)](https://nezha.wiki/en_US/developer/api.html)
+- [Developer: theme development (Chinese)](https://nezha.wiki/developer/theme-development.html)
+- [Developer: theme development (English)](https://nezha.wiki/en_US/developer/theme-development.html)
+- [Developer: agent development (Chinese)](https://nezha.wiki/developer/agent-development.html)
+- [Developer: agent development (English)](https://nezha.wiki/en_US/developer/agent-development.html)
+- [Developer: backend development (Chinese)](https://nezha.wiki/developer/backend-development.html)
+- [Developer: backend development (English)](https://nezha.wiki/en_US/developer/backend-development.html)
+- [Developer: i18n (Chinese)](https://nezha.wiki/developer/i18n.html)
+- [Developer: i18n (English)](https://nezha.wiki/en_US/developer/i18n.html)
+- [Developer: testing (Chinese)](https://nezha.wiki/developer/testing.html)
+- [Developer: testing (English)](https://nezha.wiki/en_US/developer/testing.html)
+
 ## Official source repositories
 
 - [Nezha Dashboard](https://github.com/nezhahq/nezha)
