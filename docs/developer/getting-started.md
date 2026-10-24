@@ -1,57 +1,93 @@
 ---
+description: 从源码运行哪吒监控 V2 Dashboard 与 Agent，准备 Go、Swagger、非空嵌入资源、隔离开发数据与前端联调环境。
 outline: deep
 ---
 
-# 快速开始
+# 源码开发快速开始
 
-本文档将引导您一步步构建开发环境, 并让您能够快速参与到 NeZha 的开发中来.
+先让隔离的 Dashboard、用户前端和测试 Agent 工作，再修改功能。以下步骤不使用生产配置、凭据或数据库。
 
-首先 fork 一下 nezha 的仓库用于保存修改, 接下来您可以选择使用容器开发或在本地开发, 为了让您能更快速的开始开发,本文先介绍容器开发.
+## 仓库与职责
 
-## 容器开发环境
+| 仓库 | 职责 | 主要位置 |
+| --- | --- | --- |
+| [Dashboard](https://github.com/nezhahq/nezha) | HTTP/REST、WebSocket、gRPC、MCP、权限和存储 | `cmd/dashboard`、`model`、`service` |
+| [Agent](https://github.com/nezhahq/agent) | 主机采集、探测与远程操作 | `cmd/agent`、`pkg/monitor`、`model` |
+| [管理前端](https://github.com/nezhahq/admin-frontend) | `/dashboard/` 管理应用 | `src`、`vite.config.ts` |
+| [官方用户前端](https://github.com/hamster1963/nezha-dash-v2) | `/` 状态页与节点详情 | `src`、`vite.config.ts` |
+| [文档](https://github.com/nezhahq/nezhahq.github.io) | 双语 VitePress 文档 | `docs`、`scripts` |
 
-在 VSCode 中使用容器开发需要安装 `ms-vscode-remote.remote-containers` 插件
+Go 工具链以各仓库 `go.mod` 为准。Dashboard 使用 SQLite/CGO，需要 C 编译器与 CGO；用户前端按 `package.json` 使用 Node.js ≥ 22、pnpm ≥ 11。Dashboard manifest 固定了打包主题版本，前端主分支不一定已随面板发布。
 
-### Github Codespaces
+## 1. 准备 Dashboard
 
-在你 fork 后的仓库中, 点击仓库右上角的 `Code` -> `Codespaces` -> `Create codespace on master` 来快速创建一个云端开发环境, 等待环境构建完成.
+```bash
+git clone https://github.com/nezhahq/nezha.git
+cd nezha
+go mod download
+go install github.com/swaggo/swag/cmd/swag@v1.16.6
+"$(go env GOPATH)/bin/swag" init --pd -d cmd/dashboard -g main.go -o cmd/dashboard/docs
+```
 
-你也可以在 VSCode 或其他支持的 IDE 中安装 `GitHub.codespaces` 插件后直接连接
+`cmd/dashboard/docs` 是生成目录。普通 REST 开发不需要重新生成 protobuf，也不必执行包含跨仓库文件复制的 `script/bootstrap.sh`。
 
-### 远程容器开发
+### 选择前端输入
 
-如果你有一台专用的开发服务器, 上面有 Docker 或其兼容程序, 那么你可以通过 SSH 创建并构建远程开发容器并在远程服务器上进行开发, 此处以 VSCode 举例:
+**需要实际页面：** 准备 `curl`、`unzip`、`realpath` 和 Mike Farah 的 `yq`，从仓库根目录运行：
 
-1. 配置你的 `~/.ssh/config`(*nux) 或 `%HOMEPATH%/.ssh/config`(Windows) 文件, 下面是一个简单的示例:
-   ```
-   Host Dev
-     HostName dev.server.host
-     User <你的用户名>
-     IdentityFile <你的私钥路径>
-   ```
-2. 使用 SSH 登陆远程服务器. 如果你正确配置了第一步, 此时可以用命令 `ssh Dev` 来测试
-3. 在服务器上克隆仓库: `git clone <你 fork 后的仓库地址>`
-4. 打开 VSCode 左侧栏的远程资源管理器, 需要安装 `remote` 系列的官方插件
-5. 使用 VSCode 打开你 clone 后的目录
-6. 按下 `F1` 在弹出的对话框中键入并选择 `Dev Containers: Rebuild and Reopen in Container`
-7. 等待开发环境构建完成
+```bash
+bash script/fetch-frontends.sh
+```
 
-### 本地容器开发
+脚本按 `service/singleton/frontend-templates.yaml` 固定的仓库和版本下载 `dist.zip`，替换对应的 `cmd/dashboard/*-dist` 目录。自定义前端源码不要放在被覆盖的位置。
 
-如果你机器本地有 Docker 或其兼容程序, 那么你可以在本地创建并构建开发容器, 通常你会遇到网络问题, 请自行解决, 此处以 VSCode 举例:
+**仅测试后端：** 使用非空占位资源满足 `go:embed`，但它们不是可用管理页面：
 
-1. 克隆仓库.
-   使用命令: `git clone <你 fork 后的仓库地址>`
-2. 使用 VSCode 打开你 clone 后的目录
-3. 按下 `F1` 在弹出的对话框中键入并选择 `Dev Containers: Rebuild and Reopen in Container`
-4. 等待开发环境构建完成
+```bash
+mkdir -p cmd/dashboard/admin-dist cmd/dashboard/user-dist
+printf '<!doctype html><title>Admin placeholder</title>\n' > cmd/dashboard/admin-dist/index.html
+printf '<!doctype html><title>User placeholder</title>\n' > cmd/dashboard/user-dist/index.html
+```
 
-## 开始开发
+二选一即可。只创建空目录不够；资源在 `cmd/dashboard/` 下，不是根目录的 `dashboard/`。
 
-在完成环境的自动构建后 Nezha 默认处于能随时编译的状态, 你可以开始自由编辑后运行 `.devcontainer/build.sh` 进行编译测试.
+## 2. 使用隔离数据启动
 
-### 阅读文档
+创建目录 `dev-data`，新建 `dev-data/config.yaml`：
 
-你可可以查阅[API 文档](./api.md)来了解 NeZha 提供了哪些 WebAPI 以供调用.
+```yaml
+debug: true
+listen_host: "127.0.0.1"
+listen_port: 8008
+language: "zh_CN"
+site_name: "Nezha Development"
+install_host: "127.0.0.1:8008"
+tls: false
+```
 
-如果你使用上面提供的容器开发环境之一, 那么这些文件均已构建完毕, 存储在开发环境的 `cmd/dashboard/docs` 目录下
+```bash
+go build -o bin/dashboard ./cmd/dashboard
+./bin/dashboard -c dev-data/config.yaml -db dev-data/sqlite.db
+```
+
+空数据库首次初始化 `admin` / `admin`。仅在本机完成首次登录并改密码。访问 `/dashboard/`；Swagger 位于 `http://127.0.0.1:8008/swagger/index.html`。`debug` 同时暴露调试端点，只用于隔离开发环境。
+
+开发数据、生成文档与构建产物不要提交。不要将生产数据库复制进调试实例。
+
+## 3. 前端与 Agent 联调
+
+- 用户前端按[主题开发](/developer/theme-development.html)启动 mock，或代理 API/WebSocket 到本地 Dashboard。
+- 管理前端运行 `npm ci`、`npm run dev`，进入终端显示地址的 `/dashboard/`；保留 `/dashboard` base 和 API/WebSocket 代理。
+- 使用测试用户连接密钥运行[开发 Agent](/developer/agent-development.html)。明文回环连接仅用于本机联调，公网使用校验证书的 TLS。
+
+## 4. 验证完整链路
+
+确认测试节点上线、WebSocket 持续更新、服务探测有真实结果；直接刷新详情页仍有正确 HTTP 状态。再运行[测试与贡献检查](/developer/testing.html)。
+
+| 构建或联调错误 | 优先处理 |
+| --- | --- |
+| 缺少 `cmd/dashboard/docs` | 安装 swag 并生成，不是创建空 Go 包 |
+| `pattern *-dist: no matching files found` | 在 `cmd/dashboard/` 准备真实或非空占位资源 |
+| SQLite/CGO 编译或运行失败 | 检查 C 编译器和 CGO，不照搬 Agent 的无 CGO 构建 |
+| 8008 已占用或读到旧数据 | 检查旧进程、工作目录、`-c` 和 `-db` |
+| 页面正常但 WebSocket 被拒绝 | 检查 Origin、同源代理及 debug 回环开发条件 |

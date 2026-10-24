@@ -57,7 +57,7 @@ export default defineConfig({
           },
           {
             text: '配置指南',
-            link: '/configuration/dashboard.html',
+            link: '/configuration/index.html',
             activeMatch: '^/configuration/'
           },
           {
@@ -94,7 +94,7 @@ export default defineConfig({
         },
         nav: [
           { text: 'User Guide', link: '/en_US/', activeMatch: '^/en_US/guide/' },
-          { text: 'Configuration Guide', link: '/en_US/configuration/dashboard.html', activeMatch: '^/en_US/configuration/' },
+          { text: 'Configuration Guide', link: '/en_US/configuration/index.html', activeMatch: '^/en_US/configuration/' },
           { text: 'Community Projects', link: '/en_US/case/index.html', activeMatch: '^/en_US/case/' },
           { text: 'Development Manual', link: '/en_US/developer/index.html', activeMatch: '^/en_US/developer/' }
         ],
@@ -258,16 +258,19 @@ function getCaseSidebarZhCN() {
 }
 
 function getDeveloperSidebarZhCN() {
-  return [
-    {
-      text: '开发手册',
-      items: [
-        { text: '快速开始', link: '/developer/getting-started.html' },
-        { text: 'API 文档', link: '/developer/api.html' },
-        { text: 'i18n', link: '/developer/i18n.html' }
-      ]
-    }
-  ]
+  return [{
+    text: '开发手册',
+    items: [
+      { text: '开发导航', link: '/developer/index.html' },
+      { text: '源码开发快速开始', link: '/developer/getting-started.html' },
+      { text: 'API 与 WebSocket', link: '/developer/api.html' },
+      { text: '主题开发', link: '/developer/theme-development.html' },
+      { text: 'Agent 开发', link: '/developer/agent-development.html' },
+      { text: 'Dashboard 与 MCP 扩展', link: '/developer/backend-development.html' },
+      { text: '国际化与双语文档', link: '/developer/i18n.html' },
+      { text: '测试与贡献', link: '/developer/testing.html' }
+    ]
+  }]
 }
 
 function getGuideSidebarEnUS() {
@@ -354,39 +357,44 @@ function getCaseSidebarEnUS() {
 }
 
 function getDeveloperSidebarEnUS() {
-  return [
-    {
-      text: 'Development Manual',
-      items: [
-        { text: 'Getting Started', link: '/en_US/developer/getting-started.html' },
-        { text: 'API documentation', link: '/en_US/developer/api.html' },
-        { text: 'i18n', link: '/en_US/developer/i18n.html' }
-      ]
-    }
-  ]
+  return [{
+    text: 'Development Manual',
+    items: [
+      { text: 'Manual overview', link: '/en_US/developer/index.html' },
+      { text: 'Source quick start', link: '/en_US/developer/getting-started.html' },
+      { text: 'API and WebSocket', link: '/en_US/developer/api.html' },
+      { text: 'Theme development', link: '/en_US/developer/theme-development.html' },
+      { text: 'Agent development', link: '/en_US/developer/agent-development.html' },
+      { text: 'Dashboard and MCP extensions', link: '/en_US/developer/backend-development.html' },
+      { text: 'Internationalization', link: '/en_US/developer/i18n.html' },
+      { text: 'Testing and contributions', link: '/en_US/developer/testing.html' }
+    ]
+  }]
 }
 
 
 function getConfigurationSideBarZhCn() {
-  return [
-    {
-      text: '配置指南',
-      items: [
-        { text: '管理面板', link: '/configuration/dashboard.html' },
-        { text: 'Agent', link: '/configuration/agent.html' }
-      ]
-    }
-  ]
+  return [{
+    text: '配置指南',
+    items: [
+      { text: '配置入口与流程', link: '/configuration/index.html' },
+      { text: '配置加载与环境变量', link: '/configuration/environment.html' },
+      { text: 'Dashboard 配置参考', link: '/configuration/dashboard.html' },
+      { text: 'Agent 配置参考', link: '/configuration/agent.html' },
+      { text: '场景配置与验证', link: '/configuration/examples.html' }
+    ]
+  }]
 }
 
 function getConfigurationSideBarEnUs() {
-  return [
-    {
-      text: 'Configuration',
-      items: [
-        { text: 'Dashboard', link: '/en_US/configuration/dashboard.html' },
-        { text: 'Agent', link: '/en_US/configuration/agent.html' }
-      ]
-    }
-  ]
+  return [{
+    text: 'Configuration Guide',
+    items: [
+      { text: 'Overview and workflow', link: '/en_US/configuration/index.html' },
+      { text: 'Loading and environment variables', link: '/en_US/configuration/environment.html' },
+      { text: 'Dashboard reference', link: '/en_US/configuration/dashboard.html' },
+      { text: 'Agent reference', link: '/en_US/configuration/agent.html' },
+      { text: 'Recipes and verification', link: '/en_US/configuration/examples.html' }
+    ]
+  }]
 }

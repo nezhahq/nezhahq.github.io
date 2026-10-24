@@ -1,63 +1,93 @@
 ---
+description: Run Nezha Monitoring V2 Dashboard and Agent from source with Go, Swagger, nonempty embedded assets, isolated development data, and frontend integration.
 outline: deep
 ---
 
-# Getting Started
+# Source development quick start
 
-This guide walks you through setting up a development environment so you can quickly start contributing to Nezha.
+Get an isolated Dashboard, user frontend, and test Agent working before changing features. These steps do not use production configuration, credentials, or databases.
 
-First, fork the Nezha repository so you have a place to save your changes. You can then choose container-based development or local development. To help you get started faster, this guide introduces container-based development first.
+## Repositories and responsibilities
 
-## Container Development Environment
+| Repository | Responsibility | Main locations |
+| --- | --- | --- |
+| [Dashboard](https://github.com/nezhahq/nezha) | HTTP/REST, WebSocket, gRPC, MCP, authorization, storage | `cmd/dashboard`, `model`, `service` |
+| [Agent](https://github.com/nezhahq/agent) | Host collection, probes, remote operations | `cmd/agent`, `pkg/monitor`, `model` |
+| [Admin frontend](https://github.com/nezhahq/admin-frontend) | `/dashboard/` administration | `src`, `vite.config.ts` |
+| [Official user frontend](https://github.com/hamster1963/nezha-dash-v2) | `/` status page and server details | `src`, `vite.config.ts` |
+| [Documentation](https://github.com/nezhahq/nezhahq.github.io) | Bilingual VitePress documentation | `docs`, `scripts` |
 
-To use container-based development in VS Code, install the `ms-vscode-remote.remote-containers` extension.
+Use each repository's `go.mod` for Go requirements. Dashboard uses SQLite/CGO and requires a C compiler and CGO; the user frontend specifies Node.js ≥ 22 and pnpm ≥ 11 in `package.json`. Dashboard pins bundled theme versions, so frontend main may be ahead of the bundled release.
 
-### GitHub Codespaces
+## 1. Prepare Dashboard
 
-In your forked repository, click `Code` -> `Codespaces` -> `Create codespace on master` in the upper-right corner to create a cloud development environment, then wait for the environment to finish building.
+```bash
+git clone https://github.com/nezhahq/nezha.git
+cd nezha
+go mod download
+go install github.com/swaggo/swag/cmd/swag@v1.16.6
+"$(go env GOPATH)/bin/swag" init --pd -d cmd/dashboard -g main.go -o cmd/dashboard/docs
+```
 
-You can also install the `GitHub.codespaces` extension in VS Code or another supported IDE and connect directly from there.
+`cmd/dashboard/docs` is generated. Ordinary REST development does not require protobuf regeneration or `script/bootstrap.sh`, which also copies files across repositories.
 
-### Remote Container Development
+### Choose frontend inputs
 
-If you have a dedicated development server with Docker or a compatible runtime installed, you can create and build a remote development container over SSH and develop on that remote server. The following example uses VS Code:
+**For working pages:** install `curl`, `unzip`, `realpath`, and Mike Farah's `yq`, then run from the repository root:
 
-1. Configure your `~/.ssh/config` file on *nix or `%HOMEPATH%/.ssh/config` on Windows. Here is a simple example:
+```bash
+bash script/fetch-frontends.sh
+```
 
-   ```ssh-config
-   Host Dev
-     HostName dev.server.host
-     User <your-username>
-     IdentityFile <path-to-your-private-key>
-   ```
+The script downloads `dist.zip` from repositories and versions pinned in `service/singleton/frontend-templates.yaml`, replacing corresponding `cmd/dashboard/*-dist` directories. Keep frontend source outside these overwritten locations.
 
-2. Log in to the remote server with SSH. If the first step is configured correctly, you can test it with `ssh Dev`.
-3. Clone your forked repository on the server: `git clone <your-forked-repository-url>`.
-4. Open the VS Code Remote Explorer from the left sidebar. You need to install the official `remote` extension series.
-5. Open the cloned directory in VS Code.
-6. Press `F1`, then type and select `Dev Containers: Rebuild and Reopen in Container`.
-7. Wait for the development environment to finish building.
+**For backend-only tests:** use nonempty placeholders to satisfy `go:embed`. They are not working administration pages:
 
-### Local Container Development
+```bash
+mkdir -p cmd/dashboard/admin-dist cmd/dashboard/user-dist
+printf '<!doctype html><title>Admin placeholder</title>\n' > cmd/dashboard/admin-dist/index.html
+printf '<!doctype html><title>User placeholder</title>\n' > cmd/dashboard/user-dist/index.html
+```
 
-If Docker or a compatible runtime is installed on your local machine, you can create and build the development container locally. You may encounter network issues depending on your environment; resolve them according to your local network setup. The following example uses VS Code:
+Choose one approach. Empty directories are insufficient. Assets belong under `cmd/dashboard/`, not a root-level `dashboard/`.
 
-1. Clone the repository:
+## 2. Start with isolated data
 
-   ```shell
-   git clone <your-forked-repository-url>
-   ```
+Create `dev-data` and add `dev-data/config.yaml`:
 
-2. Open the cloned directory in VS Code.
-3. Press `F1`, then type and select `Dev Containers: Rebuild and Reopen in Container`.
-4. Wait for the development environment to finish building.
+```yaml
+debug: true
+listen_host: "127.0.0.1"
+listen_port: 8008
+language: "zh_CN"
+site_name: "Nezha Development"
+install_host: "127.0.0.1:8008"
+tls: false
+```
 
-## Start Developing
+```bash
+go build -o bin/dashboard ./cmd/dashboard
+./bin/dashboard -c dev-data/config.yaml -db dev-data/sqlite.db
+```
 
-After the environment finishes its automatic setup, Nezha is ready to build by default. You can start editing freely and run `.devcontainer/build.sh` to compile and test your changes.
+An empty database initializes `admin` / `admin`. Complete initialization locally and change the password. Open `/dashboard/`; Swagger is at `http://127.0.0.1:8008/swagger/index.html`. `debug` also exposes diagnostic endpoints and belongs only in isolated development.
 
-### Read the Documentation
+Do not commit development data, generated API documentation, or build output. Never copy production databases into a debug instance.
 
-You can read the [API documentation](./api.md) to learn which Web APIs Nezha provides.
+## 3. Connect frontends and an Agent
 
-If you use one of the container development environments above, these files have already been generated and are stored under `cmd/dashboard/docs` in the development environment.
+- Follow [theme development](/en_US/developer/theme-development.html) for mocks or API/WebSocket proxying to local Dashboard.
+- In the admin frontend, run `npm ci` and `npm run dev`, then open `/dashboard/` at the displayed address. Preserve its `/dashboard` base and API/WebSocket proxies.
+- Use a test user's connection secret with a [development Agent](/en_US/developer/agent-development.html). Plaintext loopback is for local testing only; use verified TLS across public networks.
+
+## 4. Verify a complete path
+
+Confirm registration, continuing WebSocket updates, and real probe results. Direct route refreshes should retain correct HTTP statuses. Then run [testing and contribution checks](/en_US/developer/testing.html).
+
+| Build or integration error | Check first |
+| --- | --- |
+| Missing `cmd/dashboard/docs` | Install swag and generate it, rather than inventing an empty Go package |
+| `pattern *-dist: no matching files found` | Prepare real or nonempty placeholder assets under `cmd/dashboard/` |
+| SQLite/CGO build or runtime failure | Check C compiler/CGO, not Agent's CGO-free build settings |
+| Port 8008 busy or old data loaded | Check old processes, working directory, `-c`, and `-db` |
+| Page loads, WebSocket rejected | Check Origin, same-origin proxying, and debug loopback conditions |
