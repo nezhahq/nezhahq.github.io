@@ -1,15 +1,18 @@
 <template>
-  <div v-if="show" class="wwads-cn wwads-vertical" data-id="296" style="margin-bottom: 20px;"></div>
+  <ins
+    class="adsbygoogle"
+    style="display:block; margin-bottom: 20px;"
+    data-ad-client="ca-pub-3632738952115558"
+    data-ad-format="auto"
+    data-full-width-responsive="true"
+  ></ins>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      show: false
-    }
-  },
-  mounted() {
-    this.show = navigator.language.indexOf('zh') > -1
-  }
-}
+<script setup>
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  try {
+    (window.adsbygoogle = window.adsbygoogle || []).push({})
+  } catch (e) {}
+})
 </script>

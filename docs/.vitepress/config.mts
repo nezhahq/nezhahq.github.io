@@ -13,7 +13,6 @@ export default defineConfig({
   },
   transformHead: seoHead,
   head: [
-    ['script', { src: 'https://cdn.wwads.cn/js/makemoney.js', async: 'true' }],
     [
       'script',
       {
