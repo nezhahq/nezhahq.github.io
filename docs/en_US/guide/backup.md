@@ -42,7 +42,7 @@ The Backup tab guides you through three steps in order: **S3 storage → backup 
 | Path-style addressing | Turn it on if the service does not support virtual-hosted `bucket.endpoint` addressing (for example MinIO). |
 | Access Key ID / Secret Access Key | The access key. The secret is never shown again after saving and must be entered again when the endpoint or bucket changes. |
 
-You must pass **Test connection** before saving. The test writes and deletes a temporary object under the prefix, so the key needs permission to read, write, list, and delete objects.
+During first-time setup you must pass **Test connection** before saving; when changing an existing configuration, testing before saving is still recommended. The test writes and deletes a temporary object under the prefix, so the key needs permission to read, write, list, and delete objects.
 
 #### Example: Cloudflare R2
 
@@ -153,8 +153,8 @@ Use this when moving to another server or when the original host is gone:
 4. Sign in with your original account. `config.yaml` is restored as well, including the agents' connection secret, so agents reconnect on their own as long as they can still reach the original address; if the address changed, update DNS or the agents' connection address.
 5. **The backup settings are not restored.** Configure storage, the backup password, and the schedule again on the new host. Setting a password creates a new key, so the backups already in storage are marked "Old key"; they can still be restored with the original password or recovery key.
 
-::: warning Ports and certificates
-After the restore, the dashboard uses the `config.yaml` from the backup. If the listening port or TLS certificate paths on the new host differ from the original host, the start fails and rolls back. Keep the listening port and certificate paths the same as on the original host; with Docker, only the host side of the port mapping needs to change.
+::: warning Listening address and certificates
+After the restore, the dashboard uses the `config.yaml` from the backup. At start, the effective listening address and port must be bindable on the new host, and with TLS enabled the effective certificate and private key files must be readable; otherwise the start fails and rolls back. A port or certificate path that differs from the original host is not a problem in itself; prepare the new host accordingly, for example by placing the certificate at the same path or adjusting the Docker port mapping.
 :::
 
 Once the new host is live, stop the old dashboard so that the two do not run tasks or send notifications at the same time. If the old dashboard keeps running and uses the same bucket, give the two dashboards different prefixes.
