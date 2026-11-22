@@ -7,7 +7,7 @@ outline: deep
 
 Dashboard can back up its own data from the admin panel and upload it to S3-compatible storage (AWS S3, Cloudflare R2, MinIO, and others). Backups are taken while the dashboard keeps running, and files are encrypted before upload. You can restore a backup from storage or from an uploaded file, also on a freshly installed dashboard.
 
-**Where to find it:** sign in as an administrator, click your avatar → System Settings → the **Backup** tab. Only administrators can use it, and API tokens cannot call the backup API.
+**Where to find it:** sign in as an administrator, click your avatar → System settings → the **Backup** tab. Only administrators can use it, and API tokens cannot call the backup API.
 
 ::: tip Supported versions
 This feature requires Dashboard vX.Y.Z or later. For earlier versions, use the [manual migration, backup, and restore](/en_US/guide/q5.html) method.
@@ -38,8 +38,8 @@ The Backup tab guides you through three steps in order: **S3 storage → backup 
 | Endpoint | The storage service URL. It must start with `https://` and must not contain a path. |
 | Bucket | The bucket that holds the backups. Create it beforehand. |
 | Region | The region. If your provider has no regions, follow its documentation (use `auto` for R2). |
-| Key prefix | Optional, for example `nezha/`. Letters, digits, `/`, `_`, and `-` only. **Dashboards sharing one bucket must use different prefixes**, otherwise retention cleanup deletes each other's backups. |
-| Path-style addressing | Turn it on if the service does not support virtual-hosted `bucket.endpoint` addressing (for example MinIO). |
+| Key prefix | Defaults to `nezha-backup/`, which is also used when the field is empty. Letters, digits, `/`, `_`, and `-` only. **Dashboards sharing one bucket must use different prefixes**, otherwise retention cleanup deletes each other's backups. |
+| Path-style addressing | On by default. Turn it off only if the service supports nothing but virtual-hosted `bucket.endpoint` addressing. |
 | Access Key ID / Secret Access Key | The access key. The secret is never shown again after saving and must be entered again when the endpoint or bucket changes. |
 
 During first-time setup you must pass **Test connection** before saving; when changing an existing configuration, testing before saving is still recommended. The test writes and deletes a temporary object under the prefix, so the key needs permission to read, write, list, and delete objects.
@@ -52,8 +52,8 @@ During first-time setup you must pass **Test connection** before saving; when ch
    - Endpoint: `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`
    - Bucket: `nezha-backup`
    - Region: `auto`
-   - Key prefix: for example `nezha/`
-   - Path-style addressing: may be on; R2 supports both addressing styles
+   - Key prefix: keep the default `nezha-backup/` or change it as needed
+   - Path-style addressing: keep it on (the default); R2 supports both addressing styles
 4. Click **Test connection**, then save once it passes.
 
 ![R2 storage filled in, connection test passed](/images/backup/2_en_US.png)
@@ -80,7 +80,7 @@ If you forget the backup password and do not have the recovery key, the backups 
 
 **Change password:** keeps the same key and only changes the password that protects the private key. New backups use the new password; older backups open with the old password, or with the new one on this dashboard.
 
-**Reset password:** creates a new key. Use it only if the password is lost or may have leaked. Afterwards, earlier backups are marked **Old key** in the list and can only be restored with the old password or the old recovery key. Before resetting, make sure you still have one of them, or no longer need those backups.
+**Reset password:** creates a new key. Use it only if the password is lost or may have leaked. Afterwards, earlier backups are marked **Old key** in the list and can only be restored with the old password or the old recovery key. Resetting asks you to type `RESET` to confirm. Before resetting, make sure you still have one of them, or no longer need those backups.
 
 ### 3. Scheduled backups and retention
 
@@ -186,7 +186,7 @@ The S3 storage fields can also be set with environment variables, for example to
 | `NZ_BACKUP_S3_ACCESS_KEY_ID` | Access Key ID |
 | `NZ_BACKUP_S3_SECRET_ACCESS_KEY` | Secret Access Key |
 
-Fields set by an environment variable are shown as "Set by an environment variable" and cannot be changed in the admin panel. The other backup settings are kept in a separate `backup.yaml` in the data directory (mode 0600), not in `config.yaml`. These names do not follow the [environment variable naming rules](/en_US/configuration/environment.html) of `config.yaml` fields; use them exactly as listed above.
+Fields set by an environment variable are shown as "Set by an environment variable" and cannot be changed in the admin panel. When the secret comes from an environment variable, the endpoint and bucket are read-only as well, so the secret cannot be sent to another address entered in the admin panel. The other backup settings are kept in a separate `backup.yaml` in the data directory (mode 0600), not in `config.yaml`. These names do not follow the [environment variable naming rules](/en_US/configuration/environment.html) of `config.yaml` fields; use them exactly as listed above.
 
 ## FAQ
 
