@@ -41,6 +41,10 @@ Dashboard loads the environment first and then merges YAML. File values can over
 
 File edits load after a Dashboard restart. Admin settings update runtime state through the API and save the file. File-only settings such as listeners, storage, and JWT options are outside that settings interface.
 
+### Backup storage variables
+
+S3 storage for [built-in backups](/en_US/guide/backup.html) uses separately named variables: `NZ_BACKUP_S3_ENDPOINT`, `NZ_BACKUP_S3_BUCKET`, `NZ_BACKUP_S3_REGION`, `NZ_BACKUP_S3_PREFIX`, `NZ_BACKUP_S3_ACCESS_KEY_ID`, and `NZ_BACKUP_S3_SECRET_ACCESS_KEY`. They do not map to `config.yaml` by the rules above: when set, they take precedence over values saved in the admin panel, the matching fields cannot be edited there, and they are never written back. The other backup settings are kept in a separate `backup.yaml` in the data directory.
+
 ## Agent naming rules
 
 Agent also uses `NZ_`, but **preserves underscores inside field names**. It reads YAML before environment variables. Environment values override simple scalar file settings.

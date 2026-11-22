@@ -41,6 +41,10 @@ Dashboard 先加载环境变量，再合并 YAML；同名配置可能被文件�
 
 文件中的修改在重启 Dashboard 后加载。后台设置通过 API 更新运行态并保存文件；监听地址、存储和 JWT 等只读文件项不属于该设置接口。
 
+### 备份存储的环境变量
+
+[内置备份](/guide/backup.html)的 S3 存储使用一组单独命名的变量：`NZ_BACKUP_S3_ENDPOINT`、`NZ_BACKUP_S3_BUCKET`、`NZ_BACKUP_S3_REGION`、`NZ_BACKUP_S3_PREFIX`、`NZ_BACKUP_S3_ACCESS_KEY_ID` 和 `NZ_BACKUP_S3_SECRET_ACCESS_KEY`。它们不按上面的规则映射到 `config.yaml`：设置后优先于后台保存的值，对应字段在后台不能修改，也不会写回文件。备份的其它设置保存在数据目录下单独的 `backup.yaml` 中。
+
 ## Agent 的命名规则
 
 Agent 同样读取 `NZ_` 前缀，但**保留字段中的下划线**，先读 YAML，再读环境变量。简单标量的环境变量覆盖文件值。
