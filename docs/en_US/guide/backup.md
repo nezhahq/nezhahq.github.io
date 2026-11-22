@@ -29,7 +29,7 @@ Backup files use the `.nzbak` extension. They are only staged temporarily in the
 
 The Backup tab guides you through three steps in order: **S3 storage → backup password → schedule**. Backups are available once storage and the password are set up.
 
-![First-time setup](/images/backup/en-setup.png)
+![First-time setup](/images/backup/1_en_US.png)
 
 ### 1. Configure S3 storage
 
@@ -56,6 +56,8 @@ You must pass **Test connection** before saving. The test writes and deletes a t
    - Path-style addressing: may be on; R2 supports both addressing styles
 4. Click **Test connection**, then save once it passes.
 
+![R2 storage filled in, connection test passed](/images/backup/2_en_US.png)
+
 Do not use an account-wide token with full permissions; object read and write on this one bucket is all the token needs.
 
 ### 2. Set the backup password and save the recovery key
@@ -64,7 +66,9 @@ The backup password must be at least 12 characters. When you set it, the dashboa
 
 - Backups are encrypted to the public key, so scheduled backups run without the password.
 - The private key is stored only protected by the backup password; the password itself is never stored in plain text.
-- A **recovery key** is created at the same time and shown only once; you can download it as a `.txt` file. It can replace the password to restore every backup of the same key.
+- A **recovery key** is created at the same time and shown only once. You can copy it or download it as a `.txt` file, and must tick "I have stored the recovery key safely" before closing the dialog. It can replace the password to restore every backup of the same key.
+
+![Save the recovery key](/images/backup/3_en_US.png)
 
 ::: danger Keep them safe
 If you forget the backup password and do not have the recovery key, the backups **cannot be restored** - nobody can decrypt them.
@@ -89,7 +93,7 @@ If you forget the backup password and do not have the recovery key, the backups 
 
 Click **Back up now** in the backup list. The list is read from the configured bucket and shows each backup's creation time, size, trigger (Manual, Scheduled, Before restore), status, dashboard version, and SHA-256.
 
-![Backup list](/images/backup/en-list.png)
+![Backup list](/images/backup/4_en_US.png)
 
 Click **Download** to save the `.nzbak` file locally. Downloads go through the dashboard, so the storage address and keys are never exposed. The downloaded file stays encrypted; you can keep it offline and restore it later by uploading it.
 
@@ -110,7 +114,7 @@ After a restore is applied, the dashboard exits and swaps in the data on its nex
 
 Enter the backup password, or switch to the recovery key, then click **Check backup**. The dashboard downloads and verifies the backup: checksum, decryption, contents, origin, version compatibility, database integrity, and the presence of an administrator account.
 
-![Check the backup](/images/backup/en-restore-check.png)
+![Check the backup](/images/backup/5_en_US.png)
 
 The check also lists what to be aware of, for example:
 
@@ -125,7 +129,7 @@ Some warnings must be acknowledged with **I understand and want to continue** be
 
 Enter the backup password (or recovery key) again, the last 6 characters of the backup name, and your login password. Accounts that only sign in with OAuth and have no local password must have signed in within the last 10 minutes.
 
-![Confirm and apply](/images/backup/en-restore-apply.png)
+![Confirm and apply](/images/backup/6_en_US.png)
 
 After you click **Replace current data and restart**:
 
@@ -145,9 +149,13 @@ Use this when moving to another server or when the original host is gone:
 2. Choose how to restore:
    - **You have the backup file:** upload the `.nzbak` file under "Restore from a backup file" on the Backup tab. **Storage and a password do not need to be set up first.**
    - **The backup is only in storage:** [configure S3 storage](#_1-configure-s3-storage) with the original bucket and prefix first, then restore from the list.
-3. Enter the original backup password or recovery key and complete both steps. Because the new host has a different key, the check reports that the origin cannot be verified; acknowledge it once you are sure the file is trustworthy.
-4. Sign in with your original account. Check that the agents reconnect; if the address or port of the dashboard changed, update DNS or the agents' connection address.
+3. Enter the original backup password or recovery key and complete both steps. Because the new host has a different key, the check reports that the origin cannot be verified; acknowledge it once you are sure the file is trustworthy. While backups are not set up on the new host, no pre-restore backup is taken, and the page says so.
+4. Sign in with your original account. `config.yaml` is restored as well, including the agents' connection secret, so agents reconnect on their own as long as they can still reach the original address; if the address changed, update DNS or the agents' connection address.
 5. **The backup settings are not restored.** Configure storage, the backup password, and the schedule again on the new host. Setting a password creates a new key, so the backups already in storage are marked "Old key"; they can still be restored with the original password or recovery key.
+
+::: warning Ports and certificates
+After the restore, the dashboard uses the `config.yaml` from the backup. If the listening port or TLS certificate paths on the new host differ from the original host, the start fails and rolls back. Keep the listening port and certificate paths the same as on the original host; with Docker, only the host side of the port mapping needs to change.
+:::
 
 Once the new host is live, stop the old dashboard so that the two do not run tasks or send notifications at the same time. If the old dashboard keeps running and uses the same bucket, give the two dashboards different prefixes.
 
