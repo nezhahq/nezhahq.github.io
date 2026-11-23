@@ -42,7 +42,7 @@ The Backup tab guides you through three steps in order: **S3 storage → backup 
 | Path-style addressing | On by default. Turn it off only if the service supports nothing but virtual-hosted `bucket.endpoint` addressing. |
 | Access Key ID / Secret Access Key | The access key. The secret is never shown again after saving and must be entered again when the endpoint or bucket changes. |
 
-During first-time setup you must pass **Test connection** before saving; when changing an existing configuration, testing before saving is still recommended. The test writes and deletes a temporary object under the prefix, so the key needs permission to read, write, list, and delete objects.
+During first-time setup you must pass **Test connection** before saving; when changing an existing configuration, testing before saving is still recommended. The test writes a temporary object under the prefix, reads it back, and deletes it, so it needs at least permission to read, write, and delete objects. The backup list and retention cleanup also list the objects under the prefix, so for regular use the key needs permission to list objects as well.
 
 #### Example: Cloudflare R2
 
