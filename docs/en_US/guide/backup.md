@@ -62,7 +62,7 @@ Do not use an account-wide token with full permissions; object read and write on
 
 ### 2. Set the backup password and save the recovery key
 
-The backup password must be at least 12 characters. When you set it, the dashboard creates a key pair:
+The backup password must be at least 12 characters. Setting it also asks for your login password (accounts that sign in only through OAuth must have signed in within the last 10 minutes), because whoever sets the backup password can decrypt every later backup. When you set it, the dashboard creates a key pair:
 
 - Backups are encrypted to the public key, so scheduled backups run without the password.
 - The private key is stored only protected by the backup password; the password itself is never stored in plain text.
@@ -80,7 +80,7 @@ If you forget the backup password and do not have the recovery key, the backups 
 
 **Change password:** keeps the same key and only changes the password that protects the private key. New backups use the new password; older backups open with the old password, or with the new one on this dashboard.
 
-**Reset password:** creates a new key. Use it only if the password is lost or may have leaked. Afterwards, earlier backups are marked **Old key** in the list and can only be restored with the old password or the old recovery key. Resetting asks you to type `RESET` to confirm. Before resetting, make sure you still have one of them, or no longer need those backups.
+**Reset password:** creates a new key. Use it only if the password is lost or may have leaked. Afterwards, earlier backups are marked **Old key** in the list and can only be restored with the old password or the old recovery key. Resetting asks you to type `RESET` to confirm and verifies your login password like setting it. Before resetting, make sure you still have one of them, or no longer need those backups.
 
 ### 3. Scheduled backups and retention
 
