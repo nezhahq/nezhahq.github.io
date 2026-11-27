@@ -10,7 +10,7 @@ Dashboard can back up its own data from the admin panel and upload it to S3-comp
 **Where to find it:** sign in as an administrator, click your avatar → System settings → the **Backup** tab. Only administrators can use it, and API tokens cannot call the backup API.
 
 ::: tip Supported versions
-This feature requires Dashboard vX.Y.Z or later. For earlier versions, use the [manual migration, backup, and restore](/en_US/guide/q5.html) method.
+This feature requires Dashboard v2.8.0 or later. For earlier versions, use the [manual migration, backup, and restore](/en_US/guide/q5.html) method.
 :::
 
 ## What a backup contains
