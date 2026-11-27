@@ -100,6 +100,7 @@ These features can execute commands, read or write files, establish connections,
 
 - Restrict filesystem access to the Dashboard data directory, configuration, SQLite, and TSDB.
 - Backups can contain accounts, secrets, IP addresses, server names, and history. Encrypt them and limit readers.
+- [Built-in backups](/en_US/guide/backup.html) are encrypted before upload and can only be decrypted with the backup password or the recovery key. Keep the password in a password manager and the recovery key offline, not in the same storage as the backups. Grant the storage access key only object read and write on the backup bucket.
 - Stop Dashboard before migration or a consistency-sensitive backup; after restoration, verify users, Agents, services, notifications, and history.
 - Debug logs can contain internal paths, error context, or request information. Enable `debug` only while troubleshooting and protect or remove collected logs afterward.
 - Configure an appropriate TSDB retention and free-space threshold. Longer retention increases both storage responsibility and the data exposure window.
